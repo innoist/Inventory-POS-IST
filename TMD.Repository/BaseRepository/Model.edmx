@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TMDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TMDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -89,6 +89,53 @@
           <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Value" Type="nvarchar" MaxLength="1024" />
         </EntityType>
+        <EntityType Name="DataWarehouseDimComapany">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DataWarehouseDimDate">
+          <Key>
+            <PropertyRef Name="DateId" />
+          </Key>
+          <Property Name="DateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DataWarehouseDimProduct">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DataWarehouseDimProductType">
+          <Key>
+            <PropertyRef Name="ProductTypeId" />
+          </Key>
+          <Property Name="ProductTypeId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DataWarehouseFactSale">
+          <Key>
+            <PropertyRef Name="SaleId" />
+          </Key>
+          <Property Name="SaleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="DateId" Type="int" />
+          <Property Name="ProductID" Type="int" />
+          <Property Name="ProductTypeId" Type="int" />
+          <Property Name="CompanyId" Type="int" />
+        </EntityType>
+        <EntityType Name="InventoryItems">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ItemId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="bigint" Nullable="false" />
+          <Property Name="VendorId" Type="int" Nullable="false" />
+          <Property Name="Quantity" Type="bigint" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Log">
           <Key>
             <PropertyRef Name="LogID" />
@@ -107,6 +154,80 @@
           <Property Name="Win32ThreadId" Type="nvarchar" MaxLength="128" />
           <Property Name="Message" Type="nvarchar" MaxLength="1500" />
           <Property Name="FormattedMessage" Type="ntext" />
+        </EntityType>
+        <EntityType Name="OrderItems">
+          <Key>
+            <PropertyRef Name="OrderItemId" />
+          </Key>
+          <Property Name="OrderItemId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="bigint" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+          <Property Name="OrderId" Type="bigint" Nullable="false" />
+          <Property Name="PurchasePrice" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="SalePrice" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="MinSalePriceAllowed" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="Discount" Type="tinyint" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IsModified" Type="bit" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductCategory">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ProductConfiguration">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="MaxAllowedDiscount" />
+            <PropertyRef Name="Emails" />
+            <PropertyRef Name="SecurityPassword" />
+            <PropertyRef Name="ProductCodePrefix" />
+          </Key>
+          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="MaxAllowedDiscount" Type="tinyint" Nullable="false" />
+          <Property Name="Emails" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="SecurityPassword" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ProductCodePrefix" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProductCode" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="ProductBarCode" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="PurchasePrice" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="SalePrice" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="MinSalePriceAllowed" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="CategoryId" Type="bigint" Nullable="false" />
+          <Property Name="VendorId" Type="bigint" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="StagingEbayBatchImports">
           <Key>
@@ -187,6 +308,47 @@
           <Property Name="Imported" Type="int" />
           <Property Name="Failed" Type="int" />
         </EntityType>
+        <EntityType Name="StagingToyGraderItems">
+          <Key>
+            <PropertyRef Name="ToyGraderItemId" />
+          </Key>
+          <Property Name="ToyGraderItemId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ToyGraderBatchImporttId" Type="int" />
+          <Property Name="CreatedBy" Type="int" Nullable="false" />
+          <Property Name="CreatedOn" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedBy" Type="int" />
+          <Property Name="ModifiedOn" Type="datetime" />
+          <Property Name="Deleted" Type="bit" Nullable="false" />
+          <Property Name="DeletedOn" Type="datetime" />
+          <Property Name="DeletedBy" Type="int" />
+          <Property Name="AfaSerial" Type="nvarchar" MaxLength="30" />
+          <Property Name="Blister" Type="int" />
+          <Property Name="Card" Type="int" />
+          <Property Name="Company" Type="nvarchar" MaxLength="50" />
+          <Property Name="DateGraded" Type="datetime" />
+          <Property Name="Figure" Type="int" />
+          <Property Name="Grade" Type="int" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Price" Type="money" />
+          <Property Name="Quantity" Type="int" />
+          <Property Name="Series" Type="nvarchar" MaxLength="50" />
+          <Property Name="Title" Type="nvarchar" MaxLength="50" />
+          <Property Name="Variation" Type="nvarchar" MaxLength="50" />
+          <Property Name="Year" Type="int" />
+        </EntityType>
+        <EntityType Name="Vendors">
+          <Key>
+            <PropertyRef Name="VendorId" />
+          </Key>
+          <Property Name="VendorId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ContactNo" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="ActiveFlag" Type="bit" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
         <Association Name="FK_CategoryLog_Category">
           <End Role="Category" Type="Self.Category" Multiplicity="1" />
           <End Role="CategoryLog" Type="Self.CategoryLog" Multiplicity="*" />
@@ -199,15 +361,51 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_CategoryLog_Log">
-          <End Role="Log" Type="Self.Log" Multiplicity="1" />
-          <End Role="CategoryLog" Type="Self.CategoryLog" Multiplicity="*" />
+        <Association Name="FK_DataWarehouseFactSale_DataWarehouseDimComapany">
+          <End Role="DataWarehouseDimComapany" Type="Self.DataWarehouseDimComapany" Multiplicity="0..1" />
+          <End Role="DataWarehouseFactSale" Type="Self.DataWarehouseFactSale" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Log">
-              <PropertyRef Name="LogID" />
+            <Principal Role="DataWarehouseDimComapany">
+              <PropertyRef Name="CompanyId" />
             </Principal>
-            <Dependent Role="CategoryLog">
-              <PropertyRef Name="LogID" />
+            <Dependent Role="DataWarehouseFactSale">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataWarehouseFactSale_DataWarehouseDimDate">
+          <End Role="DataWarehouseDimDate" Type="Self.DataWarehouseDimDate" Multiplicity="0..1" />
+          <End Role="DataWarehouseFactSale" Type="Self.DataWarehouseFactSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DataWarehouseDimDate">
+              <PropertyRef Name="DateId" />
+            </Principal>
+            <Dependent Role="DataWarehouseFactSale">
+              <PropertyRef Name="DateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataWarehouseFactSale_DataWarehouseDimProduct">
+          <End Role="DataWarehouseDimProduct" Type="Self.DataWarehouseDimProduct" Multiplicity="0..1" />
+          <End Role="DataWarehouseFactSale" Type="Self.DataWarehouseFactSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DataWarehouseDimProduct">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="DataWarehouseFactSale">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataWarehouseFactSale_DataWarehouseDimProductType">
+          <End Role="DataWarehouseDimProductType" Type="Self.DataWarehouseDimProductType" Multiplicity="0..1" />
+          <End Role="DataWarehouseFactSale" Type="Self.DataWarehouseFactSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DataWarehouseDimProductType">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="DataWarehouseFactSale">
+              <PropertyRef Name="ProductTypeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -264,6 +462,54 @@
             </Principal>
             <Dependent Role="AspNetUserRoles">
               <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InventoryItems_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="InventoryItems" Type="Self.InventoryItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="InventoryItems">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderItems_Orders">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="OrderItems" Type="Self.OrderItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="OrderItems">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderItems_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="OrderItems" Type="Self.OrderItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="OrderItems">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_ProductCategory">
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="CategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -339,23 +585,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="AddCategory" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="CategoryName" Type="nvarchar" Mode="In" />
-          <Parameter Name="LogID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="ClearLogs" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="InsertCategoryLog" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="CategoryID" Type="int" Mode="In" />
-          <Parameter Name="LogID" Type="int" Mode="In" />
-        </Function>
-        <Function Name="spEbayItemExists" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="itemId" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="spGetEbayLoadStartTimeFrom" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="spIsEbayLoadRunning" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-        <Function Name="spUpsertEbayLoadStartTimeFromConfiguration" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="EbayLoadStartTimeFrom" Type="datetime" Mode="In" />
-        </Function>
+        <Association Name="FK_StagingEbayItems_StagingToyGraderItems">
+          <End Role="StagingToyGraderItems" Type="Self.StagingToyGraderItems" Multiplicity="0..1" />
+          <End Role="StagingEbayItems" Type="Self.StagingEbayItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StagingToyGraderItems">
+              <PropertyRef Name="ToyGraderItemId" />
+            </Principal>
+            <Dependent Role="StagingEbayItems">
+              <PropertyRef Name="ToyGraderItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StagingToyGraderItems_StagingToyGraderBatchImports">
+          <End Role="StagingToyGraderBatchImports" Type="Self.StagingToyGraderBatchImports" Multiplicity="0..1" />
+          <End Role="StagingToyGraderItems" Type="Self.StagingToyGraderItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StagingToyGraderBatchImports">
+              <PropertyRef Name="ToyGraderBatchImporttId" />
+            </Principal>
+            <Dependent Role="StagingToyGraderItems">
+              <PropertyRef Name="ToyGraderBatchImporttId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="TMDModelStoreContainer">
           <EntitySet Name="AspNetRoles" EntityType="Self.AspNetRoles" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="AspNetUserClaims" EntityType="Self.AspNetUserClaims" Schema="dbo" store:Type="Tables" />
@@ -365,17 +618,50 @@
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CategoryLog" EntityType="Self.CategoryLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DataWarehouseDimComapany" EntityType="Self.DataWarehouseDimComapany" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DataWarehouseDimDate" EntityType="Self.DataWarehouseDimDate" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DataWarehouseDimProduct" EntityType="Self.DataWarehouseDimProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DataWarehouseDimProductType" EntityType="Self.DataWarehouseDimProductType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DataWarehouseFactSale" EntityType="Self.DataWarehouseFactSale" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="InventoryItems" EntityType="Self.InventoryItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="OrderItems" EntityType="Self.OrderItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StagingEbayBatchImports" EntityType="Self.StagingEbayBatchImports" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StagingEbayItems" EntityType="Self.StagingEbayItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StagingToyGraderBatchImports" EntityType="Self.StagingToyGraderBatchImports" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="StagingToyGraderItems" EntityType="Self.StagingToyGraderItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vendors" EntityType="Self.Vendors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductConfiguration" EntityType="Self.ProductConfiguration" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ProductConfiguration].[Id] AS [Id], 
+    [ProductConfiguration].[MaxAllowedDiscount] AS [MaxAllowedDiscount], 
+    [ProductConfiguration].[Emails] AS [Emails], 
+    [ProductConfiguration].[SecurityPassword] AS [SecurityPassword], 
+    [ProductConfiguration].[ProductCodePrefix] AS [ProductCodePrefix]
+    FROM [dbo].[ProductConfiguration] AS [ProductConfiguration]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_CategoryLog_Category" Association="Self.FK_CategoryLog_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="CategoryLog" EntitySet="CategoryLog" />
           </AssociationSet>
-          <AssociationSet Name="FK_CategoryLog_Log" Association="Self.FK_CategoryLog_Log">
-            <End Role="Log" EntitySet="Log" />
-            <End Role="CategoryLog" EntitySet="CategoryLog" />
+          <AssociationSet Name="FK_DataWarehouseFactSale_DataWarehouseDimComapany" Association="Self.FK_DataWarehouseFactSale_DataWarehouseDimComapany">
+            <End Role="DataWarehouseDimComapany" EntitySet="DataWarehouseDimComapany" />
+            <End Role="DataWarehouseFactSale" EntitySet="DataWarehouseFactSale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataWarehouseFactSale_DataWarehouseDimDate" Association="Self.FK_DataWarehouseFactSale_DataWarehouseDimDate">
+            <End Role="DataWarehouseDimDate" EntitySet="DataWarehouseDimDate" />
+            <End Role="DataWarehouseFactSale" EntitySet="DataWarehouseFactSale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataWarehouseFactSale_DataWarehouseDimProduct" Association="Self.FK_DataWarehouseFactSale_DataWarehouseDimProduct">
+            <End Role="DataWarehouseDimProduct" EntitySet="DataWarehouseDimProduct" />
+            <End Role="DataWarehouseFactSale" EntitySet="DataWarehouseFactSale" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataWarehouseFactSale_DataWarehouseDimProductType" Association="Self.FK_DataWarehouseFactSale_DataWarehouseDimProductType">
+            <End Role="DataWarehouseDimProductType" EntitySet="DataWarehouseDimProductType" />
+            <End Role="DataWarehouseFactSale" EntitySet="DataWarehouseFactSale" />
           </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -392,6 +678,22 @@
           <AssociationSet Name="FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserRoles_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserRoles" EntitySet="AspNetUserRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InventoryItems_Products" Association="Self.FK_InventoryItems_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="InventoryItems" EntitySet="InventoryItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderItems_Orders" Association="Self.FK_OrderItems_Orders">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="OrderItems" EntitySet="OrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderItems_Products" Association="Self.FK_OrderItems_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="OrderItems" EntitySet="OrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_ProductCategory" Association="Self.FK_Products_ProductCategory">
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
+            <End Role="Products" EntitySet="Products" />
           </AssociationSet>
           <AssociationSet Name="FK_StagingEbayBatchImports_AspNetUsers_CreatedBy" Association="Self.FK_StagingEbayBatchImports_AspNetUsers_CreatedBy">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -416,6 +718,14 @@
           <AssociationSet Name="FK_StagingEbayItems_StagingEbayBatchImports" Association="Self.FK_StagingEbayItems_StagingEbayBatchImports">
             <End Role="StagingEbayBatchImports" EntitySet="StagingEbayBatchImports" />
             <End Role="StagingEbayItems" EntitySet="StagingEbayItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StagingEbayItems_StagingToyGraderItems" Association="Self.FK_StagingEbayItems_StagingToyGraderItems">
+            <End Role="StagingToyGraderItems" EntitySet="StagingToyGraderItems" />
+            <End Role="StagingEbayItems" EntitySet="StagingEbayItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StagingToyGraderItems_StagingToyGraderBatchImports" Association="Self.FK_StagingToyGraderItems_StagingToyGraderBatchImports">
+            <End Role="StagingToyGraderBatchImports" EntitySet="StagingToyGraderBatchImports" />
+            <End Role="StagingToyGraderItems" EntitySet="StagingToyGraderItems" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -495,6 +805,59 @@
             <Parameter Name="CategoryID" Mode="In" Type="Int32" />
             <Parameter Name="LogID" Mode="In" Type="Int32" />
           </FunctionImport>
+          <EntitySet Name="DataWarehouseDimComapanies" EntityType="TMD.Models.DomainModels.DataWarehouseDimComapany" />
+          <EntitySet Name="DataWarehouseDimDates" EntityType="TMD.Models.DomainModels.DataWarehouseDimDate" />
+          <EntitySet Name="DataWarehouseDimProducts" EntityType="TMD.Models.DomainModels.DataWarehouseDimProduct" />
+          <EntitySet Name="DataWarehouseDimProductTypes" EntityType="TMD.Models.DomainModels.DataWarehouseDimProductType" />
+          <EntitySet Name="DataWarehouseFactSales" EntityType="TMD.Models.DomainModels.DataWarehouseFactSale" />
+          <EntitySet Name="InventoryItems" EntityType="TMD.Models.DomainModels.InventoryItem" />
+          <EntitySet Name="OrderItems" EntityType="TMD.Models.DomainModels.OrderItem" />
+          <EntitySet Name="Orders" EntityType="TMD.Models.DomainModels.Order" />
+          <EntitySet Name="ProductCategories" EntityType="TMD.Models.DomainModels.ProductCategory" />
+          <EntitySet Name="Products" EntityType="TMD.Models.DomainModels.Product" />
+          <EntitySet Name="StagingToyGraderItems" EntityType="TMD.Models.DomainModels.StagingToyGraderItem" />
+          <EntitySet Name="Vendors" EntityType="TMD.Models.DomainModels.Vendor" />
+          <EntitySet Name="ProductConfigurations" EntityType="TMD.Models.DomainModels.ProductConfiguration" />
+          <AssociationSet Name="FK_DataWarehouseFactSale_DataWarehouseDimComapany" Association="TMD.Models.DomainModels.FK_DataWarehouseFactSale_DataWarehouseDimComapany">
+            <End Role="DataWarehouseDimComapany" EntitySet="DataWarehouseDimComapanies" />
+            <End Role="DataWarehouseFactSale" EntitySet="DataWarehouseFactSales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataWarehouseFactSale_DataWarehouseDimDate" Association="TMD.Models.DomainModels.FK_DataWarehouseFactSale_DataWarehouseDimDate">
+            <End Role="DataWarehouseDimDate" EntitySet="DataWarehouseDimDates" />
+            <End Role="DataWarehouseFactSale" EntitySet="DataWarehouseFactSales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataWarehouseFactSale_DataWarehouseDimProduct" Association="TMD.Models.DomainModels.FK_DataWarehouseFactSale_DataWarehouseDimProduct">
+            <End Role="DataWarehouseDimProduct" EntitySet="DataWarehouseDimProducts" />
+            <End Role="DataWarehouseFactSale" EntitySet="DataWarehouseFactSales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DataWarehouseFactSale_DataWarehouseDimProductType" Association="TMD.Models.DomainModels.FK_DataWarehouseFactSale_DataWarehouseDimProductType">
+            <End Role="DataWarehouseDimProductType" EntitySet="DataWarehouseDimProductTypes" />
+            <End Role="DataWarehouseFactSale" EntitySet="DataWarehouseFactSales" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderItems_Orders" Association="TMD.Models.DomainModels.FK_OrderItems_Orders">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderItem" EntitySet="OrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderItems_Products" Association="TMD.Models.DomainModels.FK_OrderItems_Products">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="OrderItem" EntitySet="OrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StagingEbayItems_StagingToyGraderItems" Association="TMD.Models.DomainModels.FK_StagingEbayItems_StagingToyGraderItems">
+            <End Role="StagingToyGraderItem" EntitySet="StagingToyGraderItems" />
+            <End Role="StagingEbayItem" EntitySet="StagingEbayItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_StagingToyGraderItems_StagingToyGraderBatchImports" Association="TMD.Models.DomainModels.FK_StagingToyGraderItems_StagingToyGraderBatchImports">
+            <End Role="StagingToyGraderBatchImport" EntitySet="StagingToyGraderBatchImports" />
+            <End Role="StagingToyGraderItem" EntitySet="StagingToyGraderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InventoryItems_Products" Association="TMD.Models.DomainModels.FK_InventoryItems_Products">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="InventoryItem" EntitySet="InventoryItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_ProductCategory" Association="TMD.Models.DomainModels.FK_Products_ProductCategory">
+            <End Role="ProductCategory" EntitySet="ProductCategories" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AspNetRole">
           <Key>
@@ -793,6 +1156,7 @@
           <Property Name="CompletedOn" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="Imported" Type="Int32" />
           <Property Name="Failed" Type="Int32" />
+          <NavigationProperty Name="StagingToyGraderItems" Relationship="TMD.Models.DomainModels.FK_StagingToyGraderItems_StagingToyGraderBatchImports" FromRole="StagingToyGraderBatchImport" ToRole="StagingToyGraderItem" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -856,13 +1220,310 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="DataWarehouseDimComapany">
+          <Key>
+            <PropertyRef Name="CompanyId" />
+          </Key>
+          <Property Name="CompanyId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="DataWarehouseFactSales" Relationship="TMD.Models.DomainModels.FK_DataWarehouseFactSale_DataWarehouseDimComapany" FromRole="DataWarehouseDimComapany" ToRole="DataWarehouseFactSale" />
+        </EntityType>
+        <EntityType Name="DataWarehouseDimDate">
+          <Key>
+            <PropertyRef Name="DateId" />
+          </Key>
+          <Property Name="DateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="DataWarehouseFactSales" Relationship="TMD.Models.DomainModels.FK_DataWarehouseFactSale_DataWarehouseDimDate" FromRole="DataWarehouseDimDate" ToRole="DataWarehouseFactSale" />
+        </EntityType>
+        <EntityType Name="DataWarehouseDimProduct">
+          <Key>
+            <PropertyRef Name="ProductID" />
+          </Key>
+          <Property Name="ProductID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="DataWarehouseFactSales" Relationship="TMD.Models.DomainModels.FK_DataWarehouseFactSale_DataWarehouseDimProduct" FromRole="DataWarehouseDimProduct" ToRole="DataWarehouseFactSale" />
+        </EntityType>
+        <EntityType Name="DataWarehouseDimProductType">
+          <Key>
+            <PropertyRef Name="ProductTypeId" />
+          </Key>
+          <Property Name="ProductTypeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="DataWarehouseFactSales" Relationship="TMD.Models.DomainModels.FK_DataWarehouseFactSale_DataWarehouseDimProductType" FromRole="DataWarehouseDimProductType" ToRole="DataWarehouseFactSale" />
+        </EntityType>
+        <EntityType Name="DataWarehouseFactSale">
+          <Key>
+            <PropertyRef Name="SaleId" />
+          </Key>
+          <Property Name="SaleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DateId" Type="Int32" />
+          <Property Name="ProductID" Type="Int32" />
+          <Property Name="ProductTypeId" Type="Int32" />
+          <Property Name="CompanyId" Type="Int32" />
+          <NavigationProperty Name="DataWarehouseDimComapany" Relationship="TMD.Models.DomainModels.FK_DataWarehouseFactSale_DataWarehouseDimComapany" FromRole="DataWarehouseFactSale" ToRole="DataWarehouseDimComapany" />
+          <NavigationProperty Name="DataWarehouseDimDate" Relationship="TMD.Models.DomainModels.FK_DataWarehouseFactSale_DataWarehouseDimDate" FromRole="DataWarehouseFactSale" ToRole="DataWarehouseDimDate" />
+          <NavigationProperty Name="DataWarehouseDimProduct" Relationship="TMD.Models.DomainModels.FK_DataWarehouseFactSale_DataWarehouseDimProduct" FromRole="DataWarehouseFactSale" ToRole="DataWarehouseDimProduct" />
+          <NavigationProperty Name="DataWarehouseDimProductType" Relationship="TMD.Models.DomainModels.FK_DataWarehouseFactSale_DataWarehouseDimProductType" FromRole="DataWarehouseFactSale" ToRole="DataWarehouseDimProductType" />
+        </EntityType>
+        <EntityType Name="InventoryItem">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int64" Nullable="false" />
+          <Property Name="VendorId" Type="Int32" Nullable="false" />
+          <Property Name="Quantity" Type="Int64" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Product" Relationship="TMD.Models.DomainModels.FK_InventoryItems_Products" FromRole="InventoryItem" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="OrderItem">
+          <Key>
+            <PropertyRef Name="OrderItemId" />
+          </Key>
+          <Property Name="OrderItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int64" Nullable="false" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <Property Name="OrderId" Type="Int64" Nullable="false" />
+          <Property Name="PurchasePrice" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="SalePrice" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="MinSalePriceAllowed" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="Discount" Type="Byte" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Order" Relationship="TMD.Models.DomainModels.FK_OrderItems_Orders" FromRole="OrderItem" ToRole="Order" />
+          <NavigationProperty Name="Product" Relationship="TMD.Models.DomainModels.FK_OrderItems_Products" FromRole="OrderItem" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsModified" Type="Boolean" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OrderItems" Relationship="TMD.Models.DomainModels.FK_OrderItems_Orders" FromRole="Order" ToRole="OrderItem" />
+        </EntityType>
+        <EntityType Name="ProductCategory">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="TMD.Models.DomainModels.FK_Products_ProductCategory" FromRole="ProductCategory" ToRole="Product" />
+        </EntityType>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+          </Key>
+          <Property Name="ProductId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProductCode" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="ProductBarCode" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="PurchasePrice" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="SalePrice" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="MinSalePriceAllowed" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="CategoryId" Type="Int64" Nullable="false" />
+          <Property Name="VendorId" Type="Int64" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="OrderItems" Relationship="TMD.Models.DomainModels.FK_OrderItems_Products" FromRole="Product" ToRole="OrderItem" />
+          <NavigationProperty Name="InventoryItems" Relationship="TMD.Models.DomainModels.FK_InventoryItems_Products" FromRole="Product" ToRole="InventoryItem" />
+          <NavigationProperty Name="ProductCategory" Relationship="TMD.Models.DomainModels.FK_Products_ProductCategory" FromRole="Product" ToRole="ProductCategory" />
+        </EntityType>
+        <EntityType Name="StagingToyGraderItem">
+          <Key>
+            <PropertyRef Name="ToyGraderItemId" />
+          </Key>
+          <Property Name="ToyGraderItemId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ToyGraderBatchImporttId" Type="Int32" />
+          <Property Name="CreatedBy" Type="Int32" Nullable="false" />
+          <Property Name="CreatedOn" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedBy" Type="Int32" />
+          <Property Name="ModifiedOn" Type="DateTime" Precision="3" />
+          <Property Name="Deleted" Type="Boolean" Nullable="false" />
+          <Property Name="DeletedOn" Type="DateTime" Precision="3" />
+          <Property Name="DeletedBy" Type="Int32" />
+          <Property Name="AfaSerial" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="Blister" Type="Int32" />
+          <Property Name="Card" Type="Int32" />
+          <Property Name="Company" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DateGraded" Type="DateTime" Precision="3" />
+          <Property Name="Figure" Type="Int32" />
+          <Property Name="Grade" Type="Int32" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Quantity" Type="Int32" />
+          <Property Name="Series" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Title" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Variation" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Year" Type="Int32" />
+          <NavigationProperty Name="StagingEbayItems" Relationship="TMD.Models.DomainModels.FK_StagingEbayItems_StagingToyGraderItems" FromRole="StagingToyGraderItem" ToRole="StagingEbayItem" />
+          <NavigationProperty Name="StagingToyGraderBatchImport" Relationship="TMD.Models.DomainModels.FK_StagingToyGraderItems_StagingToyGraderBatchImports" FromRole="StagingToyGraderItem" ToRole="StagingToyGraderBatchImport" />
+        </EntityType>
+        <EntityType Name="Vendor">
+          <Key>
+            <PropertyRef Name="VendorId" />
+          </Key>
+          <Property Name="VendorId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ContactNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="ActiveFlag" Type="Boolean" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="ProductConfiguration">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="MaxAllowedDiscount" />
+            <PropertyRef Name="Emails" />
+            <PropertyRef Name="SecurityPassword" />
+            <PropertyRef Name="ProductCodePrefix" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="MaxAllowedDiscount" Type="Byte" Nullable="false" />
+          <Property Name="Emails" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityPassword" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ProductCodePrefix" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK_DataWarehouseFactSale_DataWarehouseDimComapany">
+          <End Type="TMD.Models.DomainModels.DataWarehouseDimComapany" Role="DataWarehouseDimComapany" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.DataWarehouseFactSale" Role="DataWarehouseFactSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DataWarehouseDimComapany">
+              <PropertyRef Name="CompanyId" />
+            </Principal>
+            <Dependent Role="DataWarehouseFactSale">
+              <PropertyRef Name="CompanyId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataWarehouseFactSale_DataWarehouseDimDate">
+          <End Type="TMD.Models.DomainModels.DataWarehouseDimDate" Role="DataWarehouseDimDate" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.DataWarehouseFactSale" Role="DataWarehouseFactSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DataWarehouseDimDate">
+              <PropertyRef Name="DateId" />
+            </Principal>
+            <Dependent Role="DataWarehouseFactSale">
+              <PropertyRef Name="DateId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataWarehouseFactSale_DataWarehouseDimProduct">
+          <End Type="TMD.Models.DomainModels.DataWarehouseDimProduct" Role="DataWarehouseDimProduct" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.DataWarehouseFactSale" Role="DataWarehouseFactSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DataWarehouseDimProduct">
+              <PropertyRef Name="ProductID" />
+            </Principal>
+            <Dependent Role="DataWarehouseFactSale">
+              <PropertyRef Name="ProductID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DataWarehouseFactSale_DataWarehouseDimProductType">
+          <End Type="TMD.Models.DomainModels.DataWarehouseDimProductType" Role="DataWarehouseDimProductType" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.DataWarehouseFactSale" Role="DataWarehouseFactSale" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DataWarehouseDimProductType">
+              <PropertyRef Name="ProductTypeId" />
+            </Principal>
+            <Dependent Role="DataWarehouseFactSale">
+              <PropertyRef Name="ProductTypeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderItems_Orders">
+          <End Type="TMD.Models.DomainModels.Order" Role="Order" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.OrderItem" Role="OrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="OrderItem">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderItems_Products">
+          <End Type="TMD.Models.DomainModels.Product" Role="Product" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.OrderItem" Role="OrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="OrderItem">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StagingEbayItems_StagingToyGraderItems">
+          <End Type="TMD.Models.DomainModels.StagingToyGraderItem" Role="StagingToyGraderItem" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.StagingEbayItem" Role="StagingEbayItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StagingToyGraderItem">
+              <PropertyRef Name="ToyGraderItemId" />
+            </Principal>
+            <Dependent Role="StagingEbayItem">
+              <PropertyRef Name="ToyGraderItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_StagingToyGraderItems_StagingToyGraderBatchImports">
+          <End Type="TMD.Models.DomainModels.StagingToyGraderBatchImport" Role="StagingToyGraderBatchImport" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.StagingToyGraderItem" Role="StagingToyGraderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="StagingToyGraderBatchImport">
+              <PropertyRef Name="ToyGraderBatchImporttId" />
+            </Principal>
+            <Dependent Role="StagingToyGraderItem">
+              <PropertyRef Name="ToyGraderBatchImporttId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InventoryItems_Products">
+          <End Type="TMD.Models.DomainModels.Product" Role="Product" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.InventoryItem" Role="InventoryItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="InventoryItem">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_ProductCategory">
+          <End Type="TMD.Models.DomainModels.ProductCategory" Role="ProductCategory" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductCategory">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="TMDModelStoreContainer" CdmEntityContainer="Entities">
-          <FunctionImportMapping FunctionImportName="spIsEbayLoadRunning" FunctionName="TMDModel.Store.spIsEbayLoadRunning" />
           <EntitySetMapping Name="AspNetRoles">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.AspNetRole">
               <MappingFragment StoreEntitySet="AspNetRoles">
@@ -1004,10 +1665,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="spUpsertEbayLoadStartTimeFromConfiguration" FunctionName="TMDModel.Store.spUpsertEbayLoadStartTimeFromConfiguration" />
-          <FunctionImportMapping FunctionImportName="spGetEbayLoadStartTimeFrom" FunctionName="TMDModel.Store.spGetEbayLoadStartTimeFrom" />
-          <FunctionImportMapping FunctionImportName="spEbayItemExists" FunctionName="TMDModel.Store.spEbayItemExists" >
-          </FunctionImportMapping>
           <EntitySetMapping Name="StagingToyGraderBatchImports">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.StagingToyGraderBatchImport">
               <MappingFragment StoreEntitySet="StagingToyGraderBatchImports">
@@ -1058,9 +1715,175 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="AddCategory" FunctionName="TMDModel.Store.AddCategory" />
-          <FunctionImportMapping FunctionImportName="ClearLogs" FunctionName="TMDModel.Store.ClearLogs" />
-          <FunctionImportMapping FunctionImportName="InsertCategoryLog" FunctionName="TMDModel.Store.InsertCategoryLog" />
+          <EntitySetMapping Name="DataWarehouseDimComapanies">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.DataWarehouseDimComapany">
+              <MappingFragment StoreEntitySet="DataWarehouseDimComapany">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DataWarehouseDimDates">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.DataWarehouseDimDate">
+              <MappingFragment StoreEntitySet="DataWarehouseDimDate">
+                <ScalarProperty Name="DateId" ColumnName="DateId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DataWarehouseDimProducts">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.DataWarehouseDimProduct">
+              <MappingFragment StoreEntitySet="DataWarehouseDimProduct">
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DataWarehouseDimProductTypes">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.DataWarehouseDimProductType">
+              <MappingFragment StoreEntitySet="DataWarehouseDimProductType">
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DataWarehouseFactSales">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.DataWarehouseFactSale">
+              <MappingFragment StoreEntitySet="DataWarehouseFactSale">
+                <ScalarProperty Name="CompanyId" ColumnName="CompanyId" />
+                <ScalarProperty Name="ProductTypeId" ColumnName="ProductTypeId" />
+                <ScalarProperty Name="ProductID" ColumnName="ProductID" />
+                <ScalarProperty Name="DateId" ColumnName="DateId" />
+                <ScalarProperty Name="SaleId" ColumnName="SaleId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="InventoryItems">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.InventoryItem">
+              <MappingFragment StoreEntitySet="InventoryItems">
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="OrderItems">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.OrderItem">
+              <MappingFragment StoreEntitySet="OrderItems">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="MinSalePriceAllowed" ColumnName="MinSalePriceAllowed" />
+                <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+                <ScalarProperty Name="PurchasePrice" ColumnName="PurchasePrice" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="OrderItemId" ColumnName="OrderItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="IsModified" ColumnName="IsModified" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductCategories">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductCategory">
+              <MappingFragment StoreEntitySet="ProductCategory">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Product">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+                <ScalarProperty Name="MinSalePriceAllowed" ColumnName="MinSalePriceAllowed" />
+                <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+                <ScalarProperty Name="PurchasePrice" ColumnName="PurchasePrice" />
+                <ScalarProperty Name="ProductBarCode" ColumnName="ProductBarCode" />
+                <ScalarProperty Name="ProductCode" ColumnName="ProductCode" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="StagingToyGraderItems">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.StagingToyGraderItem">
+              <MappingFragment StoreEntitySet="StagingToyGraderItems">
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Variation" ColumnName="Variation" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="Series" ColumnName="Series" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Grade" ColumnName="Grade" />
+                <ScalarProperty Name="Figure" ColumnName="Figure" />
+                <ScalarProperty Name="DateGraded" ColumnName="DateGraded" />
+                <ScalarProperty Name="Company" ColumnName="Company" />
+                <ScalarProperty Name="Card" ColumnName="Card" />
+                <ScalarProperty Name="Blister" ColumnName="Blister" />
+                <ScalarProperty Name="AfaSerial" ColumnName="AfaSerial" />
+                <ScalarProperty Name="DeletedBy" ColumnName="DeletedBy" />
+                <ScalarProperty Name="DeletedOn" ColumnName="DeletedOn" />
+                <ScalarProperty Name="Deleted" ColumnName="Deleted" />
+                <ScalarProperty Name="ModifiedOn" ColumnName="ModifiedOn" />
+                <ScalarProperty Name="ModifiedBy" ColumnName="ModifiedBy" />
+                <ScalarProperty Name="CreatedOn" ColumnName="CreatedOn" />
+                <ScalarProperty Name="CreatedBy" ColumnName="CreatedBy" />
+                <ScalarProperty Name="ToyGraderBatchImporttId" ColumnName="ToyGraderBatchImporttId" />
+                <ScalarProperty Name="ToyGraderItemId" ColumnName="ToyGraderItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vendors">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Vendor">
+              <MappingFragment StoreEntitySet="Vendors">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="ActiveFlag" ColumnName="ActiveFlag" />
+                <ScalarProperty Name="ContactNo" ColumnName="ContactNo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductConfigurations">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductConfiguration">
+              <MappingFragment StoreEntitySet="ProductConfiguration">
+                <ScalarProperty Name="ProductCodePrefix" ColumnName="ProductCodePrefix" />
+                <ScalarProperty Name="SecurityPassword" ColumnName="SecurityPassword" />
+                <ScalarProperty Name="Emails" ColumnName="Emails" />
+                <ScalarProperty Name="MaxAllowedDiscount" ColumnName="MaxAllowedDiscount" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

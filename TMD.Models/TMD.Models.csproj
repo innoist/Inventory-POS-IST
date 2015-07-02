@@ -106,9 +106,16 @@
     <Compile Include="DomainModels\AspNetUserLogin.cs" />
     <Compile Include="DomainModels\AspNetUserRole.cs" />
     <Compile Include="DomainModels\Configuration.cs" />
+    <Compile Include="DomainModels\InventoryItem.cs" />
+    <Compile Include="DomainModels\Order.cs" />
+    <Compile Include="DomainModels\OrderItem.cs" />
+    <Compile Include="DomainModels\Product.cs" />
+    <Compile Include="DomainModels\ProductCategory.cs" />
+    <Compile Include="DomainModels\ProductConfiguration.cs" />
     <Compile Include="DomainModels\StagingEbayBatchImport.cs" />
     <Compile Include="DomainModels\StagingEbayItem.cs" />
     <Compile Include="DomainModels\UserPrefrence.cs" />
+    <Compile Include="DomainModels\Vendor.cs" />
     <Compile Include="IdentityModels\ApplicationRights.cs">
       <SubType>Code</SubType>
     </Compile>
