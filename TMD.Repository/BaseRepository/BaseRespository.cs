@@ -5,7 +5,7 @@ using System.Data.Entity;
 using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Linq.Expressions;
-using TMD.Interfaces.Repository;
+using TMD.Interfaces.IRepository;
 using TMD.Models.DomainModels;
 using Microsoft.Practices.Unity;
 

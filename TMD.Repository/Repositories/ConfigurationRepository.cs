@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 using Microsoft.Practices.Unity;
-using TMD.Interfaces.Repository;
+using TMD.Interfaces.IRepository;
 using TMD.Models.DomainModels;
 using TMD.Repository.BaseRepository;
 

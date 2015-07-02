@@ -3,7 +3,7 @@ using System.Data.Entity;
 using System.Data.Entity.Core.Objects;
 using System.Data.Odbc;
 using System.Linq;
-using TMD.Interfaces.Repository;
+using TMD.Interfaces.IRepository;
 using TMD.Models.Common;
 using TMD.Models.DomainModels;
 using TMD.Models.ResponseModels;

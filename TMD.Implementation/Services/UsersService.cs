@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TMD.Interfaces.IRepository;
 using TMD.Interfaces.IServices;
-using TMD.Interfaces.Repository;
 
 namespace TMD.Implementation.Services
 {

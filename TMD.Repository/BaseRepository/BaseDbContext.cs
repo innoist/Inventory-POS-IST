@@ -78,6 +78,7 @@ namespace TMD.Repository.BaseRepository
         public DbSet<AspNetUserClaim> UserClaims { get; set; }
         public DbSet<AspNetUserLogin> UserLogins { get; set; }
         public DbSet<AspNetUser> AspNetUsers { get; set; }
+        public DbSet<ProductCategory> ProductCategories { get; set; }
 
         /// <summary>
         /// Staging Ebay

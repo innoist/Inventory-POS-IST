@@ -133,6 +133,7 @@
     <Compile Include="Repositories\ApplicationUserRepository.cs" />
     <Compile Include="Repositories\AspNetUserRepository.cs" />
     <Compile Include="Repositories\ConfigurationRepository.cs" />
+    <Compile Include="Repositories\ProductCategoryRepository.cs" />
     <Compile Include="Repositories\StagingEbayItemRepository.cs" />
     <Compile Include="Repositories\StagingEbayBatchImportsRepository.cs" />
     <Compile Include="Repositories\UserRoleStore.cs" />

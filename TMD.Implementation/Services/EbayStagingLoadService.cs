@@ -1,6 +1,6 @@
 ﻿using System;
+using TMD.Interfaces.IRepository;
 using TMD.Interfaces.IServices;
-using TMD.Interfaces.Repository;
 using TMD.Models.DomainModels;
 
 namespace TMD.Implementation.Services

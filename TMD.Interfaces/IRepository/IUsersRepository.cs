@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using TMD.Models.DomainModels;
 
-namespace TMD.Interfaces.Repository
+namespace TMD.Interfaces.IRepository
 {
-    public interface IAspNetUserRepository : IBaseRepository<AspNetUser, string>
+    public interface IUsersRepository : IBaseRepository<AspNetUser,int>
     {
         IEnumerable<AspNetUser> GetAllUsers();
     }
-
 }

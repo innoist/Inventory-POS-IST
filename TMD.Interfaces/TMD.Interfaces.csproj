@@ -55,18 +55,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IRepository\IProductCategoryRepository.cs" />
     <Compile Include="IServices\IAspNetUserService.cs" />
+    <Compile Include="IServices\IProductCategoryService.cs" />
     <Compile Include="IServices\IStagingEbayBatchImportsService.cs" />
     <Compile Include="IServices\IStagingEbayLoadService.cs" />
     <Compile Include="IServices\ILogger.cs" />
     <Compile Include="IServices\IUsersService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Repository\IAspNetUserRepository.cs" />
-    <Compile Include="Repository\IBaseRepository.cs" />
-    <Compile Include="Repository\IConfigurationRepository.cs" />
-    <Compile Include="Repository\IStagingEbayBatchImportsRepository.cs" />
-    <Compile Include="Repository\IStagingEbayItemRepository.cs" />
-    <Compile Include="Repository\IUsersRepository.cs" />
+    <Compile Include="IRepository\IAspNetUserRepository.cs" />
+    <Compile Include="IRepository\IBaseRepository.cs" />
+    <Compile Include="IRepository\IConfigurationRepository.cs" />
+    <Compile Include="IRepository\IStagingEbayBatchImportsRepository.cs" />
+    <Compile Include="IRepository\IStagingEbayItemRepository.cs" />
+    <Compile Include="IRepository\IUsersRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

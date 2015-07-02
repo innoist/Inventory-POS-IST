@@ -1,5 +1,5 @@
 ﻿using System.Data.Entity;
-using TMD.Interfaces.Repository;
+using TMD.Interfaces.IRepository;
 using TMD.Repository.BaseRepository;
 using TMD.Repository.Repositories;
 using Microsoft.Practices.Unity;

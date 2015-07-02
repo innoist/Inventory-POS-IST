@@ -1,7 +1,7 @@
 ﻿using System;
 using TMD.Models.DomainModels;
 
-namespace TMD.Interfaces.Repository
+namespace TMD.Interfaces.IRepository
 {
     public interface IConfigurationRepository: IBaseRepository<Configuration, int>
     {

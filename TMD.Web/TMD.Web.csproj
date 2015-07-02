@@ -295,6 +295,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProductCategoryController.cs" />
     <Compile Include="Controllers\UnauthorizedRequestController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Global.asax.cs">
@@ -313,6 +314,7 @@
     </Compile>
     <Compile Include="ModelMappers\AspNetUserMapper.cs" />
     <Compile Include="ModelMappers\FindingServiceSearchItemMapper.cs" />
+    <Compile Include="ModelMappers\ProductCategoryMapper.cs" />
     <Compile Include="ModelMappers\StagingEbayBatchImportMapper.cs" />
     <Compile Include="ModelMappers\StagingEbayItemMapper.cs" />
     <Compile Include="ModelMappers\UserMapper.cs" />
@@ -320,6 +322,7 @@
     <Compile Include="Models\ApplicantModel.cs" />
     <Compile Include="Models\AspNetUserModel.cs" />
     <Compile Include="Models\Common\BoolDropDownModel.cs" />
+    <Compile Include="Models\ProductCategoryModel.cs" />
     <Compile Include="Models\StagingEbayBatchImportModel.cs" />
     <Compile Include="Models\PaypalPaymentModel.cs" />
     <Compile Include="Models\StagingEbayItemModel.cs" />
@@ -1642,6 +1645,7 @@
     <Content Include="Views\Admin\EbayItemImportLV.cshtml" />
     <Content Include="Views\Admin\EbayItemImportDetail.cshtml" />
     <None Include="Service References\LocalEbayIntegrationWS\TmdEbayIntegrationService1.wsdl" />
+    <Content Include="Views\ProductCategory\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

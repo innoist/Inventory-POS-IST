@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
-using TMD.Interfaces.Repository;
+using TMD.Interfaces.IRepository;
 using TMD.Models.DomainModels;
 using TMD.Repository.BaseRepository;
 

@@ -2,7 +2,7 @@
 using System.Linq;
 using TMD.Models.DomainModels;
 
-namespace TMD.Interfaces.Repository
+namespace TMD.Interfaces.IRepository
 {
     /// <summary>
     /// Base repository interface
