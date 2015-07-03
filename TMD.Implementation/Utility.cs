@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Mail;
 
 namespace TMD.Implementation
-{
+{ 
     public class Utility
     {
         public static void SendEmail(string email, string subject, string body)
