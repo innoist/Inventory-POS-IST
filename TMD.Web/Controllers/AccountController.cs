@@ -868,28 +868,28 @@ namespace IdentitySample.Controllers
         //}
 
         [AllowAnonymous]
-        public ActionResult SignUp(int ? PackageId,string  vkpy)
+        public ActionResult SignUp()
         {
             try
             {
 
 
-                if (!string.IsNullOrEmpty(vkpy))
-                {
+                //if (!string.IsNullOrEmpty(vkpy))
+                //{
 
-                    //means we need to go direct to payment
-                    AspNetUser oModel = UserManager.FindByEmail(vkpy);
-                    if (oModel != null)
-                        return PreparePayPalPayment(oModel);
+                //    //means we need to go direct to payment
+                //    AspNetUser oModel = UserManager.FindByEmail(vkpy);
+                //    if (oModel != null)
+                //        return PreparePayPalPayment(oModel);
 
-                }
+                //}
 
                 return View();
             }
             catch (Exception)
             {
 
-                return RedirectToAction("Pricing");
+                return RedirectToAction("SignUp");
             }
         }
         [HttpPost]
@@ -910,6 +910,7 @@ namespace IdentitySample.Controllers
                 Telephone = oModel.Telephone,
                 FirstName = oModel.FirstName,
                 LastName = oModel.LastName,
+                UserComments = string.Empty,
                 LockoutEnabled = false
             };
 
@@ -924,13 +925,13 @@ namespace IdentitySample.Controllers
                         var roleName = roleManager.FindById(oModel.RoleId).Name;
                         UserManager.AddToRole(user.Id, roleName);
 
-                        return PreparePayPalPayment(user);
+                        //return PreparePayPalPayment(user);
 
 
                         // Add User Preferences for Dashboards Widgets
 
-                        //TempData["message"] = new MessageViewModel { Message = "Employee has been created", IsSaved = true };
-                        //return RedirectToAction("Users");
+                        TempData["message"] = new MessageViewModel { Message = "Please check your email for Confirmation", IsSaved = true };
+                        return RedirectToAction("Index","Home");
                     }
                     
                 }

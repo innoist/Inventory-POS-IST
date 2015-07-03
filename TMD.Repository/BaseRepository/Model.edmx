@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TMDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TMDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -58,12 +58,7 @@
           <Property Name="FirstName" Type="nvarchar" MaxLength="200" />
           <Property Name="LastName" Type="nvarchar" MaxLength="200" />
           <Property Name="Telephone" Type="nvarchar" MaxLength="200" />
-          <Property Name="Package" Type="int" />
-          <Property Name="RegisterPayPalTxnID" Type="varchar" MaxLength="250" />
-          <Property Name="RegisterPayPalDate" Type="datetime" />
-          <Property Name="PayPalAmount" Type="float" />
-          <Property Name="PayPalAmountAfterDeduct" Type="float" />
-          <Property Name="PayPalMisc" Type="nvarchar(max)" />
+          <Property Name="UserComments" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -910,17 +905,12 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           <Property Name="FirstName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="LastName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Telephone" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="Package" Type="Int32" />
-          <Property Name="RegisterPayPalTxnID" Type="String" MaxLength="250" FixedLength="false" Unicode="false" />
-          <Property Name="RegisterPayPalDate" Type="DateTime" Precision="3" />
-          <Property Name="PayPalAmount" Type="Double" />
-          <Property Name="PayPalAmountAfterDeduct" Type="Double" />
-          <Property Name="PayPalMisc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="StagingEbayBatchesImportCreatedBy" Relationship="TMD.Models.DomainModels.FK_StagingEbayBatchImports_AspNetUsers_CreatedBy" FromRole="AspNetUser" ToRole="StagingEbayBatchImport" />
           <NavigationProperty Name="StagingEbayBatchesImportDeletedBy" Relationship="TMD.Models.DomainModels.FK_StagingEbayBatchImports_AspNetUsers_DeletedBy" FromRole="AspNetUser" ToRole="StagingEbayBatchImport" />
           <NavigationProperty Name="StagingEbayItemsCreatedBy" Relationship="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_CreatedBy" FromRole="AspNetUser" ToRole="StagingEbayItem" />
           <NavigationProperty Name="StagingEbayItemsDeletedBy" Relationship="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_DeletedBy" FromRole="AspNetUser" ToRole="StagingEbayItem" />
           <NavigationProperty Name="StagingEbayItemsModifiedBy" Relationship="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_ModifiedBy" FromRole="AspNetUser" ToRole="StagingEbayItem" />
+          <Property Name="UserComments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1">
@@ -1554,12 +1544,7 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="PayPalMisc" ColumnName="PayPalMisc" />
-                <ScalarProperty Name="PayPalAmountAfterDeduct" ColumnName="PayPalAmountAfterDeduct" />
-                <ScalarProperty Name="PayPalAmount" ColumnName="PayPalAmount" />
-                <ScalarProperty Name="RegisterPayPalDate" ColumnName="RegisterPayPalDate" />
-                <ScalarProperty Name="RegisterPayPalTxnID" ColumnName="RegisterPayPalTxnID" />
-                <ScalarProperty Name="Package" ColumnName="Package" />
+                <ScalarProperty Name="UserComments" ColumnName="UserComments" />
                 <ScalarProperty Name="Telephone" ColumnName="Telephone" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
                 <ScalarProperty Name="FirstName" ColumnName="FirstName" />

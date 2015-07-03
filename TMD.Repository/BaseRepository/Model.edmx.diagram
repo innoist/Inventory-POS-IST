@@ -6,10 +6,10 @@
     <edmx:Diagrams>
       <Diagram DiagramId="149d63c950554997821631b5961128b4" Name="Diagram1" ZoomLevel="65">
         <EntityTypeShape EntityType="TMD.Models.DomainModels.sysdiagram" Width="1.5" PointX="5.75" PointY="0.75" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetRole" Width="1.5" PointX="0.75" PointY="7.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetRole" Width="1.5" PointX="0.5" PointY="7.375" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="5.5" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="3" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetUser" Width="1.5" PointX="3" PointY="5.25" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetUser" Width="2.125" PointX="2.375" PointY="5.25" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Category" Width="1.5" PointX="9.75" PointY="10.125" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.CategoryLog" Width="1.5" PointX="12" PointY="6" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Configuration" Width="1.5" PointX="0.75" PointY="0.75" />
