@@ -302,18 +302,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\CultureHelper.cs" />
-    <Compile Include="Integration\Ebay\Faults\AuthenticationFault.cs" />
-    <Compile Include="Integration\Ebay\Faults\AuthorisationFault.cs" />
-    <Compile Include="Integration\Ebay\Faults\BaseCustomFault.cs" />
-    <Compile Include="Integration\Ebay\Faults\EbayLoadProcessingFault.cs" />
-    <Compile Include="Integration\Ebay\Faults\InputParameterFault.cs" />
-    <Compile Include="Integration\Ebay\Faults\LoggerFault.cs" />
-    <Compile Include="Integration\Ebay\ITmdEbayIntegrationService.cs" />
-    <Compile Include="Integration\Ebay\TmdEbayIntegrationService.svc.cs">
-      <DependentUpon>TmdEbayIntegrationService.svc</DependentUpon>
-    </Compile>
     <Compile Include="ModelMappers\AspNetUserMapper.cs" />
-    <Compile Include="ModelMappers\FindingServiceSearchItemMapper.cs" />
     <Compile Include="ModelMappers\ProductCategoryMapper.cs" />
     <Compile Include="ModelMappers\StagingEbayBatchImportMapper.cs" />
     <Compile Include="ModelMappers\StagingEbayItemMapper.cs" />
@@ -356,11 +345,6 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Common.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Service References\LocalEbayIntegrationWS\Reference.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="StringCipher.cs" />
@@ -1541,7 +1525,6 @@
     <Content Include="Images\Web\banner3.jpg" />
     <Content Include="Images\Web\logo2.png" />
     <Content Include="Images\Web\logo3.png" />
-    <Content Include="Integration\Ebay\TmdEbayIntegrationService.svc" />
     <Content Include="Content\global\img\social\Thumbs.db" />
     <Content Include="Content\global\plugins\font-awesome\fonts\fontawesome-webfont.eot" />
     <Content Include="Content\global\plugins\font-awesome\fonts\fontawesome-webfont.ttf" />
@@ -1626,13 +1609,6 @@
     <Content Include="Scripts\js\skel-layers.min.js" />
     <Content Include="Scripts\js\skel.min.js" />
     <None Include="Properties\PublishProfiles\TOYMARKET.pubxml" />
-    <None Include="Service References\LocalEbayIntegrationWS\configuration91.svcinfo" />
-    <None Include="Service References\LocalEbayIntegrationWS\configuration.svcinfo" />
-    <None Include="Service References\LocalEbayIntegrationWS\Reference.svcmap">
-      <Generator>WCF Proxy Generator</Generator>
-      <LastGenOutput>Reference.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </None>
     <Content Include="Views\Home\OneColumn.cshtml" />
     <Content Include="Views\Home\TwoColumnOne.cshtml" />
     <Content Include="Views\Home\TwoColumnTwo.cshtml" />
@@ -1644,7 +1620,6 @@
     <Content Include="Views\Admin\BatchImportLV.cshtml" />
     <Content Include="Views\Admin\EbayItemImportLV.cshtml" />
     <Content Include="Views\Admin\EbayItemImportDetail.cshtml" />
-    <None Include="Service References\LocalEbayIntegrationWS\TmdEbayIntegrationService1.wsdl" />
     <Content Include="Views\ProductCategory\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
@@ -2724,7 +2699,6 @@
     <Folder Include="Areas\Common\Models\" />
     <Folder Include="Areas\Common\Scripts\" />
     <Folder Include="Files\" />
-    <Folder Include="Integration\ToyGrader\" />
     <Folder Include="Reports\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
@@ -2736,10 +2710,6 @@
     <None Include="Project_Readme.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\eBay.Services\eBay.Services.csproj">
-      <Project>{742d29f1-bbce-4c7f-aba8-239de44f8d60}</Project>
-      <Name>eBay.Services</Name>
-    </ProjectReference>
     <ProjectReference Include="..\TMD.Implementation\TMD.Implementation.csproj">
       <Project>{42d2e6c0-74f1-46fb-b7ba-43251156275d}</Project>
       <Name>TMD.Implementation</Name>
@@ -2796,9 +2766,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadataStorage Include="Service References\LocalEbayIntegrationWS\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

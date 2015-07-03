@@ -207,10 +207,11 @@ namespace IdentitySample.Controllers
                             var role = user.AspNetRoles.FirstOrDefault();
                             if (role.Id == Utility.MemberRoleId)
                             {
-                                if (string.IsNullOrEmpty(user.RegisterPayPalTxnID ))
-                                {
-                                  return  RedirectToAction("Pricing","Account", new { vkpy = user.Email });
-                                }
+                                //Commenting ToysWorld
+                                //if (string.IsNullOrEmpty(user.RegisterPayPalTxnID ))
+                                //{
+                                //  return  RedirectToAction("Pricing","Account", new { vkpy = user.Email });
+                                //}
                             }
                         }
                     }
@@ -400,8 +401,7 @@ namespace IdentitySample.Controllers
                     UserName = model.AspNetUserModel.UserName,
                     Email = model.AspNetUserModel.Email,
                     Address = model.AspNetUserModel.Address, 
-                    Telephone = model.AspNetUserModel.Telephone,FirstName = model.AspNetUserModel.FirstName,LastName = model.AspNetUserModel.LastName, LockoutEnabled = false,
-                    RegisterPayPalDate = null
+                    Telephone = model.AspNetUserModel.Telephone,FirstName = model.AspNetUserModel.FirstName,LastName = model.AspNetUserModel.LastName, LockoutEnabled = false
                 };
                 user.EmailConfirmed = true;
                 if (!String.IsNullOrEmpty(model.AspNetUserModel.Password))
@@ -849,81 +849,7 @@ namespace IdentitySample.Controllers
         }
         #endregion
 
-        #region Thank you
-
-        [AllowAnonymous]
-        public ActionResult ThankYou()
-        {
-            NVPAPICaller PPAPICaller = new NVPAPICaller();
-            NVPCodec decoder = new NVPCodec();
-            string token = string.Empty;
-            string payerID = string.Empty;
-            string finalPaymentAmount = string.Empty;
-            string retMsg = string.Empty;
-            string currency = string.Empty;
-            string email = string.Empty;
-            string transactionId = string.Empty;
-            token = Session["token"].ToString();
-            var payPalFee = string.Empty;
-            AspNetUser userToUpdate = null;
-            //use the PayPal token to get the details of payment - this could include shipping details
-            bool ret = PPAPICaller.GetDetails(token, ref decoder, ref retMsg);
-            if (ret)
-            {
-                payerID = decoder["PayerID"];
-                token = decoder["token"];
-                finalPaymentAmount = decoder["PAYMENTREQUEST_0_AMT"];
-                currency = decoder["CURRENCYCODE"];
-                email = decoder["PAYMENTREQUEST_0_CUSTOM"];
-                transactionId = token;
-                payPalFee = "0"; //decoder["PAYMENTINFO_n_FEEAMT"];
-                // string Success= "Payment successful for - PayerID: " + payerID + "; Amount: " + finalPaymentAmount;
-            }
-            else
-            {
-                //error.LogError();
-            }
-
-            NVPCodec confirmdecoder = new NVPCodec();
-
-            //confirm that payment was taken
-            bool ret2 = PPAPICaller.ConfirmPayment(finalPaymentAmount, token, payerID, currency, ref confirmdecoder, ref retMsg);
-            if (ret2)
-            {
-                //if payment was taken do some back end processing to mark order as paid
-                //use token to work out which order to mark as paid
-                token = confirmdecoder["token"];
-
-
-                var txn = transactionId;
-                var amount = finalPaymentAmount;
-             
-                userToUpdate = UserManager.FindByEmail(email);
-                if (userToUpdate != null)
-                {
-                    userToUpdate.Package = 1;
-                    userToUpdate.RegisterPayPalDate = DateTime.Now;
-                    userToUpdate.RegisterPayPalTxnID = txn;
-                    userToUpdate.PayPalAmount = double.Parse(amount);
-                    userToUpdate.PayPalAmountAfterDeduct = double.Parse(amount) - double.Parse(payPalFee);
-                    userToUpdate.PayPalMisc = "PayerID="+payerID;
-                }
-                var updateUserResult = UserManager.Update(userToUpdate);
-           
-            }
-            else
-            {
-                //payment has not been successful - don't send goods!
-            }
-
-            PaypalPaymentModel oThankyouModel = new PaypalPaymentModel();
-            oThankyouModel.AmountPaid = userToUpdate.PayPalAmount.ToString();
-            oThankyouModel.TxnString = userToUpdate.RegisterPayPalTxnID;
-
-
-            return View(oThankyouModel);
-        }
-        #endregion
+      
 
         #region Pricing
         [AllowAnonymous]
@@ -1056,37 +982,7 @@ namespace IdentitySample.Controllers
             //return Redirect(redirect);
         }
 
-        [AllowAnonymous]
-        public void PayPalIPN()
-        {
-            var p = Request.Params;
-            var email = p["custom"].ToString();
-            var txn = p["txn_id"].ToString();
-            var amount = double.Parse(p["mc_gross"].ToString());
-            var tax = double.Parse(p["mc_fee"].ToString());
-            AspNetUser userToUpdate = UserManager.FindByEmail(email);
-            if (userToUpdate != null)
-            {
-                userToUpdate.Package = 1;
-                userToUpdate.RegisterPayPalDate = DateTime.Now;
-                userToUpdate.RegisterPayPalTxnID = txn;
-                userToUpdate.PayPalAmount = amount;
-                userToUpdate.PayPalAmountAfterDeduct = amount-tax;
-                userToUpdate.PayPalMisc = p.ToString();
-            }
-            var updateUserResult =  UserManager.Update(userToUpdate);
-            //if (updateUserResult.Succeeded)
-            //{
-                //TempData["message"] = new MessageViewModel
-                //{
-                //    Message = "User has been Updated",
-                //    IsUpdated = true
-                //};
-            //}
-                
-            
-
-        }
+      
 
 
         #endregion
