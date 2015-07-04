@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using TMD.Models.DomainModels;
 
 namespace TMD.Web.Models
 {
@@ -15,6 +16,7 @@ namespace TMD.Web.Models
         public string RecLastUpdatedBy { get; set; }
 
         public List<OrderItemModel> OrderItems { get; set; }
+        public Customer Customer { get; set; }
         //public virtual Customer Customer { get; set; }
     }
 }

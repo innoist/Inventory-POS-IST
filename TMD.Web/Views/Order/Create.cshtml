@@ -1,4 +1,4 @@
-﻿@model TMD.Web.ViewModels.OrderViewModel
+﻿@model TMD.Web.Models.OrderModel
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
@@ -24,75 +24,263 @@
         </div>
 
         <div class="portlet-body form">
-            @*<div class="container-fluid">
+            <div class="container-fluid">
                 @Html.AntiForgeryToken()
-                @Html.HiddenFor(m => m.ProductModel.ProductId)
-                @Html.HiddenFor(m => m.ProductModel.RecCreatedBy)
-                @Html.HiddenFor(m => m.ProductModel.RecCreatedDate)
+                @Html.HiddenFor(m => m.OrderId)
+                @Html.HiddenFor(m => m.RecCreatedBy)
+                @Html.HiddenFor(m => m.RecCreatedDate)
+                @Html.HiddenFor(m => m.CustomerId)
                 
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.ProductBarCode, new { @class = "col-md-3 control-label" })
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.ProductBarCode, new { @class = "form-control input-circle mandatory" })
+                <div class="row">
+                    <div class="col-md-7 col-sm-12">
+                        <div class="portlet red-sunglo box">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-cogs"></i>Order Items
+                                </div>
+
+                            </div>
+
+                            <div class="portlet-body">
+
+                                <div class="row static-info">
+                                    <div class="col-md-2 name">
+                                        Code
+                                    </div>
+                                    <div class="col-md-4 value">
+                                        <input type="text" value="" class="form-control" id="ItemCode" />
+                                        <input type="hidden" value="" id="ItemId" />
+                                    </div>
+                                    <div class="col-md-2 name">
+                                        Price
+                                    </div>
+                                    <div class="col-md-4 value">
+                                        <input type="text" value="" readonly="readonly" class="form-control" id="SalePrice" />
+                                    </div>
+                                </div>
+
+                                <div class="row static-info">
+                                    <div class="col-md-2 name">
+                                        Quantity
+                                    </div>
+                                    <div class="col-md-4 value">
+                                        <input type="text" value="1" class="form-control" id="ItemQty" />
+                                     </div>
+                                    <div class="col-md-2 name">
+                                        Total
+                                    </div>
+                                    <div class="col-md-4 value">
+                                        <input type="text" value="" readonly="readonly" class="form-control" id="TotalPrice" />
+                                    </div>
+                                </div>
+
+                                
+                                <div class="row static-info">
+                                    <div class="col-md-2 name">
+                                        Disc %
+                                    </div>
+                                    <div class="col-md-4 value">
+                                        <input type="text" value="" class="form-control" id="ItemDiscPerc" />
+                                    </div>
+                                    <div class="col-md-2 name">
+                                        Disc Rs
+                                    </div>
+                                    <div class="col-md-4 value">
+                                        <input type="text" value="" class="form-control" id="ItemDiscPrice" />
+                                    </div>
+                                </div>
+                                <div class="row static-info">
+                                    <div class="col-md-2 name">
+                                        Grand TOTAL
+                                    </div>
+                                    <div class="col-md-8 value">
+                                        <input type="text" readonly="readonly" value="" class="form-control" id="GrandTotal" />
+                                    </div>
+                                    
+                                    <div class="col-md-2 value">
+                                        <button type="button" class="btn btn-circle red">Add Item</button>
+                                    </div>
+                                   
+                                </div>
+
+
+
+
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    
+                    <div class="col-md-5 col-sm-12">
+                        <div class="portlet green-meadow box">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-cogs"></i>Customer
+                                </div>
+
+                            </div>
+
+                            <div class="portlet-body">
+
+                                <div class="row static-info">
+                                    <div class="col-md-2 name">
+                                        Phone
+                                    </div>
+                                    <div class="col-md-4 value">
+                                        @Html.TextBoxFor(m=>m.Customer.Phone,new { @class = "form-control mandatory", @height = "24px", @placeholder = "Enter Phone Number" })
+                                        @*@Model.ToyGraderItemId*@
+                                    </div>
+                                    <div class="col-md-2 name">
+                                        Name
+                                    </div>
+                                    <div class="col-md-4 value">
+                                        @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control mandatory", @height = "24px", @placeholder = "Enter Phone Number" })
+                                    </div>
+                                    
+                                </div>
+                                
+                                <div class="row static-info">
+                                    <div class="col-md-2 name">
+                                        Email
+                                    </div>
+                                    <div class="col-md-4 value">
+                                        @Html.TextBoxFor(m => m.Customer.Email, new { @class = "form-control mandatory", @height = "24px", @placeholder = "Enter Email" })
+                                        @*@Model.ToyGraderItemId*@
+                                    </div>
+                                    <div class="col-md-2 name">
+                                        Address
+                                    </div>
+                                    <div class="col-md-4 value">
+                                        @Html.TextBoxFor(m => m.Customer.Address, new { @class = "form-control mandatory", @height = "24px", @placeholder = "Enter Address" })
+                                    </div>
+
+                                </div>
+                                
+                                <div class="row static-info">
+                                    <div class="col-md-4 name">
+                                        <a href="#" target="_blank" class="">View Customers</a>
+                                    </div>
+                                  
+
+                                </div>
+
+
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+ 
                 
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.ProductCode, new { @class = "col-md-3 control-label" })<span class="requiredStar">*</span>
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.ProductCode, new { @class = "form-control input-circle mandatory" })
-                    </div>
-                </div>
+            </div>
 
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.Name, new { @class = "col-md-3 control-label" })<span class="requiredStar">*</span>
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.Name, new { @class = "form-control input-circle mandatory" })
-                    </div>
-                </div>
-                
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.PurchasePrice, new { @class = "col-md-3 control-label" })<span class="requiredStar">*</span>
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.PurchasePrice, new { @class = "form-control input-circle mandatory" })
-                    </div>
-                </div>
 
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.SalePrice, new { @class = "col-md-3 control-label" })<span class="requiredStar">*</span>
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.SalePrice, new { @class = "form-control input-circle mandatory" })
+                <div class="row">
+                    <div class="col-md-7 col-sm-12">
+                        <div class="portlet purple-plum box">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-cogs"></i>Order Details
+                                </div>
+
+                            </div>
+
+                            <div class="portlet-body">
+
+                                <div class="row static-info">
+                                    <div class="col-md-6 name">
+                                        Code
+                                    </div>
+                                 
+                                </div>
+                            </div>
+                        </div>
                     </div>
 
-                    @Html.Label("% Profit", new { @class = "col-md-1 control-label" })
-                    <div class="col-md-2">
-                        @Html.TextBox("Profit",null, new { @class = "form-control input-circle mandatory" })
-                    </div>
-                </div>
+                    <div class="col-md-5 col-sm-12">
+                        <div class="portlet blue-steel box">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-cogs"></i>Pricing
+                                </div>
 
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.MinSalePriceAllowed, new { @class = "col-md-3 control-label" })
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.MinSalePriceAllowed, new { @class = "form-control input-circle mandatory" })
-                    </div>
-                </div>
-                
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.CategoryId, new { @class = "col-md-3 control-label" })<span class="requiredStar">*</span>
-                    <div class="col-md-4">
-                        @Html.DropDownListFor(model => model.ProductModel.CategoryId, new SelectList(Model.ProductCategories, "CategoryId", "Name"), new { @class = "form-control input-circle", @id = "ProductCategories" })
-                    </div>
-                </div>
+                            </div>
 
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.Comments, new { @class = "col-md-3 control-label" })
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.Comments, new { @class = "form-control input-circle mandatory" })
-                    </div>
-                </div>
-            </div>*@
+                            <div class="portlet-body">
 
-        </div>
+                                <div class="row static-info">
+                                    <div class="col-sm-2 name">
+                                        Total Amount
+                                    </div>
+                                    <div class="col-sm-4 value">
+                                        <input readonly="readonly" class="form-control" disabled="disabled" type="text" id="TotalTotal" />
+                                        @*@Model.ToyGraderItemId*@
+                                    </div>
+                                    <div class="col-sm-2 name">
+                                        Discount Rs
+                                    </div>
+                                    <div class="col-sm-4 value">
+                                        <input readonly="readonly" class="form-control" disabled="disabled" type="text" id="TotalDisc" />
+                                    </div>
+
+                                </div>
+
+                                <div class="row static-info">
+                                    <div class="col-md-2 name">
+                                        NET
+                                    </div>
+                                    <div class="col-md-10 value">
+                                        <input readonly="readonly" style="color:red" disabled="disabled" type="text" class="form-control" id="NetTotal" />
+                                        @*@Model.ToyGraderItemId*@
+                                    </div>
+                                  
+
+                                </div>
+
+                                
+                                <div class="row static-info">
+                                   
+                                    <div class="col-md-2 name">
+                                        Amount Given
+                                    </div>
+                                    <div class="col-md-4 value">
+                                        <input type="text" class="form-control" id="AmountGiven" />
+                                    </div>
+
+                                    <div class="col-md-2 name">
+                                        Return
+                                    </div>
+                                    <div class="col-md-4 value">
+                                        <input readonly="readonly" disabled="disabled" type="text" class="form-control" id="AmountReturn" />
+                                    </div>
+
+                                </div>
+
+                                <div class="row static-info">
+                                    <div class="col-md-4 name">
+                                        <a href="#" target="_blank" class="">View Customers</a>
+                                    </div>
+
+
+                                </div>
+
+
+
+
+
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+             
+            </div>
     </div>
-}
+</div>
+    }
 

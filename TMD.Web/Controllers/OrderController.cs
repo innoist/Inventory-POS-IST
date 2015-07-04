@@ -20,6 +20,7 @@ namespace TMD.Web.Controllers
         // GET: ProductCategory/Create
         public ActionResult Create()
         {
+
             return View();
         }
 
