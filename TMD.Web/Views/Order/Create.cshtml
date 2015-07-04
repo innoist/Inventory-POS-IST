@@ -65,7 +65,7 @@
                                     </div>
                                     <div class="col-md-4 value">
                                         <input type="text" value="1" class="form-control" id="ItemQty" />
-                                     </div>
+                                    </div>
                                     <div class="col-md-2 name">
                                         Total
                                     </div>
@@ -174,7 +174,7 @@
                     </div>
  
                 
-            </div>
+                </div>
 
 
                 <div class="row">
@@ -188,12 +188,79 @@
                             </div>
 
                             <div class="portlet-body">
+                                <div class="table-scrollable">
+                                    <table class="table table-striped table-bordered table-advance table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th style='display:none'>
 
-                                <div class="row static-info">
-                                    <div class="col-md-6 name">
-                                        Code
-                                    </div>
-                                 
+                                                </th>
+
+                                                <th>
+                                                    Code
+                                                </th>
+                                                <th class="hidden-xs">
+                                                    Name
+                                                </th>
+                                                <th>
+                                                    Price
+                                                </th>
+                                                
+                                                <th>
+                                                    Quantity
+                                                </th>
+                                              
+                                                <th>
+                                                    Disc Amount
+                                                </th>
+                                                <th>
+                                                    Total
+                                                </th>
+
+                                                <th>
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @for(int i=0;i<Model.OrderItems.Count;i++)
+                                            {
+                                                @Html.HiddenFor(model => model.OrderItems[i].OrderId,
+                                                    new { @class = "auto-resize ImageOrder", @hidden = "true", @id = "OrderId" })
+                                                
+                                                <tr data-id="@i">
+                                                    <td style='display:none'><input name='OrderItems.Index' type='hidden' value='@i' /></td>
+                                                    <td class="highlight">
+                                                        @Html.DisplayFor(model =>model.OrderItems[i].ProductId)
+                                                    </td>
+                                                    <td class="hidden-xs">
+                                                        @Html.DisplayFor(model => model.OrderItems[i].Product.Name)
+                                                    </td>
+
+                                                    <td class="highlight">
+                                                        @Html.DisplayFor(model => model.OrderItems[i].Product.SalePrice)
+                                                    </td>
+                                                    <td >
+                                                        @Html.DisplayFor(model => model.OrderItems[i].Quantity)
+                                                    </td>
+                                                    <td>
+                                                        @Html.DisplayFor(model => model.OrderItems[i].Discount)
+                                                    </td>
+                                                    
+                                                    <td >
+                                                        @Html.DisplayFor(model => model.OrderItems[i].TotalItemAmount)
+                                                        @*@Html.DisplayFor(model => model.OrderItems[i].)*@
+                                                    </td>
+
+                                                    
+                                                    <td>
+                                                        <a href="#" class="btn default btn-xs purple">
+                                                            <i class="fa fa-edit"></i> Edit
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -258,19 +325,6 @@
 
                                 </div>
 
-                                <div class="row static-info">
-                                    <div class="col-md-4 name">
-                                        <a href="#" target="_blank" class="">View Customers</a>
-                                    </div>
-
-
-                                </div>
-
-
-
-
-
-
 
                             </div>
                         </div>
@@ -280,7 +334,10 @@
                 </div>
              
             </div>
-    </div>
+        </div>
+        <script >
+            
+        </script>
 </div>
     }
 

@@ -19,7 +19,7 @@ namespace TMD.Implementation.Services
 
         public Order GetOrders(long orderId)
         {
-            throw new System.NotImplementedException();
+            return ordersRepository.Find(orderId);
         }
 
         public IEnumerable<Order> GetAllOrders()

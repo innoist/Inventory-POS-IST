@@ -1,14 +1,28 @@
-﻿using System.Web.Mvc;
+﻿using System.Activities.Expressions;
+using System.Collections.Generic;
+using System.Web.Mvc;
+using TMD.Interfaces.IServices;
+using TMD.Models.DomainModels;
+using TMD.Web.ModelMappers;
 using TMD.Web.Models;
+using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
     public class OrderController : Controller
     {
+        private readonly IOrdersService orderService;
+        
         // GET: ProductCategory
         public ActionResult Index()
         {
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View();
+        }
+
+        public OrderController(IOrdersService orderService)
+        {
+            this.orderService = orderService;
         }
 
         // GET: ProductCategory/Details/5
@@ -18,10 +32,18 @@ namespace TMD.Web.Controllers
         }
 
         // GET: ProductCategory/Create
-        public ActionResult Create()
+        public ActionResult Create(long ? id)
         {
+            OrderModel toSend = new OrderModel();
+            if (id == null || id == 0)
+                toSend.OrderItems = new List<OrderItemModel>();
+            else
+            {
+                //Means Edit case
+                toSend = orderService.GetOrders(id.Value).CreateFromServerToClient();
+            }
 
-            return View();
+            return View(toSend);
         }
 
         // POST: ProductCategory/Create
