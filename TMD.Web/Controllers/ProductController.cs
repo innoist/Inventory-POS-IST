@@ -1,9 +1,11 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using TMD.Interfaces.IServices;
 using TMD.Web.ModelMappers;
 using TMD.Web.Models;
 using TMD.Web.ViewModels;
+using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
@@ -21,6 +23,7 @@ namespace TMD.Web.Controllers
         // GET: Product
         public ActionResult Index()
         {
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View();
         }
 
@@ -34,7 +37,7 @@ namespace TMD.Web.Controllers
         public ActionResult Create()
         {
             ProductViewModel productViewModel=new ProductViewModel();
-             var categories=productCategoryService.GetAllProductCategories().ToList();
+            var categories=productCategoryService.GetAllProductCategories().ToList();
             if (categories.Any())
                 productViewModel.ProductCategories = categories.Select(x => x.CreateFromServerToClient());
             return View(productViewModel);
@@ -46,11 +49,23 @@ namespace TMD.Web.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
+                if (product.CategoryId == 0)
+                {
+                    product.RecCreatedBy = User.Identity.Name;
+                    product.RecCreatedDate = DateTime.Now;
+                }
+                product.RecLastUpdatedBy = User.Identity.Name;
+                product.RecLastUpdatedDate = DateTime.Now;
+                if (productService.AddProduct(product.CreateFromClientToServer()) > 0)
+                {
+                    //Product Saved
+                    TempData["message"] = new MessageViewModel { Message = "Product has been saved successfully.", IsSaved = true };
+                }
+                
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception exception)
             {
                 return View();
             }

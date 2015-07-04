@@ -7,7 +7,7 @@ namespace TMD.Web.Models
         
         public long ProductId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Name is required")]
         [Display(Name = "Product Name")]
         public string Name { get; set; }
 
