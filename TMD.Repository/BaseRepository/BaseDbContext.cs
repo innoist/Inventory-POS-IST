@@ -79,6 +79,8 @@ namespace TMD.Repository.BaseRepository
         public DbSet<AspNetUserLogin> UserLogins { get; set; }
         public DbSet<AspNetUser> AspNetUsers { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Vendor> Vendors { get; set; }
 
         /// <summary>
         /// Staging Ebay

@@ -55,8 +55,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IRepository\IVendorRepositoy.cs" />
+    <Compile Include="IRepository\IProductRepositoy.cs" />
     <Compile Include="IRepository\IProductCategoryRepository.cs" />
     <Compile Include="IServices\IAspNetUserService.cs" />
+    <Compile Include="IServices\IVendorService.cs" />
+    <Compile Include="IServices\IProductService.cs" />
     <Compile Include="IServices\IProductCategoryService.cs" />
     <Compile Include="IServices\IStagingEbayBatchImportsService.cs" />
     <Compile Include="IServices\IStagingEbayLoadService.cs" />
