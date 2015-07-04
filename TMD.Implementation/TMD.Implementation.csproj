@@ -128,6 +128,8 @@
     <Compile Include="Services\EbayStagingLoadService.cs" />
     <Compile Include="Services\OrderItemsService.cs" />
     <Compile Include="Services\OrdersService.cs" />
+    <Compile Include="Services\InventoryItemService.cs" />
+    <Compile Include="Services\VendorService.cs" />
     <Compile Include="Services\ProductService.cs" />
     <Compile Include="Services\ProductCategoryService.cs" />
     <Compile Include="Services\StagingEbayBatchImportsService.cs" />

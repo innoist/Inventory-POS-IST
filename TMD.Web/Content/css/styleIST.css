@@ -10,6 +10,12 @@
 .requiredStar {
     color: red;
 }
+.requiredLabel:after 
+{
+    content: " *";
+    font-weight: bold;
+    color: red; 
+}
 .requiredLeftAlign {
     color: #e02222;
     text-align: left !important;

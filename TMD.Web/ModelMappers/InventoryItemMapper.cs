@@ -3,22 +3,21 @@ using TMD.Web.Models;
 
 namespace TMD.Web.ModelMappers
 {
-    public static class ProductMapper
+    public static class InventoryItemMapper
     {
-        public static Product CreateFromClientToServer(this ProductModel source)
+        public static InventoryItem CreateFromClientToServer(this InventoryItemModel source)
         {
-            return new Product
+            return new InventoryItem
             {
-                CategoryId = source.CategoryId,
+                ItemId = source.ItemId,
                 ProductId = source.ProductId,
+                Quantity = source.ProductId,
                 VendorId = source.VendorId,
-                ProductBarCode = source.ProductBarCode,
-                ProductCode = source.ProductCode,
-                Name = source.Name,
+                Comments = source.Comments,
+                MinSalePriceAllowed = source.MinSalePriceAllowed,
                 PurchasePrice = source.PurchasePrice,
                 SalePrice = source.SalePrice,
-                MinSalePriceAllowed = source.MinSalePriceAllowed,
-                Comments = source.Comments,
+                PurchasingDate = source.PurchasingDate,
 
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
@@ -27,19 +26,19 @@ namespace TMD.Web.ModelMappers
             };
         }
 
-        public static ProductModel CreateFromServerToClient(this Product source)
+        public static InventoryItemModel CreateFromServerToClient(this InventoryItem source)
         {
-            return new ProductModel
+            return new InventoryItemModel
             {
-                CategoryId = source.CategoryId,
+                ItemId = source.ItemId,
                 ProductId = source.ProductId,
+                Quantity = source.ProductId,
                 VendorId = source.VendorId,
-                ProductBarCode = source.ProductBarCode,
-                ProductCode = source.ProductCode,
-                Name = source.Name,
+                Comments = source.Comments,
+                MinSalePriceAllowed = source.MinSalePriceAllowed,
                 PurchasePrice = source.PurchasePrice,
                 SalePrice = source.SalePrice,
-                MinSalePriceAllowed = source.MinSalePriceAllowed,
+                PurchasingDate = source.PurchasingDate,
 
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TMDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TMDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -141,10 +141,15 @@
           <Property Name="ProductId" Type="bigint" Nullable="false" />
           <Property Name="VendorId" Type="int" Nullable="false" />
           <Property Name="Quantity" Type="bigint" Nullable="false" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="PurchasingDate" Type="datetime" Nullable="false" />
+          <Property Name="PurchasePrice" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="SalePrice" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="MinSalePriceAllowed" Type="decimal" Precision="9" Scale="2" Nullable="false" />
         </EntityType>
         <EntityType Name="Log">
           <Key>
@@ -240,8 +245,8 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           </Key>
           <Property Name="ProductId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="ProductCode" Type="nvarchar" MaxLength="25" Nullable="false" />
-          <Property Name="ProductBarCode" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="ProductCode" Type="nvarchar" MaxLength="25" />
+          <Property Name="ProductBarCode" Type="nvarchar" MaxLength="25" />
           <Property Name="PurchasePrice" Type="decimal" Precision="9" Scale="2" Nullable="false" />
           <Property Name="SalePrice" Type="decimal" Precision="9" Scale="2" Nullable="false" />
           <Property Name="MinSalePriceAllowed" Type="decimal" Precision="9" Scale="2" Nullable="false" />
@@ -1321,6 +1326,11 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Product" Relationship="TMD.Models.DomainModels.FK_InventoryItems_Products" FromRole="InventoryItem" ToRole="Product" />
+          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="PurchasingDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="PurchasePrice" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="SalePrice" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="MinSalePriceAllowed" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
         </EntityType>
         <EntityType Name="OrderItem">
           <Key>
@@ -1377,8 +1387,8 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           </Key>
           <Property Name="ProductId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ProductCode" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="ProductBarCode" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="ProductCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="ProductBarCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
           <Property Name="PurchasePrice" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
           <Property Name="SalePrice" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
           <Property Name="MinSalePriceAllowed" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
@@ -1841,6 +1851,11 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           <EntitySetMapping Name="InventoryItems">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.InventoryItem">
               <MappingFragment StoreEntitySet="InventoryItems">
+                <ScalarProperty Name="MinSalePriceAllowed" ColumnName="MinSalePriceAllowed" />
+                <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+                <ScalarProperty Name="PurchasePrice" ColumnName="PurchasePrice" />
+                <ScalarProperty Name="PurchasingDate" ColumnName="PurchasingDate" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
                 <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
                 <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />

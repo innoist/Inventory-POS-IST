@@ -7,5 +7,6 @@ namespace TMD.Interfaces.IServices
     {
         Product GetProduct(long productId);
         IEnumerable<Product> GetAllProducts();
+        long AddProduct(Product product);
     }
 }

@@ -1,6 +1,6 @@
-﻿namespace TMD.Models.DomainModels
+﻿namespace TMD.Web.Models
 {
-    public class InventoryItem
+    public class InventoryItemModel
     {
         public long ItemId { get; set; }
         public long ProductId { get; set; }
@@ -15,7 +15,5 @@
         public decimal PurchasePrice { get; set; }
         public decimal SalePrice { get; set; }
         public decimal MinSalePriceAllowed { get; set; }
-
-        public virtual Product Product { get; set; }
     }
 }

@@ -15,6 +15,9 @@ namespace TMD.Repository
             unityContainer.RegisterType<IStagingEbayItemRepository, StagingEbayItemRepository>();
             unityContainer.RegisterType<IConfigurationRepository, ConfigurationRepository>();
             unityContainer.RegisterType<DbContext, BaseDbContext>(new PerRequestLifetimeManager());
+            unityContainer.RegisterType<IProductCategoryRepository, ProductCategoryRepository>();
+            unityContainer.RegisterType<IProductRepository, ProductRepository>();
+            unityContainer.RegisterType<IVendorRepository, VendorRepository>();
         }
     }
 }

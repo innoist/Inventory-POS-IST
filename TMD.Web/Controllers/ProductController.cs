@@ -1,13 +1,28 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Linq;
+using System.Web.Mvc;
+using TMD.Interfaces.IServices;
+using TMD.Web.ModelMappers;
 using TMD.Web.ViewModels;
+using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
-    public class ProductController : Controller
+    public class ProductController : BaseController
     {
+        private readonly IProductService productService;
+        private readonly IProductCategoryService productCategoryService;
+
+        public ProductController(IProductService productService,IProductCategoryService productCategoryService)
+        {
+            this.productService = productService;
+            this.productCategoryService = productCategoryService;
+        }
+
         // GET: Product
         public ActionResult Index()
         {
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View();
         }
 
@@ -18,23 +33,44 @@ namespace TMD.Web.Controllers
         }
 
         // GET: Product/Create
-        public ActionResult Create()
+        public ActionResult Create(long? id)
         {
             ProductViewModel productViewModel=new ProductViewModel();
+            if (id!=null)
+            {
+                var product = productService.GetProduct((long)id);
+                if(product!=null)
+                    productViewModel.ProductModel = product.CreateFromServerToClient();
+            }
+            var categories=productCategoryService.GetAllProductCategories().ToList();
+            if (categories.Any())
+                productViewModel.ProductCategories = categories.Select(x => x.CreateFromServerToClient());
             return View(productViewModel);
         }
 
         // POST: Product/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(ProductViewModel productViewModel)
         {
             try
             {
-                // TODO: Add insert logic here
+                if (productViewModel.ProductModel.ProductId == 0)
+                {
+                    productViewModel.ProductModel.RecCreatedBy = User.Identity.Name;
+                    productViewModel.ProductModel.RecCreatedDate = DateTime.Now;
+                }
+                productViewModel.ProductModel.RecLastUpdatedBy = User.Identity.Name;
+                productViewModel.ProductModel.RecLastUpdatedDate = DateTime.Now;
+                if (productService.AddProduct(productViewModel.ProductModel.CreateFromClientToServer()) > 0)
+                {
+                    //Product Saved
+                    TempData["message"] = new MessageViewModel { Message = "Product has been saved successfully.", IsSaved = true };
+                }
+                
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch(Exception exception)
             {
                 return View();
             }
