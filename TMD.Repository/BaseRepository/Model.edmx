@@ -181,6 +181,8 @@
           <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="AmountGiven" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="Orders">
           <Key>
@@ -193,6 +195,7 @@
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="CustomerId" Type="bigint" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -215,12 +218,21 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
             <PropertyRef Name="Emails" />
             <PropertyRef Name="SecurityPassword" />
             <PropertyRef Name="ProductCodePrefix" />
+            <PropertyRef Name="RecCreatedDate" />
+            <PropertyRef Name="RecLastUpdatedDate" />
+            <PropertyRef Name="RecCreatedBy" />
+            <PropertyRef Name="RecLastUpdatedBy" />
           </Key>
           <Property Name="Id" Type="bigint" Nullable="false" />
           <Property Name="MaxAllowedDiscount" Type="tinyint" Nullable="false" />
           <Property Name="Emails" Type="nvarchar(max)" Nullable="false" />
           <Property Name="SecurityPassword" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="ProductCodePrefix" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="Products">
           <Key>
@@ -239,6 +251,7 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="StagingEbayBatchImports">
           <Key>
@@ -664,7 +677,12 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
     [ProductConfiguration].[MaxAllowedDiscount] AS [MaxAllowedDiscount], 
     [ProductConfiguration].[Emails] AS [Emails], 
     [ProductConfiguration].[SecurityPassword] AS [SecurityPassword], 
-    [ProductConfiguration].[ProductCodePrefix] AS [ProductCodePrefix]
+    [ProductConfiguration].[ProductCodePrefix] AS [ProductCodePrefix], 
+    [ProductConfiguration].[Comments] AS [Comments], 
+    [ProductConfiguration].[RecCreatedDate] AS [RecCreatedDate], 
+    [ProductConfiguration].[RecLastUpdatedDate] AS [RecLastUpdatedDate], 
+    [ProductConfiguration].[RecCreatedBy] AS [RecCreatedBy], 
+    [ProductConfiguration].[RecLastUpdatedBy] AS [RecLastUpdatedBy]
     FROM [dbo].[ProductConfiguration] AS [ProductConfiguration]</DefiningQuery>
           </EntitySet>
           <AssociationSet Name="FK_CategoryLog_Category" Association="Self.FK_CategoryLog_Category">
@@ -1322,6 +1340,8 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Order" Relationship="TMD.Models.DomainModels.FK_OrderItems_Orders" FromRole="OrderItem" ToRole="Order" />
           <NavigationProperty Name="Product" Relationship="TMD.Models.DomainModels.FK_OrderItems_Products" FromRole="OrderItem" ToRole="Product" />
+          <Property Name="AmountGiven" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Order">
           <Key>
@@ -1336,6 +1356,7 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           <NavigationProperty Name="OrderItems" Relationship="TMD.Models.DomainModels.FK_OrderItems_Orders" FromRole="Order" ToRole="OrderItem" />
           <Property Name="CustomerId" Type="Int64" />
           <NavigationProperty Name="Customer" Relationship="TMD.Models.DomainModels.FK_Orders_Customer" FromRole="Order" ToRole="Customer" />
+          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -1370,6 +1391,7 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           <NavigationProperty Name="OrderItems" Relationship="TMD.Models.DomainModels.FK_OrderItems_Products" FromRole="Product" ToRole="OrderItem" />
           <NavigationProperty Name="InventoryItems" Relationship="TMD.Models.DomainModels.FK_InventoryItems_Products" FromRole="Product" ToRole="InventoryItem" />
           <NavigationProperty Name="ProductCategory" Relationship="TMD.Models.DomainModels.FK_Products_ProductCategory" FromRole="Product" ToRole="ProductCategory" />
+          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="StagingToyGraderItem">
           <Key>
@@ -1421,12 +1443,21 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
             <PropertyRef Name="Emails" />
             <PropertyRef Name="SecurityPassword" />
             <PropertyRef Name="ProductCodePrefix" />
+            <PropertyRef Name="RecCreatedDate" />
+            <PropertyRef Name="RecLastUpdatedDate" />
+            <PropertyRef Name="RecCreatedBy" />
+            <PropertyRef Name="RecLastUpdatedBy" />
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" />
           <Property Name="MaxAllowedDiscount" Type="Byte" Nullable="false" />
           <Property Name="Emails" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SecurityPassword" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ProductCodePrefix" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_DataWarehouseFactSale_DataWarehouseDimComapany">
           <End Type="TMD.Models.DomainModels.DataWarehouseDimComapany" Role="DataWarehouseDimComapany" Multiplicity="0..1" />
@@ -1824,6 +1855,8 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           <EntitySetMapping Name="OrderItems">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.OrderItem">
               <MappingFragment StoreEntitySet="OrderItems">
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="AmountGiven" ColumnName="AmountGiven" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
                 <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
@@ -1842,6 +1875,7 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.Order">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
@@ -1868,6 +1902,7 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
                 <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
@@ -1930,6 +1965,11 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           <EntitySetMapping Name="ProductConfigurations">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductConfiguration">
               <MappingFragment StoreEntitySet="ProductConfiguration">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
                 <ScalarProperty Name="ProductCodePrefix" ColumnName="ProductCodePrefix" />
                 <ScalarProperty Name="SecurityPassword" ColumnName="SecurityPassword" />
                 <ScalarProperty Name="Emails" ColumnName="Emails" />
@@ -1975,6 +2015,56 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
       </DesignerInfoPropertySet>
     </Options>
     <!-- Diagram content (shape and connector positions) -->
-    <Diagrams></Diagrams>
+    <Diagrams>
+      <Diagram DiagramId="6c84cfef5aef40aa8729388622e77122" Name="Diagram1">
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetRole" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetUser" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.StagingEbayBatchImport" Width="1.5" PointX="5.25" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.StagingEbayItem" Width="1.5" PointX="7.5" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Configuration" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.StagingToyGraderBatchImport" Width="1.5" PointX="3" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Category" Width="1.5" PointX="9.75" PointY="12.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.CategoryLog" Width="1.5" PointX="12" PointY="11.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Log" Width="1.5" PointX="9.75" PointY="22" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.DataWarehouseDimComapany" Width="1.5" PointX="7.75" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.DataWarehouseDimDate" Width="1.5" PointX="7.75" PointY="15.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.DataWarehouseDimProduct" Width="1.5" PointX="7.75" PointY="17.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.DataWarehouseDimProductType" Width="1.5" PointX="7.75" PointY="19.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.DataWarehouseFactSale" Width="1.5" PointX="10" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.InventoryItem" Width="1.5" PointX="14.25" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.OrderItem" Width="1.5" PointX="17.25" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Order" Width="1.5" PointX="15" PointY="2.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductCategory" Width="1.5" PointX="9.75" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Product" Width="1.5" PointX="12" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.StagingToyGraderItem" Width="1.5" PointX="5.25" PointY="14.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Vendor" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductConfiguration" Width="1.5" PointX="9.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Customer" Width="1.5" PointX="12.75" PointY="2.25" IsExpanded="true" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
+        <AssociationConnector Association="TMD.Models.DomainModels.AspNetUserRoles" ManuallyRouted="false" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_StagingEbayItems_StagingEbayBatchImports" ManuallyRouted="false" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_StagingEbayBatchImports_AspNetUsers_CreatedBy" ManuallyRouted="false" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_StagingEbayBatchImports_AspNetUsers_DeletedBy" ManuallyRouted="false" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_CreatedBy" ManuallyRouted="false" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_DeletedBy" ManuallyRouted="false" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_ModifiedBy" ManuallyRouted="false" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_CategoryLog_Category" ManuallyRouted="false" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_CategoryLog_Log" ManuallyRouted="false" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_DataWarehouseFactSale_DataWarehouseDimComapany" ManuallyRouted="false" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_DataWarehouseFactSale_DataWarehouseDimDate" ManuallyRouted="false" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_DataWarehouseFactSale_DataWarehouseDimProduct" ManuallyRouted="false" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_DataWarehouseFactSale_DataWarehouseDimProductType" ManuallyRouted="false" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_OrderItems_Orders" ManuallyRouted="false" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_OrderItems_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_StagingEbayItems_StagingToyGraderItems" ManuallyRouted="false" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_StagingToyGraderItems_StagingToyGraderBatchImports" ManuallyRouted="false" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_InventoryItems_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Products_ProductCategory" ManuallyRouted="false" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Orders_Customer" ManuallyRouted="false" />
+      </Diagram>
+    </Diagrams>
   </Designer>
 </edmx:Edmx>
