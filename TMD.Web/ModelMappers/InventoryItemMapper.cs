@@ -13,7 +13,12 @@ namespace TMD.Web.ModelMappers
                 ProductId = source.ProductId,
                 Quantity = source.ProductId,
                 VendorId = source.VendorId,
-                
+                Comments = source.Comments,
+                MinSalePriceAllowed = source.MinSalePriceAllowed,
+                PurchasePrice = source.PurchasePrice,
+                SalePrice = source.SalePrice,
+                PurchasingDate = source.PurchasingDate,
+
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
@@ -29,6 +34,11 @@ namespace TMD.Web.ModelMappers
                 ProductId = source.ProductId,
                 Quantity = source.ProductId,
                 VendorId = source.VendorId,
+                Comments = source.Comments,
+                MinSalePriceAllowed = source.MinSalePriceAllowed,
+                PurchasePrice = source.PurchasePrice,
+                SalePrice = source.SalePrice,
+                PurchasingDate = source.PurchasingDate,
 
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,

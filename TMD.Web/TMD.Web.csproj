@@ -295,6 +295,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductCategoryController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -309,6 +310,7 @@
     <Compile Include="ModelMappers\OrderItemMapper.cs" />
     <Compile Include="ModelMappers\OrderMapper.cs" />
     <Compile Include="ModelMappers\InventoryItemMapper.cs" />
+    <Compile Include="ModelMappers\VendorMapper.cs" />
     <Compile Include="ModelMappers\ProductMapper.cs" />
     <Compile Include="ModelMappers\ProductCategoryMapper.cs" />
     <Compile Include="ModelMappers\StagingEbayBatchImportMapper.cs" />
@@ -1639,6 +1641,7 @@
     <Content Include="Views\ProductCategory\Create.cshtml" />
     <Content Include="Views\Product\Create.cshtml" />
     <Content Include="Views\Order\Create.cshtml" />
+    <Content Include="Views\Inventory\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

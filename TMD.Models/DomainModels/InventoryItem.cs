@@ -10,6 +10,11 @@
         public string RecLastUpdatedBy { get; set; }
         public System.DateTime RecCreatedDate { get; set; }
         public System.DateTime RecLastUpdatedDate { get; set; }
+        public string Comments { get; set; }
+        public System.DateTime PurchasingDate { get; set; }
+        public decimal PurchasePrice { get; set; }
+        public decimal SalePrice { get; set; }
+        public decimal MinSalePriceAllowed { get; set; }
 
         public virtual Product Product { get; set; }
     }
