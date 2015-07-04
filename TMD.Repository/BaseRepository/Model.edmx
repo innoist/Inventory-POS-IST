@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TMDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TMDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -240,8 +240,8 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           </Key>
           <Property Name="ProductId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="ProductCode" Type="nvarchar" MaxLength="25" Nullable="false" />
-          <Property Name="ProductBarCode" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="ProductCode" Type="nvarchar" MaxLength="25" />
+          <Property Name="ProductBarCode" Type="nvarchar" MaxLength="25" />
           <Property Name="PurchasePrice" Type="decimal" Precision="9" Scale="2" Nullable="false" />
           <Property Name="SalePrice" Type="decimal" Precision="9" Scale="2" Nullable="false" />
           <Property Name="MinSalePriceAllowed" Type="decimal" Precision="9" Scale="2" Nullable="false" />
@@ -1377,8 +1377,8 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           </Key>
           <Property Name="ProductId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="ProductCode" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
-          <Property Name="ProductBarCode" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="ProductCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="ProductBarCode" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
           <Property Name="PurchasePrice" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
           <Property Name="SalePrice" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
           <Property Name="MinSalePriceAllowed" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
