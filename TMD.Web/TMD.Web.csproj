@@ -308,6 +308,7 @@
     <Compile Include="ModelMappers\CustomerMapper.cs" />
     <Compile Include="ModelMappers\OrderItemMapper.cs" />
     <Compile Include="ModelMappers\OrderMapper.cs" />
+    <Compile Include="ModelMappers\InventoryItemMapper.cs" />
     <Compile Include="ModelMappers\ProductMapper.cs" />
     <Compile Include="ModelMappers\ProductCategoryMapper.cs" />
     <Compile Include="ModelMappers\StagingEbayBatchImportMapper.cs" />
@@ -318,6 +319,7 @@
     <Compile Include="Models\AspNetUserModel.cs" />
     <Compile Include="Models\Common\BoolDropDownModel.cs" />
     <Compile Include="Models\CustomerModel.cs" />
+    <Compile Include="Models\InventoryItemModel.cs" />
     <Compile Include="Models\OrderItemModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
@@ -370,6 +372,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\EbayItemViewModel.cs" />
+    <Compile Include="ViewModels\InventoryItemViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="Views\Shared\ES.Master.cs">
@@ -2797,7 +2800,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>23866</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

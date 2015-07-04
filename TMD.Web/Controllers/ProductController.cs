@@ -3,7 +3,6 @@ using System.Linq;
 using System.Web.Mvc;
 using TMD.Interfaces.IServices;
 using TMD.Web.ModelMappers;
-using TMD.Web.Models;
 using TMD.Web.ViewModels;
 using TMD.Web.ViewModels.Common;
 
@@ -34,9 +33,15 @@ namespace TMD.Web.Controllers
         }
 
         // GET: Product/Create
-        public ActionResult Create()
+        public ActionResult Create(long? id)
         {
             ProductViewModel productViewModel=new ProductViewModel();
+            if (id!=null)
+            {
+                var product = productService.GetProduct((long)id);
+                if(product!=null)
+                    productViewModel.ProductModel = product.CreateFromServerToClient();
+            }
             var categories=productCategoryService.GetAllProductCategories().ToList();
             if (categories.Any())
                 productViewModel.ProductCategories = categories.Select(x => x.CreateFromServerToClient());
@@ -45,18 +50,18 @@ namespace TMD.Web.Controllers
 
         // POST: Product/Create
         [HttpPost]
-        public ActionResult Create(ProductModel product)
+        public ActionResult Create(ProductViewModel productViewModel)
         {
             try
             {
-                if (product.CategoryId == 0)
+                if (productViewModel.ProductModel.ProductId == 0)
                 {
-                    product.RecCreatedBy = User.Identity.Name;
-                    product.RecCreatedDate = DateTime.Now;
+                    productViewModel.ProductModel.RecCreatedBy = User.Identity.Name;
+                    productViewModel.ProductModel.RecCreatedDate = DateTime.Now;
                 }
-                product.RecLastUpdatedBy = User.Identity.Name;
-                product.RecLastUpdatedDate = DateTime.Now;
-                if (productService.AddProduct(product.CreateFromClientToServer()) > 0)
+                productViewModel.ProductModel.RecLastUpdatedBy = User.Identity.Name;
+                productViewModel.ProductModel.RecLastUpdatedDate = DateTime.Now;
+                if (productService.AddProduct(productViewModel.ProductModel.CreateFromClientToServer()) > 0)
                 {
                     //Product Saved
                     TempData["message"] = new MessageViewModel { Message = "Product has been saved successfully.", IsSaved = true };

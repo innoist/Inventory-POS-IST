@@ -18,7 +18,8 @@ namespace TMD.Web.ModelMappers
                 PurchasePrice = source.PurchasePrice,
                 SalePrice = source.SalePrice,
                 MinSalePriceAllowed = source.MinSalePriceAllowed,
-               
+                Comments = source.Comments,
+
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
