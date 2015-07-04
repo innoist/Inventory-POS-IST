@@ -5,7 +5,7 @@ namespace TMD.Interfaces.IServices
 {
     public interface IVendorService
     {
-        Vendor GetVendor(long productId);
+        Vendor GetVendor(long vendorId);
         IEnumerable<Vendor> GetAllVendors();
     }
 }
