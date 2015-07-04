@@ -84,6 +84,21 @@
           <Property Name="Type" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Value" Type="nvarchar" MaxLength="1024" />
         </EntityType>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="100" />
+          <Property Name="Address" Type="nvarchar" MaxLength="500" />
+          <Property Name="Email" Type="nvarchar" MaxLength="100" />
+          <Property Name="Comments" Type="nvarchar" MaxLength="500" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
         <EntityType Name="DataWarehouseDimComapany">
           <Key>
             <PropertyRef Name="CompanyId" />
@@ -177,6 +192,7 @@
           <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="CustomerId" Type="bigint" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -496,6 +512,18 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Orders_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Products_ProductCategory">
           <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
@@ -613,6 +641,7 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           <EntitySet Name="Category" EntityType="Self.Category" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CategoryLog" EntityType="Self.CategoryLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Configurations" EntityType="Self.Configurations" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DataWarehouseDimComapany" EntityType="Self.DataWarehouseDimComapany" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DataWarehouseDimDate" EntityType="Self.DataWarehouseDimDate" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DataWarehouseDimProduct" EntityType="Self.DataWarehouseDimProduct" Schema="dbo" store:Type="Tables" />
@@ -685,6 +714,10 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           <AssociationSet Name="FK_OrderItems_Products" Association="Self.FK_OrderItems_Products">
             <End Role="Products" EntitySet="Products" />
             <End Role="OrderItems" EntitySet="OrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Customer" Association="Self.FK_Orders_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Orders" EntitySet="Orders" />
           </AssociationSet>
           <AssociationSet Name="FK_Products_ProductCategory" Association="Self.FK_Products_ProductCategory">
             <End Role="ProductCategory" EntitySet="ProductCategory" />
@@ -852,6 +885,11 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           <AssociationSet Name="FK_Products_ProductCategory" Association="TMD.Models.DomainModels.FK_Products_ProductCategory">
             <End Role="ProductCategory" EntitySet="ProductCategories" />
             <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <EntitySet Name="Customers" EntityType="TMD.Models.DomainModels.Customer" />
+          <AssociationSet Name="FK_Orders_Customer" Association="TMD.Models.DomainModels.FK_Orders_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AspNetRole">
@@ -1296,6 +1334,8 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="OrderItems" Relationship="TMD.Models.DomainModels.FK_OrderItems_Orders" FromRole="Order" ToRole="OrderItem" />
+          <Property Name="CustomerId" Type="Int64" />
+          <NavigationProperty Name="Customer" Relationship="TMD.Models.DomainModels.FK_Orders_Customer" FromRole="Order" ToRole="Customer" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -1505,6 +1545,34 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
             </Principal>
             <Dependent Role="Product">
               <PropertyRef Name="CategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Customer">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Address" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Orders" Relationship="TMD.Models.DomainModels.FK_Orders_Customer" FromRole="Customer" ToRole="Order" />
+        </EntityType>
+        <Association Name="FK_Orders_Customer">
+          <End Type="TMD.Models.DomainModels.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="CustomerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1774,6 +1842,7 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.Order">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
                 <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
@@ -1865,6 +1934,22 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
                 <ScalarProperty Name="SecurityPassword" ColumnName="SecurityPassword" />
                 <ScalarProperty Name="Emails" ColumnName="Emails" />
                 <ScalarProperty Name="MaxAllowedDiscount" ColumnName="MaxAllowedDiscount" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Customers">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Customer">
+              <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
