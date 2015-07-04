@@ -19,7 +19,7 @@
                 </a>
             </div>
             <div class="caption">
-                <i class="fa fa-male"></i>Create/Update Product Category
+                <i class="fa fa-male"></i>Create/Update Product
             </div>
         </div>
 
@@ -63,9 +63,9 @@
                     <div class="col-md-4">
                         @Html.TextBoxFor(m => m.ProductModel.SalePrice, new { @class = "form-control input-circle mandatory" })
                     </div>
-                    @Html.Label("% Profit", new { @class = "col-md-3 control-label" })
-                    <div class="col-md-4">
-                        @Html.TextBox("Profit", new { @class = "form-control input-circle mandatory" })
+                    @Html.Label("% Profit", new { @class = "col-md-1 control-label" })
+                    <div class="col-md-2">
+                        @Html.TextBox("Profit",null, new { @class = "form-control input-circle mandatory" })
                     </div>
                 </div>
 
@@ -73,6 +73,19 @@
                     @Html.LabelFor(m => m.ProductModel.MinSalePriceAllowed, new { @class = "col-md-3 control-label" })
                     <div class="col-md-4">
                         @Html.TextBoxFor(m => m.ProductModel.MinSalePriceAllowed, new { @class = "form-control input-circle mandatory" })
+                    </div>
+                </div>
+                
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.ProductModel.CategoryId, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.ProductModel.CategoryId, new SelectList(Model.ProductCategories, "CategoryId", "Name"), new { @class = "form-control input-circle", @id = "ProductCategories" })
+                    </div>
+                </div>
+                <div class="form-group margin-top-20 required">
+                    @Html.LabelFor(m => m.ProductModel.Comments, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.ProductModel.Comments, new { @class = "form-control input-circle mandatory" })
                     </div>
                 </div>
             </div>
