@@ -18,6 +18,7 @@ namespace TMD.Repository
             unityContainer.RegisterType<IProductCategoryRepository, ProductCategoryRepository>();
             unityContainer.RegisterType<IProductRepository, ProductRepository>();
             unityContainer.RegisterType<IVendorRepository, VendorRepository>();
+            unityContainer.RegisterType<IInventoryItemRepositoy, InventoryItemRepository>();
         }
     }
 }

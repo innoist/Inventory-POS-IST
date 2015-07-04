@@ -4,7 +4,7 @@
 }
 
 
-@using (Html.BeginForm("Create", "Product", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Create", "Inventory", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     <div class="portlet box blue-hoki">
         <div class="portlet-title">
@@ -14,7 +14,7 @@
                     </a>*@
 
                 <button type="submit" class="btn btn-circle blue">Save</button>
-                <a href="~/Product/Index">
+                <a href="~/Inventory/Index">
                     <button type="button" class="btn btn-circle default">Cancel</button>
                 </a>
             </div>
@@ -26,74 +26,91 @@
         <div class="portlet-body form">
             <div class="container-fluid">
                 @Html.AntiForgeryToken()
-                @Html.HiddenFor(m => m.ProductModel.ProductId)
-                @Html.HiddenFor(m => m.ProductModel.RecCreatedBy)
-                @Html.HiddenFor(m => m.ProductModel.RecCreatedDate)
+                @Html.HiddenFor(m => m.InventoryItem.ItemId)
+                @Html.HiddenFor(m => m.InventoryItem.RecCreatedBy)
+                @Html.HiddenFor(m => m.InventoryItem.RecCreatedDate)
                 
                 <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.ProductBarCode, new { @class = "col-md-3 control-label" })
+                    @Html.Label("Vendor Barcode", new { @class = "col-md-3 control-label" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.ProductBarCode, new { @class = "form-control input-circle mandatory" })
+                        @Html.TextBox("Barcode", null, new { @class = "form-control input-circle mandatory" })
                     </div>
                 </div>
                 
-                @*<div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.ProductCode, new { @class = "col-md-3 control-label requiredLabel" })
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.InventoryItem.ProductId, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.ProductCode, new { @class = "form-control input-circle mandatory" })
+                        @Html.TextBoxFor(m => m.InventoryItem.ProductId, new { @class = "form-control input-circle mandatory" })
+                        @Html.ValidationMessageFor(model => model.InventoryItem.ProductId)
                     </div>
-                   
-                </div>*@
+                </div>
 
                 <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.Name, new { @class = "col-md-3 control-label requiredLabel" })
+                    @Html.LabelFor(m => m.InventoryItem.Quantity, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.Name, new { @class = "form-control input-circle mandatory" })
+                        @Html.TextBoxFor(m => m.InventoryItem.Quantity, new { @class = "form-control input-circle mandatory" })
+                        @Html.ValidationMessageFor(model => model.InventoryItem.Quantity)
                     </div>
-                    @Html.ValidationMessageFor(model => model.ProductModel.Name)
+                    
+                    @Html.Label("Stock on hold", new { @class = "col-md-1 control-label" })
+                    <div class="col-md-2">
+                        @Html.TextBox("Stock", null, new { @id = "StockOnHold", @class = "form-control input-circle mandatory", @readonly = true })
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.InventoryItem.PurchasePrice, new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.InventoryItem.PurchasePrice, new { @class = "form-control input-circle mandatory" })
+                        @Html.ValidationMessageFor(model => model.InventoryItem.PurchasePrice)
+                    </div>
                 </div>
                 
                 <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.PurchasePrice, new { @class = "col-md-3 control-label requiredLabel" })
+                    @Html.LabelFor(m => m.InventoryItem.SalePrice, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.PurchasePrice, new { @class = "form-control input-circle mandatory" })
+                        @Html.TextBoxFor(m => m.InventoryItem.SalePrice, new { @class = "form-control input-circle mandatory" })
+                        @Html.ValidationMessageFor(model => model.InventoryItem.SalePrice)
                     </div>
-                    @Html.ValidationMessageFor(model => model.ProductModel.PurchasePrice)
-                </div>
-
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.SalePrice, new { @class = "col-md-3 control-label requiredLabel" })
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.SalePrice, new { @class = "form-control input-circle mandatory" })
-                    </div>
-
+                    
                     @Html.Label("% Profit", new { @class = "col-md-1 control-label" })
                     <div class="col-md-2">
-                        @Html.TextBox("Profit",null, new { @class = "form-control input-circle mandatory" })
+                        @Html.TextBox("Profit", null, new { @id = "Profit", @class = "form-control input-circle mandatory", @readonly = true })
                     </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.InventoryItem.MinSalePriceAllowed, new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.InventoryItem.MinSalePriceAllowed, new { @class = "form-control input-circle mandatory" })
+                        @Html.ValidationMessageFor(model => model.InventoryItem.MinSalePriceAllowed)
+                    </div>
+
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.InventoryItem.VendorId, new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.InventoryItem.VendorId, new SelectList(Model.Vendors, "VendorId", "Name"), "Select Vendor", new { @class = "form-control input-circle", @id = "Vendors" })
+                        @Html.ValidationMessageFor(model => model.InventoryItem.VendorId)
+                    </div>
+                    
                 </div>
 
                 <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.MinSalePriceAllowed, new { @class = "col-md-3 control-label" })
+                    @Html.LabelFor(m => m.InventoryItem.PurchasingDate, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.MinSalePriceAllowed, new { @class = "form-control input-circle mandatory" })
+                        @Html.TextBoxFor(m => m.InventoryItem.PurchasingDate,"{0:d}", new { @class = "form-control input-circle mandatory datepicker" })
+                        @Html.ValidationMessageFor(model => model.InventoryItem.PurchasingDate)
                     </div>
                 </div>
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.InventoryItem.Comments, new { @class = "col-md-3 control-label " })
+                    <div class="col-md-4">
+                        @Html.TextAreaFor(m => m.InventoryItem.Comments, new { @class = "form-control input-circle mandatory" })
+                    </div>
+                </div>
+
                 
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.CategoryId, new { @class = "col-md-3 control-label requiredLabel" })
-                    <div class="col-md-4">
-                        @Html.DropDownListFor(model => model.ProductModel.CategoryId, new SelectList(Model.ProductCategories, "CategoryId", "Name"),"Select Category", new { @class = "form-control input-circle", @id = "ProductCategories" })
-                    </div>
-                    @Html.ValidationMessageFor(model => model.ProductModel.CategoryId)
-                </div>
-
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.Comments, new { @class = "col-md-3 control-label" })
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.Comments, new { @class = "form-control input-circle mandatory" })
-                    </div>
-                </div>
+                
             </div>
 
         </div>

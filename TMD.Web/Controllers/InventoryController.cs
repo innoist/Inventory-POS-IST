@@ -52,15 +52,33 @@ namespace TMD.Web.Controllers
 
         // POST: Inventory/Create
         [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult Create(InventoryItemViewModel inventoryItemViewModel)
         {
             try
             {
-                // TODO: Add insert logic here
+                if (inventoryItemViewModel.InventoryItem.ItemId == 0)
+                {
+                    inventoryItemViewModel.InventoryItem.RecCreatedBy = User.Identity.Name;
+                    inventoryItemViewModel.InventoryItem.RecCreatedDate = DateTime.Now;
+                }
+                inventoryItemViewModel.InventoryItem.RecLastUpdatedBy = User.Identity.Name;
+                inventoryItemViewModel.InventoryItem.RecLastUpdatedDate = DateTime.Now;
+
+                //Minimum sale price should not be less than purchase price
+                if (inventoryItemViewModel.InventoryItem.MinSalePriceAllowed <
+                    inventoryItemViewModel.InventoryItem.PurchasePrice)
+                    inventoryItemViewModel.InventoryItem.MinSalePriceAllowed =
+                        inventoryItemViewModel.InventoryItem.SalePrice;
+                if (inventoryItemService.AddInventoryItem(inventoryItemViewModel.InventoryItem.CreateFromClientToServer()) > 0)
+                {
+                    //Product Saved
+                    TempData["message"] = new MessageViewModel { Message = "Inventory has been saved successfully.", IsSaved = true };
+                }
+
 
                 return RedirectToAction("Index");
             }
-            catch
+            catch (Exception exception)
             {
                 return View();
             }

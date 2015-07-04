@@ -1620,7 +1620,9 @@
     <Content Include="Scripts\App\toastr.js" />
     <Content Include="Scripts\App\toastr.min.js" />
     <Content Include="Scripts\App\ValidateFields.js" />
+    <Content Include="Scripts\InventoryScripts.js" />
     <Content Include="Scripts\jquery.blockUI.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\js\html5shiv.js" />
     <Content Include="Scripts\js\init.js" />
     <Content Include="Scripts\js\jquery.min.js" />

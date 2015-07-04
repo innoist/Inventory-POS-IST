@@ -11,7 +11,7 @@ namespace TMD.Web.ModelMappers
             {
                 ItemId = source.ItemId,
                 ProductId = source.ProductId,
-                Quantity = source.ProductId,
+                Quantity = source.Quantity,
                 VendorId = source.VendorId,
                 Comments = source.Comments,
                 MinSalePriceAllowed = source.MinSalePriceAllowed,
@@ -32,7 +32,7 @@ namespace TMD.Web.ModelMappers
             {
                 ItemId = source.ItemId,
                 ProductId = source.ProductId,
-                Quantity = source.ProductId,
+                Quantity = source.Quantity,
                 VendorId = source.VendorId,
                 Comments = source.Comments,
                 MinSalePriceAllowed = source.MinSalePriceAllowed,

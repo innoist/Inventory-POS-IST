@@ -61,6 +61,13 @@ namespace TMD.Web.Controllers
                 }
                 productViewModel.ProductModel.RecLastUpdatedBy = User.Identity.Name;
                 productViewModel.ProductModel.RecLastUpdatedDate = DateTime.Now;
+
+                //Minimum sale price should not be less than purchase price
+                if (productViewModel.ProductModel.MinSalePriceAllowed <
+                    productViewModel.ProductModel.PurchasePrice)
+                    productViewModel.ProductModel.MinSalePriceAllowed =
+                        productViewModel.ProductModel.SalePrice;
+
                 if (productService.AddProduct(productViewModel.ProductModel.CreateFromClientToServer()) > 0)
                 {
                     //Product Saved

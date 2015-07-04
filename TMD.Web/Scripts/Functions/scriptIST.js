@@ -213,26 +213,16 @@ function GregorianToHijri(englishCalendar,arabicCalendar) {
     }
 }
 $(document).ready(function () {
-    $('.select2me').select2({
-        placeholder: "Select"
+    $(".datepicker").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        maxDate:new Date()
     });
-    //$(".datepickerArabic").mask('99/99/9999');
-    //$.datepicker.setDefaults($.datepicker.regional['en-US']);
-    $(".dateFormatter").mask('99/99/9999');
-    $(".datepickerGregorian").mask('99/99/9999');
     $(".datepickerGregorian").datepicker({
         changeMonth: true,
         changeYear: true,
         dateFormat: "dd/mm/yy",
         yearRange: "1950:2050"
-    });
-    // Arabic Date Picker
-    var calendar = $.calendars.instance('islamic');
-    $('.datepickerArabic').calendarsPicker({
-        calendar: calendar,
-        onSelect: function () {
-            $(this).change();
-        }
     });
 });
 
