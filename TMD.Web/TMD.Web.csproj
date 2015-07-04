@@ -295,6 +295,7 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductCategoryController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\UnauthorizedRequestController.cs" />
@@ -304,6 +305,9 @@
     </Compile>
     <Compile Include="Helper\CultureHelper.cs" />
     <Compile Include="ModelMappers\AspNetUserMapper.cs" />
+    <Compile Include="ModelMappers\CustomerMapper.cs" />
+    <Compile Include="ModelMappers\OrderItemMapper.cs" />
+    <Compile Include="ModelMappers\OrderMapper.cs" />
     <Compile Include="ModelMappers\ProductMapper.cs" />
     <Compile Include="ModelMappers\ProductCategoryMapper.cs" />
     <Compile Include="ModelMappers\StagingEbayBatchImportMapper.cs" />
@@ -313,6 +317,9 @@
     <Compile Include="Models\ApplicantModel.cs" />
     <Compile Include="Models\AspNetUserModel.cs" />
     <Compile Include="Models\Common\BoolDropDownModel.cs" />
+    <Compile Include="Models\CustomerModel.cs" />
+    <Compile Include="Models\OrderItemModel.cs" />
+    <Compile Include="Models\OrderModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\ProductCategoryModel.cs" />
     <Compile Include="Models\StagingEbayBatchImportModel.cs" />
@@ -363,6 +370,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\EbayItemViewModel.cs" />
+    <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="Views\Shared\ES.Master.cs">
       <DependentUpon>ES.Master</DependentUpon>
@@ -1627,6 +1635,7 @@
     <Content Include="Views\Admin\EbayItemImportDetail.cshtml" />
     <Content Include="Views\ProductCategory\Create.cshtml" />
     <Content Include="Views\Product\Create.cshtml" />
+    <Content Include="Views\Order\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -2707,6 +2716,7 @@
     <Folder Include="Files\" />
     <Folder Include="Reports\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Customer\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
