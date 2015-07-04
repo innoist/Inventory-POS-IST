@@ -1,4 +1,5 @@
 ﻿using System.Web.Mvc;
+using TMD.Web.ViewModels;
 
 namespace TMD.Web.Controllers
 {
@@ -19,7 +20,8 @@ namespace TMD.Web.Controllers
         // GET: Product/Create
         public ActionResult Create()
         {
-            return View();
+            ProductViewModel productViewModel=new ProductViewModel();
+            return View(productViewModel);
         }
 
         // POST: Product/Create

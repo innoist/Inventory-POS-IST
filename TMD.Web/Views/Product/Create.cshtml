@@ -33,14 +33,14 @@
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.ProductModel.ProductBarCode, new { @class = "col-md-3 control-label" })
                     <div class="col-md-4">
-                        @Html.TextAreaFor(m => m.ProductModel.ProductBarCode, new { @class = "form-control input-circle mandatory" })
+                        @Html.TextBoxFor(m => m.ProductModel.ProductBarCode, new { @class = "form-control input-circle mandatory" })
                     </div>
                 </div>
                 
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.ProductModel.ProductCode, new { @class = "col-md-3 control-label" })
                     <div class="col-md-4">
-                        @Html.TextAreaFor(m => m.ProductModel.ProductCode, new { @class = "form-control input-circle mandatory"})
+                        @Html.TextBoxFor(m => m.ProductModel.ProductCode, new { @class = "form-control input-circle mandatory" })
                     </div>
                 </div>
 
@@ -51,7 +51,30 @@
                     </div>
                 </div>
                 
-                
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.ProductModel.PurchasePrice, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.ProductModel.PurchasePrice, new { @class = "form-control input-circle mandatory" })
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.ProductModel.SalePrice, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.ProductModel.SalePrice, new { @class = "form-control input-circle mandatory" })
+                    </div>
+                    @Html.Label("% Profit", new { @class = "col-md-3 control-label" })
+                    <div class="col-md-4">
+                        @Html.TextBox("Profit", new { @class = "form-control input-circle mandatory" })
+                    </div>
+                </div>
+
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.ProductModel.MinSalePriceAllowed, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.ProductModel.MinSalePriceAllowed, new { @class = "form-control input-circle mandatory" })
+                    </div>
+                </div>
             </div>
 
         </div>
