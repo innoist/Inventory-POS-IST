@@ -109,6 +109,7 @@
     <Compile Include="DomainModels\InventoryItem.cs" />
     <Compile Include="DomainModels\Order.cs" />
     <Compile Include="DomainModels\OrderItem.cs" />
+    <Compile Include="DomainModels\Customer.cs" />
     <Compile Include="DomainModels\Product.cs" />
     <Compile Include="DomainModels\ProductCategory.cs" />
     <Compile Include="DomainModels\ProductConfiguration.cs" />
