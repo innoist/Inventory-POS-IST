@@ -7,7 +7,9 @@
     font-size: 12px;
     padding-left: 2px;
 }
-
+.requiredStar {
+    color: red;
+}
 .requiredLeftAlign {
     color: #e02222;
     text-align: left !important;

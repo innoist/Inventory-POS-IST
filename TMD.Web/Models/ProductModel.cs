@@ -10,7 +10,7 @@ namespace TMD.Web.Models
         public string Name { get; set; }
         [Display(Name = "Product Code")]
         public string ProductCode { get; set; }
-        [Display(Name = "Bar Code")]
+        [Display(Name = "Vendor Barcode")]
         public string ProductBarCode { get; set; }
         [Display(Name = "Purchase Price")]
         public decimal PurchasePrice { get; set; }
