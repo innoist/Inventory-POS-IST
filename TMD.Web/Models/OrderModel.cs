@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using TMD.Models.DomainModels;
 
 namespace TMD.Web.Models
 {
     public class OrderModel
     {
         public long OrderId { get; set; }
-        public long CustomerId { get; set; }
+        public long ? CustomerId { get; set; }
         public bool IsModified { get; set; }
         public System.DateTime RecCreatedDate { get; set; }
         public System.DateTime RecLastUpdatedDate { get; set; }
@@ -15,6 +16,7 @@ namespace TMD.Web.Models
         public string RecLastUpdatedBy { get; set; }
 
         public List<OrderItemModel> OrderItems { get; set; }
+        public CustomerModel  Customer { get; set; }
         //public virtual Customer Customer { get; set; }
     }
 }
