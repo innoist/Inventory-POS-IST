@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using TMD.Interfaces.IServices;
+using TMD.Models.RequestModels;
+using TMD.Models.ResponseModels;
 using TMD.Web.ModelMappers;
+using TMD.Web.Models;
 using TMD.Web.ViewModels;
 using TMD.Web.ViewModels.Common;
 
@@ -19,13 +23,43 @@ namespace TMD.Web.Controllers
             this.productCategoryService = productCategoryService;
         }
 
-        // GET: Product
+        // GET: Products
         public ActionResult Index()
         {
+            ProductSearchRequest searchRequest = Session["PageMetaData"] as ProductSearchRequest;
+            Session["PageMetaData"] = null;
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
-            return View();
+            return View(new ProductsListViewModel
+            {
+                SearchRequest = searchRequest ?? new ProductSearchRequest()
+            });
         }
+        [HttpPost]
+        public ActionResult Index(ProductSearchRequest searchRequest)
+        {
+            ProductsListViewModel viewModel = new ProductsListViewModel();
+            try
+            {
+                ProductSearchResponse searchResponse = productService.GetProductSearchResponse(searchRequest);
 
+                var resultData = searchResponse.Products.Any()
+                    ? searchResponse.Products.Select(x => x.CreateFromServerToClient()).ToList()
+                    : new List<ProductModel>();
+
+                viewModel.data = resultData;
+                viewModel.recordsTotal = searchResponse.TotalCount;
+                viewModel.recordsFiltered = searchResponse.FilteredCount;
+
+                // Keep Search Request in Session
+                Session["PageMetaData"] = searchRequest;
+                return Json(viewModel, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                TempData["message"] = new MessageViewModel { Message = "There is some problem, please try again.", IsError = true };
+                return View(viewModel);
+            }
+        }
         // GET: Product/Details/5
         public ActionResult Details(int id)
         {

@@ -1,5 +1,6 @@
 ﻿using TMD.Models.DomainModels;
 using TMD.Web.Models;
+using TMD.Web.ViewModels.ApiModels;
 
 namespace TMD.Web.ModelMappers
 {
@@ -40,11 +41,29 @@ namespace TMD.Web.ModelMappers
                 PurchasePrice = source.PurchasePrice,
                 SalePrice = source.SalePrice,
                 MinSalePriceAllowed = source.MinSalePriceAllowed,
+                Comments = source.Comments,
 
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate
+            };
+        }
+
+        public static ProductApiModel CreateApiModelServerToClient(this Product source)
+        {
+            return new ProductApiModel
+            {
+                CategoryId = source.CategoryId,
+                ProductId = source.ProductId,
+                VendorId = source.VendorId,
+                ProductBarCode = source.ProductBarCode,
+                ProductCode = source.ProductCode,
+                Name = source.Name,
+                PurchasePrice = source.PurchasePrice,
+                SalePrice = source.SalePrice,
+                MinSalePriceAllowed = source.MinSalePriceAllowed,
+                Comments = source.Comments
             };
         }
     }

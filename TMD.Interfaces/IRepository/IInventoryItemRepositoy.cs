@@ -4,6 +4,6 @@ namespace TMD.Interfaces.IRepository
 {
     public interface IInventoryItemRepositoy : IBaseRepository<InventoryItem, long>
     {
-
+        long GetItemCountInInventory(long productId);
     }
 }

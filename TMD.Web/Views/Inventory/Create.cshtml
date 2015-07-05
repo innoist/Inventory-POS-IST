@@ -19,7 +19,7 @@
                 </a>
             </div>
             <div class="caption">
-                <i class="fa fa-male"></i>Create/Update Product
+                <i class="fa fa-male"></i>Create/Update Inventory
             </div>
         </div>
 
@@ -33,15 +33,24 @@
                 <div class="form-group margin-top-20">
                     @Html.Label("Vendor Barcode", new { @class = "col-md-3 control-label" })
                     <div class="col-md-4">
-                        @Html.TextBox("Barcode", null, new { @class = "form-control input-circle mandatory" })
+                        @Html.TextBox("Barcode", null, new { @id = "Barcode", @class = "form-control input-circle mandatory", @onchange = "LoadProductByProductCode(this);" })
+                    </div>
+                    
+                    @Html.Label("Name", new { @class = "col-md-1 control-label" })
+                    <div class="col-md-3">
+                        @Html.TextBox("ProductName", null, new { @id = "ProductName", @class = "form-control input-circle mandatory", @readonly = true })
                     </div>
                 </div>
                 
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.InventoryItem.ProductId, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.InventoryItem.ProductId, new { @class = "form-control input-circle mandatory" })
+                        @Html.TextBoxFor(m => m.InventoryItem.ProductId, new { @id="ProductId", @class = "form-control input-circle mandatory", @onchange = "LoadProductByProductCode(this);" })
                         @Html.ValidationMessageFor(model => model.InventoryItem.ProductId)
+                    </div>
+                    @Html.Label("Description", new { @class = "col-md-1 control-label" })
+                    <div class="col-md-3">
+                        @Html.TextArea("ProductDescription", null, new { @id = "ProductDescription", @class = "form-control input-circle mandatory", @readonly = true })
                     </div>
                 </div>
 
@@ -52,16 +61,16 @@
                         @Html.ValidationMessageFor(model => model.InventoryItem.Quantity)
                     </div>
                     
-                    @Html.Label("Stock on hold", new { @class = "col-md-1 control-label" })
-                    <div class="col-md-2">
-                        @Html.TextBox("Stock", null, new { @id = "StockOnHold", @class = "form-control input-circle mandatory", @readonly = true })
+                    @Html.Label("Available Stock", new { @class = "col-md-1 control-label" })
+                    <div class="col-sm-2">
+                        @Html.TextBox("Stock", null, new { @id = "AvailableItems", @class = "form-control input-circle mandatory", @readonly = true })
                     </div>
                 </div>
 
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.InventoryItem.PurchasePrice, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.InventoryItem.PurchasePrice, new { @class = "form-control input-circle mandatory" })
+                        @Html.TextBoxFor(m => m.InventoryItem.PurchasePrice, new { @id = "PurchasePrice",@onchange="ShowProfit();", @class = "form-control input-circle mandatory" })
                         @Html.ValidationMessageFor(model => model.InventoryItem.PurchasePrice)
                     </div>
                 </div>
@@ -69,7 +78,7 @@
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.InventoryItem.SalePrice, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.InventoryItem.SalePrice, new { @class = "form-control input-circle mandatory" })
+                        @Html.TextBoxFor(m => m.InventoryItem.SalePrice, new { @id = "SalePrice", @onchange = "ShowProfit();", @class = "form-control input-circle mandatory" })
                         @Html.ValidationMessageFor(model => model.InventoryItem.SalePrice)
                     </div>
                     
@@ -77,14 +86,6 @@
                     <div class="col-md-2">
                         @Html.TextBox("Profit", null, new { @id = "Profit", @class = "form-control input-circle mandatory", @readonly = true })
                     </div>
-                </div>
-                <div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.InventoryItem.MinSalePriceAllowed, new { @class = "col-md-3 control-label requiredLabel" })
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.InventoryItem.MinSalePriceAllowed, new { @class = "form-control input-circle mandatory" })
-                        @Html.ValidationMessageFor(model => model.InventoryItem.MinSalePriceAllowed)
-                    </div>
-
                 </div>
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.InventoryItem.VendorId, new { @class = "col-md-3 control-label requiredLabel" })
@@ -116,4 +117,9 @@
         </div>
     </div>
 }
-
+<script src="~/Scripts/InventoryScripts.js"></script>
+<script>
+    $(document).ready(function() {
+        ShowProfit();
+    });
+</script>

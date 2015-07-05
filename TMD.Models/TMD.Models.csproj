@@ -96,6 +96,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\ProductByColumn.cs" />
     <Compile Include="Common\StagingEbayItemRequestByColumn.cs" />
     <Compile Include="Common\BatchImportSearchRequestByColumn.cs" />
     <Compile Include="DomainModels\AspNetRole%27.cs" />
@@ -137,7 +138,9 @@
     <Compile Include="RequestModels\BatchImportSearchRequest.cs" />
     <Compile Include="RequestModels\GetPagedListRequest.cs" />
     <Compile Include="RequestModels\StagingEbayItemRequest.cs" />
+    <Compile Include="RequestModels\ProductSearchRequest.cs" />
     <Compile Include="ResponseModels\EbayItemSearchResponse.cs" />
+    <Compile Include="ResponseModels\ProductSearchResponse.cs" />
     <Compile Include="ResponseModels\BatchImportSearchResponse.cs" />
   </ItemGroup>
   <ItemGroup>

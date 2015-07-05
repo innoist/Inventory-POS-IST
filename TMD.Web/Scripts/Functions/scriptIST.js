@@ -218,6 +218,7 @@ $(document).ready(function () {
         changeYear: true,
         maxDate:new Date()
     });
+    $(".datepicker").datepicker().datepicker("setDate", new Date());
     $(".datepickerGregorian").datepicker({
         changeMonth: true,
         changeYear: true,

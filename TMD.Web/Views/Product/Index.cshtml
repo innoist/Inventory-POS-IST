@@ -1,0 +1,169 @@
+﻿@model TMD.Web.ViewModels.ProductsListViewModel
+@{
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    }
+
+<header>
+
+    <h3 class="page-title">
+        Products
+    </h3>
+    @*<h3> <small><a href="~/Account/Create">Add New User</a></small></h3>*@
+</header>
+
+<div class="container-fluid">
+    <form class="form-horizontal">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="portlet-title">
+                    <div class="tools">
+                        <input type="button" class="btn green" id="btnFltr" value="Filter" />
+                        <input type="button" class="btn blue titleButton" id="btnResetFltr" value="Reset">
+                    </div>
+                </div>
+                <div class="portlet-body form">
+                    <div class="form-actions">
+                        <div>
+                            <table class="responsive">
+                                <tr>
+                                    <td class="col-md-1">
+                                        <label class="control-label"> Barcode </label>
+                                    </td>
+                                    <td class="col-md-2">
+                                        <div class="input-icon">
+                                            <i class="fa fa-search"></i>
+                                            @Html.TextBox("Barcode", @Model.SearchRequest.Barcode, new { @class = "searchInputs form-control", @id = "Barcode", @placeholder = "Barcode" })
+                                        </div>
+
+                                    </td>
+                                    
+                                    <td class="col-md-1">
+                                        <label class="control-label"> Product Code </label>
+                                    </td>
+                                    <td class="col-md-2">
+                                        <div class="input-icon">
+                                            <i class="fa fa-search"></i>
+                                            @Html.TextBox("Product Code", @Model.SearchRequest.ProductCode, new { @class = "searchInputs form-control", @id = "ProductCode", @placeholder = "Product Code" })
+                                          
+                                        </div>
+
+                                    </td>
+                                    <td class="col-md-1">
+                                        <label class="control-label"> Category </label>
+                                    </td>
+                                    <td class="col-md-2">
+                                        <div class="input-icon">
+                                            <i class="fa fa-search"></i>
+                                            @Html.TextBox("AFASerial", @Model.SearchRequest.Category, new { @class = "searchInputs form-control", @id = "Category", @placeholder = "Category" })
+                                          
+                                        </div>
+
+                                    </td>
+                                </tr>
+                           <tr style="height: 10px !important; "></tr>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="portlet box blue">
+                    <table id="dataTable" class="display" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th class="tableHeaderWhite">Product Code</th>
+                                <th class="tableHeaderWhite">Name</th>
+                                <th class="tableHeaderWhite">Category</th>
+                                <th class="tableHeaderWhite">Sale Price</th>
+                                @*<th>Details</th>*@
+                                
+                                @*<th class="textAlignRight">Points</th>
+                                <th class="textAlignRight">Fb Points</th>
+                                <th>Active</th>*@
+                                @*<th></th>*@
+                                @*<th>Delete</th>*@
+                            </tr>
+                        </thead>
+                        
+                    </table>
+                    
+                 
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function($) {
+
+        var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
+        var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
+        var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
+
+        var oTable = $('#dataTable').dataTable({
+            "iDisplayLength": 11,
+            "displayStart": start || 0,
+            "bFilter": false,
+            "bLengthChange": false,
+            "aaSorting": [sortBy],
+            //"aoColumnDefs": [
+            //    { 'bSortable': false, 'aTargets': [0, 4, 5, 6] },
+            //    {
+            //        "targets": [0],
+            //        "visible": false,
+            //        "searchable": false
+            //    }
+            //],
+            "columns": [
+                { "data": "ProductId" },
+                { "data": "Name" },
+                { "data": "CategoryId" },
+                { "data": "SalePrice" }
+                //{
+                //    "orderable": false,
+                //    "data": null,
+                //    "defaultContent": "<a class='delete'  href='javascript:;'></a>",
+                //    "class": "textAlignRight"
+                //}
+            ],
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                url: "/Product/Index",
+                type: "POST",
+                dataType: "json",
+                data: function(params) {
+                    params.PageNo = Math.ceil(params.start / params.length) + 1;
+                    if (params.PageNo === 0) {
+                        params.PageNo = 1;
+                    }
+                    params.PageSize = params.length;
+                    params.SortBy = params.order[0].column;
+                    params.IsAsc = params.order[0].dir === "asc";
+
+                    params.ProductCode = $('#ProductCode').val();
+                    params.Barcode = $('#Barcode').val();
+                    params.Category = $('#Category').val();
+                    params.Name = $('#Name').val();
+                }
+
+            }
+
+        });
+        $('#btnFltr').on('click', function(e) {
+            oTable.fnDraw();
+        });
+
+        $('#btnResetFltr').on('click', function(e) {
+            $('#ProductCode').val("");
+            $('#Barcode').val("");
+            $('#Category').val("");
+            $('#Name').val("");
+            oTable.fnFilter('');
+        });
+    });
+
+    function fnActivityComplete(data, e) {}
+</script>

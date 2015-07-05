@@ -3,6 +3,7 @@ using System.Linq;
 using System.Web.Mvc;
 using TMD.Interfaces.IServices;
 using TMD.Web.ModelMappers;
+using TMD.Web.Models;
 using TMD.Web.ViewModels;
 using TMD.Web.ViewModels.Common;
 
@@ -37,7 +38,8 @@ namespace TMD.Web.Controllers
         // GET: Inventory/Create
         public ActionResult Create(long? id)
         {
-            InventoryItemViewModel inventoryItemViewModel=new InventoryItemViewModel();
+            InventoryItemViewModel inventoryItemViewModel = new InventoryItemViewModel();
+            
             if (id != null)
             {
                 var inventoryItem = inventoryItemService.GetInventoryItem((long)id);
@@ -64,12 +66,7 @@ namespace TMD.Web.Controllers
                 inventoryItemViewModel.InventoryItem.RecLastUpdatedBy = User.Identity.Name;
                 inventoryItemViewModel.InventoryItem.RecLastUpdatedDate = DateTime.Now;
 
-                //Minimum sale price should not be less than purchase price
-                if (inventoryItemViewModel.InventoryItem.MinSalePriceAllowed <
-                    inventoryItemViewModel.InventoryItem.PurchasePrice)
-                    inventoryItemViewModel.InventoryItem.MinSalePriceAllowed =
-                        inventoryItemViewModel.InventoryItem.SalePrice;
-                if (inventoryItemService.AddInventoryItem(inventoryItemViewModel.InventoryItem.CreateFromClientToServer()) > 0)
+               if (inventoryItemService.AddInventoryItem(inventoryItemViewModel.InventoryItem.CreateFromClientToServer()) > 0)
                 {
                     //Product Saved
                     TempData["message"] = new MessageViewModel { Message = "Inventory has been saved successfully.", IsSaved = true };

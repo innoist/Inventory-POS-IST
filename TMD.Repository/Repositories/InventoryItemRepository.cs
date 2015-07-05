@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Linq;
 using Microsoft.Practices.Unity;
 using TMD.Interfaces.IRepository;
 using TMD.Models.DomainModels;
@@ -25,5 +26,10 @@ namespace TMD.Repository.Repositories
             get { return db.InventoryItems; }
         }
         #endregion
+
+        public long GetItemCountInInventory(long productId)
+        {
+            return DbSet.Where(x => x.ProductId == productId).Select(r => r.Quantity).DefaultIfEmpty(0).Sum();
+        }
     }
 }

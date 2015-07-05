@@ -73,6 +73,8 @@ namespace IdentitySample
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));
             // Set Web Api resolver
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
+            //remove xml api response
+            ConfigureApi(new HttpConfiguration());
         }
         private void Session_Start(object sender, EventArgs e)
         {
@@ -134,6 +136,16 @@ namespace IdentitySample
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetExpires(DateTime.UtcNow.AddHours(-1));
             Response.Cache.SetNoStore();
+        }
+        void ConfigureApi(HttpConfiguration config)
+        {
+            //// Remove the JSON formatter
+            //config.Formatters.Remove(config.Formatters.JsonFormatter);
+
+            // or
+
+            // Remove the XML formatter
+            config.Formatters.Remove(config.Formatters.XmlFormatter);
         }
     }
 }

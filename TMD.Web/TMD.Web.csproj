@@ -290,6 +290,8 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
+    <Compile Include="Areas\Api\Controllers\ProductController.cs" />
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
@@ -365,6 +367,7 @@
     <Compile Include="StringCipher.cs" />
     <Compile Include="TypeRegistrations.cs" />
     <Compile Include="Utility.cs" />
+    <Compile Include="ViewModels\ApiModels\ProductApiModel.cs" />
     <Compile Include="ViewModels\AspNetUsersViewModel.cs" />
     <Compile Include="ViewModels\BatchImportViewModel.cs" />
     <Compile Include="ViewModels\Common\MenuViewModel.cs">
@@ -376,6 +379,7 @@
     <Compile Include="ViewModels\EbayItemViewModel.cs" />
     <Compile Include="ViewModels\InventoryItemViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
+    <Compile Include="ViewModels\ProductsListViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="Views\Shared\ES.Master.cs">
       <DependentUpon>ES.Master</DependentUpon>
@@ -1628,6 +1632,7 @@
     <Content Include="Scripts\js\jquery.min.js" />
     <Content Include="Scripts\js\skel-layers.min.js" />
     <Content Include="Scripts\js\skel.min.js" />
+    <Content Include="Areas\Api\Views\web.config" />
     <None Include="Properties\PublishProfiles\TOYMARKET.pubxml" />
     <Content Include="Views\Home\OneColumn.cshtml" />
     <Content Include="Views\Home\TwoColumnOne.cshtml" />
@@ -1644,6 +1649,7 @@
     <Content Include="Views\Product\Create.cshtml" />
     <Content Include="Views\Order\Create.cshtml" />
     <Content Include="Views\Inventory\Create.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -2718,6 +2724,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ProfileImages\" />
+    <Folder Include="Areas\Api\Models\" />
+    <Folder Include="Areas\Api\Views\Shared\" />
     <Folder Include="Areas\Common\Controllers\" />
     <Folder Include="Areas\Common\Models\" />
     <Folder Include="Areas\Common\Scripts\" />

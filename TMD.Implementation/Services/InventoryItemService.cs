@@ -40,14 +40,11 @@ namespace TMD.Implementation.Services
         private void UpdateProduct(InventoryItem inventoryItem)
         {
             var product = productRepository.Find(inventoryItem.ProductId);
-            if (product == null ||
-                (product.MinSalePriceAllowed == inventoryItem.MinSalePriceAllowed &&
-                 product.PurchasePrice == inventoryItem.PurchasePrice && product.SalePrice == inventoryItem.SalePrice))
+            if (product == null || (product.PurchasePrice == inventoryItem.PurchasePrice && product.SalePrice == inventoryItem.SalePrice))
                 return;
 
             product.PurchasePrice = inventoryItem.PurchasePrice;
             product.SalePrice = inventoryItem.SalePrice;
-            product.MinSalePriceAllowed = inventoryItem.MinSalePriceAllowed;
 
             productRepository.Update(product);
             productRepository.SaveChanges();
