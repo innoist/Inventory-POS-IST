@@ -20,13 +20,13 @@ function LoadProductByProductCode(control) {
     }
 }
 function ProductLoaded(data) {
-    if (data.ProductId > 0) {
     $.unblockUI();
     if (data.ProductId <= 0) {
         toastr.error("No Product found with given Code");
+
+        $("#btnInventoryItemSubmit").attr("disabled", true);
     } else {
         toastr.success("Product found successfully");
-    }
         $("#Barcode").val(data.ProductBarCode);
         $("#ProductName").val(data.Name);
         $("#SalePrice").val(data.SalePrice);
@@ -37,8 +37,6 @@ function ProductLoaded(data) {
 
         ShowProfit();
         $("#btnInventoryItemSubmit").attr("disabled", false);
-    } else {
-        $("#btnInventoryItemSubmit").attr("disabled", true);
     }
 }
 function LoadProductByBarCode() {
