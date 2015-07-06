@@ -3,6 +3,8 @@
 });
 function LoadProductByProductCode(control) {
     var productCode = $("#" + control.id).val();
+    $.blockUI({ message: '<h3><img src="../Images/loading.gif" height=55px; width=55px; /> Fetching Product...</h2>' });
+
     if (productCode != "" && productCode != "0") {
         $.ajax({
             url: "/Api/Product",
@@ -11,12 +13,19 @@ function LoadProductByProductCode(control) {
             dataType: "json",
             success: ProductLoaded,
             error: function (textStatus, errorThrown) {
+                $.unblockUI();
                 alert("Status: " + textStatus); alert("Error: " + errorThrown);
             }
         });
     }
 }
 function ProductLoaded(data) {
+    $.unblockUI();
+    if (data.ProductId <= 0) {
+        toastr.error("No Product found with given Code");
+    } else {
+        toastr.success("Product found successfully");
+    }
     $("#Barcode").val(data.ProductBarCode);
     $("#ProductName").val(data.Name);
     $("#SalePrice").val(data.SalePrice);
