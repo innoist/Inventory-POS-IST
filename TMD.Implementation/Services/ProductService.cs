@@ -13,12 +13,14 @@ namespace TMD.Implementation.Services
         private readonly IProductRepository productRepository;
         private readonly IInventoryItemRepositoy inventoryItemRepositoy;
         private readonly IOrderItemsRepository orderItemsRepository;
+        private readonly IProductCategoryRepository productCategoryRepository;
 
-        public ProductService(IProductRepository productRepository, IInventoryItemRepositoy inventoryItemRepositoy, IOrderItemsRepository orderItemsRepository)
+        public ProductService(IProductRepository productRepository, IInventoryItemRepositoy inventoryItemRepositoy, IOrderItemsRepository orderItemsRepository, IProductCategoryRepository productCategoryRepository)
         {
             this.productRepository = productRepository;
             this.inventoryItemRepositoy = inventoryItemRepositoy;
             this.orderItemsRepository = orderItemsRepository;
+            this.productCategoryRepository = productCategoryRepository;
         }
 
         public Product GetProduct(long productId)
@@ -52,6 +54,19 @@ namespace TMD.Implementation.Services
         public ProductSearchResponse GetProductSearchResponse(ProductSearchRequest searchRequest)
         {
             return productRepository.GetProductSearchResponse(searchRequest);
+        }
+
+        public ProductResponse GetProductResponse(long? productId)
+        {
+            ProductResponse responseResult = new ProductResponse();
+            if (productId != null)
+            {
+                var product = GetProduct((long)productId);
+                if (product != null)
+                    responseResult.Product = product;
+            }
+            responseResult.ProductCategories = productCategoryRepository.GetAll().ToList();
+            return responseResult;
         }
     }
 }

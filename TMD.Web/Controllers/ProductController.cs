@@ -73,15 +73,11 @@ namespace TMD.Web.Controllers
         public ActionResult Create(long? id)
         {
             ProductViewModel productViewModel=new ProductViewModel();
-            if (id!=null)
-            {
-                var product = productService.GetProduct((long)id);
-                if(product!=null)
-                    productViewModel.ProductModel = product.CreateFromServerToClient();
-            }
-            var categories=productCategoryService.GetAllProductCategories().ToList();
-            if (categories.Any())
-                productViewModel.ProductCategories = categories.Select(x => x.CreateFromServerToClient());
+            var responseResult = productService.GetProductResponse(id);
+            if (responseResult.ProductCategories.Any())
+                productViewModel.ProductCategories = responseResult.ProductCategories.Select(x => x.CreateFromServerToClient());
+            if (responseResult.Product != null)
+                productViewModel.ProductModel = responseResult.Product.CreateFromServerToClient();
             return View(productViewModel);
         }
 

@@ -58,7 +58,7 @@
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.ProductModel.SalePrice, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.SalePrice, new { @class = "form-control input-circle mandatory", @id = "SalePrice", @onchange = "ShowProfit();" })
+                        @Html.TextBoxFor(m => m.ProductModel.SalePrice, new { @class = "form-control input-circle mandatory", @id = "SalePrice", @onchange = "SetMinSalePrice();ShowProfit();" })
                         @Html.ValidationMessageFor(model => model.ProductModel.SalePrice)
                     </div>
 
@@ -71,7 +71,8 @@
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.ProductModel.MinSalePriceAllowed, new { @class = "col-md-3 control-label" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.MinSalePriceAllowed, new { @class = "form-control input-circle" })
+                        @Html.TextBoxFor(m => m.ProductModel.MinSalePriceAllowed, new { @class = "form-control input-circle", @id = "MinSalePriceAllowed" })
+                        @Html.ValidationMessageFor(model => model.ProductModel.MinSalePriceAllowed)
                     </div>
                 </div>
                 
@@ -103,4 +104,7 @@
             ShowProfit();
         }
     });
+    function SetMinSalePrice() {
+        $("#MinSalePriceAllowed").val($("#SalePrice").val());
+    }
 </script>

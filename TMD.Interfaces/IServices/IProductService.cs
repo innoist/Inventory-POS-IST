@@ -12,5 +12,6 @@ namespace TMD.Interfaces.IServices
         long SaveProduct(Product product);
         long GetAvailableProductItem(long productId);
         ProductSearchResponse GetProductSearchResponse(ProductSearchRequest searchRequest);
+        ProductResponse GetProductResponse(long? productId);
     }
 }

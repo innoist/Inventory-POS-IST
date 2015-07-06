@@ -17,22 +17,31 @@ function LoadProductByProductCode(control) {
     }
 }
 function ProductLoaded(data) {
-    $("#Barcode").val(data.ProductBarCode);
-    $("#ProductName").val(data.Name);
-    $("#SalePrice").val(data.SalePrice);
-    $("#PurchasePrice").val(data.PurchasePrice);
-    $("#ProductDescription").val(data.Comments);
-    $("#ProductId").val(data.ProductId);
-    $("#AvailableItems").val(data.AvailableItems);
+    if (data.ProductId > 0) {
+        $("#Barcode").val(data.ProductBarCode);
+        $("#ProductName").val(data.Name);
+        $("#SalePrice").val(data.SalePrice);
+        $("#PurchasePrice").val(data.PurchasePrice);
+        $("#ProductDescription").val(data.Comments);
+        $("#ProductId").val(data.ProductId);
+        $("#AvailableItems").val(data.AvailableItems);
 
-    ShowProfit();
+        ShowProfit();
+        $("#btnInventoryItemSubmit").attr("disabled", false);
+    } else {
+        $("#btnInventoryItemSubmit").attr("disabled", true);
+    }
 }
 function LoadProductByBarCode() {
     alert("product loaded");
 }
-function CalculateProfit(from,to) {
-    var profit=((to - from) / from) *100;
-    return profit > 0 ? profit.toFixed(2) : 0;
+function CalculateProfit(from, to) {
+    if (from > 0) {
+        var profit = ((to - from) / from) * 100;
+        return profit > 0 ? profit.toFixed(2) : 0;
+    } else {
+        return 0;
+    }
 }
 function ShowProfit() {
     var fromValue = parseInt($("#PurchasePrice").val());
