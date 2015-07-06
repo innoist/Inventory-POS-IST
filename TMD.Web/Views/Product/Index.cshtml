@@ -1,18 +1,20 @@
-﻿@model TMD.Web.ViewModels.ProductsListViewModel
+﻿@using System.Web.UI.WebControls
+@model TMD.Web.ViewModels.ProductsListViewModel
 @{
     ViewBag.Title = "Products";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    }
+    Session["MenuKey"] = 11;
+ }
 
-<header>
 
-    <h3 class="page-title">
-        Products
-    </h3>
-    @*<h3> <small><a href="~/Account/Create">Add New User</a></small></h3>*@
-</header>
 
 <div class="container-fluid">
+    <header>
+        <h3 class="page-title">
+            Products
+        </h3>
+        <h3> <small><a href="~/Product/Create">Add New Product</a></small></h3>
+    </header>
     <form class="form-horizontal">
         <div class="row-fluid">
             <div class="span12">
@@ -35,7 +37,6 @@
                                             <i class="fa fa-search"></i>
                                             @Html.TextBox("Barcode", @Model.SearchRequest.Barcode, new { @class = "searchInputs form-control", @id = "Barcode", @placeholder = "Barcode" })
                                         </div>
-
                                     </td>
                                     
                                     <td class="col-md-1">
@@ -44,24 +45,34 @@
                                     <td class="col-md-2">
                                         <div class="input-icon">
                                             <i class="fa fa-search"></i>
-                                            @Html.TextBox("Product Code", @Model.SearchRequest.ProductCode, new { @class = "searchInputs form-control", @id = "ProductCode", @placeholder = "Product Code" })
+                                            @Html.TextBox("Product Code", "", new { @class = "searchInputs form-control", @id = "ProductCode", @placeholder = "Product Code"})
+                                        </div>
+                                    </td>
+
+                                    <td class="col-md-1">
+                                        <label class="control-label"> Product Name </label>
+                                    </td>
+                                    <td class="col-md-2">
+                                        <div class="input-icon">
+                                            <i class="fa fa-search"></i>
+                                            @Html.TextBox("ProductName", "", new { @class = "searchInputs form-control", @id = "ProductName", @placeholder = "Product Name" })
                                           
                                         </div>
 
                                     </td>
+                                </tr>
+                                <tr style="height: 10px !important; "></tr>
+                                    <tr>
                                     <td class="col-md-1">
                                         <label class="control-label"> Category </label>
                                     </td>
                                     <td class="col-md-2">
                                         <div class="input-icon">
                                             <i class="fa fa-search"></i>
-                                            @Html.TextBox("AFASerial", @Model.SearchRequest.Category, new { @class = "searchInputs form-control", @id = "Category", @placeholder = "Category" })
-                                          
+                                            @Html.DropDownListFor(x => x.SearchRequest.Category, new SelectList(Model.ProductCategories, "CategoryId", "Name"), "Select Category", new { @class = "searchInputs form-control", @id = "Category" })
                                         </div>
-
                                     </td>
-                                </tr>
-                           <tr style="height: 10px !important; "></tr>
+                                    </tr>
                             </table>
                         </div>
                     </div>
@@ -146,11 +157,9 @@
                     params.ProductCode = $('#ProductCode').val();
                     params.Barcode = $('#Barcode').val();
                     params.Category = $('#Category').val();
-                    params.Name = $('#Name').val();
+                    params.Name = $('#ProductName').val();
                 }
-
             }
-
         });
         $('#btnFltr').on('click', function(e) {
             oTable.fnDraw();
@@ -160,7 +169,7 @@
             $('#ProductCode').val("");
             $('#Barcode').val("");
             $('#Category').val("");
-            $('#Name').val("");
+            $('#ProductName').val("");
             oTable.fnFilter('');
         });
     });

@@ -29,9 +29,12 @@ namespace TMD.Web.Controllers
             ProductSearchRequest searchRequest = Session["PageMetaData"] as ProductSearchRequest;
             Session["PageMetaData"] = null;
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+
+            var categories = productCategoryService.GetAllProductCategories().ToList();
             return View(new ProductsListViewModel
             {
-                SearchRequest = searchRequest ?? new ProductSearchRequest()
+                SearchRequest = searchRequest ?? new ProductSearchRequest(),
+                ProductCategories = categories.Any()?categories.Select(x=>x.CreateFromServerToClient()):new List<ProductCategoryModel>()
             });
         }
         [HttpPost]

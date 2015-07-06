@@ -11,13 +11,13 @@
                 //}
                 missingCounter++;
                 $(fields[i]).css('border-color', 'red');
-                inCompleteFields += ($(fields[i]).attr('id')+ (i+1 == fields.length ?"": ", "));
+                inCompleteFields += "<br/>"+($(fields[i]).attr('id') + (i + 1 == fields.length ? "" : ", "));
             }
             else
                 $(fields[i]).css('border-color', 'gainsboro');
         }
         if (missingCounter > 0) {
-            toastr.error("Please Enter Fields: " + inCompleteFields);
+            toastr.error("Please Enter Fields:" + inCompleteFields);
             //if (e != null) {
                
             //    e.preventDefault();

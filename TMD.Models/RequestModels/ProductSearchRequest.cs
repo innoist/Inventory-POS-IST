@@ -7,7 +7,7 @@ namespace TMD.Models.RequestModels
         public string Name { get; set; }
         public string Barcode { get; set; }
         public long ProductCode{ get; set; }
-        public string Category { get; set; }
+        public long Category { get; set; }
 
         public ProductByColumn ProductOrderBy
         {

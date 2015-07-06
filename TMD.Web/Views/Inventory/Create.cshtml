@@ -1,6 +1,7 @@
 ﻿@model TMD.Web.ViewModels.InventoryItemViewModel
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 11;
 }
 
 
@@ -13,7 +14,7 @@
                 @*<a href="javascript:;" class="collapse">
                     </a>*@
 
-                <button type="submit" class="btn btn-circle blue">Save</button>
+                <button type="submit" class="btn btn-circle blue" onclick="return(ValidateFields(event));">Save</button>
                 <a href="~/Inventory/Index">
                     <button type="button" class="btn btn-circle default">Cancel</button>
                 </a>
@@ -33,12 +34,12 @@
                 <div class="form-group margin-top-20">
                     @Html.Label("Vendor Barcode", new { @class = "col-md-3 control-label" })
                     <div class="col-md-4">
-                        @Html.TextBox("Barcode", null, new { @id = "Barcode", @class = "form-control input-circle mandatory", @onchange = "LoadProductByProductCode(this);" })
+                        @Html.TextBox("Barcode", null, new { @id = "Barcode", @class = "form-control input-circle", @onchange = "LoadProductByProductCode(this);" })
                     </div>
                     
                     @Html.Label("Name", new { @class = "col-md-1 control-label" })
                     <div class="col-md-3">
-                        @Html.TextBox("ProductName", null, new { @id = "ProductName", @class = "form-control input-circle mandatory", @readonly = true })
+                        @Html.TextBox("ProductName", null, new { @id = "ProductName", @class = "form-control input-circle", @readonly = true })
                     </div>
                 </div>
                 
@@ -50,7 +51,7 @@
                     </div>
                     @Html.Label("Description", new { @class = "col-md-1 control-label" })
                     <div class="col-md-3">
-                        @Html.TextArea("ProductDescription", null, new { @id = "ProductDescription", @class = "form-control input-circle mandatory", @readonly = true })
+                        @Html.TextArea("ProductDescription", null, new { @id = "ProductDescription", @class = "form-control input-circle", @readonly = true })
                     </div>
                 </div>
 
@@ -63,7 +64,7 @@
                     
                     @Html.Label("Available Stock", new { @class = "col-md-1 control-label" })
                     <div class="col-sm-2">
-                        @Html.TextBox("Stock", null, new { @id = "AvailableItems", @class = "form-control input-circle mandatory", @readonly = true })
+                        @Html.TextBox("Stock", null, new { @id = "AvailableItems", @class = "form-control input-circle", @readonly = true })
                     </div>
                 </div>
 
@@ -84,13 +85,13 @@
                     
                     @Html.Label("% Profit", new { @class = "col-md-1 control-label" })
                     <div class="col-md-2">
-                        @Html.TextBox("Profit", null, new { @id = "Profit", @class = "form-control input-circle mandatory", @readonly = true })
+                        @Html.TextBox("Profit", null, new { @id = "Profit", @class = "form-control input-circle", @readonly = true })
                     </div>
                 </div>
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.InventoryItem.VendorId, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.DropDownListFor(model => model.InventoryItem.VendorId, new SelectList(Model.Vendors, "VendorId", "Name"), "Select Vendor", new { @class = "form-control input-circle", @id = "Vendors" })
+                        @Html.DropDownListFor(model => model.InventoryItem.VendorId, new SelectList(Model.Vendors, "VendorId", "Name"), "Select Vendor", new { @class = "form-control input-circle mandatory", @id = "Vendors" })
                         @Html.ValidationMessageFor(model => model.InventoryItem.VendorId)
                     </div>
                     
@@ -106,7 +107,7 @@
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.InventoryItem.Comments, new { @class = "col-md-3 control-label " })
                     <div class="col-md-4">
-                        @Html.TextAreaFor(m => m.InventoryItem.Comments, new { @class = "form-control input-circle mandatory" })
+                        @Html.TextAreaFor(m => m.InventoryItem.Comments, new { @class = "form-control input-circle" })
                     </div>
                 </div>
 

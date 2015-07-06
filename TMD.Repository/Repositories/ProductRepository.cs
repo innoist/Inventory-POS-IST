@@ -37,7 +37,8 @@ namespace TMD.Repository.Repositories
                 {
                     {ProductByColumn.Code, c => c.ProductId},
                     {ProductByColumn.Name, c => c.Name},
-                    {ProductByColumn.Category, c => c.ProductCategory.Name}
+                    {ProductByColumn.Category, c => c.ProductCategory.Name},
+                    {ProductByColumn.SalePrice, c => c.SalePrice}
                 };
         #endregion
 
@@ -51,7 +52,7 @@ namespace TMD.Repository.Repositories
                             (searchRequest.ProductCode==0 || s.ProductId.Equals(searchRequest.ProductCode))
                             && (string.IsNullOrEmpty(searchRequest.Barcode) || s.ProductBarCode.Contains(searchRequest.Barcode))
                             && (string.IsNullOrEmpty(searchRequest.Name) || s.Name.Contains(searchRequest.Name))
-                            && (string.IsNullOrEmpty(searchRequest.Category) || s.ProductCategory.Name.Contains(searchRequest.Category))
+                            && (searchRequest.Category == 0 || s.CategoryId.Equals(searchRequest.Category))
                             )
 
 

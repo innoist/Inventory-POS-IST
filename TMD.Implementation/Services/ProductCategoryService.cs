@@ -22,7 +22,7 @@ namespace TMD.Implementation.Services
 
         public IEnumerable<ProductCategory> GetAllProductCategories()
         {
-            return productCategoryRepository.GetAll().ToList();
+            return productCategoryRepository.GetAll().OrderBy(x=>x.Name).ToList();
         }
     }
 }
