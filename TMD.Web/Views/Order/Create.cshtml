@@ -1,4 +1,5 @@
-﻿@model TMD.Web.Models.OrderModel
+﻿@using iTextSharp.text.pdf
+@model TMD.Web.Models.OrderModel
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
@@ -225,6 +226,7 @@
                                                 <th>
                                                     Sub Total
                                                 </th>
+                                                
 
                                                 <th>
                                                     Disc Amount
@@ -255,12 +257,13 @@
                                                     @Html.DisplayFor(model => model.OrderItems[i].Product.Name)
                                                 </td>
 
-                                                <td class="highlight">
-                                                    @Html.DisplayFor(model => model.OrderItems[i].Product.SalePrice)
-                                                </td>
+                                                    <td class="highlight">
+                                                        @Html.TextBoxFor(model => model.OrderItems[i].Product.SalePrice, new { @readOnly = "readOnly", @class = "TableTextBox" })
+                                                        
+                                                    </td>
                                                     <td>
 
-                                                        @Html.TextBoxFor(model => model.OrderItems[i].Quantity, new { @readOnly = "readOnly", @class = "TableTextBox" })
+                                                        @Html.TextBoxFor(model => model.OrderItems[i].Quantity, new { @class = "TableTextBox GridValueChange" })
                                                     </td>
                                                     <td>
 
@@ -268,18 +271,18 @@
                                                     </td>
                                                 <td>
 
-                                                    @Html.TextBoxFor(model => model.OrderItems[i].Discount, new { @readOnly = "readOnly", @class = "TableTextBox" })
+                                                    @Html.TextBoxFor(model => model.OrderItems[i].Discount, new { @class = "TableTextBox GridValueChange" })
                                                 </td>
 
-                                                <td>
-                                                    @Html.DisplayFor(model => model.OrderItems[i].TotalItemAmount)
-                                                    @*@Html.DisplayFor(model => model.OrderItems[i].)*@
-                                                </td>
+                                                    <td>
+                                                     @Html.TextBoxFor(model => model.OrderItems[i].TotalItemAmount, new { @readOnly = "readOnly", @class = "TableTextBox" })
+                                                               @*@Html.DisplayFor(model => model.OrderItems[i].TotalItemAmount)*@
+                                                               @*@Html.DisplayFor(model => model.OrderItems[i].)*@</td>
 
 
                                                 <td>
                                                     <a href="#" class="btn default btn-xs purple">
-                                                        <i class="fa fa-edit"></i> Edit
+                                                        <i class="fa fa-edit" onclick="EditRow()"></i> Edit
                                                     </a>
                                                 </td>
                                             </tr>
@@ -307,14 +310,14 @@
                                         Total Amount
                                     </div>
                                     <div class="col-sm-4 value">
-                                        <input readonly="readonly" class="form-control" disabled="disabled" type="text" id="TotalTotal" />
+                                        <input readonly="readonly" class="form-control" disabled="disabled" type="text" id="OrderTotal" />
                                         @*@Model.ToyGraderItemId*@
                                     </div>
                                     <div class="col-sm-2 name">
                                         Discount Rs
                                     </div>
                                     <div class="col-sm-4 value">
-                                        <input readonly="readonly" class="form-control" disabled="disabled" type="text" id="TotalDisc" />
+                                        <input readonly="readonly" class="form-control" disabled="disabled" type="text" id="OrderTotalDisc" />
                                     </div>
 
                                 </div>
@@ -324,7 +327,7 @@
                                         NET
                                     </div>
                                     <div class="col-md-10 value">
-                                        <input readonly="readonly" style="color:red" disabled="disabled" type="text" class="form-control" id="NetTotal" />
+                                        <input readonly="readonly" style="color:red" disabled="disabled" type="text" class="form-control" id="OrderNetTotal" />
                                         @*@Model.ToyGraderItemId*@
                                     </div>
 
@@ -338,14 +341,14 @@
                                         Amount Given
                                     </div>
                                     <div class="col-md-4 value">
-                                        <input type="text" class="form-control" id="AmountGiven" />
+                                        <input type="text" class="form-control" id="OrderAmountGiven" />
                                     </div>
 
                                     <div class="col-md-2 name">
                                         Return
                                     </div>
                                     <div class="col-md-4 value">
-                                        <input readonly="readonly" disabled="disabled" type="text" class="form-control" id="AmountReturn" />
+                                        <input readonly="readonly" disabled="disabled" type="text" class="form-control" id="OrderAmountReturn" />
                                     </div>
 
                                 </div>
@@ -386,10 +389,12 @@
                     '<td class="highlight">'+obj.itemName+'</td>' +
 
                     //Product Price
-                       '<td class="highlight">'+obj.salePrice+'</td>' +
+                      '<td class="highlight">' +
+                    '<input class="TableTextBox valid" name="OrderItems[' + index + '].Product.SalePrice" readonly="readOnly" type="text" value="' + obj.salePrice + '">' +
+                    '</td>' +
                     //Quantity
                     '<td class="highlight">' +
-                    '<input class="TableTextBox valid" name="OrderItems[' + index + '].Quantity" readonly="readOnly" type="text" value="' + obj.itemQty + '">' +
+                    '<input class="TableTextBox valid GridValueChange" name="OrderItems[' + index + '].Quantity"  type="text" value="' + obj.itemQty + '">' +
                     '</td>' +
 
                      //Sub Total
@@ -397,10 +402,12 @@
 
                      //Discount Amount
                      '<td class="highlight">' +
-                    '<input class="TableTextBox valid" name="OrderItems[' + index + '].Discount" readonly="readOnly" type="text" value="' + obj.itemDiscPrice + '">' +
+                    '<input class="TableTextBox valid GridValueChange" name="OrderItems[' + index + '].Discount"  type="text" value="' + obj.itemDiscPrice + '">' +
                     '</td>' +
                     //Total
-                       '<td class="highlight">' + obj.itemTotalprice + '</td>' +
+                       '<td class="highlight">' +
+                    '<input class="TableTextBox valid" name="OrderItems[' + index + '].TotalItemAmount" readonly="readOnly" type="text" value="' + obj.itemTotalprice + '">' +
+                    '</td>' +
                     
                     '<td>' +
                     '<a href="#" class="btn default btn-xs purple">' +
@@ -481,6 +488,22 @@
                 CalculateTotals();
             });
 
+
+            $('.GridValueChange').change(function(a, b) {
+                var counterID = $('#' + this.id).parent().parent().attr("data-id");
+                var qty = $('#OrderItems_' + counterID + '__Quantity').val();
+                
+                var price = $('#OrderItems_' + counterID + '__Product_SalePrice').val();
+                var discRS = $('#OrderItems_' + counterID + '__Discount').val();
+
+                var subTotal = price * qty;
+                $('#OrderItems_' + counterID + '__Subtotal').val(subTotal);
+
+                var Total = subTotal - discRS;
+                $('#OrderItems_' + counterID + '__TotalItemAmount').val(Total);
+              
+            });
+
             $('.calcDisc').change(function (a, b) {
                 var obj = new Object();
                 
@@ -494,7 +517,6 @@
                     obj.itemDiscPrice = Math.ceil(obj.itemSubTotal * (obj.itemDiscPerc / 100));
                     $('#ItemDiscPrice').val(obj.itemDiscPrice);
 
-
                 }
                else {
                     //Means Rs change
@@ -503,6 +525,12 @@
                 }
                 CalculateTotals();
             });
+
+
+            CalculateOrderTotals()
+            {
+                
+            }
 
            </script>
     </div>
