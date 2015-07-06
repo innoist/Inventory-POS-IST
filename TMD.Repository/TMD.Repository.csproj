@@ -136,6 +136,7 @@
     <Compile Include="Repositories\OrderItemsRepository.cs" />
     <Compile Include="Repositories\OrdersRepository.cs" />
     <Compile Include="Repositories\InventoryItemRepository.cs" />
+    <Compile Include="Repositories\ProductConfigurationRepository.cs" />
     <Compile Include="Repositories\VendorRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="Repositories\ProductCategoryRepository.cs" />

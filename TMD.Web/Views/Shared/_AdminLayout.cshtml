@@ -95,9 +95,6 @@
                             Accounts <span class="selected">
                             </span>
                         </a>
-
-                    </li>
-                    <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "4") ? "'classic-menu-dropdown active'" : "'classic-menu-dropdown'") >
                     </li>
 
                     <li  class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "4") ? "active" : "")>
@@ -118,20 +115,11 @@
                                 </a>
                             </li>
                         </ul>
-                        @*<a href="~/Admin/BatchImportLV">
-                Batch Import <span class="selected">
-                </span>
-            </a>*@
                     </li>
-                    <li class="classic-menu-dropdown">
-                        <a class="WhiteColor" data-toggle="dropdown" href="javascript:;">
-                            My Searches
-                        </a>
-
-                    </li>
-                    <li>
-                        <a class="WhiteColor" href="#" >
-                            News
+                    <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "3") ? "active" : "")>
+                        <a href="~/Configuration/Create" class="WhiteColor">
+                            Configuration <span class="selected">
+                            </span>
                         </a>
                     </li>
                 </ul>
