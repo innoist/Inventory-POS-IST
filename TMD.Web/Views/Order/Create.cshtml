@@ -49,7 +49,7 @@
                                     </div>
                                     <div class="col-md-2 value">
                                    
-                                        <input type="text" value="" class="form-control mandatoryItem" autofocus="autofocus" id="ItemCode" />
+                                        <input type="text" value="" class="form-control mandatoryItem" autofocus="autofocus" id="ItemCode" onchange="LoadProductByProductCode(this)" />
                                    
                                         <input type="hidden" value="" id="ItemId"/>
                                     </div>
@@ -77,9 +77,13 @@
                                     <div class="col-md-2 name">
                                         Total
                                     </div>
-                                    <div class="col-md-4 value">
+                                    <div class="col-md-2 value">
                                         <input tabindex="-1" type="text" value="" readonly="readonly" class="form-control mandatoryItem" id="TotalPrice" />
                                     </div>
+                                    <div class="col-md-2 value">
+                                        <label tabindex="-1" title="Items in Stock" class="form-control" id="itemInStoc"></label>
+                                    </div>
+
                                 </div>
 
 
@@ -101,14 +105,15 @@
                                     <div class="col-md-2 name">
                                         Grand TOTAL
                                     </div>
-                                    <div class="col-md-8 value">
+                                    <div class="col-md-7 value">
                                         <input type="text" tabindex="-1" readonly="readonly" value="" class="form-control mandatoryItem" id="GrandTotal" />
                                     </div>
 
                                     <div class="col-md-2 value">
                                         <button type="button" class="btn btn-circle red" id="addItem">Add Item</button>
                                     </div>
-
+                                    
+                                 
                                 </div>
 
 
@@ -244,7 +249,7 @@
                                                         @Html.HiddenFor(model => model.OrderItems[i].OrderItemId)
                                                 </td>
                                                 <td class="highlight">
-                                                    @Html.TextBoxFor(model => model.OrderItems[i].ProductId, new { @readOnly = "readOnly", @class = "TableTextBox" })
+                                                    @Html.TextBoxFor(model => model.OrderItems[i].ProductId, new { @readOnly = "readOnly", @class = "TableTextBox"})
                                                 </td>
                                                 <td class="hidden-xs">
                                                     @Html.DisplayFor(model => model.OrderItems[i].Product.Name)
@@ -356,7 +361,7 @@
             </div>
         </div>
         <script>
-
+            $(document).ajaxStop($.unblockUI);
             $(function () {
 
 
@@ -420,7 +425,41 @@
 
 
             }
-        </script>
+     
+        
+            function LoadProductByProductCode(control) {
+                var productCode = $("#" + control.id).val();
+                $.blockUI({ message: '<h3><img src="../Images/loading.gif" height=55px; width=55px; /> Fetching Product...</h2>' });
+                if (productCode != "" && productCode != "0") {
+                    $.ajax({
+                        url: "/Api/Product",
+                        type: "GET",
+                        data: { id: productCode },
+                        dataType: "json",
+                        success: ProductLoaded,
+                        error: function (textStatus, errorThrown) {
+                            $.unblockUI();
+                            alert("Status: " + textStatus); alert("Error: " + errorThrown);
+                        }
+                    });
+                }
+            }
+
+            function ProductLoaded(data) {
+             
+                $.unblockUI();
+                if (data.ProductId <= 0) {
+                    toastr.error("No Product found with given Code");
+                } else {
+                    toastr.success("Product found successfully");
+                }
+                $("#ItemName").val(data.Name);
+                $("#SalePrice").val(data.SalePrice);
+                $("#itemInStoc").val((data.AvailableItems-1) +"Left");
+                
+            }
+        
+           </script>
     </div>
 }
 
