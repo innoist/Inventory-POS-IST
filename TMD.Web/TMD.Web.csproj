@@ -304,6 +304,7 @@
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\UnauthorizedRequestController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
+    <Compile Include="Controllers\VendorController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1658,6 +1659,8 @@
     <Content Include="Views\Inventory\Index.cshtml" />
     <Content Include="Views\Configuration\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
+    <Content Include="Views\Vendor\Index.cshtml" />
+    <Content Include="Views\Vendor\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\images\bg01.jpg" />
