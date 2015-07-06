@@ -24,5 +24,12 @@ namespace TMD.Implementation.Services
         {
             return productCategoryRepository.GetAll().OrderBy(x=>x.Name).ToList();
         }
+
+        public long AddProductCategory(ProductCategory productCategory)
+        {
+            productCategoryRepository.Add(productCategory);
+            productCategoryRepository.SaveChanges();
+            return productCategory.CategoryId;
+        }
     }
 }

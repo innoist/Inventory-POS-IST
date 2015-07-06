@@ -7,5 +7,6 @@ namespace TMD.Interfaces.IServices
     {
         ProductCategory GetProductCategory(long productCategoryId);
         IEnumerable<ProductCategory> GetAllProductCategories();
+        long AddProductCategory(ProductCategory productCategory);
     }
 }

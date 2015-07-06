@@ -379,6 +379,7 @@
     <Compile Include="ViewModels\EbayItemViewModel.cs" />
     <Compile Include="ViewModels\InventoryItemViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
+    <Compile Include="ViewModels\ProductCategoryListViewModel.cs" />
     <Compile Include="ViewModels\ProductsListViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="Views\Shared\ES.Master.cs">
@@ -1650,6 +1651,7 @@
     <Content Include="Views\Order\Create.cshtml" />
     <Content Include="Views\Inventory\Create.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
+    <Content Include="Views\ProductCategory\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
