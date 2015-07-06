@@ -80,16 +80,12 @@ namespace TMD.Web.Controllers
         public ActionResult Create(long? id)
         {
             InventoryItemViewModel inventoryItemViewModel = new InventoryItemViewModel();
-            
-            if (id != null)
-            {
-                var inventoryItem = inventoryItemService.GetInventoryItem((long)id);
-                if (inventoryItem != null)
-                    inventoryItemViewModel.InventoryItem = inventoryItem.CreateFromServerToClient();
-            }
-            var vendors = vendorService.GetActiveVendors().ToList();
-            if (vendors.Any())
-                inventoryItemViewModel.Vendors = vendors.Select(x => x.CreateFromServerToClient());
+
+            var responseResult = inventoryItemService.GetInventoryItemResponse(id);
+            if (responseResult.Vendors.Any())
+                inventoryItemViewModel.Vendors = responseResult.Vendors.Select(x => x.CreateFromServerToClient());
+            if (responseResult.InventoryItem != null)
+                inventoryItemViewModel.InventoryItem = responseResult.InventoryItem.CreateFromServerToClient();
             return View(inventoryItemViewModel);
         }
 

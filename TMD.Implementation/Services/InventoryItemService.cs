@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using TMD.Interfaces.IRepository;
 using TMD.Interfaces.IServices;
 using TMD.Models.DomainModels;
@@ -11,11 +12,13 @@ namespace TMD.Implementation.Services
     {
         private readonly IInventoryItemRepositoy inventoryItemRepositoy;
         private readonly IProductRepository productRepository;
+        private readonly IVendorRepository vendorRepository;
 
-        public InventoryItemService(IInventoryItemRepositoy inventoryItemRepositoy,IProductRepository productRepository)
+        public InventoryItemService(IInventoryItemRepositoy inventoryItemRepositoy,IProductRepository productRepository, IVendorRepository vendorRepository)
         {
             this.inventoryItemRepositoy = inventoryItemRepositoy;
             this.productRepository = productRepository;
+            this.vendorRepository = vendorRepository;
         }
 
         public InventoryItem GetInventoryItem(long inventoryItemId)
@@ -30,7 +33,10 @@ namespace TMD.Implementation.Services
 
         public long AddInventoryItem(InventoryItem inventoryItem)
         {
-            inventoryItemRepositoy.Add(inventoryItem);
+            if (inventoryItem.ItemId>0)
+                inventoryItemRepositoy.Update(inventoryItem);
+            else
+                inventoryItemRepositoy.Add(inventoryItem);
             inventoryItemRepositoy.SaveChanges();
 
             //Update Product Price etc
@@ -47,7 +53,13 @@ namespace TMD.Implementation.Services
         public InventoryItemResponse GetInventoryItemResponse(long? inventoryItemId)
         {
             InventoryItemResponse inventoryItemResponse=new InventoryItemResponse();
-
+            if (inventoryItemId != null)
+            {
+                var inventoryItem = GetInventoryItem((long)inventoryItemId);
+                if (inventoryItem != null)
+                    inventoryItemResponse.InventoryItem = inventoryItem;
+            }
+            inventoryItemResponse.Vendors = vendorRepository.GetActiveVendors().ToList();
             return inventoryItemResponse;
         }
 
