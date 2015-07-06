@@ -331,3 +331,10 @@ body {
     background-color: white !important;
     background: none !important;
 }
+
+.TableTextBox {
+    border: 0px;
+  background-color: transparent;
+    width: 50px !important;
+  
+}

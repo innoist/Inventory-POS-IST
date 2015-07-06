@@ -28,6 +28,36 @@
     return true;
 }
 
+function ValidateFieldsByClass(ClassName) {
+    var missingCounter = 0;
+    var fields = $('.'+ClassName); //Array for all textboxes
+    var inCompleteFields = "";
+    for (var i = 0; i < fields.length; i++) {
+        var value = $(fields[i]).val();
+        if (value.toString().length == 0) {
+            //checking session
+            //if ((!document.getElementById("RoleName").value == "SuperAdmin") &&  ($(fields[i])[0].id == "ExpiryDate")){
+            //    continue;
+            //}
+            missingCounter++;
+            $(fields[i]).css('border-color', 'red');
+            inCompleteFields += "<br/>" + ($(fields[i]).attr('id') + (i + 1 == fields.length ? "" : ", "));
+        }
+        else
+            $(fields[i]).css('border-color', 'gainsboro');
+    }
+    if (missingCounter > 0) {
+        toastr.error("Please Enter Fields:" + inCompleteFields);
+        //if (e != null) {
+
+        //    e.preventDefault();
+        //}
+        return false;
+    }
+
+    return true;
+}
+
 function validateRadioButtons() {
     var radioButtons = $("input[type=radio]");
     var counter = -1;
