@@ -1,14 +1,33 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Web.Mvc;
+using TMD.Interfaces.IServices;
+using TMD.Models.RequestModels;
+using TMD.Web.ModelMappers;
 using TMD.Web.Models;
+using TMD.Web.ViewModels;
+using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
     public class ProductCategoryController : Controller
     {
+        private readonly IProductCategoryService productCategoryService;
+
+        public ProductCategoryController(IProductCategoryService productCategoryService)
+        {
+            this.productCategoryService = productCategoryService;
+        }
         // GET: ProductCategory
         public ActionResult Index()
         {
-            return View();
+            ProductCategorySearchRequest searchRequest = Session["PageMetaData"] as ProductCategorySearchRequest;
+            Session["PageMetaData"] = null;
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            return View(new ProductCategoryListViewModel
+            {
+                SearchRequest = searchRequest ?? new ProductCategorySearchRequest()                
+            });
         }
 
         // GET: ProductCategory/Details/5
@@ -29,7 +48,21 @@ namespace TMD.Web.Controllers
         {
             try
             {
-                // TODO: Add insert logic here
+                if (productCategory.CategoryId == 0)
+                {
+                    productCategory.RecCreatedBy = User.Identity.Name;
+                    productCategory.RecCreatedDate = DateTime.Now;
+                }
+                productCategory.RecLastUpdatedBy = User.Identity.Name;
+                productCategory.RecLastUpdatedDate = DateTime.Now;
+
+
+                if (productCategoryService.AddProductCategory(productCategory.CreateFromClientToServer()) > 0)
+                {
+                    //Product Saved
+                    TempData["message"] = new MessageViewModel { Message = "Product category has been saved successfully.", IsSaved = true };
+                }
+                
 
                 return RedirectToAction("Index");
             }
