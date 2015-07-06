@@ -12,7 +12,7 @@ namespace TMD.Web.Models
 
         [Required]
         [Display(Name = "Vendor")]
-        public int VendorId { get; set; }
+        public long VendorId { get; set; }
         public long Quantity { get; set; }
         public string RecCreatedBy { get; set; }
         public string RecLastUpdatedBy { get; set; }

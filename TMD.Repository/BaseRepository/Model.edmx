@@ -139,7 +139,7 @@
           </Key>
           <Property Name="ItemId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductId" Type="bigint" Nullable="false" />
-          <Property Name="VendorId" Type="int" Nullable="false" />
+          <Property Name="VendorId" Type="bigint" />
           <Property Name="Quantity" Type="bigint" Nullable="false" />
           <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
@@ -506,6 +506,18 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_InventoryItems_Vendors">
+          <End Role="Vendors" Type="Self.Vendors" Multiplicity="0..1" />
+          <End Role="InventoryItems" Type="Self.InventoryItems" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendors">
+              <PropertyRef Name="VendorId" />
+            </Principal>
+            <Dependent Role="InventoryItems">
+              <PropertyRef Name="VendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_OrderItems_Orders">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
           <End Role="OrderItems" Type="Self.OrderItems" Multiplicity="*" />
@@ -730,6 +742,10 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
             <End Role="Products" EntitySet="Products" />
             <End Role="InventoryItems" EntitySet="InventoryItems" />
           </AssociationSet>
+          <AssociationSet Name="FK_InventoryItems_Vendors" Association="Self.FK_InventoryItems_Vendors">
+            <End Role="Vendors" EntitySet="Vendors" />
+            <End Role="InventoryItems" EntitySet="InventoryItems" />
+          </AssociationSet>
           <AssociationSet Name="FK_OrderItems_Orders" Association="Self.FK_OrderItems_Orders">
             <End Role="Orders" EntitySet="Orders" />
             <End Role="OrderItems" EntitySet="OrderItems" />
@@ -913,6 +929,10 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           <AssociationSet Name="FK_Orders_Customer" Association="TMD.Models.DomainModels.FK_Orders_Customer">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_InventoryItems_Vendors" Association="TMD.Models.DomainModels.FK_InventoryItems_Vendors">
+            <End Role="Vendor" EntitySet="Vendors" />
+            <End Role="InventoryItem" EntitySet="InventoryItems" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AspNetRole">
@@ -1319,7 +1339,7 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           </Key>
           <Property Name="ItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProductId" Type="Int64" Nullable="false" />
-          <Property Name="VendorId" Type="Int32" Nullable="false" />
+          <Property Name="VendorId" Type="Int64" />
           <Property Name="Quantity" Type="Int64" Nullable="false" />
           <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
@@ -1331,6 +1351,7 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           <Property Name="PurchasePrice" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
           <Property Name="SalePrice" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
           <Property Name="MinSalePriceAllowed" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <NavigationProperty Name="Vendor" Relationship="TMD.Models.DomainModels.FK_InventoryItems_Vendors" FromRole="InventoryItem" ToRole="Vendor" />
         </EntityType>
         <EntityType Name="OrderItem">
           <Key>
@@ -1445,6 +1466,7 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="InventoryItems" Relationship="TMD.Models.DomainModels.FK_InventoryItems_Vendors" FromRole="Vendor" ToRole="InventoryItem" />
         </EntityType>
         <EntityType Name="ProductConfiguration">
           <Key>
@@ -1614,6 +1636,18 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
             </Principal>
             <Dependent Role="Order">
               <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_InventoryItems_Vendors">
+          <End Type="TMD.Models.DomainModels.Vendor" Role="Vendor" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.InventoryItem" Role="InventoryItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendor">
+              <PropertyRef Name="VendorId" />
+            </Principal>
+            <Dependent Role="InventoryItem">
+              <PropertyRef Name="VendorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2079,6 +2113,7 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
         <AssociationConnector Association="TMD.Models.DomainModels.FK_InventoryItems_Products" ManuallyRouted="false" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Products_ProductCategory" ManuallyRouted="false" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Orders_Customer" ManuallyRouted="false" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_InventoryItems_Vendors" />
       </Diagram>
     </Diagrams>
   </Designer>
