@@ -37,9 +37,16 @@ namespace TMD.Web.Controllers
         }
 
         // GET: ProductCategory/Create
-        public ActionResult Create()
+        public ActionResult Create(long? id)
         {
-            return View();
+            ProductCategoryModel model = new ProductCategoryModel();
+            if (id != null)
+            {
+                var product = productCategoryService.GetProductCategory((long)id);
+                if (product != null)
+                    model = product.CreateFromServerToClient();
+            }
+            return View(model);
         }
 
         // POST: ProductCategory/Create

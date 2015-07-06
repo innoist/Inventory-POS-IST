@@ -27,7 +27,11 @@ namespace TMD.Implementation.Services
 
         public long AddProductCategory(ProductCategory productCategory)
         {
-            productCategoryRepository.Add(productCategory);
+            if (productCategory.CategoryId > 0)
+                productCategoryRepository.Update(productCategory);
+            else
+                productCategoryRepository.Add(productCategory);
+            
             productCategoryRepository.SaveChanges();
             return productCategory.CategoryId;
         }
