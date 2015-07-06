@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
+using iTextSharp.text;
 using TMD.Interfaces.IServices;
 using TMD.Models.RequestModels;
 using TMD.Web.ModelMappers;
@@ -21,13 +23,8 @@ namespace TMD.Web.Controllers
         // GET: ProductCategory
         public ActionResult Index()
         {
-            ProductCategorySearchRequest searchRequest = Session["PageMetaData"] as ProductCategorySearchRequest;
-            Session["PageMetaData"] = null;
-            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
-            return View(new ProductCategoryListViewModel
-            {
-                SearchRequest = searchRequest ?? new ProductCategorySearchRequest()                
-            });
+            IEnumerable<ProductCategoryModel> categories = productCategoryService.GetAllProductCategories().Select(x=>x.CreateFromServerToClient());
+            return View(categories);
         }
 
         // GET: ProductCategory/Details/5

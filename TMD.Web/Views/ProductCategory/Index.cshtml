@@ -1,4 +1,4 @@
-﻿@model TMD.Web.ViewModels.ProductCategoryListViewModel
+﻿@model IEnumerable<TMD.Web.Models.ProductCategoryModel>
 @{
     ViewBag.Title = "Product Categories";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -7,62 +7,53 @@
 
 
 
+<header>
+
+    <h3 class="page-title">
+        Categories <small></small>
+    </h3>    
+</header>
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
 <div class="container-fluid">
-    <header>
-        <h3 class="page-title">
-            Products
-        </h3>
-        <h3> <small><a href="~/ProductCategory/Create">Add New Product Category</a></small></h3>
-    </header>
     <form class="form-horizontal">
         <div class="row-fluid">
             <div class="span12">
-                <div class="portlet-title">
-                    <div class="tools">
-                        <input type="button" class="btn green" id="btnFltr" value="Filter" />
-                        <input type="button" class="btn blue titleButton" id="btnResetFltr" value="Reset">
+                <div class="portlet box blue">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-cogs"></i>There are @(Model.Count()) Categories
+                        </div>
+                        <div class="tools">
+                            <a href="~/ProductCategory/Create" style="color:white !important; font-size: 16px; text-decoration: underline; ">Add New Category</a>
+                            <a href="javascript:;" class="collapse">
+                            </a>                           
+                        </div>
                     </div>
-                </div>
-                <div class="portlet-body form">
-                    <div class="form-actions">
-                        <div>
-                            <table class="responsive">
-                                <tr>
-                                    <td class="col-md-1">
-                                        <label class="control-label"> Name </label>
-                                    </td>
-                                    <td class="col-md-2">
-                                        <div class="input-icon">
-                                            <i class="fa fa-search"></i>
-                                            @Html.TextBox("Name", @Model.SearchRequest.Name, new { @class = "searchInputs form-control", @id = "Name", @placeholder = "Name" })
-                                        </div>
-                                    </td>
-                                    
-                                    <td class="col-md-1">
-                                        <label class="control-label"> Description </label>
-                                    </td>
-                                    <td class="col-md-2">
-                                        <div class="input-icon">
-                                            <i class="fa fa-search"></i>
-                                            @Html.TextBox("Description", "", new { @class = "searchInputs form-control", @id = "Description", @placeholder = "Description" })
-                                        </div>
-                                    </td>                                    
-                                </tr>
-                                <tr style="height: 10px !important; "></tr>                                    
+                    <div class="portlet-body">
+                        <div class="table-responsive">
+                            <table id="UserList" class="table table-striped table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Description</th>                                        
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@Html.ActionLink(@item.Name + " " + @item.Description, "Create", new { userName = item.Name }) </td>
+                                            <td>@item.Name</td>
+                                            <td>@item.Description</td>                                            
+                                        </tr>
+                                    }
+                                </tbody>
                             </table>
                         </div>
                     </div>
 
-                </div>
-                <div class="portlet box blue">
-                    <table id="dataTable" class="display" cellspacing="0" width="100%">
-                        <thead>
-                            <tr>
-                                <th class="tableHeaderWhite">Name</th>
-                                <th class="tableHeaderWhite">Description</th>                                
-                            </tr>
-                        </thead>                        
-                    </table>                 
                 </div>
             </div>
         </div>
@@ -70,68 +61,12 @@
 </div>
 
 <script type="text/javascript">
-
-    jQuery(document).ready(function($) {
-
-        var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
-        var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
-        var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
-
-        var oTable = $('#dataTable').dataTable({
-            "iDisplayLength": 11,
-            "displayStart": start || 0,
+    $(document).ready(function () {
+        $('#UserList').dataTable({
+            "sPaginationType": "full_numbers",
+            "iDisplayLength": 10,
             "bFilter": false,
             "bLengthChange": false,
-            "aaSorting": [sortBy],
-            //"aoColumnDefs": [
-            //    { 'bSortable': false, 'aTargets': [0, 4, 5, 6] },
-            //    {
-            //        "targets": [0],
-            //        "visible": false,
-            //        "searchable": false
-            //    }
-            //],
-            "columns": [
-                { "data": "ProducCategorytId" },
-                { "data": "Name" },
-                { "data": "Description" }
-                //{
-                //    "orderable": false,
-                //    "data": null,
-                //    "defaultContent": "<a class='delete'  href='javascript:;'></a>",
-                //    "class": "textAlignRight"
-                //}
-            ],
-            "processing": true,
-            "serverSide": true,
-            "ajax": {
-                url: "/ProductCategory/Index",
-                type: "POST",
-                dataType: "json",
-                data: function(params) {
-                    params.PageNo = Math.ceil(params.start / params.length) + 1;
-                    if (params.PageNo === 0) {
-                        params.PageNo = 1;
-                    }
-                    params.PageSize = params.length;
-                    params.SortBy = params.order[0].column;
-                    params.IsAsc = params.order[0].dir === "asc";
-                    
-                    params.Name = $('#Name').val();
-                    params.Description = $('#Description').val();
-                }
-            }
-        });
-        $('#btnFltr').on('click', function(e) {
-            oTable.fnDraw();
-        });
-
-        $('#btnResetFltr').on('click', function(e) {
-            $('#Name').val("");
-            $('#Description').val("");           
-            oTable.fnFilter('');
         });
     });
-
-    function fnActivityComplete(data, e) {}
 </script>
