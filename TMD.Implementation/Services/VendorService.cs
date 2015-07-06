@@ -5,7 +5,7 @@ using TMD.Models.DomainModels;
 
 namespace TMD.Implementation.Services
 {
-    public class VendorService:IVendorService
+    public class VendorService : IVendorService
     {
         private readonly IVendorRepository vendorRepository;
 
@@ -16,7 +16,7 @@ namespace TMD.Implementation.Services
 
         public Vendor GetVendor(long vendorId)
         {
-           return vendorRepository.Find(vendorId);
+            return vendorRepository.Find(vendorId);
         }
 
         public IEnumerable<Vendor> GetAllVendors()
@@ -28,5 +28,17 @@ namespace TMD.Implementation.Services
         {
             return vendorRepository.GetActiveVendors();
         }
+
+        public long AddVendor(Vendor vendor)
+        {
+            if (vendor.VendorId > 0)
+                vendorRepository.Update(vendor);
+            else
+                vendorRepository.Add(vendor);
+
+            vendorRepository.SaveChanges();
+            return vendor.VendorId;
+        }
     }
 }
+
