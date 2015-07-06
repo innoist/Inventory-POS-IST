@@ -72,7 +72,7 @@
                                         Quantity
                                     </div>
                                     <div class="col-md-4 value">
-                                        <input tabindex="-1" type="text" value="1" class="form-control" id="ItemQty" />
+                                        <input tabindex="-1" type="text" value="1" class="form-control calcPrice" id="ItemQty" />
                                     </div>
                                     <div class="col-md-2 name">
                                         Total
@@ -81,7 +81,7 @@
                                         <input tabindex="-1" type="text" value="" readonly="readonly" class="form-control mandatoryItem" id="TotalPrice" />
                                     </div>
                                     <div class="col-md-2 value">
-                                        <label tabindex="-1" title="Items in Stock" class="form-control" id="itemInStoc"></label>
+                                        <label tabindex="-1" title="Items in Stock"  style="font-style: italic" class="form-control" id="itemInStock"></label>
                                     </div>
 
                                 </div>
@@ -92,13 +92,13 @@
                                         Disc %
                                     </div>
                                     <div class="col-md-4 value">
-                                        <input tabindex="-1" type="text" value="0" class="form-control" id="ItemDiscPerc" />
+                                        <input tabindex="-1" type="text" value="0" class="form-control calcDisc" id="ItemDiscPerc" />
                                     </div>
                                     <div class="col-md-2 name">
                                         Disc Rs
                                     </div>
                                     <div class="col-md-4 value">
-                                        <input tabindex="-1" type="text" value="0" class="form-control" id="ItemDiscPrice" />
+                                        <input tabindex="-1" type="text" value="0" class="form-control calcDisc" id="ItemDiscPrice" />
                                     </div>
                                 </div>
                                 <div class="row static-info">
@@ -367,6 +367,8 @@
 
             });
 
+
+        
             $('#addItem').on("click", function (event) {
                 
                 var index = $("#tblItemDetails").children("tbody").children("tr").length;
@@ -452,13 +454,56 @@
                     toastr.error("No Product found with given Code");
                 } else {
                     toastr.success("Product found successfully");
+
                 }
+             
                 $("#ItemName").val(data.Name);
                 $("#SalePrice").val(data.SalePrice);
-                $("#itemInStoc").val((data.AvailableItems-1) +"Left");
-                
+                $("#itemInStock").text((data.AvailableItems-1) +" Left");
+                CalculateTotals();
             }
         
+            function CalculateTotals() {
+
+                var obj = new Object();
+                obj.salePrice = $('#SalePrice').val();
+                obj.itemQty = $('#ItemQty').val();
+                obj.itemSubTotal = obj.salePrice * obj.itemQty;
+                obj.itemDiscPrice = $('#ItemDiscPrice').val();
+                obj.GrandTotal = obj.itemSubTotal - obj.itemDiscPrice;
+
+                $('#GrandTotal').val(obj.GrandTotal);
+                $('#TotalPrice').val(obj.itemSubTotal);
+            }
+
+            $('.calcPrice').change(function () {
+
+                CalculateTotals();
+            });
+
+            $('.calcDisc').change(function (a, b) {
+                var obj = new Object();
+                
+                obj.salePrice = $('#SalePrice').val();
+                obj.itemQty = $('#ItemQty').val();
+                obj.itemSubTotal = obj.salePrice * obj.itemQty;
+                obj.itemDiscPerc = $('#ItemDiscPerc').val();
+                obj.itemDiscPrice = $('#ItemDiscPrice').val();
+                if (this.id == "ItemDiscPerc") {
+                    //Means perc changes
+                    obj.itemDiscPrice = Math.ceil(obj.itemSubTotal * (obj.itemDiscPerc / 100));
+                    $('#ItemDiscPrice').val(obj.itemDiscPrice);
+
+
+                }
+               else {
+                    //Means Rs change
+                    obj.itemDiscPerc = Math.round((obj.itemDiscPrice * 100) / obj.itemSubTotal, 1);
+                    $('#ItemDiscPerc').val(obj.itemDiscPerc);
+                }
+                CalculateTotals();
+            });
+
            </script>
     </div>
 }
