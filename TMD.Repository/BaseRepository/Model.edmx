@@ -220,9 +220,6 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           <Key>
             <PropertyRef Name="Id" />
             <PropertyRef Name="MaxAllowedDiscount" />
-            <PropertyRef Name="Emails" />
-            <PropertyRef Name="SecurityPassword" />
-            <PropertyRef Name="ProductCodePrefix" />
             <PropertyRef Name="RecCreatedDate" />
             <PropertyRef Name="RecLastUpdatedDate" />
             <PropertyRef Name="RecCreatedBy" />
@@ -230,9 +227,9 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           </Key>
           <Property Name="Id" Type="bigint" Nullable="false" />
           <Property Name="MaxAllowedDiscount" Type="tinyint" Nullable="false" />
-          <Property Name="Emails" Type="nvarchar(max)" Nullable="false" />
-          <Property Name="SecurityPassword" Type="nvarchar" MaxLength="100" Nullable="false" />
-          <Property Name="ProductCodePrefix" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Emails" Type="nvarchar(max)" />
+          <Property Name="SecurityPassword" Type="nvarchar" MaxLength="100" />
+          <Property Name="ProductCodePrefix" Type="nvarchar" MaxLength="20" />
           <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
           <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
@@ -884,7 +881,6 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           <EntitySet Name="Products" EntityType="TMD.Models.DomainModels.Product" />
           <EntitySet Name="StagingToyGraderItems" EntityType="TMD.Models.DomainModels.StagingToyGraderItem" />
           <EntitySet Name="Vendors" EntityType="TMD.Models.DomainModels.Vendor" />
-          <EntitySet Name="ProductConfigurations" EntityType="TMD.Models.DomainModels.ProductConfiguration" />
           <AssociationSet Name="FK_DataWarehouseFactSale_DataWarehouseDimComapany" Association="TMD.Models.DomainModels.FK_DataWarehouseFactSale_DataWarehouseDimComapany">
             <End Role="DataWarehouseDimComapany" EntitySet="DataWarehouseDimComapanies" />
             <End Role="DataWarehouseFactSale" EntitySet="DataWarehouseFactSales" />
@@ -934,6 +930,7 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
             <End Role="Vendor" EntitySet="Vendors" />
             <End Role="InventoryItem" EntitySet="InventoryItems" />
           </AssociationSet>
+          <EntitySet Name="ProductConfigurations" EntityType="TMD.Models.DomainModels.ProductConfiguration" />
           </EntityContainer>
         <EntityType Name="AspNetRole">
           <Key>
@@ -1468,29 +1465,6 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="InventoryItems" Relationship="TMD.Models.DomainModels.FK_InventoryItems_Vendors" FromRole="Vendor" ToRole="InventoryItem" />
         </EntityType>
-        <EntityType Name="ProductConfiguration">
-          <Key>
-            <PropertyRef Name="Id" />
-            <PropertyRef Name="MaxAllowedDiscount" />
-            <PropertyRef Name="Emails" />
-            <PropertyRef Name="SecurityPassword" />
-            <PropertyRef Name="ProductCodePrefix" />
-            <PropertyRef Name="RecCreatedDate" />
-            <PropertyRef Name="RecLastUpdatedDate" />
-            <PropertyRef Name="RecCreatedBy" />
-            <PropertyRef Name="RecLastUpdatedBy" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" />
-          <Property Name="MaxAllowedDiscount" Type="Byte" Nullable="false" />
-          <Property Name="Emails" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SecurityPassword" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ProductCodePrefix" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-        </EntityType>
         <Association Name="FK_DataWarehouseFactSale_DataWarehouseDimComapany">
           <End Type="TMD.Models.DomainModels.DataWarehouseDimComapany" Role="DataWarehouseDimComapany" Multiplicity="0..1" />
           <End Type="TMD.Models.DomainModels.DataWarehouseFactSale" Role="DataWarehouseFactSale" Multiplicity="*" />
@@ -1651,6 +1625,26 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ProductConfiguration">
+          <Key>
+            <PropertyRef Name="Id" />
+            <PropertyRef Name="MaxAllowedDiscount" />
+            <PropertyRef Name="RecCreatedDate" />
+            <PropertyRef Name="RecLastUpdatedDate" />
+            <PropertyRef Name="RecCreatedBy" />
+            <PropertyRef Name="RecLastUpdatedBy" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="MaxAllowedDiscount" Type="Byte" Nullable="false" />
+          <Property Name="Emails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ProductCodePrefix" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2011,22 +2005,6 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="ProductConfigurations">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductConfiguration">
-              <MappingFragment StoreEntitySet="ProductConfiguration">
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
-                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="ProductCodePrefix" ColumnName="ProductCodePrefix" />
-                <ScalarProperty Name="SecurityPassword" ColumnName="SecurityPassword" />
-                <ScalarProperty Name="Emails" ColumnName="Emails" />
-                <ScalarProperty Name="MaxAllowedDiscount" ColumnName="MaxAllowedDiscount" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.Customer">
               <MappingFragment StoreEntitySet="Customer">
@@ -2039,6 +2017,22 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
                 <ScalarProperty Name="Address" ColumnName="Address" />
                 <ScalarProperty Name="Phone" ColumnName="Phone" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductConfigurations">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductConfiguration">
+              <MappingFragment StoreEntitySet="ProductConfiguration">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="ProductCodePrefix" ColumnName="ProductCodePrefix" />
+                <ScalarProperty Name="SecurityPassword" ColumnName="SecurityPassword" />
+                <ScalarProperty Name="Emails" ColumnName="Emails" />
+                <ScalarProperty Name="MaxAllowedDiscount" ColumnName="MaxAllowedDiscount" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -2089,7 +2083,6 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Product" Width="1.5" PointX="12" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.StagingToyGraderItem" Width="1.5" PointX="5.25" PointY="14.875" IsExpanded="true" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Vendor" Width="1.5" PointX="0.75" PointY="12.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductConfiguration" Width="1.5" PointX="9.75" PointY="14.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Customer" Width="1.5" PointX="12.75" PointY="2.25" IsExpanded="true" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_dbo_AspNetUserLogins_dbo_AspNetUsers_UserId" ManuallyRouted="false" />
@@ -2114,6 +2107,7 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Products_ProductCategory" ManuallyRouted="false" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Orders_Customer" ManuallyRouted="false" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_InventoryItems_Vendors" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductConfiguration" Width="1.5" PointX="10.375" PointY="14.75" />
       </Diagram>
     </Diagrams>
   </Designer>
