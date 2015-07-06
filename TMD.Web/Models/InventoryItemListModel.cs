@@ -8,7 +8,7 @@
         public long VendorId { get; set; }
         public string VendorName { get; set; }
         public long Quantity { get; set; }
-        public System.DateTime PurchasingDate { get; set; }
+        public string PurchasingDate { get; set; }
         public decimal PurchasePrice { get; set; }
         public decimal SalePrice { get; set; }
     }

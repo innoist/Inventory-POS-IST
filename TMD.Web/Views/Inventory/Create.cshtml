@@ -101,7 +101,7 @@
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.InventoryItem.PurchasingDate, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.InventoryItem.PurchasingDate,"{0:d}", new { @class = "form-control input-circle mandatory datepicker" })
+                        @Html.TextBoxFor(m => m.InventoryItem.PurchasingDate, "{0:d}", new { @class = "form-control input-circle mandatory datepickerDefaultDate" })
                         @Html.ValidationMessageFor(model => model.InventoryItem.PurchasingDate)
                     </div>
                 </div>

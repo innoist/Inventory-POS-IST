@@ -89,7 +89,7 @@ function errorSaveAppointment(e, status) {
 }
 
 function validateEmail(email) {
-    debugger
+    
     var oEmail = $(email);
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     if (!emailReg.test(oEmail.val())) {
@@ -218,7 +218,12 @@ $(document).ready(function () {
         changeYear: true,
         maxDate:new Date()
     });
-    $(".datepicker").datepicker().datepicker("setDate", new Date());
+    $(".datepickerDefaultDate").datepicker({
+        changeMonth: true,
+        changeYear: true,
+        maxDate: new Date()
+    });
+    $(".datepickerDefaultDate").datepicker().datepicker("setDate", new Date());
     $(".datepickerGregorian").datepicker({
         changeMonth: true,
         changeYear: true,

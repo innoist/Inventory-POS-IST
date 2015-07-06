@@ -31,9 +31,13 @@ namespace TMD.Implementation.Services
             return productRepository.GetAll().ToList();
         }
 
-        public long AddProduct(Product product)
+        public long SaveProduct(Product product)
         {
-            productRepository.Add(product);
+            if(product.ProductId>0)
+                productRepository.Update(product);
+            else
+                productRepository.Add(product);
+            
             productRepository.SaveChanges();
             return product.ProductId;
         }

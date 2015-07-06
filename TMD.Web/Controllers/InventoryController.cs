@@ -33,12 +33,15 @@ namespace TMD.Web.Controllers
             Session["PageMetaData"] = null;
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
 
-            var vendors = vendorService.GetActiveVendors().ToList();
-            return View(new InventoryItemsListViewModel
-            {
-                SearchRequest = searchRequest ?? new InventoryItemSearchRequest(),
-                Vendors = vendors.Any() ? vendors.Select(x => x.CreateFromServerToClient()) : new List<VendorModel>()
-            });
+            var vendors = vendorService.GetAllVendors().ToList();
+            var viewModel = new InventoryItemsListViewModel();
+
+            viewModel.SearchRequest = searchRequest ?? new InventoryItemSearchRequest();
+            viewModel.Vendors = vendors.Any()
+                ? vendors.Select(x => x.CreateFromServerToClient())
+                : new List<VendorModel>();
+            
+            return View(viewModel);
         }
         [HttpPost]
         public ActionResult Index(InventoryItemSearchRequest searchRequest)
@@ -49,8 +52,8 @@ namespace TMD.Web.Controllers
                 InventoryItemSearchResponse searchResponse = inventoryItemService.GetInventoryItemSearchResponse(searchRequest);
 
                 var resultData = searchResponse.InventoryItems.Any()
-                    ? searchResponse.InventoryItems.Select(x => x.CreateFromServerToClient()).ToList()
-                    : new List<InventoryItemModel>();
+                    ? searchResponse.InventoryItems.Select(x => x.CreateListServerToClient()).ToList()
+                    : new List<InventoryItemListModel>();
 
                 viewModel.data = resultData;
                 viewModel.recordsTotal = searchResponse.TotalCount;
@@ -84,7 +87,7 @@ namespace TMD.Web.Controllers
                 if (inventoryItem != null)
                     inventoryItemViewModel.InventoryItem = inventoryItem.CreateFromServerToClient();
             }
-            var vendors = vendorService.GetAllVendors().ToList();
+            var vendors = vendorService.GetActiveVendors().ToList();
             if (vendors.Any())
                 inventoryItemViewModel.Vendors = vendors.Select(x => x.CreateFromServerToClient());
             return View(inventoryItemViewModel);

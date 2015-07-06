@@ -10,7 +10,7 @@ namespace TMD.Web.ViewModels
         {
             Vendors = new List<VendorModel>();
         }
-        public IEnumerable<InventoryItemModel> data { get; set; }
+        public IEnumerable<InventoryItemListModel> data { get; set; }
         public IEnumerable<VendorModel> Vendors { get; set; }
         /// <summary>
         /// Search Request

@@ -35,7 +35,7 @@
                                     <td class="col-md-2">
                                         <div class="input-icon">
                                             <i class="fa fa-search"></i>
-                                            @Html.TextBox("Barcode", @Model.SearchRequest.Barcode, new { @class = "searchInputs form-control", @id = "Barcode", @placeholder = "Barcode" })
+                                            @Html.TextBox("Barcode", "", new { @class = "searchInputs form-control", @id = "Barcode", @placeholder = "Barcode" })
                                         </div>
                                     </td>
                                     
@@ -126,7 +126,7 @@
             "bLengthChange": false,
             "aaSorting": [sortBy],
             "aoColumnDefs": [
-                { 'bSortable': false, 'aTargets': [4] },
+                { 'bSortable': false, 'aTargets': [5] },
                 //{
                 //    "targets": [0],
                 //    "visible": false,
@@ -135,9 +135,10 @@
             ],
             "columns": [
                 { "data": "ProductId" },
-                { "data": "Name" },
-                { "data": "CategoryId" },
-                { "data": "SalePrice" },
+                { "data": "ProductName" },
+                { "data": "Quantity" },
+                { "data": "VendorName" },
+                { "data": "PurchasingDate" },
                 {
                     "orderable": false,
                     "data": null,
@@ -148,7 +149,7 @@
             "processing": true,
             "serverSide": true,
             "ajax": {
-                url: "/Product/Index",
+                url: "/Inventory/Index",
                 type: "POST",
                 dataType: "json",
                 data: function(params) {
@@ -162,8 +163,9 @@
 
                     params.ProductCode = $('#ProductCode').val();
                     params.Barcode = $('#Barcode').val();
-                    params.Category = $('#Category').val();
+                    params.Vendor = $('#Vendor').val();
                     params.Name = $('#ProductName').val();
+                    params.PurchaseDate = $('#PurchaseDate').val();
                 }
             }
         });
@@ -174,8 +176,9 @@
         $('#btnResetFltr').on('click', function(e) {
             $('#ProductCode').val("");
             $('#Barcode').val("");
-            $('#Category').val("");
+            $('#Vendor').val("");
             $('#ProductName').val("");
+            $('#PurchaseDate').val("");
             oTable.fnFilter('');
         });
 
@@ -183,7 +186,7 @@
             e.preventDefault();
             var nRow = $(this).parents('tr')[0];
             var aData = oTable.fnGetData(nRow);
-            var siteUrl = '/Product/Create/' + aData.ProductId;
+            var siteUrl = '/Inventory/Create/' + aData.ItemId;
             $(location).attr('href', siteUrl);
 
         });

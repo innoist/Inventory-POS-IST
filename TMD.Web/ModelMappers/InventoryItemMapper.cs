@@ -53,12 +53,13 @@ namespace TMD.Web.ModelMappers
             {
                 ItemId = source.ItemId,
                 ProductId = source.ProductId,
+                ProductName = source.Product.Name,
                 Quantity = source.Quantity,
                 VendorId = source.VendorId,
                 VendorName = source.Vendor.Name,
                 PurchasePrice = source.PurchasePrice,
                 SalePrice = source.SalePrice,
-                PurchasingDate = source.PurchasingDate
+                PurchasingDate = source.PurchasingDate.ToShortDateString()
             };
         }
     }

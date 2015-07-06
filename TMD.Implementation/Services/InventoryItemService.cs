@@ -44,6 +44,13 @@ namespace TMD.Implementation.Services
             return inventoryItemRepositoy.GetInventoryItemSearchResponse(searchRequest);
         }
 
+        public InventoryItemResponse GetInventoryItemResponse(long? inventoryItemId)
+        {
+            InventoryItemResponse inventoryItemResponse=new InventoryItemResponse();
+
+            return inventoryItemResponse;
+        }
+
         private void UpdateProduct(InventoryItem inventoryItem)
         {
             var product = productRepository.Find(inventoryItem.ProductId);

@@ -59,7 +59,7 @@ namespace TMD.Repository.Repositories
                             && (searchRequest.Vendor == 0 || s.VendorId.Equals(searchRequest.Vendor))
                             && (string.IsNullOrEmpty(searchRequest.Barcode) || s.Product.ProductBarCode.Contains(searchRequest.Barcode))
                             && (string.IsNullOrEmpty(searchRequest.Name) || s.Product.Name.Contains(searchRequest.Name))
-                            && (searchRequest.PurchaseDate == null || DbFunctions.TruncateTime(s.PurchasingDate).Equals(DbFunctions.TruncateTime(searchRequest.PurchaseDate)))
+                            && (searchRequest.PurchaseDate == null || DbFunctions.TruncateTime(s.PurchasingDate)==searchRequest.PurchaseDate)
                             )
                         );
             IEnumerable<InventoryItem> result =

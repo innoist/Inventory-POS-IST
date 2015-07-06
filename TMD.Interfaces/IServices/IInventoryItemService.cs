@@ -11,5 +11,6 @@ namespace TMD.Interfaces.IServices
         IEnumerable<InventoryItem> GetAllInventoryItems();
         long AddInventoryItem(InventoryItem inventoryItem);
         InventoryItemSearchResponse GetInventoryItemSearchResponse(InventoryItemSearchRequest searchRequest);
+        InventoryItemResponse GetInventoryItemResponse(long? inventoryItemId);
     }
 }
