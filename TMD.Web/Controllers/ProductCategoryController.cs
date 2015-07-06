@@ -10,7 +10,7 @@ using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
-    public class ProductCategoryController : Controller
+    public class ProductCategoryController : BaseController
     {
         private readonly IProductCategoryService productCategoryService;
 
