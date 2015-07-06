@@ -23,5 +23,10 @@ namespace TMD.Implementation.Services
         {
             return vendorRepository.GetAll();
         }
+
+        public IEnumerable<Vendor> GetActiveVendors()
+        {
+            return vendorRepository.GetActiveVendors();
+        }
     }
 }

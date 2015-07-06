@@ -323,6 +323,7 @@
     <Compile Include="Models\AspNetUserModel.cs" />
     <Compile Include="Models\Common\BoolDropDownModel.cs" />
     <Compile Include="Models\CustomerModel.cs" />
+    <Compile Include="Models\InventoryItemListModel.cs" />
     <Compile Include="Models\InventoryItemModel.cs" />
     <Compile Include="Models\OrderItemModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
@@ -380,6 +381,7 @@
     <Compile Include="ViewModels\InventoryItemViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\ProductCategoryListViewModel.cs" />
+    <Compile Include="ViewModels\InventoryItemsListViewModel.cs" />
     <Compile Include="ViewModels\ProductsListViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="Views\Shared\ES.Master.cs">
@@ -1652,6 +1654,7 @@
     <Content Include="Views\Inventory\Create.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\ProductCategory\Index.cshtml" />
+    <Content Include="Views\Inventory\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

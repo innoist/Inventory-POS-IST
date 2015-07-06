@@ -1,6 +1,7 @@
 ﻿@model TMD.Web.ViewModels.InventoryItemViewModel
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var isEdit = (Model.InventoryItem != null && Model.InventoryItem.ItemId > 0); 
     Session["MenuKey"] = 11;
 }
 
@@ -39,7 +40,7 @@
                     
                     @Html.Label("Name", new { @class = "col-md-1 control-label" })
                     <div class="col-md-3">
-                        @Html.TextBox("ProductName", null, new { @id = "ProductName", @class = "form-control input-circle", @readonly = true })
+                        @Html.TextBox("ProductName", null, new { @id = "ProductName", @class = "form-control input-circle", @readonly = true, @tabindex = 100 })
                     </div>
                 </div>
                 
@@ -51,7 +52,7 @@
                     </div>
                     @Html.Label("Description", new { @class = "col-md-1 control-label" })
                     <div class="col-md-3">
-                        @Html.TextArea("ProductDescription", null, new { @id = "ProductDescription", @class = "form-control input-circle", @readonly = true })
+                        @Html.TextArea("ProductDescription", null, new { @id = "ProductDescription", @class = "form-control input-circle", @readonly = true, @tabindex = 100 })
                     </div>
                 </div>
 
@@ -64,7 +65,7 @@
                     
                     @Html.Label("Available Stock", new { @class = "col-md-1 control-label" })
                     <div class="col-sm-2">
-                        @Html.TextBox("Stock", null, new { @id = "AvailableItems", @class = "form-control input-circle", @readonly = true })
+                        @Html.TextBox("Stock", null, new { @id = "AvailableItems", @class = "form-control input-circle", @readonly = true, @tabindex = 100 })
                     </div>
                 </div>
 
@@ -85,7 +86,7 @@
                     
                     @Html.Label("% Profit", new { @class = "col-md-1 control-label" })
                     <div class="col-md-2">
-                        @Html.TextBox("Profit", null, new { @id = "Profit", @class = "form-control input-circle", @readonly = true })
+                        @Html.TextBox("Profit", null, new { @id = "Profit", @class = "form-control input-circle", @readonly = true, @tabindex = 100 })
                     </div>
                 </div>
                 <div class="form-group margin-top-20">
@@ -121,6 +122,8 @@
 <script src="~/Scripts/InventoryScripts.js"></script>
 <script>
     $(document).ready(function() {
-        ShowProfit();
+        if ('@isEdit') {
+            ShowProfit();
+        }
     });
 </script>
