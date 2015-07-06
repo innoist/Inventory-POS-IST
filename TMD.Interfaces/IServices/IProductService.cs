@@ -9,7 +9,7 @@ namespace TMD.Interfaces.IServices
     {
         Product GetProduct(long productId);
         IEnumerable<Product> GetAllProducts();
-        long AddProduct(Product product);
+        long SaveProduct(Product product);
         long GetAvailableProductItem(long productId);
         ProductSearchResponse GetProductSearchResponse(ProductSearchRequest searchRequest);
     }

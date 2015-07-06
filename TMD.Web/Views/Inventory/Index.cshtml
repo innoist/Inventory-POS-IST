@@ -1,7 +1,7 @@
 ﻿@using System.Web.UI.WebControls
-@model TMD.Web.ViewModels.ProductsListViewModel
+@model TMD.Web.ViewModels.InventoryItemsListViewModel
 @{
-    ViewBag.Title = "Products";
+    ViewBag.Title = "Inventory Items";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     Session["MenuKey"] = 11;
  }
@@ -13,7 +13,7 @@
         <h3 class="page-title">
             @ViewBag.Title
         </h3>
-        <h3> <small><a href="~/Product/Create">Add New Product</a></small></h3>
+        <h3> <small><a href="~/Inventory/Create">Add New Inventory</a></small></h3>
     </header>
     <form class="form-horizontal">
         <div class="row-fluid">
@@ -62,17 +62,27 @@
                                     </td>
                                 </tr>
                                 <tr style="height: 10px !important; "></tr>
-                                    <tr>
+                                <tr>
                                     <td class="col-md-1">
-                                        <label class="control-label"> Category </label>
+                                        <label class="control-label"> Vendor </label>
                                     </td>
                                     <td class="col-md-2">
                                         <div class="input-icon">
                                             <i class="fa fa-search"></i>
-                                            @Html.DropDownListFor(x => x.SearchRequest.Category, new SelectList(Model.ProductCategories, "CategoryId", "Name"), "Select Category", new { @class = "searchInputs form-control", @id = "Category" })
+                                            @Html.DropDownListFor(x => x.SearchRequest.Vendor, new SelectList(Model.Vendors, "VendorId", "Name"), "Select Vendor", new { @class = "searchInputs form-control", @id = "Vendor" })
                                         </div>
                                     </td>
-                                    </tr>
+                                    
+                                    <td class="col-md-1">
+                                        <label class="control-label"> Purchase Date </label>
+                                    </td>
+                                    <td class="col-md-2">
+                                        <div class="input-icon">
+                                            <i class="fa fa-search"></i>
+                                            @Html.TextBox("PurchaseDate", "", new { @class = "searchInputs form-control datepicker", @id = "PurchaseDate" })
+                                        </div>
+                                    </td>
+                                </tr>
                             </table>
                         </div>
                     </div>
@@ -84,8 +94,9 @@
                             <tr>
                                 <th class="tableHeaderWhite">Product Code</th>
                                 <th class="tableHeaderWhite">Name</th>
-                                <th class="tableHeaderWhite">Category</th>
-                                <th class="tableHeaderWhite">Sale Price</th>
+                                <th class="tableHeaderWhite">Quantity</th>
+                                <th class="tableHeaderWhite">Vendor</th>
+                                <th class="tableHeaderWhite">Purchase Date</th>
                        
                                 <th></th>
                             </tr>
@@ -115,7 +126,7 @@
             "bLengthChange": false,
             "aaSorting": [sortBy],
             "aoColumnDefs": [
-                { 'bSortable': false, 'aTargets': [4] },
+                { 'bSortable': false, 'aTargets': [5] },
                 //{
                 //    "targets": [0],
                 //    "visible": false,
@@ -124,9 +135,10 @@
             ],
             "columns": [
                 { "data": "ProductId" },
-                { "data": "Name" },
-                { "data": "CategoryId" },
-                { "data": "SalePrice" },
+                { "data": "ProductName" },
+                { "data": "Quantity" },
+                { "data": "VendorName" },
+                { "data": "PurchasingDate" },
                 {
                     "orderable": false,
                     "data": null,
@@ -137,7 +149,7 @@
             "processing": true,
             "serverSide": true,
             "ajax": {
-                url: "/Product/Index",
+                url: "/Inventory/Index",
                 type: "POST",
                 dataType: "json",
                 data: function(params) {
@@ -151,8 +163,9 @@
 
                     params.ProductCode = $('#ProductCode').val();
                     params.Barcode = $('#Barcode').val();
-                    params.Category = $('#Category').val();
+                    params.Vendor = $('#Vendor').val();
                     params.Name = $('#ProductName').val();
+                    params.PurchaseDate = $('#PurchaseDate').val();
                 }
             }
         });
@@ -163,8 +176,9 @@
         $('#btnResetFltr').on('click', function(e) {
             $('#ProductCode').val("");
             $('#Barcode').val("");
-            $('#Category').val("");
+            $('#Vendor').val("");
             $('#ProductName').val("");
+            $('#PurchaseDate').val("");
             oTable.fnFilter('');
         });
 
@@ -172,7 +186,7 @@
             e.preventDefault();
             var nRow = $(this).parents('tr')[0];
             var aData = oTable.fnGetData(nRow);
-            var siteUrl = '/Product/Create/' + aData.ProductId;
+            var siteUrl = '/Inventory/Create/' + aData.ItemId;
             $(location).attr('href', siteUrl);
 
         });

@@ -46,5 +46,21 @@ namespace TMD.Web.ModelMappers
                 RecLastUpdatedDate = source.RecLastUpdatedDate
             };
         }
+
+        public static InventoryItemListModel CreateListServerToClient(this InventoryItem source)
+        {
+            return new InventoryItemListModel
+            {
+                ItemId = source.ItemId,
+                ProductId = source.ProductId,
+                ProductName = source.Product.Name,
+                Quantity = source.Quantity,
+                VendorId = source.VendorId,
+                VendorName = source.Vendor.Name,
+                PurchasePrice = source.PurchasePrice,
+                SalePrice = source.SalePrice,
+                PurchasingDate = source.PurchasingDate.ToShortDateString()
+            };
+        }
     }
 }

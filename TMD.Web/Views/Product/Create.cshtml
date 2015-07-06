@@ -1,6 +1,7 @@
 ﻿@model TMD.Web.ViewModels.ProductViewModel
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    var isEdit = (Model.ProductModel != null && Model.ProductModel.ProductId > 0);
     Session["MenuKey"] = 11;
 }
 
@@ -14,7 +15,7 @@
                 @*<a href="javascript:;" class="collapse">
                     </a>*@
 
-                <button type="submit" class="btn btn-circle blue">Save</button>
+                <button type="submit" class="btn btn-circle blue" onclick="return(ValidateFields(event));">Save</button>
                 <a href="~/Product/Index">
                     <button type="button" class="btn btn-circle default">Cancel</button>
                 </a>
@@ -34,65 +35,59 @@
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.ProductModel.ProductBarCode, new { @class = "col-md-3 control-label" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.ProductBarCode, new { @class = "form-control input-circle mandatory" })
+                        @Html.TextBoxFor(m => m.ProductModel.ProductBarCode, new { @class = "form-control input-circle", @id="Barcode" })
                     </div>
                 </div>
-                
-                @*<div class="form-group margin-top-20">
-                    @Html.LabelFor(m => m.ProductModel.ProductCode, new { @class = "col-md-3 control-label requiredLabel" })
-                    <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.ProductCode, new { @class = "form-control input-circle mandatory" })
-                    </div>
-                   
-                </div>*@
 
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.ProductModel.Name, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.Name, new { @class = "form-control input-circle mandatory" })
+                        @Html.TextBoxFor(m => m.ProductModel.Name, new { @class = "form-control input-circle mandatory", @id = "ProductName" })
+                        @Html.ValidationMessageFor(model => model.ProductModel.Name)
                     </div>
-                    @Html.ValidationMessageFor(model => model.ProductModel.Name)
                 </div>
                 
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.ProductModel.PurchasePrice, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.PurchasePrice, new { @class = "form-control input-circle mandatory" })
+                        @Html.TextBoxFor(m => m.ProductModel.PurchasePrice, new { @class = "form-control input-circle mandatory", @id = "PurchasePrice", @onchange = "ShowProfit();" })
+                        @Html.ValidationMessageFor(model => model.ProductModel.PurchasePrice)
                     </div>
-                    @Html.ValidationMessageFor(model => model.ProductModel.PurchasePrice)
                 </div>
 
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.ProductModel.SalePrice, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.SalePrice, new { @class = "form-control input-circle mandatory" })
+                        @Html.TextBoxFor(m => m.ProductModel.SalePrice, new { @class = "form-control input-circle mandatory", @id = "SalePrice", @onchange = "ShowProfit();" })
+                        @Html.ValidationMessageFor(model => model.ProductModel.SalePrice)
                     </div>
 
                     @Html.Label("% Profit", new { @class = "col-md-1 control-label" })
                     <div class="col-md-2">
-                        @Html.TextBox("Profit",null, new { @class = "form-control input-circle mandatory" })
+                        @Html.TextBox("Profit", null, new { @class = "form-control input-circle", @readonly = true, @tabindex = 100 })
                     </div>
                 </div>
 
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.ProductModel.MinSalePriceAllowed, new { @class = "col-md-3 control-label" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.MinSalePriceAllowed, new { @class = "form-control input-circle mandatory" })
+                        @Html.TextBoxFor(m => m.ProductModel.MinSalePriceAllowed, new { @class = "form-control input-circle" })
                     </div>
                 </div>
                 
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.ProductModel.CategoryId, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.DropDownListFor(model => model.ProductModel.CategoryId, new SelectList(Model.ProductCategories, "CategoryId", "Name"),"Select Category", new { @class = "form-control input-circle", @id = "ProductCategories" })
+                        @Html.DropDownListFor(model => model.ProductModel.CategoryId, new SelectList(Model.ProductCategories, "CategoryId", "Name"), "Select Category", new { @class = "form-control input-circle mandatory", @id = "Category" })
+                        @Html.ValidationMessageFor(model => model.ProductModel.CategoryId)
                     </div>
-                    @Html.ValidationMessageFor(model => model.ProductModel.CategoryId)
+                    
                 </div>
 
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.ProductModel.Comments, new { @class = "col-md-3 control-label" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductModel.Comments, new { @class = "form-control input-circle mandatory" })
+                        @Html.TextBoxFor(m => m.ProductModel.Comments, new { @class = "form-control input-circle" })
                     </div>
                 </div>
             </div>
@@ -101,3 +96,11 @@
     </div>
 }
 
+<script src="~/Scripts/InventoryScripts.js"></script>
+<script>
+    $(document).ready(function () {
+        if ('@isEdit') {
+            ShowProfit();
+        }
+    });
+</script>

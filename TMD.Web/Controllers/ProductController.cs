@@ -105,7 +105,7 @@ namespace TMD.Web.Controllers
                     productViewModel.ProductModel.MinSalePriceAllowed =
                         productViewModel.ProductModel.SalePrice;
 
-                if (productService.AddProduct(productViewModel.ProductModel.CreateFromClientToServer()) > 0)
+                if (productService.SaveProduct(productViewModel.ProductModel.CreateFromClientToServer()) > 0)
                 {
                     //Product Saved
                     TempData["message"] = new MessageViewModel { Message = "Product has been saved successfully.", IsSaved = true };

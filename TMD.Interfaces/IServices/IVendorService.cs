@@ -7,5 +7,6 @@ namespace TMD.Interfaces.IServices
     {
         Vendor GetVendor(long vendorId);
         IEnumerable<Vendor> GetAllVendors();
+        IEnumerable<Vendor> GetActiveVendors();
     }
 }

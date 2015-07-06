@@ -1,4 +1,6 @@
-﻿namespace TMD.Models.DomainModels
+﻿using System.Collections.Generic;
+
+namespace TMD.Models.DomainModels
 {
     public class Vendor
     {
@@ -10,5 +12,6 @@
         public System.DateTime RecLastUpdatedDate { get; set; }
         public string RecCreatedBy { get; set; }
         public string RecLastUpdatedBy { get; set; }
+        public virtual ICollection<InventoryItem> InventoryItems { get; set; }
     }
 }

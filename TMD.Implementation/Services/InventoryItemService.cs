@@ -2,6 +2,8 @@
 using TMD.Interfaces.IRepository;
 using TMD.Interfaces.IServices;
 using TMD.Models.DomainModels;
+using TMD.Models.RequestModels;
+using TMD.Models.ResponseModels;
 
 namespace TMD.Implementation.Services
 {
@@ -35,6 +37,18 @@ namespace TMD.Implementation.Services
             UpdateProduct(inventoryItem);
 
             return inventoryItem.ItemId;
+        }
+
+        public InventoryItemSearchResponse GetInventoryItemSearchResponse(InventoryItemSearchRequest searchRequest)
+        {
+            return inventoryItemRepositoy.GetInventoryItemSearchResponse(searchRequest);
+        }
+
+        public InventoryItemResponse GetInventoryItemResponse(long? inventoryItemId)
+        {
+            InventoryItemResponse inventoryItemResponse=new InventoryItemResponse();
+
+            return inventoryItemResponse;
         }
 
         private void UpdateProduct(InventoryItem inventoryItem)

@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using TMD.Interfaces.IServices;
+using TMD.Models.RequestModels;
+using TMD.Models.ResponseModels;
 using TMD.Web.ModelMappers;
 using TMD.Web.Models;
 using TMD.Web.ViewModels;
@@ -26,7 +29,45 @@ namespace TMD.Web.Controllers
         // GET: Inventory
         public ActionResult Index()
         {
-            return View();
+            InventoryItemSearchRequest searchRequest = Session["PageMetaData"] as InventoryItemSearchRequest;
+            Session["PageMetaData"] = null;
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+
+            var vendors = vendorService.GetAllVendors().ToList();
+            var viewModel = new InventoryItemsListViewModel();
+
+            viewModel.SearchRequest = searchRequest ?? new InventoryItemSearchRequest();
+            viewModel.Vendors = vendors.Any()
+                ? vendors.Select(x => x.CreateFromServerToClient())
+                : new List<VendorModel>();
+            
+            return View(viewModel);
+        }
+        [HttpPost]
+        public ActionResult Index(InventoryItemSearchRequest searchRequest)
+        {
+            InventoryItemsListViewModel viewModel = new InventoryItemsListViewModel();
+            try
+            {
+                InventoryItemSearchResponse searchResponse = inventoryItemService.GetInventoryItemSearchResponse(searchRequest);
+
+                var resultData = searchResponse.InventoryItems.Any()
+                    ? searchResponse.InventoryItems.Select(x => x.CreateListServerToClient()).ToList()
+                    : new List<InventoryItemListModel>();
+
+                viewModel.data = resultData;
+                viewModel.recordsTotal = searchResponse.TotalCount;
+                viewModel.recordsFiltered = searchResponse.FilteredCount;
+
+                // Keep Search Request in Session
+                Session["PageMetaData"] = searchRequest;
+                return Json(viewModel, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception e)
+            {
+                TempData["message"] = new MessageViewModel { Message = "There is some problem, please try again.", IsError = true };
+                return View(viewModel);
+            }
         }
 
         // GET: Inventory/Details/5
@@ -46,7 +87,7 @@ namespace TMD.Web.Controllers
                 if (inventoryItem != null)
                     inventoryItemViewModel.InventoryItem = inventoryItem.CreateFromServerToClient();
             }
-            var vendors = vendorService.GetAllVendors().ToList();
+            var vendors = vendorService.GetActiveVendors().ToList();
             if (vendors.Any())
                 inventoryItemViewModel.Vendors = vendors.Select(x => x.CreateFromServerToClient());
             return View(inventoryItemViewModel);

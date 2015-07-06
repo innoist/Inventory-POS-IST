@@ -4,7 +4,7 @@
     {
         public long ItemId { get; set; }
         public long ProductId { get; set; }
-        public int VendorId { get; set; }
+        public long VendorId { get; set; }
         public long Quantity { get; set; }
         public string RecCreatedBy { get; set; }
         public string RecLastUpdatedBy { get; set; }
@@ -17,5 +17,6 @@
         public decimal MinSalePriceAllowed { get; set; }
 
         public virtual Product Product { get; set; }
+        public virtual Vendor Vendor { get; set; }
     }
 }
