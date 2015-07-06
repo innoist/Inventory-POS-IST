@@ -28,7 +28,11 @@ namespace TMD.Web.Models
         {
             get { return AmountGiven - Discount; }
         }
-
+        //Calculated field
+        public decimal Subtotal
+        {
+            get { return Quantity * SalePrice; }
+        }
         public ProductModel Product { get; set; }
     
     }

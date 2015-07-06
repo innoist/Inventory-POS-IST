@@ -48,7 +48,7 @@ namespace TMD.Web.Controllers
 
         // POST: ProductCategory/Create
         [HttpPost]
-        public ActionResult Create(ProductCategoryModel productCategory)
+        public ActionResult Create(OrderModel productCategory)
         {
             try
             {
