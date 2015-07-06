@@ -10,7 +10,7 @@ namespace TMD.Web.ModelMappers
             return new ProductCategory
             {
                 CategoryId = source.CategoryId,
-                Description = source.Description,
+                Description = string.IsNullOrEmpty(source.Description)?"":source.Description,
                 Name = source.Name,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
