@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TMD.Interfaces.IRepository;
 using TMD.Interfaces.IServices;
@@ -26,5 +27,24 @@ namespace TMD.Implementation.Services
         {
             throw new System.NotImplementedException();
         }
+
+
+        public long AddService(Order order)
+        {
+            try
+            {
+
+            
+            ordersRepository.Add(order);
+                ordersRepository.SaveChanges();
+            return order.OrderId;
+
+            }
+            catch (Exception e)
+            {
+
+                throw e;
+            }
+            }
     }
 }

@@ -7,5 +7,7 @@ namespace TMD.Interfaces.IServices
     {
         Order GetOrders(long orderId);
         IEnumerable<Order> GetAllOrders();
+
+        long AddService(Order order);
     }
 }
