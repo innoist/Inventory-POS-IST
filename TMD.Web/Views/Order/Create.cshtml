@@ -242,21 +242,21 @@
                                         <tbody>
                                             @for (int i = 0; i < Model.OrderItems.Count; i++)
                                             {
-                                                @Html.HiddenFor(model => model.OrderItems[i].OrderId,
-                                                    new { @class = "auto-resize ImageOrder", @hidden = "true", @id = "OrderId" })
+                                              
                                                 
                                                 
                                                 <tr data-id="@i">
+                                                    @Html.HiddenFor(model => model.OrderItems[i].OrderItemId )
                                                     <td style='display:none'>
                                                         <input name='OrderItems.Index' type='hidden' value='@i' />
                                                         @Html.HiddenFor(model => model.OrderItems[i].OrderItemId)
-                                                </td>
-                                                <td class="highlight">
-                                                    @Html.TextBoxFor(model => model.OrderItems[i].ProductId, new { @readOnly = "readOnly", @class = "TableTextBox"})
-                                                </td>
-                                                <td class="hidden-xs">
-                                                    @Html.DisplayFor(model => model.OrderItems[i].Product.Name)
-                                                </td>
+                                                    </td>
+                                                    <td class="highlight">
+                                                        @Html.TextBoxFor(model => model.OrderItems[i].ProductId, new { @readOnly = "readOnly", @class = "TableTextBox"})
+                                                    </td>
+                                                    <td class="hidden-xs">
+                                                        @Html.DisplayFor(model => model.OrderItems[i].Product.Name)
+                                                    </td>
 
                                                     <td class="highlight">
                                                         @Html.TextBoxFor(model => model.OrderItems[i].Product.SalePrice, new { @readOnly = "readOnly", @class = "TableTextBox" })
@@ -270,23 +270,20 @@
 
                                                         @Html.TextBoxFor(model => model.OrderItems[i].Subtotal, new { @readOnly = "readOnly", @class = "TableTextBox" })
                                                     </td>
-                                                <td>
+                                                    <td>
 
-                                                    @Html.TextBoxFor(model => model.OrderItems[i].Discount, new { @class = "TableTextBox GridValueChange" })
-                                                </td>
+                                                        @Html.TextBoxFor(model => model.OrderItems[i].Discount, new { @class = "TableTextBox GridValueChange" })
+                                                    </td>
 
                                                     <td>
-                                                     @Html.TextBoxFor(model => model.OrderItems[i].TotalItemAmount, new { @readOnly = "readOnly", @class = "TableTextBox" })
-                                                               @*@Html.DisplayFor(model => model.OrderItems[i].TotalItemAmount)*@
-                                                               @*@Html.DisplayFor(model => model.OrderItems[i].)*@</td>
+                                                        @Html.TextBoxFor(model => model.OrderItems[i].TotalItemAmount, new { @readOnly = "readOnly", @class = "TableTextBox" })
+                                                    </td>
+                                                  
 
-
-                                                <td>
-                                                    @*<a href="#" class="btn default btn-xs purple deleteRow">
-                                                        <i class="fa fa-trash-o"></i> Delete
-                                                    </a>*@
-                                                </td>
-                                            </tr>
+                                                    <td>
+                                                        @Html.HiddenFor(model=>model.OrderItems[i].IsModified)
+                                                    </td>
+                                                </tr>
                                             }
                                         </tbody>
                                     </table>
@@ -430,6 +427,7 @@
                     '<td>' +
                     '<a href="#" class="btn default btn-xs red deleteRow">' +
                     '<i class="fa fa-trash-o"  ></i> Delete </a> </td> ' +
+                    '<input id="OrderItems_'+index+'__IsModified" name="OrderItems['+index+'].IsModified" type="hidden" value="False">' +
                         '</tr>';
                     $('#tblItemDetails').append(html);
                     $('#TotalCount').val(++index);
@@ -459,7 +457,10 @@
      
             function ResetItemDetail() {
                 //var div = $('#OrderItemAddInfo');
-                $('#OrderItemAddInfo').find('input:text').val('');
+                $('#OrderItemAddInfo').find('input:text').val('0');
+                $('#OrderItemAddInfo').find('label').val('');
+                $('#ItemQty').val('1');
+                $('#ItemCode').val('');
 
             }
             function LoadProductByProductCode(control) {
@@ -522,10 +523,9 @@
                 
                 var price = $('#OrderItems_' + counterID + '__Product_SalePrice').val();
                 var discRS = $('#OrderItems_' + counterID + '__Discount').val();
-
+                $('#OrderItems_' + counterID + '__IsModified').val('True');
                 var subTotal = price * qty;
                 $('#OrderItems_' + counterID + '__Subtotal').val(subTotal);
-
                 var Total = subTotal - discRS;
                 $('#OrderItems_' + counterID + '__TotalItemAmount').val(Total);
                 CalculateOrderTotals();
@@ -566,7 +566,7 @@
               // var index = $("#tblItemDetails").children("tbody").children("tr").length; //Total for loop
               var index = $('#TotalCount').val();
                 for (i = 0; i < index; i++) {
-                    debugger
+                    
                     itemSubTotal += parseInt($('#OrderItems_' + i + '__Subtotal').val()) || 0;
                     itemDisc += parseInt($('#OrderItems_' + i + '__Discount').val()) || 0;
                     itemQtyTotal += parseInt($('#OrderItems_' + i + '__Quantity').val()) || 0;
@@ -580,7 +580,7 @@
 
             }
           function CalculateReturnAmount(agElement) {
-              debugger
+              
               var AmountPaid = $('#' + agElement.id).val();
               var NetTotal = $('#OrderNetTotal').val();
               var toGive = AmountPaid - NetTotal;

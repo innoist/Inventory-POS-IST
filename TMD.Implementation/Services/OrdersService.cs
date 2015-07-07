@@ -7,7 +7,7 @@ using TMD.Models.DomainModels;
 
 namespace TMD.Implementation.Services
 {
-    public class OrdersService:IOrdersService
+    public class OrdersService : IOrdersService
     {
         private readonly IOrdersRepository ordersRepository;
 
@@ -34,10 +34,10 @@ namespace TMD.Implementation.Services
             try
             {
 
-            
-            ordersRepository.Add(order);
+
+                ordersRepository.Add(order);
                 ordersRepository.SaveChanges();
-            return order.OrderId;
+                return order.OrderId;
 
             }
             catch (Exception e)
@@ -45,6 +45,24 @@ namespace TMD.Implementation.Services
 
                 throw e;
             }
+        }
+
+        public bool UpdateService(Order order)
+        {
+            try
+            {
+                ordersRepository.Update(order);
+                ordersRepository.SaveChanges();
+                return true;
             }
+            catch (Exception e)
+            {
+
+                throw e;
+                
+            }
+            return false;
+
+        }
     }
 }

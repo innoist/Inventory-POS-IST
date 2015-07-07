@@ -50,9 +50,9 @@ namespace TMD.Web.ModelMappers
 
                 Comments = source.Comments,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = DateTime.Now,
+                RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDate = DateTime.Now
+                RecLastUpdatedDate = source.RecLastUpdatedDate
                 
 
             };

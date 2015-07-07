@@ -8,9 +8,9 @@ namespace TMD.Implementation.Services
 {
     public class OrderItemsService:IOrderItemService
     {
-        private readonly IOrderItemService orderItemsRepository;
+        private readonly IOrderItemsRepository orderItemsRepository;
 
-        public OrderItemsService(IOrderItemService orderItemsRepository)
+        public OrderItemsService(IOrderItemsRepository orderItemsRepository)
         {
             this.orderItemsRepository = orderItemsRepository;
         }
@@ -27,6 +27,12 @@ namespace TMD.Implementation.Services
         public IEnumerable<OrderItem> GetAllOrderItems()
         {
             throw new System.NotImplementedException();
+        }
+
+
+        public OrderItem GetOrderItemById(long orderItemId)
+        {
+            return orderItemsRepository.Find(orderItemId);
         }
     }
 }

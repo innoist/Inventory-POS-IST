@@ -24,6 +24,8 @@ namespace TMD.Web.Models
         public string RecCreatedBy { get; set; }
         public string RecLastUpdatedBy { get; set; }
 
+        public bool IsModified { get; set; }
+
         public decimal TotalItemAmount
         {
             get { return AmountGiven - Discount; }

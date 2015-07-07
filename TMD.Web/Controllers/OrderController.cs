@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Activities.Expressions;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Web.Mvc;
 using TMD.Interfaces.IServices;
 using TMD.Models.DomainModels;
@@ -14,6 +15,8 @@ namespace TMD.Web.Controllers
     {
         private readonly IOrdersService orderService;
         private readonly IProductService productService;
+        private readonly IOrderItemService orderItemService;
+
         
         // GET: ProductCategory
         public ActionResult Index()
@@ -22,10 +25,11 @@ namespace TMD.Web.Controllers
             return View();
         }
 
-        public OrderController(IOrdersService orderService, IProductService productService)
+        public OrderController(IOrdersService orderService, IProductService productService, IOrderItemService orderItemService)
         {
             this.orderService = orderService;
             this.productService = productService;
+            this.orderItemService = orderItemService;
         }
 
         // GET: ProductCategory/Details/5
@@ -55,16 +59,23 @@ namespace TMD.Web.Controllers
         {
             try
             {
+                SetUserInfo(orderDetail);
                 // TODO: Add insert logic here
                 if (orderDetail.OrderId <= 0)
                 {
 
                     var order = orderDetail.CreateFromClientToServer();
-                    order.RecCreatedDate = order.RecLastUpdatedDate = DateTime.Now;
-                    order.RecCreatedBy = order.RecLastUpdatedBy = User.Identity.Name;
+                   
                     orderService.AddService(order);
                     //orderService.
                     //orderService.AddService()
+                }
+                else
+                {
+                    var order = orderDetail.CreateFromClientToServer();
+                    bool result = orderService.UpdateService(order);
+
+
                 }
                 return View();
 
@@ -77,12 +88,26 @@ namespace TMD.Web.Controllers
 
         private void SetUserInfo(OrderModel orderDetail)
         {
+               string name = User.Identity.Name;
             if (orderDetail.OrderId <= 0)
             {
                 orderDetail.RecCreatedDate = orderDetail.RecLastUpdatedDate = DateTime.Now;
-                string name = User.Identity.Name;
+
                 orderDetail.RecCreatedBy = orderDetail.RecLastUpdatedBy = name;
-                foreach (var item in orderDetail.OrderItems)
+
+            }
+            else
+            {
+                orderDetail.RecLastUpdatedDate = DateTime.Now;
+                orderDetail.RecLastUpdatedBy = User.Identity.Name;
+
+            }
+
+            List<OrderItemModel> NotUpdatedList = new List<OrderItemModel>();
+
+            foreach (var item in orderDetail.OrderItems)
+            {
+                if (item.OrderItemId <= 0)
                 {
                     item.RecCreatedDate = item.RecLastUpdatedDate = DateTime.Now;
                     item.RecCreatedBy = item.RecLastUpdatedBy = User.Identity.Name;
@@ -91,11 +116,32 @@ namespace TMD.Web.Controllers
                     item.MinSalePriceAllowed = product.MinSalePriceAllowed;
                     item.PurchasePrice = product.PurchasePrice;
                     item.SalePrice = product.SalePrice;
-                    
-
-
                 }
-                
+                else
+                {
+                    if (item.IsModified)
+                    {
+                        item.RecLastUpdatedBy = name;
+                        item.RecLastUpdatedDate = DateTime.Now;
+                        //FETCH FROM DB AND SET THE VALUES
+                        var orderItem = orderItemService.GetOrderItemById(item.OrderItemId);
+                        item.SalePrice = orderItem.SalePrice;
+                        item.PurchasePrice = orderItem.PurchasePrice;
+                        item.MinSalePriceAllowed = orderItem.MinSalePriceAllowed;
+                        item.RecCreatedBy = orderItem.RecCreatedBy;
+                        item.RecCreatedDate = orderItem.RecCreatedDate;
+                        item.OrderId = orderDetail.OrderId;
+
+                    }
+                    else
+                    {
+                        NotUpdatedList .Add(item);
+                    }
+                }
+            }
+            foreach (var orderItemModel in NotUpdatedList)
+            {
+                orderDetail.OrderItems.Remove(orderItemModel);
             }
 
         }
