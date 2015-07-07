@@ -10,61 +10,62 @@ using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
-    public class VendorController : Controller
+    public class CustomerController : Controller
     {
-        private readonly IVendorService vendorService;
+        private readonly ICustomerService customerService;
 
-        public VendorController(IVendorService vendorService)
+        public CustomerController(ICustomerService customerService)
         {
-            this.vendorService = vendorService;
+            this.customerService = customerService;
         }
         //
-        // GET: /Vendor/
+        // GET: /Customer/
         public ActionResult Index()
         {
             return View();
         }
 
         //
-        // GET: /Vendor/Details/5
+        // GET: /Customer/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
         //
-        // GET: /Vendor/Create
+        // GET: /Customer/Create
         public ActionResult Create(long? id)
         {
-            VendorModel model = new VendorModel();            
+            CustomerModel model = new CustomerModel();
             if (id != null)
             {
-                var vendor = vendorService.GetVendor((long)id);
-                if (vendor != null)
-                    model = vendor.CreateFromServerToClient();
+                var customer = customerService.GetCustomer((long)id);
+                if (customer != null)
+                    model = customer.CreateFromServerToClient();
             }
             return View(model);
         }
 
         //
-        // POST: /Vendor/Create
+        // POST: /Customer/Create
         [HttpPost]
-        public ActionResult Create(VendorModel vendor)
+        public ActionResult Create(CustomerModel customer)
         {
             try
             {
-                if (vendor.VendorId == 0)
+                if (customer.Id == 0)
                 {
-                    vendor.RecCreatedBy = User.Identity.Name;
-                    vendor.RecCreatedDate = DateTime.Now;
+                    customer.RecCreatedBy = User.Identity.Name;
+                    customer.RecCreatedDate = DateTime.Now;
                 }
-                vendor.RecLastUpdatedBy = User.Identity.Name;
-                vendor.RecLastUpdatedDate = DateTime.Now;
-                if (vendorService.AddVendor(vendor.CreateFromClientToServer()) > 0)
+                customer.RecLastUpdatedBy = User.Identity.Name;
+                customer.RecLastUpdatedDate = DateTime.Now;
+                if (customerService.AddCustomer(customer.CreateFromClientToServer()) > 0)
                 {
                     //Product Saved
-                    TempData["message"] = new MessageViewModel { Message = "Vendor has been saved successfully.", IsSaved = true };
+                    TempData["message"] = new MessageViewModel { Message = "Customer has been saved successfully.", IsSaved = true };
                 }
+
                 return RedirectToAction("Index");
             }
             catch
@@ -74,14 +75,14 @@ namespace TMD.Web.Controllers
         }
 
         //
-        // GET: /Vendor/Edit/5
+        // GET: /Customer/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
         //
-        // POST: /Vendor/Edit/5
+        // POST: /Customer/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -98,14 +99,14 @@ namespace TMD.Web.Controllers
         }
 
         //
-        // GET: /Vendor/Delete/5
+        // GET: /Customer/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
         //
-        // POST: /Vendor/Delete/5
+        // POST: /Customer/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {

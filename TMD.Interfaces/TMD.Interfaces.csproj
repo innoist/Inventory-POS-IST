@@ -59,6 +59,7 @@
     <Compile Include="IRepository\IOrdersRepository.cs" />
     <Compile Include="IRepository\IInventoryItemRepositoy.cs" />
     <Compile Include="IRepository\IProductConfigurationRepositoy.cs" />
+    <Compile Include="IRepository\ICustomerRepository.cs" />
     <Compile Include="IRepository\IVendorRepositoy.cs" />
     <Compile Include="IRepository\IProductRepositoy.cs" />
     <Compile Include="IRepository\IProductCategoryRepository.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="IServices\IOrdersService.cs" />
     <Compile Include="IServices\IInventoryItemService.cs" />
     <Compile Include="IServices\IProductConfigurationService.cs" />
+    <Compile Include="IServices\ICustomerService.cs" />
     <Compile Include="IServices\IVendorService.cs" />
     <Compile Include="IServices\IProductService.cs" />
     <Compile Include="IServices\IProductCategoryService.cs" />

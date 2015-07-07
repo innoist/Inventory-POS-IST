@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using TMD.Models.DomainModels;
+﻿using TMD.Models.DomainModels;
 using TMD.Web.Models;
 
 namespace TMD.Web.ModelMappers
@@ -18,6 +14,24 @@ namespace TMD.Web.ModelMappers
                Phone = source.Phone,
                Address =  source.Address,
                Email = source.Email,
+
+                Comments = source.Comments,
+
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDate = source.RecCreatedDate,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDate = source.RecLastUpdatedDate
+            };
+        }
+        public static Customer CreateFromClientToServer(this CustomerModel source)
+        {
+            return new Customer
+            {
+                Id = source.Id,
+                Name = source.Name,
+                Phone = source.Phone,
+                Address = source.Address,
+                Email = source.Email,
 
                 Comments = source.Comments,
 
