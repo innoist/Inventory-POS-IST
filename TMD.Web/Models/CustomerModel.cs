@@ -5,9 +5,9 @@ namespace TMD.Web.Models
     public class CustomerModel
     {
         public long Id { get; set; }
-        [Required]
+        //[Required]
         public string Name { get; set; }
-        [Required]
+        //[Required]
         public string Phone { get; set; }
         public string Address { get; set; }
         public string Email { get; set; }

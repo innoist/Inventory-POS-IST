@@ -140,14 +140,14 @@
                                         Phone
                                     </div>
                                     <div class="col-md-4 value">
-                                        @Html.TextBoxFor(m => m.Customer.Phone, new { @class = "form-control mandatory", @height = "24px", @placeholder = "Enter Phone Number" })
+                                        @Html.TextBoxFor(m => m.Customer.Phone, new { @class = "form-control", @height = "24px", @placeholder = "Enter Phone Number" })
                                         @*@Model.ToyGraderItemId*@
                                     </div>
                                     <div class="col-md-2 name">
                                         Name
                                     </div>
                                     <div class="col-md-4 value">
-                                        @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control mandatory", @height = "24px", @placeholder = "Enter Phone Number" })
+                                        @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control", @height = "24px", @placeholder = "Enter Phone Number" })
                                     </div>
 
                                 </div>
@@ -157,14 +157,14 @@
                                         Email
                                     </div>
                                     <div class="col-md-4 value">
-                                        @Html.TextBoxFor(m => m.Customer.Email, new { @class = "form-control mandatory", @height = "24px", @placeholder = "Enter Email" })
+                                        @Html.TextBoxFor(m => m.Customer.Email, new { @class = "form-control", @height = "24px", @placeholder = "Enter Email" })
                                         @*@Model.ToyGraderItemId*@
                                     </div>
                                     <div class="col-md-2 name">
                                         Address
                                     </div>
                                     <div class="col-md-4 value">
-                                        @Html.TextBoxFor(m => m.Customer.Address, new { @class = "form-control mandatory", @height = "24px", @placeholder = "Enter Address" })
+                                        @Html.TextBoxFor(m => m.Customer.Address, new { @class = "form-control", @height = "24px", @placeholder = "Enter Address" })
                                     </div>
 
                                 </div>
@@ -371,17 +371,17 @@
             $(document).ajaxStop($.unblockUI);
             $(function () {
 
-
+                CalculateOrderTotals();
             });
 
-            $(document).ready(function () {
-                $(window).keydown(function (event) {
-                    if (event.keyCode == 13) {
-                        event.preventDefault();
-                        return false;
-                    }
-                });
-            });
+            //$(document).ready(function () {
+            //    $(window).keydown(function (event) {
+            //        if (event.keyCode == 13) {
+            //            event.preventDefault();
+            //            return false;
+            //        }
+            //    });
+            //});
         
             $('#addItem').on("click", function (event) {
 

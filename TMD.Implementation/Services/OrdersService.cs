@@ -52,6 +52,7 @@ namespace TMD.Implementation.Services
             try
             {
                 ordersRepository.Update(order);
+                
                 ordersRepository.SaveChanges();
                 return true;
             }

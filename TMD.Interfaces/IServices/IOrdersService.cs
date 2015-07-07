@@ -10,5 +10,8 @@ namespace TMD.Interfaces.IServices
 
         long AddService(Order order);
         bool UpdateService(Order order);
+
+      
+
     }
 }

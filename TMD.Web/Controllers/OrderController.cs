@@ -73,9 +73,10 @@ namespace TMD.Web.Controllers
                 else
                 {
                     var order = orderDetail.CreateFromClientToServer();
-                    bool result = orderService.UpdateService(order);
-
-
+                    
+                    orderService.UpdateService(order);
+                    orderItemService.AddUpdateService(order);
+               
                 }
                 return View();
 

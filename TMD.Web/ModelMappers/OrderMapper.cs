@@ -39,7 +39,7 @@ namespace TMD.Web.ModelMappers
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
-                OrderItems = source.OrderItems.Select(x => x.CreateFromClientToServer()).ToList()
+                OrderItems = source.OrderItems.Select(x => x.CreateFromClientToServer(source.OrderId)).ToList()
             };
         }
     }
