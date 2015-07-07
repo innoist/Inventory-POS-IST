@@ -34,5 +34,28 @@ namespace TMD.Web.ModelMappers
                
             };
         }
+        public static OrderItem CreateFromClientToServer(this OrderItemModel source)
+        {
+            return new OrderItem
+            {
+                OrderItemId = source.OrderItemId,
+                OrderId = source.OrderId,
+                AmountGiven = source.AmountGiven,
+                Discount = source.Discount,
+                PurchasePrice = source.PurchasePrice,
+                ProductId = source.ProductId,
+                SalePrice = source.SalePrice,
+                MinSalePriceAllowed = source.MinSalePriceAllowed,
+                Quantity = source.Quantity,
+
+                Comments = source.Comments,
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDate = DateTime.Now,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDate = DateTime.Now
+                
+
+            };
+        }
     }
 }
