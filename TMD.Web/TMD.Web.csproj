@@ -315,6 +315,7 @@
     <Compile Include="ModelMappers\OrderItemMapper.cs" />
     <Compile Include="ModelMappers\OrderMapper.cs" />
     <Compile Include="ModelMappers\InventoryItemMapper.cs" />
+    <Compile Include="ModelMappers\ExpenseMapper.cs" />
     <Compile Include="ModelMappers\VendorMapper.cs" />
     <Compile Include="ModelMappers\ProductMapper.cs" />
     <Compile Include="ModelMappers\ProductCategoryMapper.cs" />
@@ -326,6 +327,8 @@
     <Compile Include="Models\AspNetUserModel.cs" />
     <Compile Include="Models\Common\BoolDropDownModel.cs" />
     <Compile Include="Models\CustomerModel.cs" />
+    <Compile Include="Models\ExpenseCategoryModel.cs" />
+    <Compile Include="Models\ExpenseModel.cs" />
     <Compile Include="Models\InventoryItemListModel.cs" />
     <Compile Include="Models\InventoryItemModel.cs" />
     <Compile Include="Models\OrderItemModel.cs" />
