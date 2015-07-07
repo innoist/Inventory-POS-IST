@@ -22,7 +22,8 @@ namespace TMD.Web.Controllers
         // GET: /Vendor/
         public ActionResult Index()
         {
-            return View();
+            IEnumerable<VendorModel> vendors = vendorService.GetAllVendors().Select(x => x.CreateFromServerToClient());
+            return View(vendors);
         }
 
         //
