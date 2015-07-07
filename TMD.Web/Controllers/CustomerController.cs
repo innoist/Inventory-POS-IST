@@ -22,7 +22,8 @@ namespace TMD.Web.Controllers
         // GET: /Customer/
         public ActionResult Index()
         {
-            return View();
+            IEnumerable<CustomerModel> customers = customerService.GetAllCustomers().Select(x=>x.CreateFromServerToClient());
+            return View(customers);
         }
 
         //
