@@ -35,7 +35,7 @@
                                     <td class="col-md-2">
                                         <div class="input-icon">
                                             <i class="fa fa-search"></i>
-                                            @Html.TextBox("Barcode", "", new { @class = "searchInputs form-control", @id = "Barcode", @placeholder = "Barcode" })
+                                            @Html.TextBox("Barcode", "", new { @class = "searchInputs form-control listFilter", @id = "Barcode", @placeholder = "Barcode" })
                                         </div>
                                     </td>
                                     
@@ -45,7 +45,7 @@
                                     <td class="col-md-2">
                                         <div class="input-icon">
                                             <i class="fa fa-search"></i>
-                                            @Html.TextBox("Product Code", "", new { @class = "searchInputs form-control", @id = "ProductCode", @placeholder = "Product Code"})
+                                            @Html.TextBox("Product Code", "", new { @class = "searchInputs form-control listFilter", @id = "ProductCode", @placeholder = "Product Code" })
                                         </div>
                                     </td>
 
@@ -55,7 +55,7 @@
                                     <td class="col-md-2">
                                         <div class="input-icon">
                                             <i class="fa fa-search"></i>
-                                            @Html.TextBox("ProductName", "", new { @class = "searchInputs form-control", @id = "ProductName", @placeholder = "Product Name" })
+                                            @Html.TextBox("ProductName", "", new { @class = "searchInputs form-control listFilter", @id = "ProductName", @placeholder = "Product Name" })
                                           
                                         </div>
 
@@ -69,7 +69,7 @@
                                     <td class="col-md-2">
                                         <div class="input-icon">
                                             <i class="fa fa-search"></i>
-                                            @Html.DropDownListFor(x => x.SearchRequest.Category, new SelectList(Model.ProductCategories, "CategoryId", "Name"), "Select Category", new { @class = "searchInputs form-control", @id = "Category" })
+                                            @Html.DropDownListFor(x => x.SearchRequest.Category, new SelectList(Model.ProductCategories, "CategoryId", "Name"), "Select Category", new { @class = "searchInputs form-control listFilter", @id = "Category" })
                                         </div>
                                     </td>
                                     </tr>
@@ -101,7 +101,13 @@
 </div>
 
 <script type="text/javascript">
-
+    jQuery(document).on('keyup', '.listFilter', function (ev) {
+        if (ev.which === 13) {
+            $('#btnFltr').click();
+            // Avoid form submit
+            return false;
+        }
+    });
     jQuery(document).ready(function($) {
 
         var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
