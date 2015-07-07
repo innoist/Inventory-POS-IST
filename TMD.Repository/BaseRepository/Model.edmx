@@ -214,18 +214,11 @@
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ProductConfiguration">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="MaxAllowedDiscount" />
-            <PropertyRef Name="RecCreatedDate" />
-            <PropertyRef Name="RecLastUpdatedDate" />
-            <PropertyRef Name="RecCreatedBy" />
-            <PropertyRef Name="RecLastUpdatedBy" />
           </Key>
-          <Property Name="Id" Type="bigint" Nullable="false" />
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MaxAllowedDiscount" Type="tinyint" Nullable="false" />
           <Property Name="Emails" Type="nvarchar(max)" />
           <Property Name="SecurityPassword" Type="nvarchar" MaxLength="100" />
@@ -679,26 +672,13 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
           <EntitySet Name="OrderItems" EntityType="Self.OrderItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductConfiguration" EntityType="Self.ProductConfiguration" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StagingEbayBatchImports" EntityType="Self.StagingEbayBatchImports" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StagingEbayItems" EntityType="Self.StagingEbayItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StagingToyGraderBatchImports" EntityType="Self.StagingToyGraderBatchImports" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StagingToyGraderItems" EntityType="Self.StagingToyGraderItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vendors" EntityType="Self.Vendors" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ProductConfiguration" EntityType="Self.ProductConfiguration" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [ProductConfiguration].[Id] AS [Id], 
-    [ProductConfiguration].[MaxAllowedDiscount] AS [MaxAllowedDiscount], 
-    [ProductConfiguration].[Emails] AS [Emails], 
-    [ProductConfiguration].[SecurityPassword] AS [SecurityPassword], 
-    [ProductConfiguration].[ProductCodePrefix] AS [ProductCodePrefix], 
-    [ProductConfiguration].[Comments] AS [Comments], 
-    [ProductConfiguration].[RecCreatedDate] AS [RecCreatedDate], 
-    [ProductConfiguration].[RecLastUpdatedDate] AS [RecLastUpdatedDate], 
-    [ProductConfiguration].[RecCreatedBy] AS [RecCreatedBy], 
-    [ProductConfiguration].[RecLastUpdatedBy] AS [RecLastUpdatedBy]
-    FROM [dbo].[ProductConfiguration] AS [ProductConfiguration]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_CategoryLog_Category" Association="Self.FK_CategoryLog_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="CategoryLog" EntitySet="CategoryLog" />
@@ -1628,13 +1608,8 @@ warning 6002: The table/view 'IstInventory.dbo.ProductConfiguration' does not ha
         <EntityType Name="ProductConfiguration">
           <Key>
             <PropertyRef Name="Id" />
-            <PropertyRef Name="MaxAllowedDiscount" />
-            <PropertyRef Name="RecCreatedDate" />
-            <PropertyRef Name="RecLastUpdatedDate" />
-            <PropertyRef Name="RecCreatedBy" />
-            <PropertyRef Name="RecLastUpdatedBy" />
           </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" />
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MaxAllowedDiscount" Type="Byte" Nullable="false" />
           <Property Name="Emails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="SecurityPassword" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
