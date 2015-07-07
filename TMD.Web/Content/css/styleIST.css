@@ -1,7 +1,9 @@
 ﻿.select2me {
     width: 128% !important;
 }
-
+.field-validation-error {
+    color: #e02222 !important;
+}
 .required {
     color: #e02222 !important;
     font-size: 12px;
