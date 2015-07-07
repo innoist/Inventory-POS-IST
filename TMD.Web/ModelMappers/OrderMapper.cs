@@ -17,7 +17,7 @@ namespace TMD.Web.ModelMappers
                IsModified = source.IsModified,
                CustomerId = source.CustomerId,
                 Comments = source.Comments,
-
+                OrderId =  source.OrderId,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
@@ -34,12 +34,12 @@ namespace TMD.Web.ModelMappers
                 IsModified = source.IsModified,
                 CustomerId = source.CustomerId,
                 Comments = source.Comments,
-
-                RecCreatedBy = "USMAN",
-                RecCreatedDate = DateTime.Now,
-                RecLastUpdatedBy = "USMAN",
-                RecLastUpdatedDate = DateTime.Now,
-                OrderItems = source.OrderItems.Select(x => x.CreateFromClientToServer()).ToList()
+                OrderId = source.OrderId,
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDate = source.RecCreatedDate,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDate = source.RecLastUpdatedDate,
+                OrderItems = source.OrderItems.Select(x => x.CreateFromClientToServer(source.OrderId)).ToList()
             };
         }
     }

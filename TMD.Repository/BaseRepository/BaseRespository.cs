@@ -144,6 +144,7 @@ namespace TMD.Repository.BaseRepository
         /// </summary>
         public virtual void Update(TDomainClass instance)
         {
+        
             DbSet.AddOrUpdate(instance);
         }
 

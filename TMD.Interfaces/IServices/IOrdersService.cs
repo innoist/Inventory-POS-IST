@@ -9,5 +9,9 @@ namespace TMD.Interfaces.IServices
         IEnumerable<Order> GetAllOrders();
 
         long AddService(Order order);
+        bool UpdateService(Order order);
+
+      
+
     }
 }

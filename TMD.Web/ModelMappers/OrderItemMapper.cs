@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using TMD.Models.DomainModels;
+using TMD.Models.LoggerModels;
 using TMD.Web.Models;
 
 namespace TMD.Web.ModelMappers
@@ -34,12 +35,12 @@ namespace TMD.Web.ModelMappers
                
             };
         }
-        public static OrderItem CreateFromClientToServer(this OrderItemModel source)
+        public static OrderItem CreateFromClientToServer(this OrderItemModel source,long orderId)
         {
             return new OrderItem
             {
                 OrderItemId = source.OrderItemId,
-                OrderId = source.OrderId,
+                OrderId = orderId,
                 AmountGiven = source.AmountGiven,
                 Discount = source.Discount,
                 PurchasePrice = source.PurchasePrice,
@@ -50,9 +51,9 @@ namespace TMD.Web.ModelMappers
 
                 Comments = source.Comments,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = DateTime.Now,
+                RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDate = DateTime.Now
+                RecLastUpdatedDate = source.RecLastUpdatedDate
                 
 
             };
