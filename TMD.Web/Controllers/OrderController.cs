@@ -83,7 +83,12 @@ namespace TMD.Web.Controllers
                 //Means Edit case
                 toSend = orderService.GetOrders(id.Value).CreateFromServerToClient();
             }
-
+            //Setting Max discount
+            int MaxDiscountInt = 0;
+            int.TryParse(GetConfigMaxDiscount(), out MaxDiscountInt);
+            toSend.AllowedMaxDiscount = MaxDiscountInt;
+            
+            
             return View(toSend);
         }
 
@@ -93,6 +98,8 @@ namespace TMD.Web.Controllers
         {
             try
             {
+               
+
                 SetUserInfo(orderDetail);
                 string email = GetConfigEmail();
                 // TODO: Add insert logic here
@@ -100,10 +107,27 @@ namespace TMD.Web.Controllers
                 {
 
                     var order = orderDetail.CreateFromClientToServer();
-                   
-                    orderService.AddService(order);
-                    orderDetail.OrderId = order.OrderId;
-                    new Task(() => { SendEmail(order, email); }).Start();
+                    if (ValidateDiscount(order))
+                    {
+
+                        orderService.AddService(order);
+                        orderDetail.OrderId = order.OrderId;
+                        new Task(() => { SendEmail(order, email); }).Start();
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = "Order has been created with ID: " + order.OrderId,
+                            IsSaved = true
+                        };
+                    }
+                    else
+                    {
+                        ViewBag.MessageVM = new MessageViewModel
+                        {
+                            Message = "Order Discount Exceed the permit limit",
+                            IsError = true
+                        };
+                        return View(orderDetail);
+                    }
                 }
                 else
                 {
@@ -112,6 +136,8 @@ namespace TMD.Web.Controllers
                     orderService.UpdateService(order);
                     orderItemService.AddUpdateService(order);
                     new Task(() => { SendEmail(order, email); }).Start();
+                    TempData["message"] = new MessageViewModel { Message = "Order has been updated successfully.", IsSaved = true };
+                    return RedirectToAction("Index");
                 }
                 
             //    new Task(() => { Foo2(42, "life, the universe, and everything"); }).Start();
@@ -122,6 +148,19 @@ namespace TMD.Web.Controllers
             {
                 return View();
             }
+        }
+
+        private bool ValidateDiscount(Order order)
+        {
+            var maxDiscAllowed = decimal.Parse(GetConfigMaxDiscount())/100;
+            var sumDiscount = order.OrderItems.Sum(x => x.Discount);
+            var sumRs = order.OrderItems.Sum(x => x.SalePrice*x.Quantity);
+            decimal perc = sumDiscount / sumRs;
+
+            if (perc > maxDiscAllowed)
+                return false;
+           
+            return true;
         }
 
         private bool SendEmail(Order order,string email)
@@ -275,6 +314,25 @@ namespace TMD.Web.Controllers
 
                 return Session[Utility.ConfigEmail].ToString();
             }
+        }
+
+        public string GetConfigMaxDiscount()
+        {
+            if (User.IsInRole(Utility.AdminRoleName))
+            {
+                Session[Utility.MaxDiscount] = 50;
+                
+            }
+            else if (Session[Utility.MaxDiscount] == null)
+            {
+                var config = configurationService.GetDefaultConfiguration();
+                var MaxAllowedDiscount = config.MaxAllowedDiscount;
+
+                Session[Utility.MaxDiscount] = MaxAllowedDiscount;
+               
+
+            }
+            return Session[Utility.MaxDiscount].ToString();
         }
     }
 }

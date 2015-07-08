@@ -17,7 +17,7 @@ namespace TMD.Web.Models
         public decimal AmountGiven { get; set; }
         public decimal SalePrice { get; set; }
         public decimal MinSalePriceAllowed { get; set; }
-        public byte Discount { get; set; }
+        public int Discount { get; set; }
         public string Comments { get; set; }
         public System.DateTime RecCreatedDate { get; set; }
         public System.DateTime RecLastUpdatedDate { get; set; }
@@ -28,7 +28,7 @@ namespace TMD.Web.Models
 
         public decimal TotalItemAmount
         {
-            get { return AmountGiven - Discount; }
+            get { return Quantity*SalePrice - Discount; }
         }
         //Calculated field
         public decimal Subtotal
