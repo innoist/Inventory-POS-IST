@@ -65,5 +65,11 @@ namespace TMD.Implementation.Services
             return false;
 
         }
+
+
+        public Models.ResponseModels.OrderSearchResponse GetOrdersSearchResponse(Models.RequestModels.OrderSearchRequest searchRequest)
+        {
+            return ordersRepository.GetOrdersSearchResponse(searchRequest);
+        }
     }
 }

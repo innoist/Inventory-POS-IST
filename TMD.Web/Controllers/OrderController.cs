@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Activities.Expressions;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Web.Mvc;
 using TMD.Interfaces.IServices;
 using TMD.Models.DomainModels;
+using TMD.Models.RequestModels;
+using TMD.Models.ResponseModels;
 using TMD.Web.ModelMappers;
 using TMD.Web.Models;
+using TMD.Web.ViewModels;
 using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
@@ -17,12 +21,39 @@ namespace TMD.Web.Controllers
         private readonly IProductService productService;
         private readonly IOrderItemService orderItemService;
 
-        
-        // GET: ProductCategory
         public ActionResult Index()
         {
+            //if (Request.UrlReferrer == null || Request.UrlReferrer.AbsolutePath == "/Orders/EbayItemImportLV")
+            //{
+            //    Session["PageMetaData"] = null;
+            //}
+
+            OrderSearchRequest viewModel = Session["PageMetaData"] as OrderSearchRequest;
+
+            Session["PageMetaData"] = null;
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
-            return View();
+            var toReturnModel = new OrderViewModel
+            {
+                SearchRequest = viewModel ?? new OrderSearchRequest()
+            };
+            
+            return View(toReturnModel);
+        }
+        [HttpPost]
+        public ActionResult Index(OrderSearchRequest oRequest)
+        {
+            OrderSearchResponse oResponse = orderService.GetOrdersSearchResponse(oRequest);
+            List<OrderListViewModel> oList = oResponse.Orders.Select(x => x.CreateFromServerToLVClient()).ToList();
+            OrderViewModel oVModel = new OrderViewModel();
+            oVModel.data = oList;
+            oVModel.recordsTotal = oResponse.TotalCount;
+            oVModel.recordsFiltered = oResponse.FilteredCount;
+
+
+
+            Session["PageMetaData"] = oRequest;
+            var toReturn = Json(oVModel, JsonRequestBehavior.AllowGet);
+            return toReturn;
         }
 
         public OrderController(IOrdersService orderService, IProductService productService, IOrderItemService orderItemService)

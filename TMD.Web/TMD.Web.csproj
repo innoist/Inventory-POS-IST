@@ -332,6 +332,7 @@
     <Compile Include="Models\InventoryItemListModel.cs" />
     <Compile Include="Models\InventoryItemModel.cs" />
     <Compile Include="Models\OrderItemModel.cs" />
+    <Compile Include="Models\OrderListViewModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\ProductCategoryModel.cs" />
