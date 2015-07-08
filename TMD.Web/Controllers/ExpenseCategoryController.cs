@@ -10,7 +10,8 @@ using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
-    public class ExpenseCategoryController : Controller
+    [Authorize(Roles = "Admin")]
+    public class ExpenseCategoryController : BaseController
     {
         private readonly IExpenseCategoryService expenseCategoryService;
 
@@ -22,6 +23,7 @@ namespace TMD.Web.Controllers
         // GET: /ExpenseCategory/
         public ActionResult Index()
         {
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View();
         }
 

@@ -23,10 +23,12 @@
                         <i class="fa fa-filter"></i>Filters
                     </div>*@
                     <div class="tools">
-                        <input type="button" class="btn green" id="btnFltr" value="Filter" />
-                        <input type="button" class="btn blue titleButton" id="btnResetFltr" value="Reset">
+                        <a href="~/Order/Create" class="btn red titleButton" >Create New Order</a>
+                        
+                        <input type="button" class="btn blue titleButton" id="btnResetFltr" style="float:right" value="Reset" >
+                        <input type="button" class="btn green" id="btnFltr" style="float:right" value="Filter" />
                         @*<input type="button" class="btn blue titleButton" style="float:right" id="btnResetFltr" value="Reset">*@
-                        <a href="~/Order/Create" class="btn red titleButton" style="float:right">Create New Order</a>
+                      
                     </div>
                 </div>
                 <div class="portlet-body form">
@@ -152,6 +154,7 @@
             ],
             "processing": true,
             "serverSide": true,
+            "fnRowCallback": fnLoadComplete,
             "ajax": {
                 url: siteURL + "Order/Index",
                 type: "POST",
@@ -191,8 +194,13 @@
         });
     });
 
-    function fnActivityComplete(data, e) {
-        debugger
+    function fnLoadComplete(nRow, e) {
+
+        if (e.TotalDiscount > 0) {
+            $(nRow).addClass('discountApplied');
+        }
+        return nRow;
+
     }
 
 </script>

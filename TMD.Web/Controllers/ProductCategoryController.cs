@@ -12,6 +12,7 @@ using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ProductCategoryController : BaseController
     {
         private readonly IProductCategoryService productCategoryService;

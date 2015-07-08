@@ -6,6 +6,7 @@ using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ConfigurationController : BaseController
     {
         private readonly IProductConfigurationService configurationService;
@@ -30,6 +31,7 @@ namespace TMD.Web.Controllers
         // GET: Configuration/Create
         public ActionResult Create()
         {
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             var congif = configurationService.GetDefaultConfiguration();
 
             return View(congif??new ProductConfiguration());

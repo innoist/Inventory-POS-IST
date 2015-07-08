@@ -54,8 +54,8 @@
                 <!-- BEGIN TOP BAR LEFT PART -->
                 <div class="col-md-6 col-sm-6 additional-shop-info">
                     <ul class="list-unstyled list-inline">
-                        <li><i class="fa fa-phone"></i><span>+1 456 6717</span></li>
-                        <li><i class="fa fa-envelope-o"></i><span>info@innostark.com</span></li>
+                        <li><i class="fa fa-phone"></i><span>+92 321 44 99 439</span></li>
+                        <li><i class="fa fa-envelope-o"></i><span>info@toysworldpk.com</span></li>
                     </ul>
                 </div> <!-- END TOP BAR LEFT PART --> <!-- BEGIN TOP BAR MENU --> <div class="col-md-6 col-sm-6 additional-nav">
                     <ul class="list-unstyled list-inline pull-right">
@@ -73,7 +73,7 @@
                         else
                         {
                             <li><a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())\Account\login">Log In</a></li>
-                            <li><a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())\Account\SignUp">Registration</a></li>
+                            @*<li><a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())\Account\SignUp">Registration</a></li>*@
                             <li><a href="#">Contact Us</a></li>
                         }
                     </ul>
@@ -97,15 +97,10 @@
                         <a class="" style="font-size: 16px" href="~/Home/Index"> Home  </a>
                     </li>
                     <li class="dropdown dropdown-megamenu">
-                        <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="#"> News  </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="#"> TOYS </a>
                     </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="#"> Live Data  </a>
-                    </li>
-                    <li class="dropdown">
-                        <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="#"> Portfolio  </a>
-                    </li>
-                    <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "Pricing") ? "active" : "")> <a href="~/Account/Pricing"> Pricing  </a></li>
+                  
+                  
                     <li class="dropdown">
                         <a class="dropdown-toggle" data-toggle="dropdown" data-target="#" href="#"> About Us  </a>
                     </li>

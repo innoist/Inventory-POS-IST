@@ -14,6 +14,7 @@ namespace TMD.Web
         public const string AdminRoleId = "1";
         public const string AdminRoleName = "Admin";
 
+        public const string ConfigEmail = "ConfigEmail";
         public static void SendEmailAsync(string email, string subject, string body)
         {
 

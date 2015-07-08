@@ -65,77 +65,107 @@
                                  </span>
                         </a>
                     </li>
-                    <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "11") ? "active" : "")>
-                        <a class="WhiteColor" data-toggle="dropdown" href="javascript:;">
-                            Inventory <i class="fa fa-angle-down"></i>
-                        </a>
-                        <ul class="dropdown-menu pull-left">
-                            <li>
-                                <a class="WhiteColor" href="~/Inventory/Index">
-                                    Inventory List <span class="selected">
-                                                   </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="WhiteColor" href="~/Product/Index">
-                                    Products List  <span class="selected">
-                                                   </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="WhiteColor" href="~/ProductCategory/Index">
-                                    Products Category <span class="selected">
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
                     <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "2") ? "active" : "")>
                         <a href="~/Account/Profile" class="WhiteColor">
                             Profile <span class="selected">
-                            </span>
+                                    </span>
                         </a>
                     </li>
-                    <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "3") ? "active" : "")>
-                        <a href="~/Account/Users" class="WhiteColor">
-                            Accounts <span class="selected">
-                                     </span>
-                        </a>
-                    </li>
-                    
+                 
                     <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "20") ? "active" : "")>
                         <a href="~/Order/Index" class="WhiteColor">
                             Orders <span class="selected">
-                            </span>
+                                   </span>
                         </a>
                     </li>
+                    <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "22") ? "active" : "")>
+                        <a href="~/Customer/Index" class="WhiteColor">
+                            Customers <span class="selected">
+                                      </span>
+                        </a>
+                    </li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "3") ? "active" : "")>
+                            <a href="~/Account/Users" class="WhiteColor">
+                                Accounts <span class="selected">
+                                         </span>
+                            </a>
+                        </li>
+                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "11") ? "active" : "")>
+                            <a class="WhiteColor" data-toggle="dropdown" href="javascript:;">
+                                Inventory <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu pull-left">
+                                <li>
+                                    <a class="WhiteColor" href="~/Inventory/Index">
+                                        Inventory List <span class="selected">
+                                                       </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="WhiteColor" href="~/Product/Index">
+                                        Products List  <span class="selected">
+                                                       </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="WhiteColor" href="~/ProductCategory/Index">
+                                        Products Category <span class="selected">
+                                                          </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "24") ? "active" : "")>
+                            <a class="WhiteColor" data-toggle="dropdown" href="javascript:;">
+                                Expense <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu pull-left">
+                                <li>
+                                    <a class="WhiteColor" href="~/Expense/Index">
+                                        Expense <span class="selected">
+                                                </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="WhiteColor" href="~/ExpenseCategory/Index">
+                                        Expense Category <span class="selected">
+                                                         </span>
+                                    </a>
+                                </li>
+                            
+                            </ul>
+                        </li>
 
-                    <li  class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "4") ? "active" : "")>
-                        <a class="WhiteColor" data-toggle="dropdown" href="javascript:;">
-                            eBay <i class="fa fa-angle-down"></i>
-                        </a>
-                        <ul class="dropdown-menu pull-left">
-                            <li>
-                                <a class="WhiteColor" href="~/Admin/BatchImportLV">
-                                    Batches <span class="selected">
-                                    </span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="WhiteColor" href="~/Admin/EbayItemImportLV" >
-                                    Items  <span class="selected">
-                                    </span>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "3") ? "active" : "")>
-                        <a href="~/Configuration/Create" class="WhiteColor">
-                            Configuration <span class="selected">
-                            </span>
-                        </a>
-                    </li>
-                </ul>
+
+                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "21") ? "active" : "")>
+                            <a href="~/Configuration/Create" class="WhiteColor">
+                                Configuration <span class="selected">
+                                              </span>
+                            </a>
+                        </li>
+                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "4") ? "active" : "")>
+                            <a class="WhiteColor" data-toggle="dropdown" href="javascript:;">
+                                eBay <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu pull-left">
+                                <li>
+                                    <a class="WhiteColor" href="~/Admin/BatchImportLV">
+                                        Batches <span class="selected">
+                                                </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="WhiteColor" href="~/Admin/EbayItemImportLV">
+                                        Items  <span class="selected">
+                                               </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    } @*End user role check*@
+                           </ul>
             </div>
             <!-- END HORIZANTAL MENU -->
             <!-- BEGIN HEADER SEARCH BOX -->

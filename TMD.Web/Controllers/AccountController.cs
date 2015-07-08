@@ -282,7 +282,7 @@ namespace IdentitySample.Controllers
         }
 
 
-        
+           [Authorize(Roles = "Admin")]
         //[SiteAuthorize(PermissionKey = "User")]
         public ActionResult Users()
         {
@@ -323,6 +323,7 @@ namespace IdentitySample.Controllers
 
         //
         // POST: /Account/Create
+          
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
