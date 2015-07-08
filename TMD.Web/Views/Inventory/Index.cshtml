@@ -13,7 +13,7 @@
         <h3 class="page-title">
             @ViewBag.Title
         </h3>
-        <h3> <small><a href="~/Inventory/Create">Add New Inventory</a></small></h3>
+        @*<h3> <small><a href="~/Inventory/Create">Add New Inventory</a></small></h3>*@
     </header>
     <form class="form-horizontal">
         <div class="row-fluid">
@@ -22,6 +22,7 @@
                     <div class="tools">
                         <input type="button" class="btn green" id="btnFltr" value="Filter" />
                         <input type="button" class="btn blue titleButton" id="btnResetFltr" value="Reset">
+                        <a href="~/Inventory/Create" style="float:right" class="btn red titleButton">Add New Inventory</a>
                     </div>
                 </div>
                 <div class="portlet-body form">

@@ -82,6 +82,12 @@
                                                    </span>
                                 </a>
                             </li>
+                            <li>
+                                <a class="WhiteColor" href="~/ProductCategory/Index">
+                                    Products Category <span class="selected">
+                                    </span>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                     <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "2") ? "active" : "")>
@@ -93,6 +99,13 @@
                     <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "3") ? "active" : "")>
                         <a href="~/Account/Users" class="WhiteColor">
                             Accounts <span class="selected">
+                                     </span>
+                        </a>
+                    </li>
+                    
+                    <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "20") ? "active" : "")>
+                        <a href="~/Order/Index" class="WhiteColor">
+                            Orders <span class="selected">
                             </span>
                         </a>
                     </li>

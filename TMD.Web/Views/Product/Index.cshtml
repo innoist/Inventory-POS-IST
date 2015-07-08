@@ -13,7 +13,7 @@
         <h3 class="page-title">
             @ViewBag.Title
         </h3>
-        <h3> <small><a href="~/Product/Create">Add New Product</a></small></h3>
+        @*<h3> <small><a href="~/Product/Create">Add New Product</a></small></h3>*@
     </header>
     <form class="form-horizontal">
         <div class="row-fluid">
@@ -22,6 +22,7 @@
                     <div class="tools">
                         <input type="button" class="btn green" id="btnFltr" value="Filter" />
                         <input type="button" class="btn blue titleButton" id="btnResetFltr" value="Reset">
+                        <a href="~/Product/Create" style="float:right" class="btn red titleButton">Add New Product</a>
                     </div>
                 </div>
                 <div class="portlet-body form">
@@ -131,7 +132,7 @@
             "columns": [
                 { "data": "ProductId" },
                 { "data": "Name" },
-                { "data": "CategoryId" },
+                { "data": "CategoryName" },
                 { "data": "SalePrice" },
                 {
                     "orderable": false,

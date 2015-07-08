@@ -340,3 +340,7 @@ body {
     width: 50px !important;
   
 }
+
+.page-content-wrapper .page-content {
+    padding-top: 5px !important;   
+}

@@ -2,7 +2,7 @@
 @{
     ViewBag.Title = "Orders";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    Session["MenuKey"] = 4;
+    Session["MenuKey"] = 20;
     
     }
 
@@ -25,7 +25,8 @@
                     <div class="tools">
                         <input type="button" class="btn green" id="btnFltr" value="Filter" />
                         <input type="button" class="btn blue titleButton" id="btnResetFltr" value="Reset">
-                    
+                        @*<input type="button" class="btn blue titleButton" style="float:right" id="btnResetFltr" value="Reset">*@
+                        <a href="~/Order/Create" class="btn red titleButton" style="float:right">Create New Order</a>
                     </div>
                 </div>
                 <div class="portlet-body form">
@@ -132,6 +133,10 @@
             "bFilter": false,
             "bLengthChange": false,
             "aaSorting": [sortBy],
+            "aoColumnDefs": [
+               { 'bSortable': false, 'aTargets': [2,3,4,5,6,7,8] },
+            
+            ],
             "columns": [
                  { "data": "OrderId"},
                  { "data": "RecCreatedDate" },

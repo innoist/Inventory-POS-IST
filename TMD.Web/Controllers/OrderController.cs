@@ -15,7 +15,8 @@ using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
-    public class OrderController : Controller
+    [Authorize(Roles = "Admin, Employee")]
+    public class OrderController : BaseController
     {
         private readonly IOrdersService orderService;
         private readonly IProductService productService;
