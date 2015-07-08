@@ -159,7 +159,6 @@ namespace TMD.Web.Controllers
 
             if (perc > maxDiscAllowed)
                 return false;
-           
             return true;
         }
 
@@ -198,7 +197,6 @@ namespace TMD.Web.Controllers
                 orderDetail.RecCreatedDate = orderDetail.RecLastUpdatedDate = DateTime.Now;
 
                 orderDetail.RecCreatedBy = orderDetail.RecLastUpdatedBy = name;
-
             }
             else
             {
@@ -206,7 +204,6 @@ namespace TMD.Web.Controllers
                 orderDetail.RecLastUpdatedBy = User.Identity.Name;
 
             }
-
             List<OrderItemModel> NotUpdatedList = new List<OrderItemModel>();
 
             foreach (var item in orderDetail.OrderItems)
@@ -334,5 +331,15 @@ namespace TMD.Web.Controllers
             }
             return Session[Utility.MaxDiscount].ToString();
         }
+
+        public ActionResult PrintOrder(long id)
+        {
+            OrderListViewModel oVM = new OrderListViewModel();
+            var orderDetails = orderService.GetOrders(id);
+            oVM = orderDetails.CreateFromServerToLVClient();
+            oVM.OrderItems = orderDetails.OrderItems.Select(x => x.CreateFromServerToClient()).ToList();
+            return View(oVM);
+        }
+
     }
 }
