@@ -27,6 +27,9 @@ namespace TMD.Web.ModelMappers
             };
         }
 
+
+
+
         public static Order CreateFromClientToServer(this OrderModel source)
         {
             return new Order
@@ -40,6 +43,33 @@ namespace TMD.Web.ModelMappers
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
                 OrderItems = source.OrderItems.Select(x => x.CreateFromClientToServer(source.OrderId)).ToList()
+            };
+        }
+    
+    
+    //FOR LIST VIEW
+
+        public static OrderListViewModel CreateFromServerToLVClient(this Order source)
+        {
+            var hostURL = "http://" + HttpContext.Current.Request.Url.Host.ToLower() + "/";//ConfigurationManager.AppSettings["HostURL"];
+            var item = source.OrderItems.ToList();
+            var customer = source.Customer;
+            return new OrderListViewModel
+            {
+                IsModified = source.IsModified,
+                CustomerId = source.CustomerId,
+                Comments = source.Comments,
+                OrderId = @"<a title='Click to open order' href='" + hostURL + "Order/Create?id=" + source.OrderId + "'> " + source.OrderId + "</a>",
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDate = source.RecCreatedDate.ToShortDateString(),
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDate = source.RecLastUpdatedDate,
+                TotalDiscount = item.Sum(x=>x.Discount),
+                TotalSale = double.Parse(item.Sum(x => x.SalePrice).ToString()),
+                TotalItems = item.Sum(x => x.Quantity),
+                CustomerName = source.CustomerId>0 ? source.Customer.Name : "",
+                CustomerEmail = source.CustomerId > 0 ? source.Customer.Email : "",
+                CustomerPhone = source.CustomerId > 0 ? source.Customer.Phone : "",
             };
         }
     }
