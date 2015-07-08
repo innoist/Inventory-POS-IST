@@ -231,9 +231,9 @@
 
                 @*<input type="hidden" id="siteURL" value="@(ConfigurationManager.AppSettings["HostURL"].ToString())" />*@
 
-                <input type="hidden" id="siteURL" value="@( "http://"+Request.Url.Host.ToLower()+"/")" />
+                @*<input type="hidden" id="siteURL" value="@( "http://"+Request.Url.Host.ToLower()+"/")" />*@
                 
-                @*<input type="hidden" id="siteURL" value="http://localhost:23866/" />*@
+                <input type="hidden" id="siteURL" value="http://localhost:23866/" />
             </div>
 
 

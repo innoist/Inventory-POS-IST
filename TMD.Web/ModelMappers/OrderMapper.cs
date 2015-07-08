@@ -51,6 +51,7 @@ namespace TMD.Web.ModelMappers
 
         public static OrderListViewModel CreateFromServerToLVClient(this Order source)
         {
+            var hostURL = "http://" + HttpContext.Current.Request.Url.Host.ToLower() + "/";//ConfigurationManager.AppSettings["HostURL"];
             var item = source.OrderItems.ToList();
             var customer = source.Customer;
             return new OrderListViewModel
@@ -58,9 +59,9 @@ namespace TMD.Web.ModelMappers
                 IsModified = source.IsModified,
                 CustomerId = source.CustomerId,
                 Comments = source.Comments,
-                OrderId = source.OrderId,
+                OrderId = @"<a title='Click to open order' href='" + hostURL + "Order/Create?id=" + source.OrderId + "'> " + source.OrderId + "</a>",
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = source.RecCreatedDate.ToShortDateString(),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
                 TotalDiscount = item.Sum(x=>x.Discount),

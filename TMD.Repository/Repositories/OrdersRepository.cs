@@ -48,8 +48,8 @@ namespace TMD.Repository.Repositories
             Expression<Func<Order, bool>> query =
                     s => (
                             (
-                             (searchRequest.OrderId == 0 || s.OrderId.Equals(searchRequest.OrderId)) &&
-                            (searchRequest.ProductCode == 0 || s.OrderItems.Where(x=>x.ProductId==searchRequest.ProductCode).Any())
+                             (string.IsNullOrEmpty( searchRequest.OrderId )|| s.OrderId.ToString().Equals(searchRequest.OrderId)) &&
+                            (string.IsNullOrEmpty(searchRequest.ProductCode) || s.OrderItems.Where(x=>x.ProductId.ToString()==searchRequest.ProductCode).Any())
                             && (searchRequest.OrderDate == null || EntityFunctions.TruncateTime(s.RecCreatedDate) == searchRequest.OrderDate.Value)
                             )
                         );

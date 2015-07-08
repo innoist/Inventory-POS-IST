@@ -5,9 +5,9 @@ namespace TMD.Models.RequestModels
 {
     public class OrderSearchRequest : GetPagedListRequest
     {
-        public long  OrderId { get; set; }
+        public string  OrderId { get; set; }
         public DateTime ? OrderDate { get; set; }
-        public long  ProductCode { get; set; }
+        public string  ProductCode { get; set; }
 
 
         public OrdersByColumn OrdersOrderBy
