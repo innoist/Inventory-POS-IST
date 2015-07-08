@@ -298,6 +298,7 @@
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\ConfigurationController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\ExpenseCategoryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
@@ -312,6 +313,7 @@
     <Compile Include="Helper\CultureHelper.cs" />
     <Compile Include="ModelMappers\AspNetUserMapper.cs" />
     <Compile Include="ModelMappers\CustomerMapper.cs" />
+    <Compile Include="ModelMappers\ExpenseCategoryMapper.cs" />
     <Compile Include="ModelMappers\OrderItemMapper.cs" />
     <Compile Include="ModelMappers\OrderMapper.cs" />
     <Compile Include="ModelMappers\InventoryItemMapper.cs" />
@@ -1664,6 +1666,8 @@
     <Content Include="Views\Configuration\Create.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\Customer\Create.cshtml" />
+    <Content Include="Views\ExpenseCategory\Index.cshtml" />
+    <Content Include="Views\ExpenseCategory\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />

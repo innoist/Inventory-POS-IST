@@ -23,6 +23,7 @@ namespace TMD.Repository
             unityContainer.RegisterType<IOrdersRepository, OrdersRepository>();
             unityContainer.RegisterType<IProductConfigurationRepositoy, ProductConfigurationRepository>();
             unityContainer.RegisterType<ICustomerRepository, CustomerRepository>();
+            unityContainer.RegisterType<IExpenseCategoryRepository, ExpenseCategoryRepository>();
         }
     }
 }
