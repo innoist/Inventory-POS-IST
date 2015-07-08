@@ -86,6 +86,7 @@ namespace TMD.Repository.BaseRepository
         public DbSet<InventoryItem> InventoryItems { get; set; }
         public DbSet<ProductConfiguration> ProductConfiguration { get; set; }
         public DbSet<Customer> Customers { get; set; }
+        public DbSet<ExpenseCategory> ExpenseCategories { get; set; }
 
         /// <summary>
         /// Staging Ebay
