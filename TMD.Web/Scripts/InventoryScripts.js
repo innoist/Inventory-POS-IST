@@ -3,6 +3,8 @@
 });
 function LoadProductByCode(control) {
     var code = $("#" + control.id).val();
+    if (code == "")
+        return;
     $.blockUI({ message: '<h3><img src="../Images/loading.gif" height=55px; width=55px; /> Fetching Product...</h2>' });
 
     if (code != "" && code != "0") {

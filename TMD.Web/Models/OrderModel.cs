@@ -6,6 +6,10 @@ namespace TMD.Web.Models
 {
     public class OrderModel
     {
+        public OrderModel()
+        {
+            Customer = new CustomerModel();
+        }
         public long OrderId { get; set; }
         public long ? CustomerId { get; set; }
         public bool IsModified { get; set; }

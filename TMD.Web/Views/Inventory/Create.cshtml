@@ -36,7 +36,7 @@
                 <div class="form-group margin-top-20">
                     @Html.Label("Vendor Barcode", new { @class = "col-md-3 control-label" })
                     <div class="col-md-4">
-                        @Html.TextBox("Barcode", null, new { @id = "Barcode", @class = "form-control input-circle", @onchange = "LoadProductByCode(this);" })
+                        @Html.TextBox("Barcode", null, new { @id = "Barcode", @class = "form-control input-circle",@autofocus="autofocus", @onchange = "LoadProductByCode(this);" })
                     </div>
                     
                     @Html.Label("Name", new { @class = "col-md-1 control-label" })

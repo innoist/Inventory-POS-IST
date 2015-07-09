@@ -53,8 +53,8 @@
                                         Code
                                     </div>
                                     <div class="col-md-2 value">
-                                   
-                                        <input type="text" value="" class="form-control mandatoryItem" autofocus="autofocus" id="ItemCode" onchange="LoadProductByCode(this)" />
+                                        @*onchange="LoadProductByCode(this)"*@
+                                        <input type="text" value="" class="form-control mandatoryItem searchBarcode" autofocus="autofocus" id="ItemCode" />
                                    
                                         <input type="hidden" value="" id="ItemId"/>
                                     </div>
@@ -467,8 +467,18 @@
                 $('#ItemCode').val('');
 
             }
+
+            jQuery(document).on('keydown', '.searchBarcode', function (ev) {
+                if (ev.which === 13) {
+                    LoadProductByCode(this);
+                    // Avoid form submit
+                    return false;
+                }
+            });
             function LoadProductByCode(control) {
                 var productCode = $("#" + control.id).val();
+                if (productCode == "")
+                    return;
                 $.blockUI({ message: '<h3><img src="../Images/loading.gif" height=55px; width=55px; /> Fetching Product...</h2>' });
                 if (productCode != "" && productCode != "0") {
                     $.ajax({
@@ -490,11 +500,13 @@
                 $.unblockUI();
                 if (data.ProductId <= 0) {
                     toastr.error("No Product found with given Code");
+                    $('#ItemQty').val(1);
                 } else {
                     toastr.success("Product found successfully");
 
                 }
-             
+                
+                $("#ItemCode").val(data.ProductId);
                 $("#ItemName").val(data.Name);
                 $("#SalePrice").val(data.SalePrice);
                 $("#itemInStock").text((data.AvailableItems-1) +" Left");
