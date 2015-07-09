@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TMDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TMDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -239,6 +239,7 @@
           <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="MainCategoryId" Type="bigint" />
         </EntityType>
         <EntityType Name="ProductConfiguration">
           <Key>
@@ -250,6 +251,18 @@
           <Property Name="SecurityPassword" Type="nvarchar" MaxLength="100" />
           <Property Name="ProductCodePrefix" Type="nvarchar" MaxLength="20" />
           <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductMainCategory">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" Nullable="false" />
           <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
@@ -582,6 +595,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProductCategory_ProductMainCategory">
+          <End Role="ProductMainCategory" Type="Self.ProductMainCategory" Multiplicity="0..1" />
+          <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductMainCategory">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="ProductCategory">
+              <PropertyRef Name="MainCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Products_ProductCategory">
           <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
@@ -713,6 +738,7 @@
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductConfiguration" EntityType="Self.ProductConfiguration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductMainCategory" EntityType="Self.ProductMainCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StagingEbayBatchImports" EntityType="Self.StagingEbayBatchImports" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StagingEbayItems" EntityType="Self.StagingEbayItems" Schema="dbo" store:Type="Tables" />
@@ -778,6 +804,10 @@
           <AssociationSet Name="FK_Orders_Customer" Association="Self.FK_Orders_Customer">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductCategory_ProductMainCategory" Association="Self.FK_ProductCategory_ProductMainCategory">
+            <End Role="ProductMainCategory" EntitySet="ProductMainCategory" />
+            <End Role="ProductCategory" EntitySet="ProductCategory" />
           </AssociationSet>
           <AssociationSet Name="FK_Products_ProductCategory" Association="Self.FK_Products_ProductCategory">
             <End Role="ProductCategory" EntitySet="ProductCategory" />
@@ -960,6 +990,11 @@
           <AssociationSet Name="FK_Expenses_ExpenseCategory" Association="TMD.Models.DomainModels.FK_Expenses_ExpenseCategory">
             <End Role="ExpenseCategory" EntitySet="ExpenseCategories" />
             <End Role="Expens" EntitySet="Expenses" />
+          </AssociationSet>
+          <EntitySet Name="ProductMainCategories" EntityType="TMD.Models.DomainModels.ProductMainCategory" />
+          <AssociationSet Name="FK_ProductCategory_ProductMainCategory" Association="TMD.Models.DomainModels.FK_ProductCategory_ProductMainCategory">
+            <End Role="ProductMainCategory" EntitySet="ProductMainCategories" />
+            <End Role="ProductCategory" EntitySet="ProductCategories" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AspNetRole">
@@ -1428,6 +1463,8 @@
           <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Products" Relationship="TMD.Models.DomainModels.FK_Products_ProductCategory" FromRole="ProductCategory" ToRole="Product" />
+          <Property Name="MainCategoryId" Type="Int64" />
+          <NavigationProperty Name="ProductMainCategory" Relationship="TMD.Models.DomainModels.FK_ProductCategory_ProductMainCategory" FromRole="ProductCategory" ToRole="ProductMainCategory" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -1707,6 +1744,31 @@
             </Principal>
             <Dependent Role="Expens">
               <PropertyRef Name="ExpenseCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="ProductMainCategory">
+          <Key>
+            <PropertyRef Name="CategoryId" />
+          </Key>
+          <Property Name="CategoryId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductCategories" Relationship="TMD.Models.DomainModels.FK_ProductCategory_ProductMainCategory" FromRole="ProductMainCategory" ToRole="ProductCategory" />
+        </EntityType>
+        <Association Name="FK_ProductCategory_ProductMainCategory">
+          <End Type="TMD.Models.DomainModels.ProductMainCategory" Role="ProductMainCategory" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.ProductCategory" Role="ProductCategory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductMainCategory">
+              <PropertyRef Name="CategoryId" />
+            </Principal>
+            <Dependent Role="ProductCategory">
+              <PropertyRef Name="MainCategoryId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1997,6 +2059,7 @@
           <EntitySetMapping Name="ProductCategories">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductCategory">
               <MappingFragment StoreEntitySet="ProductCategory">
+                <ScalarProperty Name="MainCategoryId" ColumnName="MainCategoryId" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
                 <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
@@ -2130,6 +2193,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ProductMainCategories">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductMainCategory">
+              <MappingFragment StoreEntitySet="ProductMainCategory">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="CategoryId" ColumnName="CategoryId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2204,6 +2280,8 @@
         <EntityTypeShape EntityType="TMD.Models.DomainModels.ExpenseCategory" Width="1.5" PointX="14.375" PointY="13.125" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Expense" Width="1.5" PointX="16.625" PointY="13" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Expenses_ExpenseCategory" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductMainCategory" Width="1.5" PointX="7.5" PointY="22.75" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductCategory_ProductMainCategory" />
       </Diagram>
     </Diagrams>
   </Designer>

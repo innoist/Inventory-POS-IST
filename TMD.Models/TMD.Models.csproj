@@ -119,6 +119,7 @@
     <Compile Include="DomainModels\Product.cs" />
     <Compile Include="DomainModels\ProductCategory.cs" />
     <Compile Include="DomainModels\ProductConfiguration.cs" />
+    <Compile Include="DomainModels\ProductMainCategory.cs" />
     <Compile Include="DomainModels\StagingEbayBatchImport.cs" />
     <Compile Include="DomainModels\StagingEbayItem.cs" />
     <Compile Include="DomainModels\UserPrefrence.cs" />
@@ -147,6 +148,7 @@
     <Compile Include="RequestModels\InventoryItemSearchRequest.cs" />
     <Compile Include="RequestModels\StagingEbayItemRequest.cs" />
     <Compile Include="RequestModels\ProductSearchRequest.cs" />
+    <Compile Include="ResponseModels\CreateCategoryResponseModel.cs" />
     <Compile Include="ResponseModels\EbayItemSearchResponse.cs" />
     <Compile Include="ResponseModels\InventoryItemResponse.cs" />
     <Compile Include="ResponseModels\InventoryItemSearchResponse.cs" />

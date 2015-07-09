@@ -38,34 +38,32 @@ namespace TMD.Web.Controllers
         // GET: ProductCategory/Create
         public ActionResult Create(long? id)
         {
-           
-
-            ProductCategoryModel model = new ProductCategoryModel();
-            if (id != null)
+            ProductCategoryViewModel model = new ProductCategoryViewModel();
+            var categoryReponse = productCategoryService.GetProductCategoryResponse(id);
+            if (categoryReponse.ProductCategory != null)
             {
-                var product = productCategoryService.GetProductCategory((long)id);
-                if (product != null)
-                    model = product.CreateFromServerToClient();
+                model.ProductCategoryModel = categoryReponse.ProductCategory.CreateFromServerToClient();
             }
+            model.ProductMainCategories = categoryReponse.ProductMainCategories.Select(x=>x.CreateFromServerToClient());
             return View(model);
         }
 
         // POST: ProductCategory/Create
         [HttpPost]
-        public ActionResult Create(ProductCategoryModel productCategory)
+        public ActionResult Create(ProductCategoryViewModel viewModel)
         {
             try
             {
-                if (productCategory.CategoryId == 0)
+                if (viewModel.ProductCategoryModel.CategoryId == 0)
                 {
-                    productCategory.RecCreatedBy = User.Identity.Name;
-                    productCategory.RecCreatedDate = DateTime.Now;
+                    viewModel.ProductCategoryModel.RecCreatedBy = User.Identity.Name;
+                    viewModel.ProductCategoryModel.RecCreatedDate = DateTime.Now;
                 }
-                productCategory.RecLastUpdatedBy = User.Identity.Name;
-                productCategory.RecLastUpdatedDate = DateTime.Now;
+                viewModel.ProductCategoryModel.RecLastUpdatedBy = User.Identity.Name;
+                viewModel.ProductCategoryModel.RecLastUpdatedDate = DateTime.Now;
 
 
-                if (productCategoryService.AddProductCategory(productCategory.CreateFromClientToServer()) > 0)
+                if (productCategoryService.AddProductCategory(viewModel.ProductCategoryModel.CreateFromClientToServer()) > 0)
                 {
                     //Product Saved
                     TempData["message"] = new MessageViewModel { Message = "Product category has been saved successfully.", IsSaved = true };

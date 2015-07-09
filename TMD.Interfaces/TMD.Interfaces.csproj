@@ -59,6 +59,7 @@
     <Compile Include="IRepository\IOrderItemsRepository.cs" />
     <Compile Include="IRepository\IOrdersRepository.cs" />
     <Compile Include="IRepository\IInventoryItemRepositoy.cs" />
+    <Compile Include="IRepository\IProductMainCategoryRepository.cs" />
     <Compile Include="IRepository\IProductConfigurationRepositoy.cs" />
     <Compile Include="IRepository\ICustomerRepository.cs" />
     <Compile Include="IRepository\IExpenseCategoryRepository.cs" />
