@@ -15,5 +15,6 @@ namespace TMD.Web.Models
         public System.DateTime RecLastUpdatedDate { get; set; }
         public string RecCreatedBy { get; set; }
         public string RecLastUpdatedBy { get; set; }
+        public string ProductMainCategoryName { get; set; }
     }
 }

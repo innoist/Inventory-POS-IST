@@ -13,7 +13,7 @@
                 @*<a href="javascript:;" class="collapse">
                     </a>*@
 
-                <button type="submit" class="btn btn-circle blue" onclick="return(ValidateFields(event));">Save</button>
+                <button type="submit" class="btn btn-circle blue" onclick="return(ValidateFields(event) && ValidateDropDown());">Save</button>
                 <a href="~/ProductCategory/Index">
                     <button type="button" class="btn btn-circle default">Cancel</button>
                 </a>
@@ -39,7 +39,7 @@
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.ProductCategoryModel.MainCategoryId, new { @class = "col-md-3 control-label" })
                     <div class="col-md-4">
-                        @Html.DropDownListFor(m => m.ProductCategoryModel.MainCategoryId, new SelectList(Model.ProductMainCategories, "CategoryId", "Name"), "No Parent", new { @class = "form-control input-circle", placeholder = "Name" })
+                        @Html.DropDownListFor(m => m.ProductCategoryModel.MainCategoryId, new SelectList(Model.ProductMainCategories, "CategoryId", "Name"), "Please select", new { @class = "form-control input-circle", placeholder = "Name" })
                     </div>
                 </div>
                 <div class="form-group margin-top-20">
@@ -51,6 +51,14 @@
             </div>
 
         </div>
+        <script>
+            function ValidateDropDown() {
+                var value = $('#ProductCategoryModel_MainCategoryId option:selected').val();
+                if (value == "" || value < 0)
+                    return false;
+                return true;
+            }
+        </script>
     </div>
 }
 

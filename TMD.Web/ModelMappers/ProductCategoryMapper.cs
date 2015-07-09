@@ -33,7 +33,8 @@ namespace TMD.Web.ModelMappers
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDate = source.RecLastUpdatedDate
+                RecLastUpdatedDate = source.RecLastUpdatedDate,
+                ProductMainCategoryName = source.ProductMainCategory==null ?"": source.ProductMainCategory.Name
             };
         }
         #endregion
