@@ -76,7 +76,9 @@ namespace TMD.Repository.Repositories
 
         public Product GetProductByAnyCode(string code)
         {
-            return DbSet.FirstOrDefault(x => x.ProductId == Convert.ToInt64(code) || x.ProductBarCode == code);
+            long productId;
+            Int64.TryParse(code,out productId);//try parse, because code may contains some special characters
+            return DbSet.FirstOrDefault(x => x.ProductId == productId || x.ProductBarCode == code);
         }
     }
 }

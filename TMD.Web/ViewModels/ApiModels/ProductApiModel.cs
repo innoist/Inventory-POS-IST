@@ -13,5 +13,7 @@
         public long CategoryId { get; set; }
         public long VendorId { get; set; }
         public long AvailableItems { get; set; }
+        public System.DateTime RecCreatedDate { get; set; }
+        public string RecCreatedBy { get; set; }
     }
 }

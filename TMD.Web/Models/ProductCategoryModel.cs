@@ -9,6 +9,7 @@ namespace TMD.Web.Models
         public long? MainCategoryId { get; set; }
         [Required(ErrorMessage = "Name is required")]
         public string Name { get; set; }
+        public string NameWithMainCategory { get; set; }
         public string Description { get; set; }
         public System.DateTime RecCreatedDate { get; set; }
         public System.DateTime RecLastUpdatedDate { get; set; }
