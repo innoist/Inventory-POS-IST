@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IRepository\IExpenseRepository.cs" />
     <Compile Include="IRepository\IOrderItemsRepository.cs" />
     <Compile Include="IRepository\IOrdersRepository.cs" />
     <Compile Include="IRepository\IInventoryItemRepositoy.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="IRepository\IProductRepositoy.cs" />
     <Compile Include="IRepository\IProductCategoryRepository.cs" />
     <Compile Include="IServices\IAspNetUserService.cs" />
+    <Compile Include="IServices\IExpenseService.cs" />
     <Compile Include="IServices\IOrderItemService.cs" />
     <Compile Include="IServices\IOrdersService.cs" />
     <Compile Include="IServices\IInventoryItemService.cs" />

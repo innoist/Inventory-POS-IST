@@ -6,67 +6,71 @@ using System.Web.Mvc;
 using TMD.Interfaces.IServices;
 using TMD.Web.ModelMappers;
 using TMD.Web.Models;
+using TMD.Web.ViewModels;
 using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
-    public class CustomerController : BaseController
+    public class ExpenseController : BaseController
     {
-        private readonly ICustomerService customerService;
+        private readonly IExpenseService expenseService;
+        private readonly IExpenseCategoryService expenseCategoryService;
 
-        public CustomerController(ICustomerService customerService)
+        public ExpenseController(IExpenseService expenseService, IExpenseCategoryService expenseCategoryService)
         {
-            this.customerService = customerService;
+            this.expenseService = expenseService;
+            this.expenseCategoryService = expenseCategoryService;
         }
         //
-        // GET: /Customer/
+        // GET: /Expense/
         public ActionResult Index()
         {
-            IEnumerable<CustomerModel> customers = customerService.GetAllCustomers().Select(x=>x.CreateFromServerToClient());
-            return View(customers);
+            return View();
         }
 
         //
-        // GET: /Customer/Details/5
+        // GET: /Expense/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
         //
-        // GET: /Customer/Create
+        // GET: /Expense/Create
         public ActionResult Create(long? id)
         {
-            CustomerModel model = new CustomerModel();
+            ExpenseViewModel model = new ExpenseViewModel();
+            model.ExpenseCategories = expenseCategoryService.GetAllExpenseCategories().Select(x => x.CreateFromServerToClient());
             if (id != null)
             {
-                var customer = customerService.GetCustomer((long)id);
-                if (customer != null)
-                    model = customer.CreateFromServerToClient();
+                var expense = expenseService.GetExpense((long)id);
+                if (expense != null)
+                    model.ExpenseModel = expense.CreateFromServerToClient();
             }
             return View(model);
         }
 
         //
-        // POST: /Customer/Create
+        // POST: /Expense/Create
         [HttpPost]
-        public ActionResult Create(CustomerModel customer)
+        public ActionResult Create(ExpenseViewModel evm)
         {
             try
             {
-                if (customer.Id == 0)
+                if (evm.ExpenseModel.Id == 0)
                 {
-                    customer.RecCreatedBy = User.Identity.Name;
-                    customer.RecCreatedDate = DateTime.Now;
+                    evm.ExpenseModel.RecCreatedBy = User.Identity.Name;
+                    evm.ExpenseModel.RecCreatedDate = DateTime.Now;
                 }
-                customer.RecLastUpdatedBy = User.Identity.Name;
-                customer.RecLastUpdatedDate = DateTime.Now;
-                if (customerService.AddCustomer(customer.CreateFromClientToServer()) > 0)
+                evm.ExpenseModel.RecLastUpdatedBy = User.Identity.Name;
+                evm.ExpenseModel.RecLastUpdatedDate = DateTime.Now;
+
+
+                if (expenseService.AddExpense(evm.ExpenseModel.CreateFromClientToServer()) > 0)
                 {
                     //Product Saved
-                    TempData["message"] = new MessageViewModel { Message = "Customer has been saved successfully.", IsSaved = true };
+                    TempData["message"] = new MessageViewModel { Message = "Expense has been saved successfully.", IsSaved = true };
                 }
-
                 return RedirectToAction("Index");
             }
             catch
@@ -76,14 +80,14 @@ namespace TMD.Web.Controllers
         }
 
         //
-        // GET: /Customer/Edit/5
+        // GET: /Expense/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
         //
-        // POST: /Customer/Edit/5
+        // POST: /Expense/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -100,14 +104,14 @@ namespace TMD.Web.Controllers
         }
 
         //
-        // GET: /Customer/Delete/5
+        // GET: /Expense/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
         //
-        // POST: /Customer/Delete/5
+        // POST: /Expense/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {

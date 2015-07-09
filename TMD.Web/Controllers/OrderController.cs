@@ -15,7 +15,7 @@ using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
-    public class OrderController : Controller
+    public class OrderController : BaseController
     {
         private readonly IOrdersService orderService;
         private readonly IProductService productService;

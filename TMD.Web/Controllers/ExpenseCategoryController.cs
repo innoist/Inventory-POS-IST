@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using TMD.Interfaces.IServices;
 using TMD.Web.ModelMappers;
@@ -10,7 +7,7 @@ using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
-    public class ExpenseCategoryController : Controller
+    public class ExpenseCategoryController : BaseController
     {
         private readonly IExpenseCategoryService expenseCategoryService;
 

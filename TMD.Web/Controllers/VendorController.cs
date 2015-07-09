@@ -10,7 +10,7 @@ using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
-    public class VendorController : Controller
+    public class VendorController : BaseController
     {
         private readonly IVendorService vendorService;
 

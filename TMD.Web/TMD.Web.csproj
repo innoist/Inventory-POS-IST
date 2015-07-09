@@ -299,6 +299,7 @@
     <Compile Include="Controllers\ConfigurationController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\ExpenseCategoryController.cs" />
+    <Compile Include="Controllers\ExpenseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
@@ -392,6 +393,7 @@
     <Compile Include="ViewModels\ProductCategoryListViewModel.cs" />
     <Compile Include="ViewModels\InventoryItemsListViewModel.cs" />
     <Compile Include="ViewModels\ProductsListViewModel.cs" />
+    <Compile Include="ViewModels\ExpenseViewModel.cs" />
     <Compile Include="ViewModels\ProductViewModel.cs" />
     <Compile Include="Views\Shared\ES.Master.cs">
       <DependentUpon>ES.Master</DependentUpon>
@@ -1670,6 +1672,8 @@
     <Content Include="Views\ExpenseCategory\Index.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\ExpenseCategory\Create.cshtml" />
+    <Content Include="Views\Expense\Index.cshtml" />
+    <Content Include="Views\Expense\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />
