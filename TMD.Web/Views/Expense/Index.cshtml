@@ -90,8 +90,7 @@
 
         $('#btnFltr').on('click', function (e) {
             var searchN = $('#txtSearchExpense').val();           
-            //oTable.fnFilter(searchN);
-            oTable.fnDraw(searchN);
+            oTable.fnFilter(searchN);
         });
         $('#btnResetFltr').on('click', function (e) {
           
