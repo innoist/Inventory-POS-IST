@@ -10,6 +10,7 @@ using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class VendorController : BaseController
     {
         private readonly IVendorService vendorService;
@@ -22,6 +23,7 @@ namespace TMD.Web.Controllers
         // GET: /Vendor/
         public ActionResult Index()
         {
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             IEnumerable<VendorModel> vendors = vendorService.GetAllVendors().Select(x => x.CreateFromServerToClient());
             return View(vendors);
         }

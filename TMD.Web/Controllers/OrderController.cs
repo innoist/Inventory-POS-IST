@@ -12,14 +12,16 @@ using TMD.Web.ModelMappers;
 using TMD.Web.Models;
 using TMD.Web.ViewModels;
 using TMD.Web.ViewModels.Common;
-
+using System.Threading.Tasks;
 namespace TMD.Web.Controllers
 {
+    [Authorize(Roles = "Admin, Employee")]
     public class OrderController : BaseController
     {
         private readonly IOrdersService orderService;
         private readonly IProductService productService;
         private readonly IOrderItemService orderItemService;
+        private readonly IProductConfigurationService configurationService;
 
         public ActionResult Index()
         {
@@ -56,11 +58,12 @@ namespace TMD.Web.Controllers
             return toReturn;
         }
 
-        public OrderController(IOrdersService orderService, IProductService productService, IOrderItemService orderItemService)
+        public OrderController(IOrdersService orderService, IProductService productService, IOrderItemService orderItemService, IProductConfigurationService configurationService)
         {
             this.orderService = orderService;
             this.productService = productService;
             this.orderItemService = orderItemService;
+            this.configurationService = configurationService;
         }
 
         // GET: ProductCategory/Details/5
@@ -80,7 +83,12 @@ namespace TMD.Web.Controllers
                 //Means Edit case
                 toSend = orderService.GetOrders(id.Value).CreateFromServerToClient();
             }
-
+            //Setting Max discount
+            int MaxDiscountInt = 0;
+            int.TryParse(GetConfigMaxDiscount(), out MaxDiscountInt);
+            toSend.AllowedMaxDiscount = MaxDiscountInt;
+            
+            
             return View(toSend);
         }
 
@@ -90,16 +98,36 @@ namespace TMD.Web.Controllers
         {
             try
             {
+               
+
                 SetUserInfo(orderDetail);
+                string email = GetConfigEmail();
                 // TODO: Add insert logic here
                 if (orderDetail.OrderId <= 0)
                 {
 
                     var order = orderDetail.CreateFromClientToServer();
-                   
-                    orderService.AddService(order);
-                    //orderService.
-                    //orderService.AddService()
+                    if (ValidateDiscount(order))
+                    {
+
+                        orderService.AddService(order);
+                        orderDetail.OrderId = order.OrderId;
+                        new Task(() => { SendEmail(order, email); }).Start();
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = "Order has been created with ID: " + order.OrderId,
+                            IsSaved = true
+                        };
+                    }
+                    else
+                    {
+                        ViewBag.MessageVM = new MessageViewModel
+                        {
+                            Message = "Order Discount Exceed the permit limit",
+                            IsError = true
+                        };
+                        return View(orderDetail);
+                    }
                 }
                 else
                 {
@@ -107,8 +135,12 @@ namespace TMD.Web.Controllers
                     
                     orderService.UpdateService(order);
                     orderItemService.AddUpdateService(order);
-               
+                    new Task(() => { SendEmail(order, email); }).Start();
+                    TempData["message"] = new MessageViewModel { Message = "Order has been updated successfully.", IsSaved = true };
+                    return RedirectToAction("Index");
                 }
+                
+            //    new Task(() => { Foo2(42, "life, the universe, and everything"); }).Start();
                 return View();
 
             }
@@ -118,6 +150,45 @@ namespace TMD.Web.Controllers
             }
         }
 
+        private bool ValidateDiscount(Order order)
+        {
+            var maxDiscAllowed = decimal.Parse(GetConfigMaxDiscount())/100;
+            var sumDiscount = order.OrderItems.Sum(x => x.Discount);
+            var sumRs = order.OrderItems.Sum(x => x.SalePrice*x.Quantity);
+            decimal perc = sumDiscount / sumRs;
+
+            if (perc > maxDiscAllowed)
+                return false;
+            return true;
+        }
+
+        private bool SendEmail(Order order,string email)
+        {
+            if (string.IsNullOrEmpty(email) || email.ToLower() == "none")
+            {
+                return false;
+            }
+            string subject = "";
+            if (order.IsModified)
+            {
+                subject = "Modified: Order: " + order.OrderId;
+            }
+            else
+            {
+                subject = "Created: Order: " + order.OrderId;
+            }
+            string body = "Total Sale: " + order.OrderItems.Sum(x => x.SalePrice);
+            body += " Total Discount: " + order.OrderItems.Sum(x => x.Discount);
+            body += " Total Qty: " + order.OrderItems.Sum(x => x.Quantity);
+            if (order.IsModified)
+            {
+                //Just enter that order was modified
+                body = "Order Modified at: " + DateTime.Now.ToShortDateString() + " By:" + User.Identity.Name;
+            }
+            Utility.SendEmailAsync(email,subject,body);
+            return true;
+            //Utility.SendEmailAsync(email,"");
+        }
         private void SetUserInfo(OrderModel orderDetail)
         {
                string name = User.Identity.Name;
@@ -126,7 +197,6 @@ namespace TMD.Web.Controllers
                 orderDetail.RecCreatedDate = orderDetail.RecLastUpdatedDate = DateTime.Now;
 
                 orderDetail.RecCreatedBy = orderDetail.RecLastUpdatedBy = name;
-
             }
             else
             {
@@ -134,7 +204,6 @@ namespace TMD.Web.Controllers
                 orderDetail.RecLastUpdatedBy = User.Identity.Name;
 
             }
-
             List<OrderItemModel> NotUpdatedList = new List<OrderItemModel>();
 
             foreach (var item in orderDetail.OrderItems)
@@ -148,6 +217,8 @@ namespace TMD.Web.Controllers
                     item.MinSalePriceAllowed = product.MinSalePriceAllowed;
                     item.PurchasePrice = product.PurchasePrice;
                     item.SalePrice = product.SalePrice;
+                    if(orderDetail.OrderId>0)
+                        orderDetail.IsModified = true;//Means a previous order had a new entery. I know this because orderid >0 and orderitem id<=0
                 }
                 else
                 {
@@ -163,7 +234,7 @@ namespace TMD.Web.Controllers
                         item.RecCreatedBy = orderItem.RecCreatedBy;
                         item.RecCreatedDate = orderItem.RecCreatedDate;
                         item.OrderId = orderDetail.OrderId;
-
+                        orderDetail.IsModified = true;//means there is some modification in order. Only qty and Discount can be updated
                     }
                     else
                     {
@@ -221,5 +292,54 @@ namespace TMD.Web.Controllers
                 return View();
             }
         }
+
+        public string GetConfigEmail()
+        {
+            if (Session[Utility.ConfigEmail] == null)
+            {
+                var config = configurationService.GetDefaultConfiguration();
+                var email = config.Emails;
+                if (string.IsNullOrEmpty(email))
+                    Session[Utility.ConfigEmail] = "NONE";
+                else
+                    Session[Utility.ConfigEmail] = email;
+                return email;
+                
+            }
+            else
+            {
+
+                return Session[Utility.ConfigEmail].ToString();
+            }
+        }
+
+        public string GetConfigMaxDiscount()
+        {
+            if (User.IsInRole(Utility.AdminRoleName))
+            {
+                Session[Utility.MaxDiscount] = 50;
+                
+            }
+            else if (Session[Utility.MaxDiscount] == null)
+            {
+                var config = configurationService.GetDefaultConfiguration();
+                var MaxAllowedDiscount = config.MaxAllowedDiscount;
+
+                Session[Utility.MaxDiscount] = MaxAllowedDiscount;
+               
+
+            }
+            return Session[Utility.MaxDiscount].ToString();
+        }
+
+        public ActionResult PrintOrder(long id)
+        {
+            OrderListViewModel oVM = new OrderListViewModel();
+            var orderDetails = orderService.GetOrders(id);
+            oVM = orderDetails.CreateFromServerToLVClient();
+            oVM.OrderItems = orderDetails.OrderItems.Select(x => x.CreateFromServerToClient()).ToList();
+            return View(oVM);
+        }
+
     }
 }

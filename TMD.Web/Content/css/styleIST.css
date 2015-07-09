@@ -340,3 +340,14 @@ body {
     width: 50px !important;
   
 }
+
+.page-content-wrapper .page-content {
+    padding-top: 5px !important;   
+}
+
+.discountApplied {
+    background-color: lightcoral !important;
+}
+#btnFltr {
+    margin-right: 10px !important;
+}

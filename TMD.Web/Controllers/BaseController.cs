@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using TMD.Implementation.Identity;
+using TMD.Interfaces.IServices;
 using TMD.Models.DomainModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -31,8 +32,9 @@ namespace TMD.Web.Controllers
                 SetUserDetail();
            // SetCultureInfo();
         }
+       
         #endregion
-
+        
         #region Public
 
         //when isForce =  true it sets the value, no matter session has or not
@@ -68,6 +70,8 @@ namespace TMD.Web.Controllers
 
         #endregion
 
+
+       
         public void SetCultureInfo()
         {
             CultureInfo info;

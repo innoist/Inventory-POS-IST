@@ -1,0 +1,90 @@
+﻿@model TMD.Web.Models.OrderListViewModel
+@{
+    ViewBag.Title = "Print Order";
+    Session["MenuKey"] = 20;
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div>
+    <a href="~/Order/Index">
+        <button type="button" class="btn red">Back to Orders</button>
+    </a>
+</div>
+<br />
+<div id="PrintDiv">
+    <div class="portlet box blue">
+        <table id="dataTable" class="display" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th>
+                        Code
+                    </th>
+                    <th class="hidden-xs">
+                        Name
+                    </th>
+                    <th>
+                        Price
+                    </th>
+
+                    <th>
+                        Quantity
+                    </th>
+                    <th>
+                        Sub Total
+                    </th>
+
+
+                    <th>
+                        Disc Amount
+                    </th>
+                    <th>
+                        Total
+                    </th>
+
+
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.OrderItems)
+                {
+                    <tr>
+                        @*<td>@Html.ActionLink(@item., "Create", new { id = item.Id }) </td>
+                        <td>@item.Phone</td>
+                        <td>@item.Address</td>
+                        <td>@item.Email</td>
+                        <td>@item.Comments</td>*@
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+
+
+    </div>
+</div>
+<input type="button" value="Print Div" onclick="PrintElem('#PrintDiv')" />
+<script type="text/javascript">
+
+    function PrintElem(elem) {
+        Popup($(elem).html());
+    }
+
+    function Popup(data) {
+        var mywindow = window.open('', 'my div', 'height=400,width=600');
+        mywindow.document.write('<html><head><title>my div</title>');
+        /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
+        mywindow.document.write('</head><body >');
+        mywindow.document.write(data);
+        mywindow.document.write('</body></html>');
+
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10
+
+        mywindow.print();
+        mywindow.close();
+
+        return true;
+    }
+
+</script>
+

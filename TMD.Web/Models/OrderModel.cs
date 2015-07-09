@@ -19,6 +19,8 @@ namespace TMD.Web.Models
         public CustomerModel  Customer { get; set; }
 
 
+        public int AllowedMaxDiscount { get; set; }
+
         //public virtual Customer Customer { get; set; }
     }
 }

@@ -12,6 +12,7 @@ using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class ProductCategoryController : BaseController
     {
         private readonly IProductCategoryService productCategoryService;
@@ -23,6 +24,7 @@ namespace TMD.Web.Controllers
         // GET: ProductCategory
         public ActionResult Index()
         {
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             IEnumerable<ProductCategoryModel> categories = productCategoryService.GetAllProductCategories().Select(x=>x.CreateFromServerToClient());
             return View(categories);
         }
@@ -36,6 +38,8 @@ namespace TMD.Web.Controllers
         // GET: ProductCategory/Create
         public ActionResult Create(long? id)
         {
+           
+
             ProductCategoryModel model = new ProductCategoryModel();
             if (id != null)
             {

@@ -42,7 +42,7 @@ namespace TMD.Web.ModelMappers
                 OrderItemId = source.OrderItemId,
                 OrderId = orderId,
                 AmountGiven = source.AmountGiven,
-                Discount = source.Discount,
+                Discount = byte.Parse( source.Discount.ToString()),
                 PurchasePrice = source.PurchasePrice,
                 ProductId = source.ProductId,
                 SalePrice = source.SalePrice,

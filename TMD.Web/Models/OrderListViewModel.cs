@@ -23,8 +23,9 @@ namespace TMD.Web.Models
         public string CustomerPhone { get; set; }
         public string CustomerName { get; set; }
         public string CustomerEmail { get; set; }
-
-
+        
+        //Will only use at printing
+        public List<OrderItemModel> OrderItems { get; set; }
         //public virtual Customer Customer { get; set; }
     }
 }

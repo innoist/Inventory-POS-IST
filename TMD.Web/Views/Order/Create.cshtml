@@ -1,7 +1,9 @@
 ﻿@using iTextSharp.text.pdf
 @model TMD.Web.Models.OrderModel
 @{
+    ViewBag.Title = "Create/Update Order";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 20;
 }
 
 
@@ -15,7 +17,7 @@
                     </a>*@
 
                 <button type="submit" class="btn btn-circle blue">Save</button>
-                <a href="~/ProductCategory/Index">
+                <a href="~/Order/Index">
                     <button type="button" class="btn btn-circle default">Cancel</button>
                 </a>
             </div>
@@ -31,6 +33,8 @@
                 @Html.HiddenFor(m => m.RecCreatedBy)
                 @Html.HiddenFor(m => m.RecCreatedDate)
                 @Html.HiddenFor(m => m.CustomerId)
+                @Html.HiddenFor(m => m.AllowedMaxDiscount)
+                
 
                 <div class="row">
                     <div class="col-md-7 col-sm-12">
@@ -517,17 +521,33 @@
 
 
             //$('.GridValueChange').change(function (a, b) {
-            $(document).on('change','.GridValueChange', function (a, b) {
+            $(document).on('change', '.GridValueChange', function (a, b) {
+                debugger
                 var counterID = $('#' + this.id).parent().parent().attr("data-id");
                 var qty = $('#OrderItems_' + counterID + '__Quantity').val();
                 
                 var price = $('#OrderItems_' + counterID + '__Product_SalePrice').val();
                 var discRS = $('#OrderItems_' + counterID + '__Discount').val();
-                $('#OrderItems_' + counterID + '__IsModified').val('True');
                 var subTotal = price * qty;
+
+                var discPerc = (discRS * 100) / subTotal;
+
+                //Checking max allowed... if any problem i will revert it to 0
+                var maxAllowedDiscPerc = $('#AllowedMaxDiscount').val();
+                if (parseInt(discPerc) > parseInt(maxAllowedDiscPerc)) {
+                    $('#OrderItems_' + counterID + '__Discount').val(0);
+                    toastr.error("ORDER EXCEEDING SALE DISCOUNT LIMIT");
+                     discRS = $('#OrderItems_' + counterID + '__Discount').val();
+                }
+
+                $('#OrderItems_' + counterID + '__IsModified').val('True');
+             
                 $('#OrderItems_' + counterID + '__Subtotal').val(subTotal);
                 var Total = subTotal - discRS;
                 $('#OrderItems_' + counterID + '__TotalItemAmount').val(Total);
+
+
+
                 CalculateOrderTotals();
                 
                 return false;
@@ -542,6 +562,9 @@
                 obj.itemSubTotal = obj.salePrice * obj.itemQty;
                 obj.itemDiscPerc = $('#ItemDiscPerc').val();
                 obj.itemDiscPrice = $('#ItemDiscPrice').val();
+
+                
+
                 if (this.id == "ItemDiscPerc") {
                     //Means perc changes
                     obj.itemDiscPrice = Math.ceil(obj.itemSubTotal * (obj.itemDiscPerc / 100));
@@ -552,6 +575,14 @@
                     //Means Rs change
                     obj.itemDiscPerc = Math.round((obj.itemDiscPrice * 100) / obj.itemSubTotal, 1);
                     $('#ItemDiscPerc').val(obj.itemDiscPerc);
+                }
+                //CHECKING MAX ALLOWED
+                var maxAllowedDiscPerc = $('#AllowedMaxDiscount').val();
+                
+                if ( parseInt(obj.itemDiscPerc) > parseInt(maxAllowedDiscPerc)) {
+                    $('#ItemDiscPerc').val(0);
+                    $('#ItemDiscPrice').val(0);
+                    toastr.error("ORDER EXCEEDING SALE DISCOUNT LIMIT");
                 }
                 CalculateTotals();
             });
