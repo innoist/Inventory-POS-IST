@@ -351,3 +351,7 @@ body {
 #btnFltr {
     margin-right: 10px !important;
 }
+.TermsAndConditions {
+    font-style: italic;
+    font-size: 10px;
+}

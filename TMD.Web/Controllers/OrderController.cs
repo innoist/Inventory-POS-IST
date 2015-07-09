@@ -44,6 +44,7 @@ namespace TMD.Web.Controllers
         [HttpPost]
         public ActionResult Index(OrderSearchRequest oRequest)
         {
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             OrderSearchResponse oResponse = orderService.GetOrdersSearchResponse(oRequest);
             List<OrderListViewModel> oList = oResponse.Orders.Select(x => x.CreateFromServerToLVClient()).ToList();
             OrderViewModel oVModel = new OrderViewModel();
@@ -118,6 +119,7 @@ namespace TMD.Web.Controllers
                             Message = "Order has been created with ID: " + order.OrderId,
                             IsSaved = true
                         };
+                        return RedirectToAction("PrintOrder", "Order", new { id = order.OrderId });
                     }
                     else
                     {
@@ -334,6 +336,7 @@ namespace TMD.Web.Controllers
 
         public ActionResult PrintOrder(long id)
         {
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             OrderListViewModel oVM = new OrderListViewModel();
             var orderDetails = orderService.GetOrders(id);
             oVM = orderDetails.CreateFromServerToLVClient();

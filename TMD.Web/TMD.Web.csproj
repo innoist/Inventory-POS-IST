@@ -659,6 +659,7 @@
     <Content Include="Content\css\images\sort_both.png" />
     <Content Include="Content\css\images\sort_desc.png" />
     <Content Include="Content\css\images\sort_desc_disabled.png" />
+    <Content Include="Content\css\invoice.css" />
     <Content Include="Content\css\jquery.dataTables.css" />
     <Content Include="Content\css\skel.css" />
     <Content Include="Content\css\style-1000px.css" />
@@ -1541,6 +1542,7 @@
     <Content Include="Content\global\plugins\slider-revolution-slider\video-boxed.html" />
     <Content Include="Content\global\plugins\slider-revolution-slider\video-fullscreen.html" />
     <Content Include="Content\global\plugins\slider-revolution-slider\video-fullwidth.html" />
+    <Content Include="Images\CompanyLogo\toysworldlogo.png" />
     <Content Include="Images\loading.gif" />
     <Content Include="Images\photon\entypo.eot" />
     <Content Include="Images\photon\entypo.ttf" />
