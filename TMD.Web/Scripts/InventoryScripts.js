@@ -1,15 +1,15 @@
 ﻿$(document).ready(function() {
     
 });
-function LoadProductByProductCode(control) {
-    var productCode = $("#" + control.id).val();
+function LoadProductByCode(control) {
+    var code = $("#" + control.id).val();
     $.blockUI({ message: '<h3><img src="../Images/loading.gif" height=55px; width=55px; /> Fetching Product...</h2>' });
 
-    if (productCode != "" && productCode != "0") {
+    if (code != "" && code != "0") {
         $.ajax({
             url: "/Api/Product",
             type: "GET",
-            data: { id: productCode },
+            data: { id: code },
             dataType: "json",
             success: ProductLoaded,
             error: function (textStatus, errorThrown) {
@@ -39,9 +39,7 @@ function ProductLoaded(data) {
         $("#btnInventoryItemSubmit").attr("disabled", false);
     }
 }
-function LoadProductByBarCode() {
-    alert("product loaded");
-}
+
 function CalculateProfit(from, to) {
     if (from > 0) {
         var profit = ((to - from) / from) * 100;

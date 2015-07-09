@@ -68,5 +68,17 @@ namespace TMD.Implementation.Services
             responseResult.ProductCategories = productCategoryRepository.GetAll().ToList();
             return responseResult;
         }
+
+        public ProductSearchResponseByAnyCode GetProductByAnyCode(string code)
+        {
+            ProductSearchResponseByAnyCode response=new ProductSearchResponseByAnyCode();
+            var product = productRepository.GetProductByAnyCode(code);
+            if (product != null)
+            {
+                response.Product = product;
+                response.AvailableItems=GetAvailableProductItem(product.ProductId);
+            }
+            return response;
+        }
     }
 }

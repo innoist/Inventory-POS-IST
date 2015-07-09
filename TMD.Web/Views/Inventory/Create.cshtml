@@ -35,7 +35,7 @@
                 <div class="form-group margin-top-20">
                     @Html.Label("Vendor Barcode", new { @class = "col-md-3 control-label" })
                     <div class="col-md-4">
-                        @Html.TextBox("Barcode", null, new { @id = "Barcode", @class = "form-control input-circle", @onchange = "LoadProductByProductCode(this);" })
+                        @Html.TextBox("Barcode", null, new { @id = "Barcode", @class = "form-control input-circle", @onchange = "LoadProductByCode(this);" })
                     </div>
                     
                     @Html.Label("Name", new { @class = "col-md-1 control-label" })
@@ -47,7 +47,7 @@
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.InventoryItem.ProductId, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.InventoryItem.ProductId, new { @id="ProductId", @class = "form-control input-circle mandatory", @onchange = "LoadProductByProductCode(this);" })
+                        @Html.TextBoxFor(m => m.InventoryItem.ProductId, new { @id = "ProductId", @class = "form-control input-circle mandatory", @onchange = "LoadProductByCode(this);" })
                         @Html.ValidationMessageFor(model => model.InventoryItem.ProductId)
                     </div>
                     @Html.Label("Description", new { @class = "col-md-1 control-label" })

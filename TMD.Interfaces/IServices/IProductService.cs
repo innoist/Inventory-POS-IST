@@ -13,5 +13,6 @@ namespace TMD.Interfaces.IServices
         long GetAvailableProductItem(long productId);
         ProductSearchResponse GetProductSearchResponse(ProductSearchRequest searchRequest);
         ProductResponse GetProductResponse(long? productId);
+        ProductSearchResponseByAnyCode GetProductByAnyCode(string code);
     }
 }

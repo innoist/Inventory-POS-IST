@@ -23,15 +23,15 @@ namespace TMD.Web.Areas.Api.Controllers
         }
 
         // GET api/<controller>/5
-        public ProductApiModel Get(int id)
+        public ProductApiModel Get(string id)
         {
-            if (id <= 0) return new ProductApiModel();
+            if (string.IsNullOrEmpty(id)) return new ProductApiModel();
 
-            var product = productService.GetProduct((long)id);
-            if (product == null) return new ProductApiModel();
+            var response = productService.GetProductByAnyCode(id);
+            if (response.Product == null) return new ProductApiModel();
 
-            var productApiModel=product.CreateApiModelServerToClient();
-            productApiModel.AvailableItems = productService.GetAvailableProductItem(id);
+            var productApiModel = response.Product.CreateApiModelServerToClient();
+            productApiModel.AvailableItems = response.AvailableItems;
 
             return productApiModel;
         }

@@ -73,5 +73,10 @@ namespace TMD.Repository.Repositories
             return new ProductSearchResponse { Products = result, TotalCount = DbSet.Count(), FilteredCount = DbSet.Count(query) };
 
         }
+
+        public Product GetProductByAnyCode(string code)
+        {
+            return DbSet.FirstOrDefault(x => x.ProductId == Convert.ToInt64(code) || x.ProductBarCode == code);
+        }
     }
 }

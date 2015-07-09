@@ -54,7 +54,7 @@
                                     </div>
                                     <div class="col-md-2 value">
                                    
-                                        <input type="text" value="" class="form-control mandatoryItem" autofocus="autofocus" id="ItemCode" onchange="LoadProductByProductCode(this)" />
+                                        <input type="text" value="" class="form-control mandatoryItem" autofocus="autofocus" id="ItemCode" onchange="LoadProductByCode(this)" />
                                    
                                         <input type="hidden" value="" id="ItemId"/>
                                     </div>
@@ -467,7 +467,7 @@
                 $('#ItemCode').val('');
 
             }
-            function LoadProductByProductCode(control) {
+            function LoadProductByCode(control) {
                 var productCode = $("#" + control.id).val();
                 $.blockUI({ message: '<h3><img src="../Images/loading.gif" height=55px; width=55px; /> Fetching Product...</h2>' });
                 if (productCode != "" && productCode != "0") {

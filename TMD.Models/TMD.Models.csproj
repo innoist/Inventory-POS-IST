@@ -156,6 +156,7 @@
     <Compile Include="ResponseModels\ProductResponse.cs" />
     <Compile Include="ResponseModels\ProductSearchResponse.cs" />
     <Compile Include="ResponseModels\BatchImportSearchResponse.cs" />
+    <Compile Include="ResponseModels\ProductSearchResponseByAnyCode.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
