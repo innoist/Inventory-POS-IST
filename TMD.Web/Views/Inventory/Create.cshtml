@@ -1,5 +1,6 @@
 ﻿@model TMD.Web.ViewModels.InventoryItemViewModel
 @{
+    ViewBag.Title = "Create/Update Inventory";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     var isEdit = (Model.InventoryItem != null && Model.InventoryItem.ItemId > 0); 
     Session["MenuKey"] = 11;

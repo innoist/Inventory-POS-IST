@@ -27,7 +27,8 @@ namespace TMD.Web.ModelMappers
             {
                 CategoryId = source.CategoryId,
                 Description = source.Description,
-                Name = source.Name,
+                Name=source.Name,
+                NameWithMainCategory = (source.ProductMainCategory != null ? source.ProductMainCategory.Name + " - " : "") + source.Name,
                 MainCategoryId = source.MainCategoryId,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,

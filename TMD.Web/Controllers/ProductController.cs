@@ -79,6 +79,8 @@ namespace TMD.Web.Controllers
                 productViewModel.ProductCategories = responseResult.ProductCategories.Select(x => x.CreateFromServerToClient());
             if (responseResult.Product != null)
                 productViewModel.ProductModel = responseResult.Product.CreateFromServerToClient();
+
+            ViewBag.LastSavedId = TempData["LastSavedId"];
             return View(productViewModel);
         }
 
@@ -88,10 +90,12 @@ namespace TMD.Web.Controllers
         {
             try
             {
+                bool isCreated = false;
                 if (productViewModel.ProductModel.ProductId == 0)
                 {
                     productViewModel.ProductModel.RecCreatedBy = User.Identity.Name;
                     productViewModel.ProductModel.RecCreatedDate = DateTime.Now;
+                    isCreated = true;
                 }
                 productViewModel.ProductModel.RecLastUpdatedBy = User.Identity.Name;
                 productViewModel.ProductModel.RecLastUpdatedDate = DateTime.Now;
@@ -101,15 +105,26 @@ namespace TMD.Web.Controllers
                     productViewModel.ProductModel.PurchasePrice)
                     productViewModel.ProductModel.MinSalePriceAllowed =
                         productViewModel.ProductModel.SalePrice;
-
-                if (productService.SaveProduct(productViewModel.ProductModel.CreateFromClientToServer()) > 0)
+                var lastSavedId = productService.SaveProduct(productViewModel.ProductModel.CreateFromClientToServer());
+                if (lastSavedId > 0)
                 {
-                    //Product Saved
-                    TempData["message"] = new MessageViewModel { Message = "Product has been saved successfully.", IsSaved = true };
+                    if (isCreated)
+                    {
+                        //Product Saved
+                        TempData["message"] = new MessageViewModel { Message = "Product has been saved successfully.<br/>Last saved product id is " + lastSavedId, IsSaved = true };
+                    }
+                    else
+                    {
+                        //Product Updated
+                        TempData["message"] = new MessageViewModel { Message = "Product has been updated successfully.<br/>Updated product id is " + lastSavedId, IsUpdated = true };
+                    }
                 }
-                
 
-                return RedirectToAction("Index");
+                if (Request.Form["save"]!=null)
+                    return RedirectToAction("Index");
+                if (isCreated)
+                    TempData["LastSavedId"] = lastSavedId;
+                return RedirectToAction("Create");
             }
             catch(Exception exception)
             {

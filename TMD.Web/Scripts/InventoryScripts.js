@@ -35,6 +35,13 @@ function ProductLoaded(data) {
         $("#ProductId").val(data.ProductId);
         $("#AvailableItems").val(data.AvailableItems);
 
+        //For New Product Page Fields
+        $("#Category").val(data.CategoryId);
+        $("#MinSalePriceAllowed").val(data.MinSalePriceAllowed);
+        $("#ProductModel_ProductId").val(data.ProductId);
+        $("#ProductModel_RecCreatedBy").val(data.RecCreatedBy);
+        $("#ProductModel_RecCreatedDate").val(data.RecCreatedDate);
+        //END For New Product Page Fields
         ShowProfit();
         $("#btnInventoryItemSubmit").attr("disabled", false);
     }
