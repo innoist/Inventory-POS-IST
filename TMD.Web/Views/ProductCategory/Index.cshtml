@@ -22,6 +22,7 @@
                             <tr>
                                 <th class="tableHeaderWhite">Name</th>
                                 <th class="tableHeaderWhite">Description</th>
+                                <th class="tableHeaderWhite">Main Category</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -30,6 +31,7 @@
                                 <tr>
                                     <td>@Html.ActionLink(@item.Name, "Create", new { id = item.CategoryId }) </td>
                                     <td>@item.Description</td>
+                                    <td>@item.ProductMainCategoryName</td>
                                 </tr>
                             }
                         </tbody>
