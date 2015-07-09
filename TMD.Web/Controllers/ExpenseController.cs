@@ -1,72 +1,76 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using TMD.Interfaces.IServices;
 using TMD.Web.ModelMappers;
 using TMD.Web.Models;
+using TMD.Web.ViewModels;
 using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    public class ExpenseCategoryController : BaseController
+    public class ExpenseController : BaseController
     {
+        private readonly IExpenseService expenseService;
         private readonly IExpenseCategoryService expenseCategoryService;
 
-        public ExpenseCategoryController(IExpenseCategoryService expenseCategoryService)
+        public ExpenseController(IExpenseService expenseService, IExpenseCategoryService expenseCategoryService)
         {
+            this.expenseService = expenseService;
             this.expenseCategoryService = expenseCategoryService;
         }
         //
-        // GET: /ExpenseCategory/
+        // GET: /Expense/
         public ActionResult Index()
         {
-            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View();
         }
 
         //
-        // GET: /ExpenseCategory/Details/5
+        // GET: /Expense/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
         //
-        // GET: /ExpenseCategory/Create
+        // GET: /Expense/Create
         public ActionResult Create(long? id)
         {
-            ExpenseCategoryModel model = new ExpenseCategoryModel();
+            ExpenseViewModel model = new ExpenseViewModel();
+            model.ExpenseCategories = expenseCategoryService.GetAllExpenseCategories().Select(x => x.CreateFromServerToClient());
             if (id != null)
             {
-                var category = expenseCategoryService.GetExpenseCategory((long)id);
-                if (category != null)
-                    model = category.CreateFromServerToClient();
+                var expense = expenseService.GetExpense((long)id);
+                if (expense != null)
+                    model.ExpenseModel = expense.CreateFromServerToClient();
             }
             return View(model);
         }
 
         //
-        // POST: /ExpenseCategory/Create
+        // POST: /Expense/Create
         [HttpPost]
-        public ActionResult Create(ExpenseCategoryModel expenseCategory)
+        public ActionResult Create(ExpenseViewModel evm)
         {
             try
             {
-                if (expenseCategory.Id == 0)
+                if (evm.ExpenseModel.Id == 0)
                 {
-                    expenseCategory.RecCreatedBy = User.Identity.Name;
-                    expenseCategory.RecCreatedDate = DateTime.Now;
+                    evm.ExpenseModel.RecCreatedBy = User.Identity.Name;
+                    evm.ExpenseModel.RecCreatedDate = DateTime.Now;
                 }
-                expenseCategory.RecLastUpdatedBy = User.Identity.Name;
-                expenseCategory.RecLastUpdatedDate = DateTime.Now;
+                evm.ExpenseModel.RecLastUpdatedBy = User.Identity.Name;
+                evm.ExpenseModel.RecLastUpdatedDate = DateTime.Now;
 
 
-                if (expenseCategoryService.AddExpenseCategory(expenseCategory.CreateFromClientToServer()) > 0)
+                if (expenseService.AddExpense(evm.ExpenseModel.CreateFromClientToServer()) > 0)
                 {
                     //Product Saved
-                    TempData["message"] = new MessageViewModel { Message = "Expense category has been saved successfully.", IsSaved = true };
+                    TempData["message"] = new MessageViewModel { Message = "Expense has been saved successfully.", IsSaved = true };
                 }
-
                 return RedirectToAction("Index");
             }
             catch
@@ -76,14 +80,14 @@ namespace TMD.Web.Controllers
         }
 
         //
-        // GET: /ExpenseCategory/Edit/5
+        // GET: /Expense/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
         //
-        // POST: /ExpenseCategory/Edit/5
+        // POST: /Expense/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -100,14 +104,14 @@ namespace TMD.Web.Controllers
         }
 
         //
-        // GET: /ExpenseCategory/Delete/5
+        // GET: /Expense/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
         //
-        // POST: /ExpenseCategory/Delete/5
+        // POST: /Expense/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {

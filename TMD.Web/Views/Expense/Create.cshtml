@@ -1,0 +1,72 @@
+﻿@model TMD.Web.ViewModels.ExpenseViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("Create", "Expense", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="portlet box blue-hoki">
+        <div class="portlet-title">
+
+            <div class="tools">
+                @*<a href="javascript:;" class="collapse">
+                    </a>*@
+
+                <button type="submit" class="btn btn-circle blue" onclick="return(ValidateFields(event));">Save</button>
+                <a href="~/ProductCategory/Index">
+                    <button type="button" class="btn btn-circle default">Cancel</button>
+                </a>
+            </div>
+            <div class="caption">
+                <i class="fa fa-male"></i>Create/Update Expense Category
+            </div>
+        </div>
+
+        <div class="portlet-body form">
+            <div class="container-fluid">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.ExpenseModel.Id)
+                @Html.HiddenFor(m => m.ExpenseModel.RecCreatedBy)
+                @Html.HiddenFor(m => m.ExpenseModel.RecCreatedDate)
+
+                <div class="form-group margin-top-20">
+                    @Html.Label("Expense Date", new { @class = "col-md-3 control-label requiredLabel"})
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.ExpenseModel.ExpenseDate, new { @class = "form-control input-circle mandatory", placeholder = "Expense Date", @id = "ExpenseDate" })
+                    </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.Label("Expense Category", new { @class = "col-md-3 control-label requiredLabel"})
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(m => m.ExpenseModel.ExpenseCategoryId, new SelectList(Model.ExpenseCategories, "Id", "Name"), new { @class = "form-control input-circle mandatory", @id = "ExpenseCategoryId" })
+                    </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.Label("Expense Amount", new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.ExpenseModel.ExpenseAmount, new { @class = "form-control input-circle mandatory", placeholder = "Expense Amount", @id = "ExpenseAmount" })
+                    </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.ExpenseModel.Description, new { @class = "col-md-3 control-label" })
+                    <div class="col-md-4">
+                        @Html.TextAreaFor(m => m.ExpenseModel.Description, new { @class = "form-control input-circle", placeholder = "Description" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $("#ExpenseDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            maxDate: new Date()
+        });
+        $("#OrderDate").datepicker().datepicker("setDate", new Date());
+    });
+</script>

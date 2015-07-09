@@ -24,6 +24,7 @@ namespace TMD.Repository
             unityContainer.RegisterType<IProductConfigurationRepositoy, ProductConfigurationRepository>();
             unityContainer.RegisterType<ICustomerRepository, CustomerRepository>();
             unityContainer.RegisterType<IExpenseCategoryRepository, ExpenseCategoryRepository>();
+            unityContainer.RegisterType<IExpenseRepository, ExpenseRepository>();
         }
     }
 }
