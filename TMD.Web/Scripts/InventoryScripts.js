@@ -1,7 +1,7 @@
 ﻿$(document).ready(function() {
     
 });
-function LoadCustomerByCode(control) {
+function LoadProductByCode(control) {
     var code = $("#" + control.id).val();
     if (code == "")
         return;
