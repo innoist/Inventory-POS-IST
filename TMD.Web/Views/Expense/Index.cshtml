@@ -10,38 +10,40 @@
             @ViewBag.Title
         </h3>       
     </header>
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="portlet-title">
+                <div class="tools">
+                    <input type="button" class="btn blue titleButton" id="btnResetFltr" style="float:right" value="Reset">
+                    <input type="button" class="btn green" id="btnFltr" style="float:right" value="Filter" />
+                    <a href="~/Expense/Create" class="btn red titleButton">Add New Expense</a>
+                </div>
+            </div>
+            <div class="portlet-body form">
+                <div class="form-actions">
+                    <div>
+                        <table class="responsive">
+                            <tr>
+                                <td class="col-md-1">
+                                    <label class="control-label"> Search </label>
+                                </td>
+                                <td class="col-md-3">
+                                    <div class="input-icon">
+                                        <i class="fa fa-search"></i>
+                                        @Html.TextBox("Search", "", new { @class = "searchInputs form-control listFilter", @id = "txtSearchExpense", @placeholder = "Amount, Date or Description" })
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <form class="form-horizontal">
         <div class="row-fluid">
             <div class="span12">
-                <div class="portlet-title">
-                    <div class="tools">
-                        <input type="button" class="btn blue titleButton" id="btnResetFltr" style="float:right" value="Reset">
-                        <input type="button" class="btn green" id="btnFltr" style="float:right" value="Filter" />
-                        <a href="~/Expense/Create" class="btn red titleButton">Add New Expense</a>
-                    </div>
-                </div>
-                <div class="portlet-body form">
-                    <div class="form-actions">
-                        <div>
-                            <table class="responsive">
-                                <tr>
-                                    <td class="col-md-1">
-                                        <label class="control-label"> Search </label>
-                                    </td>
-                                    <td class="col-md-2">
-                                        <div class="input-icon">
-                                            <i class="fa fa-search"></i>
-                                            @Html.TextBox("Search", "", new { @class = "searchInputs form-control listFilter", @id = "txtSearchExpense", @placeholder = "Amount, Date or Description" })
-                                        </div>
-                                    </td>
-                                    <td class="col-md-1"></td>
-                                </tr>                                                                     
-                            </table>
-
-                        </div>
-                    </div>
-                </div>
                 <div class="portlet box blue">
                     <table id="dataTable" class="display" cellspacing="0" width="100%">
                         <thead>
@@ -73,21 +75,23 @@
 <script type="text/javascript">
     jQuery(document).on('keyup', '.listFilter', function (ev) {
         if (ev.which === 13) {
-            $('#btnFltr').click();            
+            $('#btnFltr').click();
+            // Avoid form submit
+            return false;
         }
-        return false;
     });
     $(document).ready(function () {
         var oTable = $('#dataTable').dataTable({
             "sPaginationType": "full_numbers",
             "iDisplayLength": 10,
-            "bFilter": false,
+            "bFilter": true,
             "bLengthChange": false,
         });
 
         $('#btnFltr').on('click', function (e) {
             var searchN = $('#txtSearchExpense').val();           
-            oTable.fnFilter(searchN);
+            //oTable.fnFilter(searchN);
+            oTable.fnDraw(searchN);
         });
         $('#btnResetFltr').on('click', function (e) {
           
