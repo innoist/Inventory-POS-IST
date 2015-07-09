@@ -33,6 +33,11 @@ namespace TMD.Implementation.Services
             customerRepository.SaveChanges();
             return customer.Id;
         }
+
+        public Customer GetCustomerByEmailOrPhone(string query)
+        {
+            return customerRepository.GetCustomerByEmailOrPhone(query);
+        }
     }
 }
 

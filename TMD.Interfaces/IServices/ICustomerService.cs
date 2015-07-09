@@ -8,5 +8,6 @@ namespace TMD.Interfaces.IServices
         Customer GetCustomer(long customerId);
         IEnumerable<Customer> GetAllCustomers();
         long AddCustomer(Customer customer);
+        Customer GetCustomerByEmailOrPhone(string query);
     }
 }
