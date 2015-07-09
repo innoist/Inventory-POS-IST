@@ -25,7 +25,8 @@ namespace TMD.Web.Controllers
         // GET: /Expense/
         public ActionResult Index()
         {
-            return View();
+            IEnumerable<ExpenseModel> expenses = expenseService.GetAllExpenses().Select(x => x.CreateFromServerToClient());
+            return View(expenses);
         }
 
         //

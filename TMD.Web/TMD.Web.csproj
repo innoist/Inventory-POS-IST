@@ -337,6 +337,7 @@
     <Compile Include="Models\OrderItemModel.cs" />
     <Compile Include="Models\OrderListViewModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
+    <Compile Include="Models\ProductMainCategoryModel.cs" />
     <Compile Include="Models\ProductModel.cs" />
     <Compile Include="Models\ProductCategoryModel.cs" />
     <Compile Include="Models\StagingEbayBatchImportModel.cs" />
@@ -388,6 +389,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\EbayItemViewModel.cs" />
+    <Compile Include="ViewModels\ProductCategoryViewModel.cs" />
     <Compile Include="ViewModels\InventoryItemViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />
     <Compile Include="ViewModels\ProductCategoryListViewModel.cs" />
