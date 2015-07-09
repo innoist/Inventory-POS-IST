@@ -3,6 +3,7 @@
 namespace TMD.Interfaces.IRepository
 {
     public interface ICustomerRepository : IBaseRepository<Customer, long>
-    {        
+    {
+        Customer GetCustomerByEmailOrPhone(string query);
     }
 }
