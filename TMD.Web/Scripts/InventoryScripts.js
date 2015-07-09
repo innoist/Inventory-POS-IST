@@ -1,7 +1,7 @@
 ﻿$(document).ready(function() {
     
 });
-function LoadProductByCode(control) {
+function LoadCustomerByCode(control) {
     var code = $("#" + control.id).val();
     $.blockUI({ message: '<h3><img src="../Images/loading.gif" height=55px; width=55px; /> Fetching Product...</h2>' });
 
@@ -44,6 +44,43 @@ function ProductLoaded(data) {
         //END For New Product Page Fields
         ShowProfit();
         $("#btnInventoryItemSubmit").attr("disabled", false);
+    }
+}
+
+function LoadCustomerByEmailOrPhone(control) {
+    var code = $("#" + control.id).val();
+    $.blockUI({ message: '<h3><img src="../Images/loading.gif" height=55px; width=55px; /> Fetching Product...</h2>' });
+
+    if (code != "" && code != "0") {
+        $.ajax({
+            url: "/Api/Customer",
+            type: "GET",
+            data: { id: code },
+            dataType: "json",
+            success: CustomerLoaded,
+            error: function (textStatus, errorThrown) {
+                $.unblockUI();
+                alert("Status: " + textStatus); alert("Error: " + errorThrown);
+            }
+        });
+    }
+}
+function CustomerLoaded(data) {
+    $.unblockUI();
+    if (data==null) {
+        toastr.error("No Customer found.");
+    } else {
+        toastr.success("Customer found successfully");
+        var Id = data.Id;
+        var Name = data.Name;
+        var Phone = data.Phone;
+        var Address = data.Address;
+        var Email = data.Email;
+        var Comments = data.Comments;
+        var RecCreatedDate = data.RecCreatedDate;
+        var RecLastUpdatedDate = data.RecLastUpdatedDate;
+        var RecCreatedBy = data.RecCreatedBy;
+        var RecLastUpdatedBy = data.RecLastUpdatedBy;
     }
 }
 
