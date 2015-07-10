@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TMDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TMDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -255,6 +255,7 @@
           <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="DefaultVendorId" Type="bigint" />
         </EntityType>
         <EntityType Name="ProductMainCategory">
           <Key>
@@ -1706,6 +1707,7 @@
           <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="DefaultVendorId" Type="Int64" />
         </EntityType>
         <EntityType Name="ExpenseCategory">
           <Key>
@@ -2152,6 +2154,7 @@
           <EntitySetMapping Name="ProductConfigurations">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductConfiguration">
               <MappingFragment StoreEntitySet="ProductConfiguration">
+                <ScalarProperty Name="DefaultVendorId" ColumnName="DefaultVendorId" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
                 <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />

@@ -22,5 +22,10 @@ namespace TMD.Models.RequestModels
                 SortBy = (short)value;
             }
         }
+        public InventoryItemSearchRequest()
+        {
+            SortBy = 4;
+            IsAsc = false;
+        }
     }
 }

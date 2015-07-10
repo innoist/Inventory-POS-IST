@@ -390,6 +390,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\EbayItemViewModel.cs" />
+    <Compile Include="ViewModels\ProductConfigurationViewModel.cs" />
     <Compile Include="ViewModels\ProductCategoryViewModel.cs" />
     <Compile Include="ViewModels\InventoryItemViewModel.cs" />
     <Compile Include="ViewModels\OrderViewModel.cs" />

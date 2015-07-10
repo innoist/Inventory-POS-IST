@@ -86,7 +86,7 @@ namespace TMD.Web.Controllers
             }
             //Setting Max discount
             int MaxDiscountInt = 0;
-            int.TryParse(GetConfigMaxDiscount(), out MaxDiscountInt);
+            int.TryParse( new Utility().GetConfigMaxDiscount(Session, configurationService,User.IsInRole(Utility.AdminRoleName)), out MaxDiscountInt);
             toSend.AllowedMaxDiscount = MaxDiscountInt;
             
             
@@ -102,7 +102,7 @@ namespace TMD.Web.Controllers
                
 
                 SetUserInfo(orderDetail);
-                string email = GetConfigEmail();
+                string email = new Utility().GetConfigEmail(Session, configurationService);
                 // TODO: Add insert logic here
                 if (orderDetail.OrderId <= 0)
                 {
@@ -154,7 +154,7 @@ namespace TMD.Web.Controllers
 
         private bool ValidateDiscount(Order order)
         {
-            var maxDiscAllowed = decimal.Parse(GetConfigMaxDiscount())/100;
+            var maxDiscAllowed = decimal.Parse( new Utility().GetConfigMaxDiscount(Session, configurationService,User.IsInRole(Utility.AdminRoleName)))/100;
             var sumDiscount = order.OrderItems.Sum(x => x.Discount);
             var sumRs = order.OrderItems.Sum(x => x.SalePrice*x.Quantity);
             decimal perc = sumDiscount / sumRs;
@@ -179,9 +179,12 @@ namespace TMD.Web.Controllers
             {
                 subject = "Created: Order: " + order.OrderId;
             }
-            string body = "Total Sale: " + order.OrderItems.Sum(x => x.SalePrice);
-            body += " Total Discount: " + order.OrderItems.Sum(x => x.Discount);
+            var grossSale = order.OrderItems.Sum(x => x.SalePrice*x.Quantity);
+            var totalDiscount = order.OrderItems.Sum(x => x.Discount);
+            string body = "Gross Sale: " + grossSale;
+            body += " Total Discount: " + totalDiscount;
             body += " Total Qty: " + order.OrderItems.Sum(x => x.Quantity);
+            body += " Net Sale: " + (grossSale - totalDiscount).ToString();
             if (order.IsModified)
             {
                 //Just enter that order was modified
@@ -295,44 +298,44 @@ namespace TMD.Web.Controllers
             }
         }
 
-        public string GetConfigEmail()
-        {
-            if (Session[Utility.ConfigEmail] == null)
-            {
-                var config = configurationService.GetDefaultConfiguration();
-                var email = config.Emails;
-                if (string.IsNullOrEmpty(email))
-                    Session[Utility.ConfigEmail] = "NONE";
-                else
-                    Session[Utility.ConfigEmail] = email;
-                return email;
+        //public string GetConfigEmail()
+        //{
+        //    if (Session[Utility.ConfigEmail] == null)
+        //    {
+        //        var config = configurationService.GetDefaultConfiguration();
+        //        var email = config.Emails;
+        //        if (string.IsNullOrEmpty(email))
+        //            Session[Utility.ConfigEmail] = "NONE";
+        //        else
+        //            Session[Utility.ConfigEmail] = email;
+        //        return email;
                 
-            }
-            else
-            {
+        //    }
+        //    else
+        //    {
 
-                return Session[Utility.ConfigEmail].ToString();
-            }
-        }
+        //        return Session[Utility.ConfigEmail].ToString();
+        //    }
+        //}
 
-        public string GetConfigMaxDiscount()
-        {
-            if (User.IsInRole(Utility.AdminRoleName))
-            {
-                Session[Utility.MaxDiscount] = 50;
+        //public string GetConfigMaxDiscount()
+        //{
+        //    if (User.IsInRole(Utility.AdminRoleName))
+        //    {
+        //        Session[Utility.MaxDiscount] = 50;
                 
-            }
-            else if (Session[Utility.MaxDiscount] == null)
-            {
-                var config = configurationService.GetDefaultConfiguration();
-                var MaxAllowedDiscount = config.MaxAllowedDiscount;
+        //    }
+        //    else if (Session[Utility.MaxDiscount] == null)
+        //    {
+        //        var config = configurationService.GetDefaultConfiguration();
+        //        var MaxAllowedDiscount = config.MaxAllowedDiscount;
 
-                Session[Utility.MaxDiscount] = MaxAllowedDiscount;
+        //        Session[Utility.MaxDiscount] = MaxAllowedDiscount;
                
 
-            }
-            return Session[Utility.MaxDiscount].ToString();
-        }
+        //    }
+        //    return Session[Utility.MaxDiscount].ToString();
+        //}
 
         public ActionResult PrintOrder(long id)
         {

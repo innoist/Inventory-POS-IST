@@ -1,4 +1,4 @@
-﻿@model TMD.Models.DomainModels.ProductConfiguration
+﻿@model TMD.Web.ViewModels.ProductConfigurationViewModel
 @{
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     Session["MenuKey"] = 21;
@@ -28,43 +28,51 @@
         <div class="portlet-body form">
             <div class="container-fluid">
                 @Html.AntiForgeryToken()
-                @Html.HiddenFor(m => m.Id)
-                @Html.HiddenFor(m => m.RecCreatedBy)
-                @Html.HiddenFor(m => m.RecCreatedDate)
+                @Html.HiddenFor(m => m.Configuration.Id)
+                @Html.HiddenFor(m => m.Configuration.RecCreatedBy)
+                @Html.HiddenFor(m => m.Configuration.RecCreatedDate)
 
                 <div class="form-group margin-top-20">
                     <label class="col-md-3 control-label">Product Code Prefix</label>
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.ProductCodePrefix, new { @class = "form-control input-circle", @id = "ProductCodePrefix" })
+                        @Html.TextBoxFor(m => m.Configuration.ProductCodePrefix, new { @class = "form-control input-circle", @id = "ProductCodePrefix" })
                     </div>
                 </div>
                 
                 <div class="form-group margin-top-20">
                     <label class="col-md-3 control-label">Max Allowed Discount</label>
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.MaxAllowedDiscount, new { @class = "form-control input-circle", @id = "MaxAllowedDiscount" })
-                        @Html.ValidationMessageFor(m=>m.MaxAllowedDiscount)
+                        @Html.TextBoxFor(m => m.Configuration.MaxAllowedDiscount, new { @class = "form-control input-circle", @id = "MaxAllowedDiscount" })
+                        @Html.ValidationMessageFor(m => m.Configuration.MaxAllowedDiscount)
                     </div>
                 </div>
                 
                 <div class="form-group margin-top-20">
                     <label class="col-md-3 control-label">Emails <small>"," separated</small></label>
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.Emails, new { @class = "form-control input-circle", @id = "Emails" })
+                        @Html.TextBoxFor(m => m.Configuration.Emails, new { @class = "form-control input-circle", @id = "Emails" })
                     </div>
                 </div>
-                
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.Configuration.DefaultVendorId, new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(model => model.Configuration.DefaultVendorId, new SelectList(Model.vendorModel, "VendorId", "Name"), "Select Vendor", new { @class = "form-control input-circle mandatory", @id = "Vendors" })
+                        @Html.ValidationMessageFor(model => model.Configuration.DefaultVendorId)
+                    </div>
+
+                </div>
                 <div class="form-group margin-top-20">
                     <label class="col-md-3 control-label">Security Password</label>
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.SecurityPassword, new { @class = "form-control input-circle", @id = "SecurityPassword" })
+                        @Html.TextBoxFor(m => m.Configuration.SecurityPassword, new { @class = "form-control input-circle", @id = "SecurityPassword" })
                     </div>
                 </div>
+
                 
                 <div class="form-group margin-top-20">
                     <label class="col-md-3 control-label">Comments</label>
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.Comments, new { @class = "form-control input-circle", @id = "Comments" })
+                        @Html.TextBoxFor(m => m.Configuration.Comments, new { @class = "form-control input-circle", @id = "Comments" })
                     </div>
                 </div>
             </div>

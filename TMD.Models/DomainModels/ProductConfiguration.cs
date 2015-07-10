@@ -12,6 +12,8 @@ namespace TMD.Models.DomainModels
         public string ProductCodePrefix { get; set; }
         public string Comments { get; set; }
 
+        public long ? DefaultVendorId { get; set; }
+
         public System.DateTime RecCreatedDate { get; set; }
         public System.DateTime RecLastUpdatedDate { get; set; }
         public string RecCreatedBy { get; set; }

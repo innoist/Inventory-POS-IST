@@ -3,6 +3,9 @@ using System.Configuration;
 using System.IO;
 using System.Net;
 using System.Net.Mail;
+using System.Web;
+using TMD.Interfaces.IServices;
+using TMD.Models.DomainModels;
 
 namespace TMD.Web
 {
@@ -13,8 +16,9 @@ namespace TMD.Web
 
         public const string AdminRoleId = "1";
         public const string AdminRoleName = "Admin";
-
+        
         public const string ConfigEmail = "ConfigEmail";
+        public const string ProductConfiguration = "ProductConfiguration";
         public const string MaxDiscount = "MaxDiscount";
         public static void SendEmailAsync(string email, string subject, string body)
         {
@@ -49,6 +53,7 @@ namespace TMD.Web
         }
         public bool SendSms(string smsText, string mobileNo)
         {
+            
             string username = ConfigurationManager.AppSettings["MobileUsername"];
             string password = ConfigurationManager.AppSettings["MobilePassword"];
             string senderId = ConfigurationManager.AppSettings["SenderID"];
@@ -68,6 +73,60 @@ namespace TMD.Web
                 return true;
             }
             return false;
+        }
+
+        public string GetConfigEmail(System.Web.HttpSessionStateBase Session, IProductConfigurationService configurationService)
+        {
+            if (Session[Utility.ProductConfiguration] == null)
+            {
+                ProductConfiguration config= configurationService.GetDefaultConfiguration();
+                Session[Utility.ProductConfiguration] = config;
+
+                var email = config.Emails;
+                if (string.IsNullOrEmpty(email))
+                    Session[Utility.ConfigEmail] = "NONE";
+                else
+                    Session[Utility.ConfigEmail] = email;
+                return email;
+
+            }
+            else
+            {
+                ProductConfiguration config = (ProductConfiguration) Session[Utility.ProductConfiguration];
+                var email = config.Emails;
+                if (string.IsNullOrEmpty(email))
+                    Session[Utility.ConfigEmail] = "NONE";
+                else
+                    Session[Utility.ConfigEmail] = email;
+                return email;
+            }
+        }
+
+        public string GetConfigMaxDiscount(System.Web.HttpSessionStateBase Session, IProductConfigurationService configurationService,bool isAdmin)
+        {
+            if (isAdmin)
+            {
+
+                return "25";
+
+            }
+            else if (Session[Utility.ProductConfiguration] == null)
+            {
+                Session[Utility.ProductConfiguration] = configurationService.GetDefaultConfiguration();
+            }
+            var config = (ProductConfiguration)Session[Utility.ProductConfiguration];
+            return config.MaxAllowedDiscount.ToString();
+        }
+
+        public string GetDefaultVendor(System.Web.HttpSessionStateBase Session, IProductConfigurationService configurationService)
+        {
+            if (Session[Utility.ProductConfiguration] == null)
+            {
+                ProductConfiguration config = configurationService.GetDefaultConfiguration();
+                Session[Utility.ProductConfiguration] = config;
+            }
+            var toReturn = (ProductConfiguration) Session[Utility.ProductConfiguration];
+            return toReturn.DefaultVendorId.ToString();
         }
     }
 }

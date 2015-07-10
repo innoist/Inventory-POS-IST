@@ -56,6 +56,7 @@ namespace TMD.Web.Controllers
         {
             try
             {
+                vendor.ActiveFlag = true;
                 if (vendor.VendorId == 0)
                 {
                     vendor.RecCreatedBy = User.Identity.Name;

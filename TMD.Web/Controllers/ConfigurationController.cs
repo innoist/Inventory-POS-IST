@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Linq;
 using System.Web.Mvc;
 using TMD.Interfaces.IServices;
 using TMD.Models.DomainModels;
+using TMD.Web.ModelMappers;
+using TMD.Web.ViewModels;
 using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
@@ -10,10 +13,12 @@ namespace TMD.Web.Controllers
     public class ConfigurationController : BaseController
     {
         private readonly IProductConfigurationService configurationService;
+        private readonly IVendorService vendorService;
 
-        public ConfigurationController(IProductConfigurationService configurationService)
+        public ConfigurationController(IProductConfigurationService configurationService, IVendorService vendorService)
         {
             this.configurationService = configurationService;
+            this.vendorService = vendorService;
         }
 
         // GET: Configuration
@@ -33,8 +38,16 @@ namespace TMD.Web.Controllers
         {
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             var congif = configurationService.GetDefaultConfiguration();
+            var vendor = vendorService.GetActiveVendors();
 
-            return View(congif??new ProductConfiguration());
+            if(congif == null)
+                congif = new ProductConfiguration();
+
+            ProductConfigurationViewModel oVM = new ProductConfigurationViewModel();
+            oVM.Configuration = congif;
+            oVM.vendorModel = vendor.Select(x => x.CreateFromServerToClient());
+
+            return View(oVM);
         }
 
         // POST: Configuration/Create

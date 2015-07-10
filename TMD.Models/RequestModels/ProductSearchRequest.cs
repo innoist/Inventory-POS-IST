@@ -20,5 +20,12 @@ namespace TMD.Models.RequestModels
                 SortBy = (short)value;
             }
         }
+
+        public ProductSearchRequest()
+        {
+            SortBy = 0;
+            IsAsc = false;
+        }
+
     }
 }

@@ -73,6 +73,7 @@ namespace TMD.Web.Controllers
         // GET: Product/Create
         public ActionResult Create(long? id)
         {
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             ProductViewModel productViewModel=new ProductViewModel();
             var responseResult = productService.GetProductResponse(id);
             if (responseResult.ProductCategories.Any())

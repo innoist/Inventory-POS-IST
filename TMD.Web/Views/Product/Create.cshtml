@@ -16,8 +16,8 @@
                 @*<a href="javascript:;" class="collapse">
                     </a>*@
 
-                <button type="submit" class="btn btn-circle blue" name="save" onclick="return(ValidateFields(event));">Save</button>
-                <button type="submit" class="btn btn-circle blue" name="saveCreate" onclick="return(ValidateFields(event));">Save & Add New</button>
+                <button type="submit" class="btn btn-circle blue" name="save" onclick="return(ValidateFields(event) && ValidateSalePrice()) ;">Save</button>
+                <button type="submit" class="btn btn-circle blue" name="saveCreate" onclick="return (ValidateFields(event) && ValidateSalePrice());">Save & Add New</button>
                 <a href="~/Product/Index">
                     <button type="button" class="btn btn-circle default">Cancel</button>
                 </a>
@@ -122,5 +122,15 @@
     });
     function SetMinSalePrice() {
         $("#MinSalePriceAllowed").val($("#SalePrice").val());
+    }
+    function ValidateSalePrice() {
+        var Cost = parseInt($('#PurchasePrice').val());
+        var Sale = parseInt($('#SalePrice').val());
+
+        if (Cost < Sale)
+            return true;
+        return false;
+
+
     }
 </script>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using TMD.Interfaces.IServices;
+using TMD.Models.DomainModels;
 using TMD.Models.RequestModels;
 using TMD.Models.ResponseModels;
 using TMD.Web.ModelMappers;
@@ -18,13 +19,16 @@ namespace TMD.Web.Controllers
         private readonly IInventoryItemService inventoryItemService;
         private readonly IProductService productService;
         private readonly IVendorService vendorService;
+        private readonly IProductConfigurationService configService;
 
 
-        public InventoryController(IInventoryItemService inventoryItemService,IProductService productService,IVendorService vendorService)
+
+        public InventoryController(IInventoryItemService inventoryItemService, IProductService productService, IVendorService vendorService, IProductConfigurationService configService)
         {
             this.inventoryItemService = inventoryItemService;
             this.productService = productService;
             this.vendorService = vendorService;
+            this.configService = configService;
         }
 
         // GET: Inventory
@@ -81,8 +85,16 @@ namespace TMD.Web.Controllers
         public ActionResult Create(long? id)
         {
             InventoryItemViewModel inventoryItemViewModel = new InventoryItemViewModel();
+            var DefaultVendorId = new Utility().GetDefaultVendor(Session, configService);
+
 
             var responseResult = inventoryItemService.GetInventoryItemResponse(id);
+            if (id == null || id <= 0)
+            {
+                responseResult.InventoryItem = new InventoryItem();
+
+                responseResult.InventoryItem.VendorId = long.Parse(DefaultVendorId);
+            }
             if (responseResult.Vendors.Any())
                 inventoryItemViewModel.Vendors = responseResult.Vendors.Select(x => x.CreateFromServerToClient());
             if (responseResult.InventoryItem != null)
