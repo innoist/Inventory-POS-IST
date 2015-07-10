@@ -134,10 +134,9 @@
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
       <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+    <Reference Include="Microsoft.ReportViewer.WebForms, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>SolutionDLL\Microsoft.ReportViewer.WebForms.dll</HintPath>
-      <Private>True</Private>
+      <HintPath>..\..\OSS\OSS.Web\SolutionDLL\Microsoft.ReportViewer.WebForms.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Helpers">
       <HintPath>..\packages\Microsoft.AspNet.WebHelpers.3.2.2\lib\net45\Microsoft.Web.Helpers.dll</HintPath>
@@ -306,6 +305,7 @@
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductCategoryController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\UnauthorizedRequestController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Controllers\VendorController.cs" />
@@ -347,6 +347,18 @@
     <Compile Include="Models\VendorModel.cs" />
     <Compile Include="PayPal\NVPAPICaller.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportsDS.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ReportsDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsFiles\Sales.aspx.cs">
+      <DependentUpon>Sales.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportsFiles\Sales.aspx.designer.cs">
+      <DependentUpon>Sales.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\HR\Account.Designer.cs" />
     <Compile Include="Resources\HR\ContactsList.ar.Designer.cs" />
     <Compile Include="Resources\HR\ContactsList.Designer.cs" />
@@ -405,6 +417,13 @@
     </Compile>
     <Compile Include="Views\Shared\ES.Master.designer.cs">
       <DependentUpon>ES.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Shared\Reports.Master.cs">
+      <DependentUpon>Reports.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Views\Shared\Reports.Master.designer.cs">
+      <DependentUpon>Reports.Master</DependentUpon>
     </Compile>
     <Content Include="Content\Admin\layout\css\custom.css" />
     <Content Include="Content\Admin\layout\css\layout.css" />
@@ -1563,6 +1582,7 @@
     <Content Include="Images\photon\user_icon.psd" />
     <Content Include="Images\photon\w_arrow_red%402x.psd" />
     <Content Include="Images\pic05.jpg" />
+    <Content Include="Images\reportsSpinner.gif" />
     <Content Include="Images\Web\banner1.PNG" />
     <Content Include="Images\Web\banner2.jpg" />
     <Content Include="Images\Web\banner3.jpg" />
@@ -1638,6 +1658,7 @@
     <Content Include="Content\global\plugins\bootstrap-hover-dropdown\README.md" />
     <Content Include="Content\global\plugins\jquery-slimscroll\README.md" />
     <Content Include="Content\global\plugins\jquery-slimscroll\slimScroll.jquery.json" />
+    <Content Include="ReportsFiles\Sales.aspx" />
     <Content Include="Scripts\App\jquery.dataTables.js" />
     <Content Include="Scripts\App\toastr.min.js.map" />
     <Content Include="Content\css\toastr.less" />
@@ -1682,9 +1703,23 @@
     <Content Include="Views\Expense\Index.cshtml" />
     <Content Include="Views\Order\PrintOrder.cshtml" />
     <Content Include="Views\Expense\Create.cshtml" />
+    <Content Include="Views\Shared\Reports.Master" />
+    <Content Include="Views\Reports\Sales.cshtml" />
+    <Content Include="ReportsDS.xsc">
+      <DependentUpon>ReportsDS.xsd</DependentUpon>
+    </Content>
+    <None Include="ReportsDS.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>ReportsDS.Designer.cs</LastGenOutput>
+    </None>
+    <Content Include="ReportsDS.xss">
+      <DependentUpon>ReportsDS.xsd</DependentUpon>
+    </Content>
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />
+    <Content Include="Views\Shared\_ReportSpinner.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\css\images\bg01.jpg" />
@@ -2764,7 +2799,6 @@
     <Folder Include="Areas\Common\Models\" />
     <Folder Include="Areas\Common\Scripts\" />
     <Folder Include="Files\" />
-    <Folder Include="Reports\" />
     <Folder Include="Views\Base\" />
   </ItemGroup>
   <ItemGroup>
@@ -2797,6 +2831,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ReportsFiles\Sales.rdlc" />
     <EmbeddedResource Include="Resources\HR\Account.ar.resx" />
     <EmbeddedResource Include="Resources\HR\Account.resx">
       <SubType>Designer</SubType>

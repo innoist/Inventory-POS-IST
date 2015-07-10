@@ -29,6 +29,7 @@ namespace TMD.Implementation
             unityContainer.RegisterType<ICustomerService, CustomerService>();
             unityContainer.RegisterType<IExpenseCategoryService, ExpenseCategoryService>();
             unityContainer.RegisterType<IExpenseService, ExpenseService>();
+            unityContainer.RegisterType<IReportsService, ReportsService>();
             
         }
     }

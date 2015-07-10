@@ -1,0 +1,27 @@
+﻿
+<style>
+    #loading {
+        width: 100%;
+        padding: 15%;
+        /*background: orange;*/
+        color: #054850;
+        text-align: center;
+        margin: 0 auto;
+        display: none;
+    }
+</style>
+
+<div id="loading" class="reload">
+    <img src="~/Images/reportsSpinner.gif" style="width: 196px;" />
+    <span style="margin-left: -144px;">Loading report...</span>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#loading").show();
+        $("#autoUpdate").hide();
+    });
+    $('iframe').load(function () {
+        $('#loading').hide();
+        $("#autoUpdate").show();
+    });
+</script>
