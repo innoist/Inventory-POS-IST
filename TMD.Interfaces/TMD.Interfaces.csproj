@@ -74,6 +74,7 @@
     <Compile Include="IServices\IProductConfigurationService.cs" />
     <Compile Include="IServices\ICustomerService.cs" />
     <Compile Include="IServices\IExpenseCategoryService.cs" />
+    <Compile Include="IServices\IReportsService.cs" />
     <Compile Include="IServices\IVendorService.cs" />
     <Compile Include="IServices\IProductService.cs" />
     <Compile Include="IServices\IProductCategoryService.cs" />

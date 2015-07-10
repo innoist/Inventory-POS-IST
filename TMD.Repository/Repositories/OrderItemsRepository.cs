@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using Microsoft.Practices.Unity;
 using TMD.Interfaces.IRepository;
@@ -30,6 +31,11 @@ namespace TMD.Repository.Repositories
         public long GetItemCountInOrders(long productId)
         {
             return DbSet.Where(x => x.ProductId == productId).Select(r => r.Quantity).DefaultIfEmpty(0).Sum();
+        }
+
+        public IEnumerable<OrderItem> GetOrderItemsReport()
+        {
+            return DbSet.ToList();
         }
     }
 }
