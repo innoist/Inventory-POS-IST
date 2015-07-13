@@ -57,9 +57,7 @@
                                         <div class="input-icon">
                                             <i class="fa fa-search"></i>
                                             @Html.TextBox("ProductName", "", new { @class = "searchInputs form-control listFilter", @id = "ProductName", @placeholder = "Product Name" })
-                                          
                                         </div>
-
                                     </td>
                                 </tr>
                                 <tr style="height: 10px !important; "></tr>
@@ -67,12 +65,21 @@
                                     <td class="col-md-1">
                                         <label class="control-label"> Category </label>
                                     </td>
-                                    <td class="col-md-2">
-                                        <div class="input-icon">
-                                            <i class="fa fa-search"></i>
-                                            @Html.DropDownListFor(x => x.SearchRequest.Category, new SelectList(Model.ProductCategories, "CategoryId", "Name"), "Select Category", new { @class = "searchInputs form-control listFilter", @id = "Category" })
-                                        </div>
-                                    </td>
+                                        <td class="col-md-2">
+                                            <div class="input-icon">
+                                                <i class="fa fa-search"></i>
+                                                @Html.DropDownListFor(x => x.SearchRequest.Category, new SelectList(Model.ProductCategories, "CategoryId", "Name"), "Select Category", new { @class = "searchInputs form-control listFilter", @id = "Category" })
+                                            </div>
+                                        </td>
+                                        <td class="col-md-1">
+                                            <label class="control-label"> Price </label>
+                                        </td>
+                                        <td class="col-md-2">
+                                            <div class="input-icon">
+                                                <i class="fa fa-search"></i>
+                                                @Html.TextBox("ProductPrice", "", new { @class = "searchInputs form-control listFilter", @id = "ProductPrice", @placeholder = "Purchase/Sale Price" })
+                                            </div>
+                                        </td>
                                     </tr>
                             </table>
                         </div>
