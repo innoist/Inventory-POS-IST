@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="TMDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="TMDModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="AspNetRoles">
           <Key>
             <PropertyRef Name="Id" />
@@ -195,6 +195,33 @@
           <Property Name="Win32ThreadId" Type="nvarchar" MaxLength="128" />
           <Property Name="Message" Type="nvarchar" MaxLength="1500" />
           <Property Name="FormattedMessage" Type="ntext" />
+        </EntityType>
+        <EntityType Name="Notes">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="NotesDate" Type="datetime" Nullable="false" />
+          <Property Name="NotesCategoryId" Type="bigint" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="IsOpen" Type="bit" Nullable="false" />
+          <Property Name="Amount" Type="decimal" Precision="9" Scale="2" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="NotesCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <EntityType Name="OrderItems">
           <Key>
@@ -560,6 +587,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Notes_NotesCategory">
+          <End Role="NotesCategory" Type="Self.NotesCategory" Multiplicity="1" />
+          <End Role="Notes" Type="Self.Notes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NotesCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Notes">
+              <PropertyRef Name="NotesCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_OrderItems_Orders">
           <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
           <End Role="OrderItems" Type="Self.OrderItems" Multiplicity="*" />
@@ -735,6 +774,8 @@
           <EntitySet Name="Expenses" EntityType="Self.Expenses" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InventoryItems" EntityType="Self.InventoryItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Notes" EntityType="Self.Notes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NotesCategory" EntityType="Self.NotesCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="OrderItems" EntityType="Self.OrderItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
@@ -793,6 +834,10 @@
           <AssociationSet Name="FK_InventoryItems_Vendors" Association="Self.FK_InventoryItems_Vendors">
             <End Role="Vendors" EntitySet="Vendors" />
             <End Role="InventoryItems" EntitySet="InventoryItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Notes_NotesCategory" Association="Self.FK_Notes_NotesCategory">
+            <End Role="NotesCategory" EntitySet="NotesCategory" />
+            <End Role="Notes" EntitySet="Notes" />
           </AssociationSet>
           <AssociationSet Name="FK_OrderItems_Orders" Association="Self.FK_OrderItems_Orders">
             <End Role="Orders" EntitySet="Orders" />
@@ -996,6 +1041,12 @@
           <AssociationSet Name="FK_ProductCategory_ProductMainCategory" Association="TMD.Models.DomainModels.FK_ProductCategory_ProductMainCategory">
             <End Role="ProductMainCategory" EntitySet="ProductMainCategories" />
             <End Role="ProductCategory" EntitySet="ProductCategories" />
+          </AssociationSet>
+          <EntitySet Name="Notes" EntityType="TMD.Models.DomainModels.Note" />
+          <EntitySet Name="NotesCategories" EntityType="TMD.Models.DomainModels.NotesCategory" />
+          <AssociationSet Name="FK_Notes_NotesCategory" Association="TMD.Models.DomainModels.FK_Notes_NotesCategory">
+            <End Role="NotesCategory" EntitySet="NotesCategories" />
+            <End Role="Note" EntitySet="Notes" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AspNetRole">
@@ -1774,6 +1825,47 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Note">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NotesDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NotesCategoryId" Type="Int64" Nullable="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="IsOpen" Type="Boolean" Nullable="false" />
+          <Property Name="Amount" Type="Decimal" Precision="9" Scale="2" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="NotesCategory" Relationship="TMD.Models.DomainModels.FK_Notes_NotesCategory" FromRole="Note" ToRole="NotesCategory" />
+        </EntityType>
+        <EntityType Name="NotesCategory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Notes" Relationship="TMD.Models.DomainModels.FK_Notes_NotesCategory" FromRole="NotesCategory" ToRole="Note" />
+        </EntityType>
+        <Association Name="FK_Notes_NotesCategory">
+          <End Type="TMD.Models.DomainModels.NotesCategory" Role="NotesCategory" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.Note" Role="Note" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NotesCategory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Note">
+              <PropertyRef Name="NotesCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2209,6 +2301,35 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Notes">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Note">
+              <MappingFragment StoreEntitySet="Notes">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="IsOpen" ColumnName="IsOpen" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="NotesCategoryId" ColumnName="NotesCategoryId" />
+                <ScalarProperty Name="NotesDate" ColumnName="NotesDate" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NotesCategories">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.NotesCategory">
+              <MappingFragment StoreEntitySet="NotesCategory">
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2285,6 +2406,9 @@
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Expenses_ExpenseCategory" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductMainCategory" Width="1.5" PointX="7.5" PointY="22.75" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductCategory_ProductMainCategory" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Note" Width="1.5" PointX="14.625" PointY="17" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.NotesCategory" Width="1.5" PointX="12.375" PointY="17.25" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Notes_NotesCategory" />
       </Diagram>
     </Diagrams>
   </Designer>

@@ -113,6 +113,8 @@
     <Compile Include="DomainModels\Expense.cs" />
     <Compile Include="DomainModels\ExpenseCategory.cs" />
     <Compile Include="DomainModels\InventoryItem.cs" />
+    <Compile Include="DomainModels\Note.cs" />
+    <Compile Include="DomainModels\NotesCategory.cs" />
     <Compile Include="DomainModels\Order.cs" />
     <Compile Include="DomainModels\OrderItem.cs" />
     <Compile Include="DomainModels\Customer.cs" />

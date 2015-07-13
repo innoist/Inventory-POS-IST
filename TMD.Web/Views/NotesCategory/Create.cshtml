@@ -1,0 +1,48 @@
+﻿@model TMD.Web.Models.NotesCategoryModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("Create", "NotesCategory", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="portlet box blue-hoki">
+        <div class="portlet-title">
+
+            <div class="tools">
+                               
+                <button type="submit" class="btn btn-circle blue" onclick="return(ValidateFields(event) && ValidateDropDown());">Save</button>
+                <a href="~/NotesCategory/Index">
+                    <button type="button" class="btn btn-circle default">Cancel</button>
+                </a>
+            </div>
+            <div class="caption">
+                <i class="fa fa-male"></i>Create/Update Notes Category
+            </div>
+        </div>
+
+        <div class="portlet-body form">
+            <div class="container-fluid">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.Id)
+                @Html.HiddenFor(m => m.RecCreatedBy)
+                @Html.HiddenFor(m => m.RecCreatedDate)
+
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.Name, new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Name, new { @class = "form-control input-circle mandatory", placeholder = "Name" })
+                    </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.Description, new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.Description, new { @class = "form-control input-circle mandatory", placeholder = "Name" })
+                    </div>
+                </div>               
+            </div>
+
+        </div>        
+    </div>
+}

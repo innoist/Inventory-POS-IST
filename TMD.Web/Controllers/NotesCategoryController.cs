@@ -3,44 +3,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using TMD.Interfaces.IServices;
+using TMD.Models.DomainModels;
 using TMD.Web.ModelMappers;
 using TMD.Web.Models;
 using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    public class ExpenseCategoryController : BaseController
+    public class NotesCategoryController : Controller
     {
-        private readonly IExpenseCategoryService expenseCategoryService;
+        private readonly INotesCategoryService notesCategoryService;
 
-        public ExpenseCategoryController(IExpenseCategoryService expenseCategoryService)
+        public NotesCategoryController(INotesCategoryService notesCategoryService)
         {
-            this.expenseCategoryService = expenseCategoryService;
+            this.notesCategoryService = notesCategoryService;
         }
         //
-        // GET: /ExpenseCategory/
+        // GET: /NotesCategory/
         public ActionResult Index()
         {
-            IEnumerable<ExpenseCategoryModel> expenseCategories = expenseCategoryService.GetAllExpenseCategories().Select(x => x.CreateFromServerToClient());
-            return View(expenseCategories);
+            IEnumerable<NotesCategoryModel> notesCategories = notesCategoryService.GetAllNotesCategories().Select(x => x.CreateFromServerToClient());
+            return View(notesCategories);
         }
 
         //
-        // GET: /ExpenseCategory/Details/5
+        // GET: /NotesCategory/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
         //
-        // GET: /ExpenseCategory/Create
+        // GET: /NotesCategory/Create
         public ActionResult Create(long? id)
         {
-            ExpenseCategoryModel model = new ExpenseCategoryModel();
+            NotesCategoryModel model = new NotesCategoryModel();
             if (id != null)
             {
-                var category = expenseCategoryService.GetExpenseCategory((long)id);
+                var category = notesCategoryService.GetNotesCategory((long)id);
                 if (category != null)
                     model = category.CreateFromServerToClient();
             }
@@ -48,25 +48,25 @@ namespace TMD.Web.Controllers
         }
 
         //
-        // POST: /ExpenseCategory/Create
+        // POST: /NotesCategory/Create
         [HttpPost]
-        public ActionResult Create(ExpenseCategoryModel expenseCategory)
+        public ActionResult Create(NotesCategoryModel category)
         {
             try
             {
-                if (expenseCategory.Id == 0)
+                if (category.Id == 0)
                 {
-                    expenseCategory.RecCreatedBy = User.Identity.Name;
-                    expenseCategory.RecCreatedDate = DateTime.Now;
+                    category.RecCreatedBy = User.Identity.Name;
+                    category.RecCreatedDate = DateTime.Now;
                 }
-                expenseCategory.RecLastUpdatedBy = User.Identity.Name;
-                expenseCategory.RecLastUpdatedDate = DateTime.Now;
+                category.RecLastUpdatedBy = User.Identity.Name;
+                category.RecLastUpdatedDate = DateTime.Now;
 
 
-                if (expenseCategoryService.AddExpenseCategory(expenseCategory.CreateFromClientToServer()) > 0)
+                if (notesCategoryService.AddNotesCategory(category.CreateFromClientToServer()) > 0)
                 {
                     //Product Saved
-                    TempData["message"] = new MessageViewModel { Message = "Expense category has been saved successfully.", IsSaved = true };
+                    TempData["message"] = new MessageViewModel { Message = "Notes category has been saved successfully.", IsSaved = true };
                 }
 
                 return RedirectToAction("Index");
@@ -78,14 +78,14 @@ namespace TMD.Web.Controllers
         }
 
         //
-        // GET: /ExpenseCategory/Edit/5
+        // GET: /NotesCategory/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
         //
-        // POST: /ExpenseCategory/Edit/5
+        // POST: /NotesCategory/Edit/5
         [HttpPost]
         public ActionResult Edit(int id, FormCollection collection)
         {
@@ -102,14 +102,14 @@ namespace TMD.Web.Controllers
         }
 
         //
-        // GET: /ExpenseCategory/Delete/5
+        // GET: /NotesCategory/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
         //
-        // POST: /ExpenseCategory/Delete/5
+        // POST: /NotesCategory/Delete/5
         [HttpPost]
         public ActionResult Delete(int id, FormCollection collection)
         {

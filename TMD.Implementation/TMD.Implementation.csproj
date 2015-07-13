@@ -127,6 +127,7 @@
     <Compile Include="Services\AspNetUserService.cs" />
     <Compile Include="Services\EbayStagingLoadService.cs" />
     <Compile Include="Services\ExpenseService.cs" />
+    <Compile Include="Services\NoteService.cs" />
     <Compile Include="Services\OrderItemsService.cs" />
     <Compile Include="Services\OrdersService.cs" />
     <Compile Include="Services\InventoryItemService.cs" />
@@ -134,6 +135,7 @@
     <Compile Include="Services\CustomerService.cs" />
     <Compile Include="Services\ExpenseCategoryService.cs" />
     <Compile Include="Services\ReportsService.cs" />
+    <Compile Include="Services\NotesCategoryService.cs" />
     <Compile Include="Services\VendorService.cs" />
     <Compile Include="Services\ProductService.cs" />
     <Compile Include="Services\ProductCategoryService.cs" />
