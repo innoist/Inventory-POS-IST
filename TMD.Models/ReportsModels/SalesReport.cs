@@ -7,6 +7,7 @@ namespace TMD.Models.ReportsModels
         public long Id { get; set; }
         public DateTime Date { get; set; }
         public long ProductCode { get; set; }
+        public string ProductName { get; set; }
         public long Quantity { get; set; }
         public decimal SalePrice { get; set; }
         public decimal SubTotalSale { get; set; }

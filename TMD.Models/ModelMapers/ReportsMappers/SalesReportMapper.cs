@@ -15,6 +15,7 @@ namespace TMD.Models.ModelMapers.ReportsMappers
             salesReport.Id = source.OrderItemId;
             salesReport.Date = source.RecCreatedDate;
             salesReport.ProductCode = source.ProductId;
+            salesReport.ProductName = source.Product.Name;
             salesReport.Quantity = source.Quantity;
             salesReport.SalePrice = source.SalePrice;
             salesReport.SubTotalSale = source.Quantity * source.SalePrice;

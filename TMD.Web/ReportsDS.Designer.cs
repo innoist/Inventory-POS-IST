@@ -283,6 +283,8 @@ namespace TMD.Web {
             
             private global::System.Data.DataColumn columnDate;
             
+            private global::System.Data.DataColumn columnProductName;
+            
             private global::System.Data.DataColumn columnProductCode;
             
             private global::System.Data.DataColumn columnQuantity;
@@ -349,6 +351,14 @@ namespace TMD.Web {
             public global::System.Data.DataColumn DateColumn {
                 get {
                     return this.columnDate;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ProductNameColumn {
+                get {
+                    return this.columnProductName;
                 }
             }
             
@@ -469,11 +479,12 @@ namespace TMD.Web {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public SalesRow AddSalesRow(long Id, System.DateTime Date, long ProductCode, long Quantity, decimal SalePrice, decimal SubTotalSale, long Discount, decimal TotalSale, decimal PurchasePrice, decimal TotalCost, decimal TotalProfit, decimal ProfitPercentage) {
+            public SalesRow AddSalesRow(long Id, System.DateTime Date, long ProductName, long ProductCode, long Quantity, decimal SalePrice, decimal SubTotalSale, long Discount, decimal TotalSale, decimal PurchasePrice, decimal TotalCost, decimal TotalProfit, decimal ProfitPercentage) {
                 SalesRow rowSalesRow = ((SalesRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         Id,
                         Date,
+                        ProductName,
                         ProductCode,
                         Quantity,
                         SalePrice,
@@ -508,6 +519,7 @@ namespace TMD.Web {
             internal void InitVars() {
                 this.columnId = base.Columns["Id"];
                 this.columnDate = base.Columns["Date"];
+                this.columnProductName = base.Columns["ProductName"];
                 this.columnProductCode = base.Columns["ProductCode"];
                 this.columnQuantity = base.Columns["Quantity"];
                 this.columnSalePrice = base.Columns["SalePrice"];
@@ -527,6 +539,8 @@ namespace TMD.Web {
                 base.Columns.Add(this.columnId);
                 this.columnDate = new global::System.Data.DataColumn("Date", typeof(global::System.DateTime), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnDate);
+                this.columnProductName = new global::System.Data.DataColumn("ProductName", typeof(long), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnProductName);
                 this.columnProductCode = new global::System.Data.DataColumn("ProductCode", typeof(long), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnProductCode);
                 this.columnQuantity = new global::System.Data.DataColumn("Quantity", typeof(long), null, global::System.Data.MappingType.Element);
@@ -547,6 +561,7 @@ namespace TMD.Web {
                 base.Columns.Add(this.columnTotalProfit);
                 this.columnProfitPercentage = new global::System.Data.DataColumn("ProfitPercentage", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnProfitPercentage);
+                this.columnProductName.Caption = "ProductCode";
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -716,6 +731,22 @@ namespace TMD.Web {
                 }
                 set {
                     this[this.tableSales.DateColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public long ProductName {
+                get {
+                    try {
+                        return ((long)(this[this.tableSales.ProductNameColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'ProductName\' in table \'Sales\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tableSales.ProductNameColumn] = value;
                 }
             }
             
@@ -901,6 +932,18 @@ namespace TMD.Web {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetDateNull() {
                 this[this.tableSales.DateColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsProductNameNull() {
+                return this.IsNull(this.tableSales.ProductNameColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetProductNameNull() {
+                this[this.tableSales.ProductNameColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]

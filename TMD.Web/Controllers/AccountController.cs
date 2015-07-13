@@ -270,7 +270,7 @@ namespace IdentitySample.Controllers
            // AspNetUsersViewModel Result = new AspNetUsersViewModel();
             AspNetUsersViewModel Result = new AspNetUsersViewModel();
             Result.AspNetUserModel = new AspNetUserModel();
-            Result.Roles = RoleManager.Roles.Where(r => r.Name == "Employee").ToList(); 
+            Result.Roles = RoleManager.Roles.Where(r => r.Name != "Admin").ToList(); 
          
             if (!string.IsNullOrEmpty(userName))
             {

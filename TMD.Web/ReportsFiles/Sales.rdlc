@@ -44,34 +44,34 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1.08333in</Width>
+              <Width>1.43376in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>1.15625in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.91667in</Width>
+              <Width>0.76417in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.79167in</Width>
+              <Width>0.51042in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>0.75in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.67708in</Width>
+              <Width>0.68083in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.9725in</Width>
+              <Width>0.74333in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.9375in</Width>
+              <Width>0.76042in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.86458in</Width>
+              <Width>0.77083in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>0.875in</Width>
+              <Width>0.69792in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>0.65625in</Width>
@@ -85,6 +85,9 @@
                   <CellContents>
                     <Textbox Name="Textbox56">
                       <CanGrow>true</CanGrow>
+                      <UserSort>
+                        <SortExpression>=Fields!Date.Value</SortExpression>
+                      </UserSort>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -119,6 +122,9 @@
                   <CellContents>
                     <Textbox Name="Textbox58">
                       <CanGrow>true</CanGrow>
+                      <UserSort>
+                        <SortExpression>=Fields!ProductCode.Value</SortExpression>
+                      </UserSort>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -391,12 +397,15 @@
                   <CellContents>
                     <Textbox Name="Textbox8">
                       <CanGrow>true</CanGrow>
+                      <UserSort>
+                        <SortExpression>=Fields!TotalProfit.Value</SortExpression>
+                      </UserSort>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
                           <TextRuns>
                             <TextRun>
-                              <Value>Total Profit</Value>
+                              <Value>Profit</Value>
                               <Style>
                                 <FontWeight>Bold</FontWeight>
                               </Style>
@@ -472,6 +481,7 @@
                               <Value>=Fields!Date.Value</Value>
                               <Style>
                                 <FontFamily>tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <TextDecoration>None</TextDecoration>
                               </Style>
                             </TextRun>
@@ -510,6 +520,7 @@
                               <Value>=Fields!ProductCode.Value</Value>
                               <Style>
                                 <FontFamily>tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <TextDecoration>None</TextDecoration>
                               </Style>
                             </TextRun>
@@ -520,6 +531,7 @@
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>ProductCode</rd:DefaultName>
+                      <ToolTip>=Fields!ProductName.Value</ToolTip>
                       <Style>
                         <Border>
                           <Color>LightGrey</Color>
@@ -548,6 +560,8 @@
                               <Value>=Fields!SalePrice.Value</Value>
                               <Style>
                                 <FontFamily>tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
+                                <Format>0;(0)</Format>
                                 <TextDecoration>None</TextDecoration>
                               </Style>
                             </TextRun>
@@ -586,6 +600,7 @@
                               <Value>=Sum(Fields!Quantity.Value)</Value>
                               <Style>
                                 <FontFamily>tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <TextDecoration>None</TextDecoration>
                               </Style>
                             </TextRun>
@@ -624,6 +639,8 @@
                               <Value>=Fields!SubTotalSale.Value</Value>
                               <Style>
                                 <FontFamily>tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
+                                <Format>0;(0)</Format>
                                 <TextDecoration>None</TextDecoration>
                               </Style>
                             </TextRun>
@@ -662,6 +679,7 @@
                               <Value>=Fields!Discount.Value</Value>
                               <Style>
                                 <FontFamily>tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <TextDecoration>None</TextDecoration>
                               </Style>
                             </TextRun>
@@ -700,6 +718,8 @@
                               <Value>=Fields!TotalSale.Value</Value>
                               <Style>
                                 <FontFamily>tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
+                                <Format>0;(0)</Format>
                                 <TextDecoration>None</TextDecoration>
                               </Style>
                             </TextRun>
@@ -738,6 +758,8 @@
                               <Value>=Fields!PurchasePrice.Value</Value>
                               <Style>
                                 <FontFamily>tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
+                                <Format>0;(0)</Format>
                                 <TextDecoration>None</TextDecoration>
                               </Style>
                             </TextRun>
@@ -776,6 +798,8 @@
                               <Value>=Fields!TotalCost.Value</Value>
                               <Style>
                                 <FontFamily>tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
+                                <Format>0;(0)</Format>
                                 <TextDecoration>None</TextDecoration>
                               </Style>
                             </TextRun>
@@ -814,6 +838,8 @@
                               <Value>=Fields!TotalProfit.Value</Value>
                               <Style>
                                 <FontFamily>tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
+                                <Format>0;(0)</Format>
                                 <TextDecoration>None</TextDecoration>
                               </Style>
                             </TextRun>
@@ -852,6 +878,7 @@
                               <Value>=Fields!ProfitPercentage.Value</Value>
                               <Style>
                                 <FontFamily>tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
                                 <TextDecoration>None</TextDecoration>
                               </Style>
                             </TextRun>
@@ -908,9 +935,9 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <Top>0.58618in</Top>
-        <Left>0.01583in</Left>
+        <Left>0.39083in</Left>
         <Height>0.5in</Height>
-        <Width>9.77458in</Width>
+        <Width>8.92417in</Width>
         <ZIndex>1</ZIndex>
         <Style>
           <Border>
@@ -920,9 +947,13 @@
       </Tablix>
     </ReportItems>
     <Height>2.89646in</Height>
-    <Style />
+    <Style>
+      <Border>
+        <Style>None</Style>
+      </Border>
+    </Style>
   </Body>
-  <Width>9.84917in</Width>
+  <Width>9.79042in</Width>
   <Page>
     <PageFooter>
       <Height>0.5in</Height>
@@ -949,7 +980,7 @@
           </Paragraphs>
           <rd:DefaultName>ExecutionTime</rd:DefaultName>
           <Top>0.125in</Top>
-          <Left>7.80083in</Left>
+          <Left>6.80083in</Left>
           <Height>0.25in</Height>
           <Width>1.98959in</Width>
           <Style>
@@ -982,7 +1013,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox11</rd:DefaultName>
           <Top>0.125in</Top>
-          <Left>2.98834in</Left>
+          <Left>1.98834in</Left>
           <Height>0.25in</Height>
           <Width>3.59375in</Width>
           <ZIndex>1</ZIndex>
@@ -1051,6 +1082,11 @@
         <Border>
           <Style>None</Style>
         </Border>
+        <TopBorder>
+          <Color>Black</Color>
+          <Style>Solid</Style>
+          <Width>1pt</Width>
+        </TopBorder>
       </Style>
     </PageFooter>
     <PageHeight>8.5in</PageHeight>
@@ -1085,6 +1121,10 @@
         <Field Name="Date">
           <DataField>Date</DataField>
           <rd:TypeName>System.DateTime</rd:TypeName>
+        </Field>
+        <Field Name="ProductName">
+          <DataField>ProductName</DataField>
+          <rd:TypeName>System.Int64</rd:TypeName>
         </Field>
         <Field Name="ProductCode">
           <DataField>ProductCode</DataField>
