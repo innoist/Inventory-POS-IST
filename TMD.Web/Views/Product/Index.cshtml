@@ -77,7 +77,7 @@
                                         <td class="col-md-2">
                                             <div class="input-icon">
                                                 <i class="fa fa-search"></i>
-                                                @Html.TextBox("ProductPrice", "", new { @class = "searchInputs form-control listFilter", @id = "ProductPrice", @placeholder = "Purchase/Sale Price" })
+                                                @Html.TextBox("ProductPrice", "", new { @class = "searchInputs form-control listFilter", @id = "ProductPrice", @placeholder = "Sale/Cost Price" })
                                             </div>
                                         </td>
                                     </tr>
@@ -93,6 +93,7 @@
                                 <th class="tableHeaderWhite">Name</th>
                                 <th class="tableHeaderWhite">Category</th>
                                 <th class="tableHeaderWhite">Sale Price</th>
+                                <th class="tableHeaderWhite">Cost Price</th>
                        
                                 <th></th>
                             </tr>
@@ -140,6 +141,7 @@
                 { "data": "Name" },
                 { "data": "CategoryName" },
                 { "data": "SalePrice" },
+                { "data": "PurchasePrice" },
                 {
                     "orderable": false,
                     "data": null,
@@ -166,6 +168,7 @@
                     params.Barcode = $('#Barcode').val();
                     params.Category = $('#Category').val();
                     params.Name = $('#ProductName').val();
+                    params.PurchasePrice = $('#ProductPrice').val();
                 }
             }
         });
@@ -178,6 +181,7 @@
             $('#Barcode').val("");
             $('#Category').val("");
             $('#ProductName').val("");
+            $('#ProductPrice').val("");
             oTable.fnFilter('');
         });
 

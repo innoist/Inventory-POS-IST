@@ -5,6 +5,7 @@
         Code = 0,
         Name =1,
         Category = 2,
-        SalePrice = 3
+        SalePrice = 3,
+        PurchasePrice = 4
     }
 }

@@ -38,7 +38,8 @@ namespace TMD.Repository.Repositories
                     {ProductByColumn.Code, c => c.ProductId},
                     {ProductByColumn.Name, c => c.Name},
                     {ProductByColumn.Category, c => c.ProductCategory.Name},
-                    {ProductByColumn.SalePrice, c => c.SalePrice}
+                    {ProductByColumn.SalePrice, c => c.SalePrice},
+                    {ProductByColumn.PurchasePrice, c => c.PurchasePrice}
                 };
         #endregion
 
@@ -53,9 +54,8 @@ namespace TMD.Repository.Repositories
                             && (string.IsNullOrEmpty(searchRequest.Barcode) || s.ProductBarCode.Contains(searchRequest.Barcode))
                             && (string.IsNullOrEmpty(searchRequest.Name) || s.Name.Contains(searchRequest.Name))
                             && (searchRequest.Category == 0 || s.CategoryId.Equals(searchRequest.Category))
+                            && (searchRequest.PurchasePrice == 0 || s.PurchasePrice.Equals(searchRequest.PurchasePrice) || s.SalePrice.Equals(searchRequest.PurchasePrice))
                             )
-
-
                         );
             IEnumerable<Product> result =
                 searchRequest.IsAsc
