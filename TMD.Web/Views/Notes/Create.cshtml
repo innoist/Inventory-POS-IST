@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    Session["MenuKey"] = 29;
 }
 
 @using (Html.BeginForm("Create", "Notes", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))

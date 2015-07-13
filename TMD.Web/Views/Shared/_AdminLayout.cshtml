@@ -131,18 +131,39 @@
                                 <li>
                                     <a class="WhiteColor" href="~/Expense/Index">
                                         Expense <span class="selected">
-                                        </span>
+                                                </span>
                                     </a>
                                 </li>
                                 <li>
                                     <a class="WhiteColor" href="~/ExpenseCategory/Index">
                                         Expense Category <span class="selected">
+                                                         </span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                          <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "29") ? "active" : "")>
+                            <a class="WhiteColor" data-toggle="dropdown" href="javascript:;">
+                                Notes <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu pull-left">
+                                <li>
+                                    <a class="WhiteColor" href="~/Notes/Index">
+                                        Notes <span class="selected">
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="WhiteColor" href="~/NotesCategory/Index">
+                                        Notes Category <span class="selected">
                                         </span>
                                     </a>
                                 </li>
 
                             </ul>
                         </li>
+                        
                         <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "21") ? "active" : "")>
                             <a href="~/Configuration/Create" class="WhiteColor">
                                 Configuration <span class="selected">
