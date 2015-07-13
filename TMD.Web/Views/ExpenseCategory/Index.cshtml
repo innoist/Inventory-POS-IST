@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<TMD.Web.Models.ExpenseCategoryModel>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Expense Categories";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     Session["MenuKey"] = 24;
 }
@@ -10,7 +10,7 @@
         <h3 class="page-title">
             @ViewBag.Title
         </h3>
-        <h3> <small><a href="~/ExpenseCategory/Create">Add New Expense Category</a></small></h3>
+        <h3> <small><a href="~/ExpenseCategory/Create" class="btn red titleButton">Add New Expense Category</a></small></h3>
     </header>
 
     <form class="form-horizontal">

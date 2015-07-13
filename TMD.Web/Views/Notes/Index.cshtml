@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<TMD.Web.Models.NoteModel>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Notes";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     Session["MenuKey"] = 29;
 }
@@ -52,6 +52,7 @@
                             <tr>
                                 <th class="tableHeaderWhite">Notes Date</th>
                                 <th class="tableHeaderWhite">Amount</th>
+                                <th class="tableHeaderWhite">Category</th>
                                 <th class="tableHeaderWhite">Description</th>
                                 <th class="tableHeaderWhite">IsOpen</th>
                                 
@@ -63,6 +64,7 @@
                                 <tr>
                                     <td>@Html.ActionLink(@item.NotesDate.ToString("MMM dd yyyy"), "Create", new { id = item.Id }) </td>
                                     <td>@item.Amount</td>
+                                    <td>@item.Category</td>
                                     <td>@item.Description</td>
                                     <td>@item.IsOpen</td>
                                 </tr>

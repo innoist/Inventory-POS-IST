@@ -5,6 +5,7 @@
         public long Id { get; set; }
         public System.DateTime ExpenseDate { get; set; }
         public long ExpenseCategoryId { get; set; }
+        public string Category { get; set; }
         public decimal ExpenseAmount { get; set; }
         public string Description { get; set; }
         public System.DateTime RecCreatedDate { get; set; }
