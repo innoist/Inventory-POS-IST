@@ -16,7 +16,7 @@
                 @*<a href="javascript:;" class="collapse">
                     </a>*@
 
-                <button type="submit" class="btn btn-circle blue">Save</button>
+                <button type="submit" class="btn btn-circle blue" onclick="return ValidateAmounts();">Save</button>
                 <a href="~/Order/Index">
                     <button type="button" class="btn btn-circle default">Cancel</button>
                 </a>
@@ -53,8 +53,8 @@
                                         Code
                                     </div>
                                     <div class="col-md-2 value">
-                                        @*onchange="LoadProductByCode(this)"*@
-                                        <input type="text" value="" class="form-control mandatoryItem searchBarcode" autofocus="autofocus" id="ItemCode" />
+                                        @**@
+                                        <input type="text" value="" class="form-control mandatoryItem searchBarcode" onchange="LoadProductByCode(this)" autofocus="autofocus" id="ItemCode" />
                                    
                                         <input type="hidden" value="" id="ItemId"/>
                                     </div>
@@ -468,13 +468,15 @@
 
             }
 
-            jQuery(document).on('keydown', '.searchBarcode', function (ev) {
+            jQuery(document).on('keydown',  function (ev) {
                 if (ev.which === 13) {
-                    LoadProductByCode(this);
+                   
                     // Avoid form submit
                     return false;
                 }
             });
+
+
             function LoadProductByCode(control) {
                 var productCode = $("#" + control.id).val();
                 if (productCode == "")
@@ -620,11 +622,12 @@
                 $('#OrderTotalDisc').val(itemDisc);
                 $('#OrderNetTotal').val(itemSubTotal - itemDisc);
                 $('#OrderItemsQty').val(itemQtyTotal);
+              CalculateReturnAmount();
 
-            }
+          }
           function CalculateReturnAmount(agElement) {
               
-              var AmountPaid = $('#' + agElement.id).val();
+              var AmountPaid = $('#OrderAmountGiven').val();
               var NetTotal = $('#OrderNetTotal').val();
               var toGive = AmountPaid - NetTotal;
               $('#OrderAmountReturn').val(toGive);
@@ -635,6 +638,16 @@
               $(this).parent().parent().remove();
               CalculateOrderTotals();
           });
+
+
+          function ValidateAmounts() {
+              var returnAmount = $('#OrderAmountReturn').val();
+              if (returnAmount == "" || parseInt(returnAmount) < 0) {
+                  toastr.error("Return Amount cannot be less than 0");
+                  return false;
+              }
+              return true;
+          }
            </script>
     </div>
 }
