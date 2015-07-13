@@ -302,6 +302,8 @@
     <Compile Include="Controllers\ExpenseController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\InventoryController.cs" />
+    <Compile Include="Controllers\NotesController.cs" />
+    <Compile Include="Controllers\NotesCategoryController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductCategoryController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
@@ -320,6 +322,8 @@
     <Compile Include="ModelMappers\OrderMapper.cs" />
     <Compile Include="ModelMappers\InventoryItemMapper.cs" />
     <Compile Include="ModelMappers\ExpenseMapper.cs" />
+    <Compile Include="ModelMappers\NotesCategoryMapper.cs" />
+    <Compile Include="ModelMappers\NoteMapper.cs" />
     <Compile Include="ModelMappers\VendorMapper.cs" />
     <Compile Include="ModelMappers\ProductMapper.cs" />
     <Compile Include="ModelMappers\ProductCategoryMapper.cs" />
@@ -335,6 +339,8 @@
     <Compile Include="Models\ExpenseModel.cs" />
     <Compile Include="Models\InventoryItemListModel.cs" />
     <Compile Include="Models\InventoryItemModel.cs" />
+    <Compile Include="Models\NoteModel.cs" />
+    <Compile Include="Models\NotesCategoryModel.cs" />
     <Compile Include="Models\OrderItemModel.cs" />
     <Compile Include="Models\OrderListViewModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
@@ -402,6 +408,7 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModels\EbayItemViewModel.cs" />
+    <Compile Include="ViewModels\NoteViewModel.cs" />
     <Compile Include="ViewModels\ProductConfigurationViewModel.cs" />
     <Compile Include="ViewModels\ProductCategoryViewModel.cs" />
     <Compile Include="ViewModels\InventoryItemViewModel.cs" />
@@ -1716,6 +1723,11 @@
     <Content Include="ReportsDS.xss">
       <DependentUpon>ReportsDS.xsd</DependentUpon>
     </Content>
+    <Content Include="Views\NotesCategory\Index.cshtml" />
+    <Content Include="Views\NotesCategory\Create.cshtml" />
+    <Content Include="Views\NotesCategory\Details.cshtml" />
+    <Content Include="Views\Notes\Index.cshtml" />
+    <Content Include="Views\Notes\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />

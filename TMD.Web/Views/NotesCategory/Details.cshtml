@@ -1,0 +1,67 @@
+﻿@model TMD.Web.Models.NotesCategoryModel
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>NotesCategoryModel</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecCreatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecCreatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecLastUpdatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecLastUpdatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecCreatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecCreatedBy)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecLastUpdatedBy)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecLastUpdatedBy)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

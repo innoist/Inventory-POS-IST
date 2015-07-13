@@ -133,6 +133,7 @@
     <Compile Include="Repositories\ApplicationUserRepository.cs" />
     <Compile Include="Repositories\AspNetUserRepository.cs" />
     <Compile Include="Repositories\ConfigurationRepository.cs" />
+    <Compile Include="Repositories\NoteRepository.cs" />
     <Compile Include="Repositories\OrderItemsRepository.cs" />
     <Compile Include="Repositories\OrdersRepository.cs" />
     <Compile Include="Repositories\InventoryItemRepository.cs" />
@@ -141,6 +142,7 @@
     <Compile Include="Repositories\CustomerRepository.cs" />
     <Compile Include="Repositories\ExpenseCategoryRepository.cs" />
     <Compile Include="Repositories\ExpenseRepository.cs" />
+    <Compile Include="Repositories\NotesCategoryRepository.cs" />
     <Compile Include="Repositories\VendorRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="Repositories\ProductCategoryRepository.cs" />

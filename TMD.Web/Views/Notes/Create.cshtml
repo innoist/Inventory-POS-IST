@@ -1,0 +1,78 @@
+﻿@model TMD.Web.ViewModels.NoteViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+@using (Html.BeginForm("Create", "Notes", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="portlet box blue-hoki">
+        <div class="portlet-title">
+
+            <div class="tools">
+                @*<a href="javascript:;" class="collapse">
+                    </a>*@
+
+                <button type="submit" class="btn btn-circle blue" onclick="return(ValidateFields(event));">Save</button>
+                <a href="~/ProductCategory/Index">
+                    <button type="button" class="btn btn-circle default">Cancel</button>
+                </a>
+            </div>
+            <div class="caption">
+                <i class="fa fa-male"></i>Create/Update Note
+            </div>
+        </div>
+
+        <div class="portlet-body form">
+            <div class="container-fluid">
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(m => m.NoteModel.Id)
+                @Html.HiddenFor(m => m.NoteModel.RecCreatedBy)
+                @Html.HiddenFor(m => m.NoteModel.RecCreatedDate)
+
+                <div class="form-group margin-top-20">
+                    @Html.Label("Notes Date", new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.NoteModel.NotesDate, new { @class = "form-control input-circle mandatory", placeholder = "Notes Date", @id = "NotesDate" })
+                    </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.Label("Notes Category", new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.DropDownListFor(m => m.NoteModel.NotesCategoryId, new SelectList(Model.NoteCategories, "Id", "Name"), new { @class = "form-control input-circle mandatory", @id = "ExpenseCategoryId" })
+                    </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.Label("Amount", new { @class = "col-md-3 control-label" })
+                    <div class="col-md-4">
+                        @Html.TextBoxFor(m => m.NoteModel.Amount, new { @class = "form-control input-circle", placeholder = "Expense Amount", @id = "Amount" })
+                    </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.NoteModel.Description, new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.TextAreaFor(m => m.NoteModel.Description, new { @class = "form-control input-circle mandatory", placeholder = "Description" })
+                    </div>
+                </div>
+                <div class="form-group margin-top-20">
+                    @Html.LabelFor(m => m.NoteModel.IsOpen, new { @class = "col-md-3 control-label requiredLabel" })
+                    <div class="col-md-4">
+                        @Html.CheckBoxFor(m => m.NoteModel.IsOpen, new { @class = "form-control input-circle mandatory", placeholder = "IsOpen" })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
+
+<script type="text/javascript">
+    jQuery(document).ready(function ($) {
+        $("#NotesDate").datepicker({
+            changeMonth: true,
+            changeYear: true,
+            maxDate: new Date()
+        });        
+    });
+</script>
+
