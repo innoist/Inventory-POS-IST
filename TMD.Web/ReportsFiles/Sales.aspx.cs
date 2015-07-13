@@ -32,10 +32,12 @@ namespace TMD.Web.ReportsFiles
             SalesReportViewer.ProcessingMode = ProcessingMode.Local;
             SalesReportViewer.LocalReport.ReportPath = Server.MapPath("~/ReportsFiles/Sales.rdlc");
 
-            DateTime startDate = string.IsNullOrEmpty(txtFrom.Text) ? new DateTime() : Convert.ToDateTime(txtFrom.Text);
-            DateTime endDate = string.IsNullOrEmpty(txtTo.Text) ? new DateTime() : Convert.ToDateTime(txtTo.Text);
+            string productCode = txtProductCode.Text;
 
-            var reportData = ReportsService.SalesReport();
+            DateTime endDate = string.IsNullOrEmpty(txtTo.Text) ? DateTime.Now : Convert.ToDateTime(txtTo.Text);
+            DateTime startDate = string.IsNullOrEmpty(txtFrom.Text) ? new DateTime(endDate.Year,endDate.Month,1) : Convert.ToDateTime(txtFrom.Text);
+            
+            var reportData = ReportsService.SalesReport(productCode,startDate,endDate);
             ReportDataSource reportDataSource = new ReportDataSource
             {
                 Name = "Sales",

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using TMD.Interfaces.IRepository;
 using TMD.Interfaces.IServices;
@@ -16,10 +17,10 @@ namespace TMD.Implementation.Services
             this.orderItemsRepository = orderItemsRepository;
         }
 
-        public IEnumerable<SalesReport> SalesReport()
+        public IEnumerable<SalesReport> SalesReport(string productCode,DateTime startDate, DateTime endDate)
         {
-            var report = orderItemsRepository.GetOrderItemsReport().ToList();
-            return report.Select(x=>x.CreateReport());
+            var report = orderItemsRepository.GetOrderItemsReport(productCode,startDate,endDate).ToList().Select(x => x.CreateReport());
+            return report;
         }
     }
 }

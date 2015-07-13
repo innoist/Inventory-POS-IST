@@ -6,7 +6,7 @@
         <div class="span12">
             <div class="portlet-title">
                     <div class="tools">
-                        <input type="button" class="btn blue titleButton" id="btnResetFltr" style="float:right" value="Reset" />
+                        <input type="button" class="btn blue titleButton" id="btnResetFltr" style="float:right" onclick="ResetFilters();" value="Reset" />
                         <asp:Button ID="btnFilter" runat="server" style="float:right"  Text="Filter" OnClick="btnFilter_OnClick" OnClientClick="Spinner();"/>
                     </div>
                 </div>
@@ -79,6 +79,11 @@
          });
          function Spinner() {
              $("#loading").show();
+         }
+         function ResetFilters() {
+             $("#txtProductCode").val("");
+             $("#txtFrom").val("");
+             $("#txtTo").val("");
          }
       </script>
 </asp:Content>
