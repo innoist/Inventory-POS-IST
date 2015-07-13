@@ -13,15 +13,15 @@
 
 <div id="loading" class="reload">
     <img src="~/Images/reportsSpinner.gif" style="width: 196px;" />
-    <span style="margin-left: -144px;">Loading report...</span>
+    <span style="margin-left: -150px;">Loading report...</span>
 </div>
 <script type="text/javascript">
     $(document).ready(function () {
         $("#loading").show();
-        $("#autoUpdate").hide();
+        $("#reportArea").hide();
     });
     $('iframe').load(function () {
         $('#loading').hide();
-        $("#autoUpdate").show();
+        $("#reportArea").show();
     });
 </script>

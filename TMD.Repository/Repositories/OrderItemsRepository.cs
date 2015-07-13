@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using Microsoft.Practices.Unity;
@@ -33,9 +34,11 @@ namespace TMD.Repository.Repositories
             return DbSet.Where(x => x.ProductId == productId).Select(r => r.Quantity).DefaultIfEmpty(0).Sum();
         }
 
-        public IEnumerable<OrderItem> GetOrderItemsReport()
+        public IEnumerable<OrderItem> GetOrderItemsReport(string productCode,DateTime startDate, DateTime endDate)
         {
-            return DbSet.ToList();
+            long productId;
+            long.TryParse(productCode, out productId);
+            return DbSet.Where(x => (productId == 0 || productId == x.ProductId) && (x.RecCreatedDate>=startDate) && (x.RecCreatedDate<=endDate)).ToList();
         }
     }
 }

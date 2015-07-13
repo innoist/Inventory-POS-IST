@@ -2,6 +2,7 @@
 
 namespace TMD.Web.Controllers
 {
+    [Authorize(Roles = "Admin, Employee")]
     public class ReportsController : Controller
     {
         // GET: Reports

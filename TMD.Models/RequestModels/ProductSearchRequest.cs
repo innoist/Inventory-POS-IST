@@ -8,6 +8,7 @@ namespace TMD.Models.RequestModels
         public string Barcode { get; set; }
         public long ProductCode{ get; set; }
         public long Category { get; set; }
+        public decimal PurchasePrice { get; set; }
 
         public ProductByColumn ProductOrderBy
         {

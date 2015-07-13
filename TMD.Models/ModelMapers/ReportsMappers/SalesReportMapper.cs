@@ -1,4 +1,5 @@
-﻿using TMD.Models.DomainModels;
+﻿using System;
+using TMD.Models.DomainModels;
 using TMD.Models.ReportsModels;
 
 namespace TMD.Models.ModelMapers.ReportsMappers
@@ -22,7 +23,7 @@ namespace TMD.Models.ModelMapers.ReportsMappers
             salesReport.PurchasePrice = itemPurchasePrice;
             salesReport.TotalCost = source.Quantity * itemPurchasePrice;
             salesReport.TotalProfit = salesReport.TotalSale - salesReport.TotalCost;
-            salesReport.ProfitPercentage = (salesReport.TotalProfit/salesReport.TotalCost)*100;
+            salesReport.ProfitPercentage = Math.Round(((salesReport.TotalProfit / salesReport.TotalCost) * 100),2);
 
             return salesReport;
         }
