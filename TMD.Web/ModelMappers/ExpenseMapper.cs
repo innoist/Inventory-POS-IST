@@ -31,6 +31,7 @@ namespace TMD.Web.ModelMappers
                 ExpenseCategoryId = source.ExpenseCategoryId,
                 ExpenseDate = source.ExpenseDate,
                 Description = source.Description,
+                Category = source.ExpenseCategory.Name,
 
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,

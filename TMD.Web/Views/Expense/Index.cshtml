@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<TMD.Web.Models.ExpenseModel>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Expenses";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
@@ -50,6 +50,7 @@
                             <tr>                                
                                 <th class="tableHeaderWhite">Expense Amount</th>
                                 <th class="tableHeaderWhite">Description</th>
+                                <th class="tableHeaderWhite">Category</th>
                                 <th class="tableHeaderWhite">Expense Date</th>
                             </tr>
                         </thead>
@@ -59,7 +60,8 @@
                                 <tr>
                                     <td>@Html.ActionLink(@item.ExpenseAmount.ToString(), "Create", new { id = item.Id }) </td>
                                     <td>@item.Description</td>
-                                    <td>@item.ExpenseDate</td>
+                                    <td>@item.Category</td>
+                                    <td>@item.ExpenseDate.ToString("MMM dd yyyy")</td>
                                 </tr>
                             }
                         </tbody>

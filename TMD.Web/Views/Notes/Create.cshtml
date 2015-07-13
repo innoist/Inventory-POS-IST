@@ -10,12 +10,9 @@
     <div class="portlet box blue-hoki">
         <div class="portlet-title">
 
-            <div class="tools">
-                @*<a href="javascript:;" class="collapse">
-                    </a>*@
-
+            <div class="tools">          
                 <button type="submit" class="btn btn-circle blue" onclick="return(ValidateFields(event));">Save</button>
-                <a href="~/ProductCategory/Index">
+                <a href="~/Notes/Index">
                     <button type="button" class="btn btn-circle default">Cancel</button>
                 </a>
             </div>
@@ -40,7 +37,7 @@
                 <div class="form-group margin-top-20">
                     @Html.Label("Notes Category", new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.DropDownListFor(m => m.NoteModel.NotesCategoryId, new SelectList(Model.NoteCategories, "Id", "Name"), new { @class = "form-control input-circle mandatory", @id = "ExpenseCategoryId" })
+                        @Html.DropDownListFor(m => m.NoteModel.NotesCategoryId, new SelectList(Model.NoteCategories, "Id", "Name"),"Select One", new { @class = "form-control input-circle mandatory", @id = "ExpenseCategoryId" })
                     </div>
                 </div>
                 <div class="form-group margin-top-20">

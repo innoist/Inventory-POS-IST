@@ -33,6 +33,7 @@ namespace TMD.Web.ModelMappers
                 IsOpen = source.IsOpen,
                 Description = source.Description,
                 Amount = source.Amount,
+                Category = source.NotesCategory.Name,
 
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
