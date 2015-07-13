@@ -40,7 +40,7 @@ namespace TMD.Web.ReportsFiles
             var reportData = ReportsService.SalesReport(productCode,startDate,endDate);
             ReportDataSource reportDataSource = new ReportDataSource
             {
-                Name = "Sales",
+                Name = "DataSet1",
                 Value = reportData
             };
 

@@ -25,6 +25,7 @@ namespace TMD.Models.ModelMapers.ReportsMappers
             salesReport.TotalCost = source.Quantity * itemPurchasePrice;
             salesReport.TotalProfit = salesReport.TotalSale - salesReport.TotalCost;
             salesReport.ProfitPercentage = Math.Round(((salesReport.TotalProfit / salesReport.TotalCost) * 100),2);
+            salesReport.OrderId = source.OrderId;
 
             return salesReport;
         }

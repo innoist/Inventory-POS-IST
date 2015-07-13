@@ -4,6 +4,8 @@ namespace TMD.Models.ReportsModels
 {
     public class SalesReport
     {
+        public long OrderId { get; set; }
+
         public long Id { get; set; }
         public DateTime Date { get; set; }
         public long ProductCode { get; set; }
