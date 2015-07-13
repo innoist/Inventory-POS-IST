@@ -25,11 +25,6 @@ namespace TMD.Web.Controllers
 
         public ActionResult Index()
         {
-            //if (Request.UrlReferrer == null || Request.UrlReferrer.AbsolutePath == "/Orders/EbayItemImportLV")
-            //{
-            //    Session["PageMetaData"] = null;
-            //}
-
             OrderSearchRequest viewModel = Session["PageMetaData"] as OrderSearchRequest;
 
             Session["PageMetaData"] = null;

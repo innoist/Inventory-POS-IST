@@ -144,7 +144,20 @@
                             </ul>
                         </li>
 
-
+                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "31") ? "active" : "")>
+                            <a class="WhiteColor" data-toggle="dropdown" href="javascript:;">
+                                Reports <i class="fa fa-angle-down"></i>
+                            </a>
+                            <ul class="dropdown-menu pull-left">
+                                <li>
+                                    <a class="WhiteColor" href="~/Reports/Sales">
+                                        Sales <span class="selected">
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        
                         <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "21") ? "active" : "")>
                             <a href="~/Configuration/Create" class="WhiteColor">
                                 Configuration <span class="selected">
