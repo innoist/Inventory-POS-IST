@@ -35,7 +35,8 @@ namespace TMD.Web.ReportsFiles
             string productCode = txtProductCode.Text;
 
             DateTime endDate = string.IsNullOrEmpty(txtTo.Text) ? DateTime.Now : Convert.ToDateTime(txtTo.Text);
-            DateTime startDate = string.IsNullOrEmpty(txtFrom.Text) ? new DateTime(endDate.Year,endDate.Month,1) : Convert.ToDateTime(txtFrom.Text);
+            DateTime startDate = string.IsNullOrEmpty(txtFrom.Text) ? DateTime.Now : Convert.ToDateTime(txtFrom.Text);
+            //DateTime startDate = string.IsNullOrEmpty(txtFrom.Text) ? new DateTime(endDate.Year,endDate.Month,1) : Convert.ToDateTime(txtFrom.Text);
             
             var reportData = ReportsService.SalesReport(productCode,startDate,endDate);
             ReportDataSource reportDataSource = new ReportDataSource

@@ -38,7 +38,7 @@ namespace TMD.Repository.Repositories
         {
             long productId;
             long.TryParse(productCode, out productId);
-            return DbSet.Where(x => (productId == 0 || productId == x.ProductId) && (x.RecCreatedDate>=startDate) && (x.RecCreatedDate<=endDate)).ToList();
+            return DbSet.Where(x => (productId == 0 || productId == x.ProductId) && (DbFunctions.TruncateTime(x.RecCreatedDate) >= DbFunctions.TruncateTime(startDate)) && (DbFunctions.TruncateTime(x.RecCreatedDate) <= DbFunctions.TruncateTime(endDate))).ToList();
         }
     }
 }

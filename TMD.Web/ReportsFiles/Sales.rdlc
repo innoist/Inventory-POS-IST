@@ -85,9 +85,6 @@
                   <CellContents>
                     <Textbox Name="Textbox32">
                       <CanGrow>true</CanGrow>
-                      <UserSort>
-                        <SortExpression>=Fields!ProductName.Value</SortExpression>
-                      </UserSort>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -122,9 +119,6 @@
                   <CellContents>
                     <Textbox Name="Textbox151">
                       <CanGrow>true</CanGrow>
-                      <UserSort>
-                        <SortExpression>=Fields!ProductCode.Value</SortExpression>
-                      </UserSort>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -340,9 +334,6 @@
                   <CellContents>
                     <Textbox Name="Textbox18">
                       <CanGrow>true</CanGrow>
-                      <UserSort>
-                        <SortExpression>=Fields!TotalSale.Value</SortExpression>
-                      </UserSort>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -411,9 +402,6 @@
                   <CellContents>
                     <Textbox Name="Textbox7">
                       <CanGrow>true</CanGrow>
-                      <UserSort>
-                        <SortExpression>=Fields!TotalProfit.Value</SortExpression>
-                      </UserSort>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -559,6 +547,7 @@
                               <Value>=Fields!PurchasePrice.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>0;(0)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -591,6 +580,7 @@
                               <Value>=Fields!SalePrice.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>0;(0)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -655,6 +645,7 @@
                               <Value>=Fields!SubTotalSale.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>0;(0)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -719,6 +710,7 @@
                               <Value>=Fields!TotalSale.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>0;(0)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -751,6 +743,7 @@
                               <Value>=Fields!TotalSale.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>0;(0)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -783,6 +776,7 @@
                               <Value>=Fields!TotalProfit.Value</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <Format>0;(0)</Format>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -997,6 +991,8 @@
                               <Value>=Sum(Fields!Quantity.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>Brown</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1029,6 +1025,8 @@
                               <Value>=Sum(Fields!SubTotalSale.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>Brown</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1061,6 +1059,8 @@
                               <Value>=Sum(Fields!Discount.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>Brown</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1093,6 +1093,8 @@
                               <Value>=Sum(Fields!TotalSale.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>Brown</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1157,6 +1159,8 @@
                               <Value>=Sum(Fields!TotalProfit.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>Brown</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1354,6 +1358,8 @@
                               <Value>=Sum(Fields!Quantity.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>Brown</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1386,6 +1392,8 @@
                               <Value>=Sum(Fields!SubTotalSale.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>Brown</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1418,6 +1426,8 @@
                               <Value>=Sum(Fields!Discount.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>Brown</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1450,6 +1460,8 @@
                               <Value>=Sum(Fields!TotalSale.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>Brown</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1514,6 +1526,8 @@
                               <Value>=Sum(Fields!TotalProfit.Value)</Value>
                               <Style>
                                 <FontSize>8pt</FontSize>
+                                <FontWeight>Bold</FontWeight>
+                                <Color>Brown</Color>
                               </Style>
                             </TextRun>
                           </TextRuns>
@@ -1633,9 +1647,6 @@
                     <CellContents>
                       <Textbox Name="Textbox172">
                         <CanGrow>true</CanGrow>
-                        <UserSort>
-                          <SortExpression>=Fields!OrderId.Value</SortExpression>
-                        </UserSort>
                         <KeepTogether>true</KeepTogether>
                         <Paragraphs>
                           <Paragraph>
