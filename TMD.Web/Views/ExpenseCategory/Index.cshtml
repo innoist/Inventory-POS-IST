@@ -1,9 +1,54 @@
-﻿
+﻿@model IEnumerable<TMD.Web.Models.ExpenseCategoryModel>
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     Session["MenuKey"] = 24;
 }
 
-<h2>Index</h2>
+<div class="container-fluid">
+    <header>
+        <h3 class="page-title">
+            @ViewBag.Title
+        </h3>
+        <h3> <small><a href="~/ExpenseCategory/Create">Add New Expense Category</a></small></h3>
+    </header>
+
+    <form class="form-horizontal">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="portlet box blue">
+                    <table id="dataTable" class="display" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th class="tableHeaderWhite">Name</th>
+                                <th class="tableHeaderWhite">Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@Html.ActionLink(@item.Name, "Create", new { id = item.Id }) </td>
+                                    <td>@item.Description</td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#dataTable').dataTable({
+            "sPaginationType": "full_numbers",
+            "iDisplayLength": 10,
+            "bFilter": false,
+            "bLengthChange": false,
+        });
+    });
+</script>
 

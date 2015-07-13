@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using TMD.Interfaces.IServices;
 using TMD.Web.ModelMappers;
@@ -20,8 +22,8 @@ namespace TMD.Web.Controllers
         // GET: /ExpenseCategory/
         public ActionResult Index()
         {
-            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
-            return View();
+            IEnumerable<ExpenseCategoryModel> expenseCategories = expenseCategoryService.GetAllExpenseCategories().Select(x => x.CreateFromServerToClient());
+            return View(expenseCategories);
         }
 
         //
