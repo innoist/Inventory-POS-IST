@@ -84,6 +84,7 @@ namespace TMD.Web.Controllers
         // GET: Inventory/Create
         public ActionResult Create(long? id)
         {
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             InventoryItemViewModel inventoryItemViewModel = new InventoryItemViewModel();
             var DefaultVendorId = new Utility().GetDefaultVendor(Session, configService);
 
@@ -99,6 +100,13 @@ namespace TMD.Web.Controllers
                 inventoryItemViewModel.Vendors = responseResult.Vendors.Select(x => x.CreateFromServerToClient());
             if (responseResult.InventoryItem != null)
                 inventoryItemViewModel.InventoryItem = responseResult.InventoryItem.CreateFromServerToClient();
+            var lastSavedVendorID = TempData["LastSavedVendorId"];
+            if (lastSavedVendorID != null)
+            {
+                if (inventoryItemViewModel.InventoryItem == null)
+                    inventoryItemViewModel.InventoryItem  = new InventoryItemModel();
+                inventoryItemViewModel.InventoryItem.VendorId = long.Parse(lastSavedVendorID.ToString());
+            }
             return View(inventoryItemViewModel);
         }
 
@@ -108,10 +116,12 @@ namespace TMD.Web.Controllers
         {
             try
             {
+                bool isCreated = false;
                 if (inventoryItemViewModel.InventoryItem.ItemId == 0)
                 {
                     inventoryItemViewModel.InventoryItem.RecCreatedBy = User.Identity.Name;
                     inventoryItemViewModel.InventoryItem.RecCreatedDate = DateTime.Now;
+                    isCreated = true;
                 }
                 inventoryItemViewModel.InventoryItem.RecLastUpdatedBy = User.Identity.Name;
                 inventoryItemViewModel.InventoryItem.RecLastUpdatedDate = DateTime.Now;
@@ -121,9 +131,17 @@ namespace TMD.Web.Controllers
                     //Product Saved
                     TempData["message"] = new MessageViewModel { Message = "Inventory has been saved successfully.", IsSaved = true };
                 }
+               if (Request.Form["save"] != null)
+                   return RedirectToAction("Index");
+               if (isCreated)
+               {
+                   
 
+                   TempData["LastSavedVendorId"] = inventoryItemViewModel.InventoryItem.VendorId;
+               }
+               return RedirectToAction("Create");
 
-                return RedirectToAction("Index");
+                //return RedirectToAction("Index");
             }
             catch (Exception exception)
             {

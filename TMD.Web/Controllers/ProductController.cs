@@ -80,6 +80,14 @@ namespace TMD.Web.Controllers
                 productViewModel.ProductCategories = responseResult.ProductCategories.Select(x => x.CreateFromServerToClient());
             if (responseResult.Product != null)
                 productViewModel.ProductModel = responseResult.Product.CreateFromServerToClient();
+            var lastSavedCategoryID = TempData["LastCategoryId"];
+            if (lastSavedCategoryID != null)
+            {
+                if (productViewModel.ProductModel== null)
+                    productViewModel.ProductModel = new ProductModel();
+                productViewModel.ProductModel.CategoryId = long.Parse(lastSavedCategoryID.ToString());
+            }
+
 
             ViewBag.LastSavedId = TempData["LastSavedId"];
             return View(productViewModel);
@@ -124,7 +132,11 @@ namespace TMD.Web.Controllers
                 if (Request.Form["save"]!=null)
                     return RedirectToAction("Index");
                 if (isCreated)
+                {
                     TempData["LastSavedId"] = lastSavedId;
+                    
+                    TempData["LastCategoryId"] = productViewModel.ProductModel.CategoryId;
+                }
                 return RedirectToAction("Create");
             }
             catch(Exception exception)
