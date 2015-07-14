@@ -13,5 +13,6 @@ namespace TMD.Models.DomainModels
         public string RecCreatedBy { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public virtual ICollection<InventoryItem> InventoryItems { get; set; }
+        public virtual ICollection<Expense> Expenses { get; set; }
     }
 }

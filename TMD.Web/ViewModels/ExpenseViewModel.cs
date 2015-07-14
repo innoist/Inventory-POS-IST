@@ -11,5 +11,6 @@ namespace TMD.Web.ViewModels
         }
         public ExpenseModel ExpenseModel { get; set; }
         public IEnumerable<ExpenseCategoryModel> ExpenseCategories { get; set; }
+        public IEnumerable<VendorModel> Vendors { get; set; }
     }
 }

@@ -14,7 +14,8 @@ namespace TMD.Web.ModelMappers
                 ExpenseCategoryId = source.ExpenseCategoryId,
                 ExpenseDate = source.ExpenseDate,
                 Description = source.Description,                
-                
+                VendorId = source.VendorId,
+
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
@@ -32,6 +33,8 @@ namespace TMD.Web.ModelMappers
                 ExpenseDate = source.ExpenseDate,
                 Description = source.Description,
                 Category = source.ExpenseCategory.Name,
+                VendorId = source.VendorId,
+                VendorName = source.Vendor != null ? source.Vendor.Name : string.Empty,
 
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,

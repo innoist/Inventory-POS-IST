@@ -154,6 +154,7 @@
           <Property Name="ExpenseCategoryId" Type="bigint" Nullable="false" />
           <Property Name="ExpenseAmount" Type="decimal" Precision="9" Scale="2" Nullable="false" />
           <Property Name="Description" Type="nvarchar" MaxLength="500" />
+          <Property Name="VendorId" Type="bigint" />
           <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
@@ -563,6 +564,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Expenses_Vendors">
+          <End Role="Vendors" Type="Self.Vendors" Multiplicity="0..1" />
+          <End Role="Expenses" Type="Self.Expenses" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendors">
+              <PropertyRef Name="VendorId" />
+            </Principal>
+            <Dependent Role="Expenses">
+              <PropertyRef Name="VendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_InventoryItems_Products">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
           <End Role="InventoryItems" Type="Self.InventoryItems" Multiplicity="*" />
@@ -827,6 +840,10 @@
             <End Role="ExpenseCategory" EntitySet="ExpenseCategory" />
             <End Role="Expenses" EntitySet="Expenses" />
           </AssociationSet>
+          <AssociationSet Name="FK_Expenses_Vendors" Association="Self.FK_Expenses_Vendors">
+            <End Role="Vendors" EntitySet="Vendors" />
+            <End Role="Expenses" EntitySet="Expenses" />
+          </AssociationSet>
           <AssociationSet Name="FK_InventoryItems_Products" Association="Self.FK_InventoryItems_Products">
             <End Role="Products" EntitySet="Products" />
             <End Role="InventoryItems" EntitySet="InventoryItems" />
@@ -1047,6 +1064,10 @@
           <AssociationSet Name="FK_Notes_NotesCategory" Association="TMD.Models.DomainModels.FK_Notes_NotesCategory">
             <End Role="NotesCategory" EntitySet="NotesCategories" />
             <End Role="Note" EntitySet="Notes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Expenses_Vendors" Association="TMD.Models.DomainModels.FK_Expenses_Vendors">
+            <End Role="Vendor" EntitySet="Vendors" />
+            <End Role="Expense" EntitySet="Expenses" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AspNetRole">
@@ -1583,6 +1604,7 @@
           <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="InventoryItems" Relationship="TMD.Models.DomainModels.FK_InventoryItems_Vendors" FromRole="Vendor" ToRole="InventoryItem" />
+          <NavigationProperty Name="Expenses" Relationship="TMD.Models.DomainModels.FK_Expenses_Vendors" FromRole="Vendor" ToRole="Expense" />
         </EntityType>
         <Association Name="FK_DataWarehouseFactSale_DataWarehouseDimComapany">
           <End Type="TMD.Models.DomainModels.DataWarehouseDimComapany" Role="DataWarehouseDimComapany" Multiplicity="0..1" />
@@ -1787,6 +1809,8 @@
           <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ExpenseCategory" Relationship="TMD.Models.DomainModels.FK_Expenses_ExpenseCategory" FromRole="Expens" ToRole="ExpenseCategory" />
+          <Property Name="VendorId" Type="Int64" />
+          <NavigationProperty Name="Vendor" Relationship="TMD.Models.DomainModels.FK_Expenses_Vendors" FromRole="Expense" ToRole="Vendor" />
         </EntityType>
         <Association Name="FK_Expenses_ExpenseCategory">
           <End Type="TMD.Models.DomainModels.ExpenseCategory" Role="ExpenseCategory" Multiplicity="1" />
@@ -1863,6 +1887,18 @@
             </Principal>
             <Dependent Role="Note">
               <PropertyRef Name="NotesCategoryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Expenses_Vendors">
+          <End Type="TMD.Models.DomainModels.Vendor" Role="Vendor" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.Expense" Role="Expense" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendor">
+              <PropertyRef Name="VendorId" />
+            </Principal>
+            <Dependent Role="Expense">
+              <PropertyRef Name="VendorId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2276,6 +2312,7 @@
           <EntitySetMapping Name="Expenses">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.Expense">
               <MappingFragment StoreEntitySet="Expenses">
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
                 <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
@@ -2409,6 +2446,7 @@
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Note" Width="1.5" PointX="14.625" PointY="17" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.NotesCategory" Width="1.5" PointX="12.375" PointY="17.25" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Notes_NotesCategory" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Expenses_Vendors" />
       </Diagram>
     </Diagrams>
   </Designer>

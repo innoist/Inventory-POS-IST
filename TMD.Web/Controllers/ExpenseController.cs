@@ -15,11 +15,13 @@ namespace TMD.Web.Controllers
     {
         private readonly IExpenseService expenseService;
         private readonly IExpenseCategoryService expenseCategoryService;
+        private readonly IVendorService vendorService;
 
-        public ExpenseController(IExpenseService expenseService, IExpenseCategoryService expenseCategoryService)
+        public ExpenseController(IExpenseService expenseService, IExpenseCategoryService expenseCategoryService, IVendorService vendorService)
         {
             this.expenseService = expenseService;
             this.expenseCategoryService = expenseCategoryService;
+            this.vendorService = vendorService;
         }
         //
         // GET: /Expense/
@@ -42,6 +44,7 @@ namespace TMD.Web.Controllers
         {
             ExpenseViewModel model = new ExpenseViewModel();
             model.ExpenseCategories = expenseCategoryService.GetAllExpenseCategories().Select(x => x.CreateFromServerToClient());
+            model.Vendors = vendorService.GetAllVendors().Select(x => x.CreateFromServerToClient());
             if (id != null)
             {
                 var expense = expenseService.GetExpense((long)id);
