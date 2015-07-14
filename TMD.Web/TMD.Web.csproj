@@ -134,6 +134,7 @@
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
       <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
     </Reference>
+      <HintPath>..\Solution Items\Microsoft.ReportViewer.WebForms.dll</HintPath>
     <Reference Include="Microsoft.Web.Helpers">
       <HintPath>..\packages\Microsoft.AspNet.WebHelpers.3.2.2\lib\net45\Microsoft.Web.Helpers.dll</HintPath>
     </Reference>
@@ -1695,6 +1696,7 @@
     <Content Include="Scripts\js\skel.min.js" />
     <Content Include="Areas\Api\Views\web.config" />
     <None Include="Properties\PublishProfiles\TOYMARKET.pubxml" />
+    <Content Include="Scripts\layout.js" />
     <Content Include="Views\Home\OneColumn.cshtml" />
     <Content Include="Views\Home\TwoColumnOne.cshtml" />
     <Content Include="Views\Home\TwoColumnTwo.cshtml" />
