@@ -17,6 +17,9 @@ namespace TMD.Web.ReportsFiles
                 return;
             }
 
+            txtFrom.Text = DateTime.Now.ToShortDateString();
+            txtTo.Text = DateTime.Now.ToShortDateString();
+
             GenerateReport();
         }
 
@@ -35,8 +38,8 @@ namespace TMD.Web.ReportsFiles
             string productCode = txtProductCode.Text;
             long vendorId = 0;
 
-            DateTime endDate = string.IsNullOrEmpty(txtTo.Text) ? DateTime.Now : Convert.ToDateTime(txtTo.Text);
-            DateTime startDate = string.IsNullOrEmpty(txtFrom.Text) ? DateTime.Now : Convert.ToDateTime(txtFrom.Text);
+            DateTime endDate = string.IsNullOrEmpty(txtTo.Text) ? new DateTime(2001, 1, 1) : Convert.ToDateTime(txtTo.Text);
+            DateTime startDate = string.IsNullOrEmpty(txtFrom.Text) ? new DateTime(2001, 1, 1) : Convert.ToDateTime(txtFrom.Text);
 
             var reportData = ReportsService.PurchaseReport(productCode, vendorId, startDate, endDate);
             ReportDataSource reportDataSource = new ReportDataSource

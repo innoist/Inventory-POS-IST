@@ -82,7 +82,9 @@ namespace TMD.Repository.Repositories
         {
             long productId;
             long.TryParse(productCode, out productId);
-            return DbSet.Where(x => (productId == 0 || productId == x.ProductId) && (vendorId==0 || x.VendorId==vendorId) && (DbFunctions.TruncateTime(x.RecCreatedDate) >= DbFunctions.TruncateTime(startDate)) && (DbFunctions.TruncateTime(x.RecCreatedDate) <= DbFunctions.TruncateTime(endDate))).ToList();
+            var stDt = new DateTime(2001, 1, 1);
+            var enDt = new DateTime(2001, 1, 1);
+            return DbSet.Where(x => (productId == 0 || productId == x.ProductId) && (vendorId==0 || x.VendorId==vendorId) && (startDate==stDt ||(DbFunctions.TruncateTime(x.RecCreatedDate) >= DbFunctions.TruncateTime(startDate))) && (endDate==enDt||(DbFunctions.TruncateTime(x.RecCreatedDate) <= DbFunctions.TruncateTime(endDate)))).ToList();
         }
     }
 }
