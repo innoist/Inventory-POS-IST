@@ -436,6 +436,24 @@
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'IstInventory.dbo.ProductsStock' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="ProductsStock">
+          <Key>
+            <PropertyRef Name="ProductId" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="PurchasePrice" />
+            <PropertyRef Name="SalePrice" />
+            <PropertyRef Name="AvailableQty" />
+          </Key>
+          <Property Name="ProductId" Type="bigint" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="PurchasePrice" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="SalePrice" Type="decimal" Precision="9" Scale="2" Nullable="false" />
+          <Property Name="PurchasedQty" Type="bigint" />
+          <Property Name="SoldQty" Type="int" />
+          <Property Name="AvailableQty" Type="bigint" Nullable="false" />
+        </EntityType>
         <Association Name="FK_CategoryLog_Category">
           <End Role="Category" Type="Self.Category" Multiplicity="1" />
           <End Role="CategoryLog" Type="Self.CategoryLog" Multiplicity="*" />
@@ -800,6 +818,17 @@
           <EntitySet Name="StagingToyGraderBatchImports" EntityType="Self.StagingToyGraderBatchImports" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StagingToyGraderItems" EntityType="Self.StagingToyGraderItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Vendors" EntityType="Self.Vendors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductsStock" EntityType="Self.ProductsStock" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [ProductsStock].[ProductId] AS [ProductId], 
+    [ProductsStock].[Name] AS [Name], 
+    [ProductsStock].[PurchasePrice] AS [PurchasePrice], 
+    [ProductsStock].[SalePrice] AS [SalePrice], 
+    [ProductsStock].[PurchasedQty] AS [PurchasedQty], 
+    [ProductsStock].[SoldQty] AS [SoldQty], 
+    [ProductsStock].[AvailableQty] AS [AvailableQty]
+    FROM [dbo].[ProductsStock] AS [ProductsStock]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_CategoryLog_Category" Association="Self.FK_CategoryLog_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="CategoryLog" EntitySet="CategoryLog" />
@@ -1069,6 +1098,7 @@
             <End Role="Vendor" EntitySet="Vendors" />
             <End Role="Expense" EntitySet="Expenses" />
           </AssociationSet>
+          <EntitySet Name="ProductsStocks" EntityType="TMD.Models.DomainModels.ProductsStock" />
           </EntityContainer>
         <EntityType Name="AspNetRole">
           <Key>
@@ -1902,6 +1932,22 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ProductsStock">
+          <Key>
+            <PropertyRef Name="ProductId" />
+            <PropertyRef Name="Name" />
+            <PropertyRef Name="PurchasePrice" />
+            <PropertyRef Name="SalePrice" />
+            <PropertyRef Name="AvailableQty" />
+          </Key>
+          <Property Name="ProductId" Type="Int64" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PurchasePrice" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="SalePrice" Type="Decimal" Nullable="false" Precision="9" Scale="2" />
+          <Property Name="PurchasedQty" Type="Int64" />
+          <Property Name="SoldQty" Type="Int32" />
+          <Property Name="AvailableQty" Type="Int64" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2367,6 +2413,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ProductsStocks">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductsStock">
+              <MappingFragment StoreEntitySet="ProductsStock">
+                <ScalarProperty Name="AvailableQty" ColumnName="AvailableQty" />
+                <ScalarProperty Name="SoldQty" ColumnName="SoldQty" />
+                <ScalarProperty Name="PurchasedQty" ColumnName="PurchasedQty" />
+                <ScalarProperty Name="SalePrice" ColumnName="SalePrice" />
+                <ScalarProperty Name="PurchasePrice" ColumnName="PurchasePrice" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2447,6 +2506,7 @@
         <EntityTypeShape EntityType="TMD.Models.DomainModels.NotesCategory" Width="1.5" PointX="12.375" PointY="17.25" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Notes_NotesCategory" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Expenses_Vendors" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductsStock" Width="1.5" PointX="17.375" PointY="0.75" />
       </Diagram>
     </Diagrams>
   </Designer>
