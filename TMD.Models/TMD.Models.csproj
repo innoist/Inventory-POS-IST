@@ -143,6 +143,7 @@
     <Compile Include="MenuModels\MenuRight.cs" />
     <Compile Include="MenuModels\Rights.cs" />
     <Compile Include="MenuModels\UserMenuResponse.cs" />
+    <Compile Include="ModelMapers\ReportsMappers\ProductsStockMapper.cs" />
     <Compile Include="ModelMapers\ReportsMappers\PurchaseReportMapper.cs" />
     <Compile Include="ModelMapers\ReportsMappers\SalesReportMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
