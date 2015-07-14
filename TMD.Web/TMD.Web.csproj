@@ -1684,6 +1684,7 @@
     <Content Include="Scripts\js\skel.min.js" />
     <Content Include="Areas\Api\Views\web.config" />
     <None Include="Properties\PublishProfiles\TOYMARKET.pubxml" />
+    <Content Include="Scripts\layout.js" />
     <Content Include="Views\Home\OneColumn.cshtml" />
     <Content Include="Views\Home\TwoColumnOne.cshtml" />
     <Content Include="Views\Home\TwoColumnTwo.cshtml" />
