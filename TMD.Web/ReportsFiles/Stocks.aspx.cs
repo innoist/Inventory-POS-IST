@@ -22,7 +22,7 @@ namespace TMD.Web.ReportsFiles
             ReportsService = UnityWebActivator.Container.Resolve<IReportsService>();
             //string name = TextBox1.Text;
             StocksReportViewer.ProcessingMode = ProcessingMode.Local;
-            StocksReportViewer.LocalReport.ReportPath = Server.MapPath("~/ReportsFiles/Purchase.rdlc");
+            StocksReportViewer.LocalReport.ReportPath = Server.MapPath("~/ReportsFiles/Stocks.rdlc");
 
             string productCode = txtProductCode.Text;
             string barCode = txtBarcode.Text;

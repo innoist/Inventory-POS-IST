@@ -1,6 +1,6 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Stocks.aspx.cs" Inherits="TMD.Web.ReportsFiles.Stocks" %>
+﻿<%@ Page Language="C#"  MasterPageFile="~/Views/Shared/Reports.Master"  AutoEventWireup="true" CodeBehind="Stocks.aspx.cs" Inherits="TMD.Web.ReportsFiles.Stocks" %>
 <%@ Register TagPrefix="rsweb" Namespace="Microsoft.Reporting.WebForms" Assembly="Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" %>
-<asp:Content ID="Content2" ContentPlaceHolderID="ReportContentPage" runat="server">
+<asp:Content ID="Content3" ContentPlaceHolderID="ReportContentPage" runat="server">
     <div class="row-fluid">
         <div class="span12">
             <div class="portlet-title">

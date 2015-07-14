@@ -9,7 +9,7 @@
               <Width>1in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>1.875in</Width>
             </TablixColumn>
             <TablixColumn>
               <Width>1in</Width>
@@ -302,10 +302,9 @@
           </TablixMembers>
         </TablixRowHierarchy>
         <DataSetName>DataSet1</DataSetName>
-        <Top>0.80083in</Top>
-        <Left>1.36333in</Left>
+        <Top>0.06944in</Top>
         <Height>0.5in</Height>
-        <Width>4in</Width>
+        <Width>4.875in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -316,10 +315,10 @@
     <Height>2in</Height>
     <Style />
   </Body>
-  <Width>6.5in</Width>
+  <Width>6.03583in</Width>
   <Page>
     <PageHeader>
-      <Height>1in</Height>
+      <Height>0.5in</Height>
       <PrintOnFirstPage>true</PrintOnFirstPage>
       <PrintOnLastPage>true</PrintOnLastPage>
       <ReportItems>
@@ -343,10 +342,10 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>Textbox17</rd:DefaultName>
-          <Top>0.35938in</Top>
-          <Left>1.04688in</Left>
+          <Top>0.10417in</Top>
+          <Left>0in</Left>
           <Height>0.28125in</Height>
-          <Width>4.40625in</Width>
+          <Width>4in</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -362,6 +361,11 @@
         <Border>
           <Style>None</Style>
         </Border>
+        <BottomBorder>
+          <Color>Black</Color>
+          <Style>Solid</Style>
+          <Width>1pt</Width>
+        </BottomBorder>
       </Style>
     </PageHeader>
     <PageFooter>
@@ -389,7 +393,7 @@
           </Paragraphs>
           <rd:DefaultName>Textbox11</rd:DefaultName>
           <Top>0.38021in</Top>
-          <Left>1.47334in</Left>
+          <Left>1.4522in</Left>
           <Height>0.25in</Height>
           <Width>2.83333in</Width>
           <Style>
@@ -422,7 +426,7 @@
           </Paragraphs>
           <rd:DefaultName>ExecutionTime</rd:DefaultName>
           <Top>0.38021in</Top>
-          <Left>4.41082in</Left>
+          <Left>4.04624in</Left>
           <Height>0.25in</Height>
           <Width>1.98959in</Width>
           <ZIndex>1</ZIndex>
@@ -471,7 +475,7 @@
             </Paragraph>
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>
-          <Top>0.36979in</Top>
+          <Top>0.38021in</Top>
           <Left>0.09958in</Left>
           <Height>0.25in</Height>
           <Width>1.33873in</Width>
@@ -491,6 +495,11 @@
         <Border>
           <Style>None</Style>
         </Border>
+        <TopBorder>
+          <Color>Black</Color>
+          <Style>Solid</Style>
+          <Width>1pt</Width>
+        </TopBorder>
       </Style>
     </PageFooter>
     <LeftMargin>1in</LeftMargin>
