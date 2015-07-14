@@ -32,7 +32,7 @@ namespace TMD.Repository.Repositories
 
         public IEnumerable<ProductsStock> StocksReport(string barCode, string productCode, string productName)
         {
-           return DbSet.Where(x => x.ProductId.ToString() == productCode || x.Name.Contains(productName)).ToList();
+            return DbSet.Where(x => ((string.IsNullOrEmpty(productCode) || x.ProductId.ToString() == productCode)) && (string.IsNullOrEmpty(productName) || x.Name.Contains(productName))).ToList();
         }
     }
 }

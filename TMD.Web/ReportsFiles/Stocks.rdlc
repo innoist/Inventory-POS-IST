@@ -6,16 +6,16 @@
         <TablixBody>
           <TablixColumns>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>1.0625in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1.875in</Width>
+              <Width>2.95833in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>1.0625in</Width>
             </TablixColumn>
             <TablixColumn>
-              <Width>1in</Width>
+              <Width>1.0625in</Width>
             </TablixColumn>
           </TablixColumns>
           <TablixRows>
@@ -26,6 +26,9 @@
                   <CellContents>
                     <Textbox Name="Textbox1">
                       <CanGrow>true</CanGrow>
+                      <UserSort>
+                        <SortExpression>=Fields!ProductCode.Value</SortExpression>
+                      </UserSort>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -38,7 +41,9 @@
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox1</rd:DefaultName>
@@ -59,6 +64,9 @@
                   <CellContents>
                     <Textbox Name="Textbox3">
                       <CanGrow>true</CanGrow>
+                      <UserSort>
+                        <SortExpression>=Fields!ProductName.Value</SortExpression>
+                      </UserSort>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -71,7 +79,9 @@
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox3</rd:DefaultName>
@@ -92,6 +102,9 @@
                   <CellContents>
                     <Textbox Name="Textbox5">
                       <CanGrow>true</CanGrow>
+                      <UserSort>
+                        <SortExpression>=Fields!PurchasedQuantity.Value</SortExpression>
+                      </UserSort>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -104,7 +117,9 @@
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox5</rd:DefaultName>
@@ -125,6 +140,9 @@
                   <CellContents>
                     <Textbox Name="Textbox7">
                       <CanGrow>true</CanGrow>
+                      <UserSort>
+                        <SortExpression>=Fields!AvailableQuantity.Value</SortExpression>
+                      </UserSort>
                       <KeepTogether>true</KeepTogether>
                       <Paragraphs>
                         <Paragraph>
@@ -137,7 +155,9 @@
                               </Style>
                             </TextRun>
                           </TextRuns>
-                          <Style />
+                          <Style>
+                            <TextAlign>Center</TextAlign>
+                          </Style>
                         </Paragraph>
                       </Paragraphs>
                       <rd:DefaultName>Textbox7</rd:DefaultName>
@@ -169,7 +189,10 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!ProductCode.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontFamily>tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -199,7 +222,10 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!ProductName.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontFamily>tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -229,7 +255,10 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!PurchasedQuantity.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontFamily>tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -259,7 +288,10 @@
                           <TextRuns>
                             <TextRun>
                               <Value>=Fields!AvailableQuantity.Value</Value>
-                              <Style />
+                              <Style>
+                                <FontFamily>tahoma</FontFamily>
+                                <FontSize>8pt</FontSize>
+                              </Style>
                             </TextRun>
                           </TextRuns>
                           <Style />
@@ -304,7 +336,7 @@
         <DataSetName>DataSet1</DataSetName>
         <Top>0.06944in</Top>
         <Height>0.5in</Height>
-        <Width>4.875in</Width>
+        <Width>6.14583in</Width>
         <Style>
           <Border>
             <Style>None</Style>
@@ -315,7 +347,7 @@
     <Height>2in</Height>
     <Style />
   </Body>
-  <Width>6.03583in</Width>
+  <Width>6.15041in</Width>
   <Page>
     <PageHeader>
       <Height>0.5in</Height>
@@ -343,9 +375,8 @@
           </Paragraphs>
           <rd:DefaultName>Textbox17</rd:DefaultName>
           <Top>0.10417in</Top>
-          <Left>0in</Left>
           <Height>0.28125in</Height>
-          <Width>4in</Width>
+          <Width>2.09375in</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -393,9 +424,9 @@
           </Paragraphs>
           <rd:DefaultName>Textbox11</rd:DefaultName>
           <Top>0.38021in</Top>
-          <Left>1.4522in</Left>
+          <Left>1.0772in</Left>
           <Height>0.25in</Height>
-          <Width>2.83333in</Width>
+          <Width>2.68085in</Width>
           <Style>
             <Border>
               <Style>None</Style>
@@ -426,9 +457,9 @@
           </Paragraphs>
           <rd:DefaultName>ExecutionTime</rd:DefaultName>
           <Top>0.38021in</Top>
-          <Left>4.04624in</Left>
+          <Left>4.17471in</Left>
           <Height>0.25in</Height>
-          <Width>1.98959in</Width>
+          <Width>1.86112in</Width>
           <ZIndex>1</ZIndex>
           <Style>
             <Border>
@@ -476,9 +507,8 @@
           </Paragraphs>
           <rd:DefaultName>PageNumber</rd:DefaultName>
           <Top>0.38021in</Top>
-          <Left>0.09958in</Left>
           <Height>0.25in</Height>
-          <Width>1.33873in</Width>
+          <Width>0.6304in</Width>
           <ZIndex>2</ZIndex>
           <Style>
             <Border>

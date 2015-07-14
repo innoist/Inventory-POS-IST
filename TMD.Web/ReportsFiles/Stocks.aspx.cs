@@ -11,7 +11,11 @@ namespace TMD.Web.ReportsFiles
         public IReportsService ReportsService { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            if (Page.IsPostBack)
+            {
+                return;
+            }
+            GenerateReport();
         }
         protected void btnFilter_OnClick(object sender, EventArgs e)
         {
@@ -25,7 +29,7 @@ namespace TMD.Web.ReportsFiles
             StocksReportViewer.LocalReport.ReportPath = Server.MapPath("~/ReportsFiles/Stocks.rdlc");
 
             string productCode = txtProductCode.Text;
-            string barCode = txtBarcode.Text;
+            string barCode = "";//txtBarcode.Text;
             string name = txtProductName.Text;
 
 

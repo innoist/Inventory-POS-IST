@@ -15,15 +15,6 @@
                             <table class="responsive">
                                 <tr>
                                     <td class="col-md-1">
-                                        <label class="control-label"> Barcode </label>
-                                    </td>
-                                    <td class="col-md-2">
-                                        <div class="input-icon">
-                                            <i class="fa fa-search"></i>
-                                           <asp:TextBox runat="server" ID="txtBarcode" ClientIDMode="static"/>
-                                        </div>
-                                    </td>
-                                    <td class="col-md-1">
                                         <label class="control-label"> Product Code </label>
                                     </td>
                                     <td class="col-md-2">
