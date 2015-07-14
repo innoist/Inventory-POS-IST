@@ -32,6 +32,18 @@
             </xs:sequence>
           </xs:complexType>
         </xs:element>
+        <xs:element name="Purchase" msprop:Generator_TableClassName="PurchaseDataTable" msprop:Generator_TableVarName="tablePurchase" msprop:Generator_RowChangedName="PurchaseRowChanged" msprop:Generator_TablePropName="Purchase" msprop:Generator_RowDeletingName="PurchaseRowDeleting" msprop:Generator_RowChangingName="PurchaseRowChanging" msprop:Generator_RowEvHandlerName="PurchaseRowChangeEventHandler" msprop:Generator_RowDeletedName="PurchaseRowDeleted" msprop:Generator_RowClassName="PurchaseRow" msprop:Generator_UserTableName="Purchase" msprop:Generator_RowEvArgName="PurchaseRowChangeEvent">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="VendorId" msprop:Generator_ColumnVarNameInTable="columnVendorId" msprop:Generator_ColumnPropNameInRow="VendorId" msprop:Generator_ColumnPropNameInTable="VendorIdColumn" msprop:Generator_UserColumnName="VendorId" type="xs:long" minOccurs="0" />
+              <xs:element name="ProductCode" msprop:Generator_ColumnVarNameInTable="columnProductCode" msprop:Generator_ColumnPropNameInRow="ProductCode" msprop:Generator_ColumnPropNameInTable="ProductCodeColumn" msprop:Generator_UserColumnName="ProductCode" type="xs:long" minOccurs="0" />
+              <xs:element name="ProductName" msprop:Generator_ColumnVarNameInTable="columnProductName" msprop:Generator_ColumnPropNameInRow="ProductName" msprop:Generator_ColumnPropNameInTable="ProductNameColumn" msprop:Generator_UserColumnName="ProductName" type="xs:string" minOccurs="0" />
+              <xs:element name="PurchasedQuantity" msprop:Generator_ColumnVarNameInTable="columnPurchasedQuantity" msprop:Generator_ColumnPropNameInRow="PurchasedQuantity" msprop:Generator_ColumnPropNameInTable="PurchasedQuantityColumn" msprop:Generator_UserColumnName="PurchasedQuantity" type="xs:long" minOccurs="0" />
+              <xs:element name="PurchasingDate" msprop:Generator_ColumnVarNameInTable="columnPurchasingDate" msprop:Generator_ColumnPropNameInRow="PurchasingDate" msprop:Generator_ColumnPropNameInTable="PurchasingDateColumn" msprop:Generator_UserColumnName="PurchasingDate" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="VendorName" msprop:Generator_ColumnVarNameInTable="columnVendorName" msprop:Generator_ColumnPropNameInRow="VendorName" msprop:Generator_ColumnPropNameInTable="VendorNameColumn" msprop:Generator_UserColumnName="VendorName" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
       </xs:choice>
     </xs:complexType>
   </xs:element>

@@ -1,0 +1,24 @@
+﻿@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewBag.Title = "Purchases Report";
+    Session["MenuKey"] = 31;
+}
+<div class="container-fluid">
+    <header>
+        <h3 class="page-title">
+            @ViewBag.Title
+        </h3>
+        @*<h3> <small><a href="~/Product/Create">Add New Product</a></small></h3>*@
+    </header>
+    <form class="form-horizontal">
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="portlet box" id="reportArea">
+                    <iframe id="SalesReport" style="min-height: 600px" src="~/ReportsFiles/Purchase.aspx" width="80%"></iframe>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+@Html.Partial("_ReportSpinner")
+

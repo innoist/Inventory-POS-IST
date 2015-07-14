@@ -14,5 +14,9 @@ namespace TMD.Web.Controllers
         {
             return View();
         }
+        public ActionResult Purchases()
+        {
+            return View();
+        }
     }
 }

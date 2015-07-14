@@ -359,6 +359,13 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ReportsDS.xsd</DependentUpon>
     </Compile>
+    <Compile Include="ReportsFiles\Purchase.aspx.cs">
+      <DependentUpon>Purchase.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportsFiles\Purchase.aspx.designer.cs">
+      <DependentUpon>Purchase.aspx</DependentUpon>
+    </Compile>
     <Compile Include="ReportsFiles\Sales.aspx.cs">
       <DependentUpon>Sales.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -1666,6 +1673,7 @@
     <Content Include="Content\global\plugins\bootstrap-hover-dropdown\README.md" />
     <Content Include="Content\global\plugins\jquery-slimscroll\README.md" />
     <Content Include="Content\global\plugins\jquery-slimscroll\slimScroll.jquery.json" />
+    <Content Include="ReportsFiles\Purchase.aspx" />
     <Content Include="ReportsFiles\Sales.aspx" />
     <Content Include="Scripts\App\jquery.dataTables.js" />
     <Content Include="Scripts\App\toastr.min.js.map" />
@@ -1730,6 +1738,7 @@
     <Content Include="Views\NotesCategory\Details.cshtml" />
     <Content Include="Views\Notes\Index.cshtml" />
     <Content Include="Views\Notes\Create.cshtml" />
+    <Content Include="Views\Reports\Purchases.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />
@@ -2845,6 +2854,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ReportsFiles\Purchase.rdlc" />
     <EmbeddedResource Include="ReportsFiles\Sales.rdlc" />
     <EmbeddedResource Include="Resources\HR\Account.ar.resx" />
     <EmbeddedResource Include="Resources\HR\Account.resx">
