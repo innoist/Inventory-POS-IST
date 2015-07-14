@@ -76,7 +76,13 @@ namespace TMD.Repository.Repositories
                         .ToList();
 
             return new InventoryItemSearchResponse { InventoryItems = result, TotalCount = DbSet.Count(), FilteredCount = DbSet.Count(query) };
+        }
 
+        public IEnumerable<InventoryItem> PurchaseReport(string productCode, long vendorId, DateTime startDate, DateTime endDate)
+        {
+            long productId;
+            long.TryParse(productCode, out productId);
+            return DbSet.Where(x => (productId == 0 || productId == x.ProductId) && (vendorId==0 || x.VendorId==vendorId) && (DbFunctions.TruncateTime(x.RecCreatedDate) >= DbFunctions.TruncateTime(startDate)) && (DbFunctions.TruncateTime(x.RecCreatedDate) <= DbFunctions.TruncateTime(endDate))).ToList();
         }
     }
 }
