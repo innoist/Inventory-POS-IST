@@ -122,6 +122,7 @@
     <Compile Include="DomainModels\ProductCategory.cs" />
     <Compile Include="DomainModels\ProductConfiguration.cs" />
     <Compile Include="DomainModels\ProductMainCategory.cs" />
+    <Compile Include="DomainModels\ProductsStock.cs" />
     <Compile Include="DomainModels\StagingEbayBatchImport.cs" />
     <Compile Include="DomainModels\StagingEbayItem.cs" />
     <Compile Include="DomainModels\UserPrefrence.cs" />
