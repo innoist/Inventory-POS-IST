@@ -24,10 +24,13 @@ namespace TMD.Web.Models
         public double TotalItems { get; set; }
 
         public double TotalDiscount { get; set; }
+        public double NetSales { get; set; }
 
         public string CustomerPhone { get; set; }
         public string CustomerName { get; set; }
         public string CustomerEmail { get; set; }
+
+        public string PrintString { get; set; }
         
         //Will only use at printing
         public List<OrderItemModel> OrderItems { get; set; }

@@ -536,7 +536,7 @@
 
             //$('.GridValueChange').change(function (a, b) {
             $(document).on('change', '.GridValueChange', function (a, b) {
-                debugger
+                
                 var counterID = $('#' + this.id).parent().parent().attr("data-id");
                 var qty = $('#OrderItems_' + counterID + '__Quantity').val();
                 
@@ -581,7 +581,7 @@
 
                 if (this.id == "ItemDiscPerc") {
                     //Means perc changes
-                    obj.itemDiscPrice = Math.ceil(obj.itemSubTotal * (obj.itemDiscPerc / 100));
+                    obj.itemDiscPrice = Math.floor(obj.itemSubTotal * (obj.itemDiscPerc / 100));
                     $('#ItemDiscPrice').val(obj.itemDiscPrice);
 
                 }

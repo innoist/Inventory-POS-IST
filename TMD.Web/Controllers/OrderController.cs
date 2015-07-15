@@ -47,7 +47,7 @@ namespace TMD.Web.Controllers
             oVModel.data = oList;
             oVModel.recordsTotal = oResponse.TotalCount;
             oVModel.recordsFiltered = oResponse.FilteredCount;
-
+            oVModel.GrossSale = oList.Sum(x => x.NetSales);
 
 
             Session["PageMetaData"] = oRequest;
