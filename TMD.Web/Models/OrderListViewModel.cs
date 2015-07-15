@@ -8,6 +8,7 @@ namespace TMD.Web.Models
     {
         public long OrderOriginalId { get; set; }
         public string OrderId { get; set; }
+        public long OrderIdValue { get; set; }
         public long ? CustomerId { get; set; }
         public bool IsModified { get; set; }
         public string RecCreatedDate { get; set; }

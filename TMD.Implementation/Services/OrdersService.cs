@@ -66,6 +66,19 @@ namespace TMD.Implementation.Services
 
         }
 
+        public bool DeleteOrder(long orderId)
+        {
+            var order = ordersRepository.Find(orderId);
+            if (order != null)
+            {
+                order.IsDeleted = true;
+                ordersRepository.Update(order);
+                ordersRepository.SaveChanges();
+                return true;
+            }
+            return false;
+        }
+
 
         public Models.ResponseModels.OrderSearchResponse GetOrdersSearchResponse(Models.RequestModels.OrderSearchRequest searchRequest)
         {

@@ -2,6 +2,7 @@
 using System.Activities.Expressions;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Web.Mvc;
 using TMD.Interfaces.IServices;
@@ -271,26 +272,23 @@ namespace TMD.Web.Controllers
             }
         }
 
-        // GET: ProductCategory/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
         // POST: ProductCategory/Delete/5
         [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
+        public ActionResult Delete(long id)
         {
             try
             {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
+                if (orderService.DeleteOrder(id))
+                {
+                    return Json(new { response = "Successfully deleted!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
+                }
+                return Json(new { response = "Probably, record has already been deleted.", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
             }
-            catch
+            catch (Exception e)
             {
-                return View();
+                return Json(new { response = "Oops, there is some problem, please try again.", status = (int)HttpStatusCode.BadRequest }, JsonRequestBehavior.AllowGet);
             }
+            
         }
 
         //public string GetConfigEmail()

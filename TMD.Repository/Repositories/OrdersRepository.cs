@@ -51,6 +51,7 @@ namespace TMD.Repository.Repositories
                              (string.IsNullOrEmpty( searchRequest.OrderId )|| s.OrderId.ToString().Equals(searchRequest.OrderId)) &&
                             (string.IsNullOrEmpty(searchRequest.ProductCode) || s.OrderItems.Where(x=>x.ProductId.ToString()==searchRequest.ProductCode).Any())
                             && (searchRequest.OrderDate == null || EntityFunctions.TruncateTime(s.RecCreatedDate) == searchRequest.OrderDate.Value)
+                            && (s.IsDeleted!=true)
                             )
                         );
             IEnumerable<Order> result =

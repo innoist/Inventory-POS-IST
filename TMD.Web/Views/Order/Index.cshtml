@@ -84,6 +84,7 @@
                     <table id="dataTable" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th class="tableHeaderWhite">Order Id</th>
                                 <th class="tableHeaderWhite">Date</th>
                                 <th class="tableLeftAlignHeader tableHeaderWhite">Customer Name</th>
@@ -94,7 +95,7 @@
                                 <th class="textAlignRight tableHeaderWhite">Total Discount</th>
                                 <th class="textAlignRight tableHeaderWhite">Total Quantity</th>
                                 <th class="tableLeftAlignHeader tableHeaderWhite">Created By</th>
-                              
+                                <th></th>
                             </tr>
                         </thead>
                         
@@ -136,21 +137,30 @@
             "bLengthChange": false,
             "aaSorting": [sortBy],
             "aoColumnDefs": [
-               { 'bSortable': false, 'aTargets': [2,3,4,5,6,7,8] },
-            
+               { 'bSortable': false, 'aTargets': [0,2, 3, 4, 5, 6, 7, 8] },
+               {
+                   "targets": [0],
+                   "visible": false,
+                   "searchable": false
+               }
             ],
             "columns": [
-                 { "data": "OrderId"},
-                 { "data": "RecCreatedDate" },
+                { "data": "OrderIdValue" },
+                { "data": "OrderId"},
+                { "data": "RecCreatedDate" },
                 { "data": "CustomerName" },
                 { "data": "CustomerPhone" },
                 { "data": "CustomerEmail" },
                 { "data": "TotalSale", "class": "textAlignRight" },
                 { "data": "TotalDiscount", "class": "textAlignRight" },
                   { "data": "TotalItems", "class": "textAlignRight" },
-
-                  { "data": "RecCreatedBy" }
-                //,{ "data": "EbayItemDetails" }
+                  { "data": "RecCreatedBy" },
+                {
+                    "orderable": false,
+                    "data": null,
+                    "defaultContent": "<a class='delete' style='text-decoration: none;font-weight: bold;'  href='javascript:;'>X</a>",
+                    "class": "textAlignRight"
+                }
             ],
             "processing": true,
             "serverSide": true,
@@ -192,6 +202,55 @@
            // $('#QS').val("");
             oTable.fnFilter('');
         });
+        $('#dataTable').on('click', '.delete', function (e) {
+            e.preventDefault();
+
+            if (confirm("Are you sure to delete this Order ?") == false) {
+                return;
+            }
+
+            var nRow = $(this).parents('tr')[0];
+            var aData = oTable.fnGetData(nRow);
+            var serviceUrl = siteURL + 'Order/Delete';
+            $.ajax({
+                type: "POST",
+                url: serviceUrl,
+                data: "{ id:" + aData.OrderIdValue + "}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                complete: function (data) {
+                    if (data.responseJSON.status === 200) {
+                        successFunc(data);
+                    }
+                    else {
+                        errorFunc(data);
+                    }
+                }
+            });
+
+            function successFunc(data) {
+
+                var totalRcd = oTable.fnSettings().fnRecordsTotal() - 1,//as success deleted one row
+                    displayStart = oTable.fnSettings()._iDisplayStart,
+                    displayLength = oTable.fnSettings()._iDisplayLength;
+
+                oTable.fnDeleteRow(nRow, null, false);
+                var page = Math.ceil(displayStart / displayLength);
+
+                if (totalRcd <= displayStart) {
+                    oTable.fnPageChange(page - 1);
+                }
+                else {
+                    oTable.fnPageChange(page);
+                }
+
+                toastr.success(data.responseJSON.response);
+            }
+
+            function errorFunc(error) {
+                toastr.error(error.responseJSON.response);
+            }
+        });//end delete
     });
 
     function fnLoadComplete(nRow, e) {
