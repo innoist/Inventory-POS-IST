@@ -8,5 +8,6 @@ namespace TMD.Interfaces.IServices
     {
         IEnumerable<SalesReport> SalesReport(string productCode,DateTime startDate, DateTime endDate);
         IEnumerable<PurchaseReport> PurchaseReport(string productCode, long vendorId, DateTime startDate, DateTime endDate);
+        IEnumerable<StockReport> StocksReport(string barCode, string productCode, string productName);
     }
 }

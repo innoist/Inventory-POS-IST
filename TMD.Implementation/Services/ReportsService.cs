@@ -12,11 +12,13 @@ namespace TMD.Implementation.Services
     {
         private readonly IOrderItemsRepository orderItemsRepository;
         private readonly IInventoryItemRepositoy inventoryItemRepositoy;
+        private readonly IProductsStockRepository productsStockRepository;
 
-        public ReportsService(IOrderItemsRepository orderItemsRepository,IInventoryItemRepositoy inventoryItemRepositoy)
+        public ReportsService(IOrderItemsRepository orderItemsRepository, IInventoryItemRepositoy inventoryItemRepositoy, IProductsStockRepository productsStockRepository)
         {
             this.orderItemsRepository = orderItemsRepository;
             this.inventoryItemRepositoy = inventoryItemRepositoy;
+            this.productsStockRepository = productsStockRepository;
         }
 
         public IEnumerable<SalesReport> SalesReport(string productCode,DateTime startDate, DateTime endDate)
@@ -28,6 +30,12 @@ namespace TMD.Implementation.Services
         public IEnumerable<PurchaseReport> PurchaseReport(string productCode, long vendorId, DateTime startDate, DateTime endDate)
         {
             var report = inventoryItemRepositoy.PurchaseReport(productCode, vendorId, startDate, endDate).ToList().Select(x => x.CreateReport());
+            return report;
+        }
+
+        public IEnumerable<StockReport> StocksReport(string barCode, string productCode, string productName)
+        {
+            var report = productsStockRepository.StocksReport(barCode, productCode, productName).Select(x => x.CreateReport());
             return report;
         }
     }

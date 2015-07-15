@@ -18,5 +18,9 @@ namespace TMD.Web.Controllers
         {
             return View();
         }
+        public ActionResult Stocks()
+        {
+            return View();
+        }
     }
 }

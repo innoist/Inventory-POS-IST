@@ -255,6 +255,7 @@
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="CustomerId" Type="bigint" />
           <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
+          <Property Name="IsDeleted" Type="bit" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -1022,7 +1023,6 @@ warning 6002: The table/view 'IstInventory.dbo.ProductsStock' does not have a pr
           <EntitySet Name="DataWarehouseFactSales" EntityType="TMD.Models.DomainModels.DataWarehouseFactSale" />
           <EntitySet Name="InventoryItems" EntityType="TMD.Models.DomainModels.InventoryItem" />
           <EntitySet Name="OrderItems" EntityType="TMD.Models.DomainModels.OrderItem" />
-          <EntitySet Name="Orders" EntityType="TMD.Models.DomainModels.Order" />
           <EntitySet Name="ProductCategories" EntityType="TMD.Models.DomainModels.ProductCategory" />
           <EntitySet Name="Products" EntityType="TMD.Models.DomainModels.Product" />
           <EntitySet Name="StagingToyGraderItems" EntityType="TMD.Models.DomainModels.StagingToyGraderItem" />
@@ -1042,10 +1042,6 @@ warning 6002: The table/view 'IstInventory.dbo.ProductsStock' does not have a pr
           <AssociationSet Name="FK_DataWarehouseFactSale_DataWarehouseDimProductType" Association="TMD.Models.DomainModels.FK_DataWarehouseFactSale_DataWarehouseDimProductType">
             <End Role="DataWarehouseDimProductType" EntitySet="DataWarehouseDimProductTypes" />
             <End Role="DataWarehouseFactSale" EntitySet="DataWarehouseFactSales" />
-          </AssociationSet>
-          <AssociationSet Name="FK_OrderItems_Orders" Association="TMD.Models.DomainModels.FK_OrderItems_Orders">
-            <End Role="Order" EntitySet="Orders" />
-            <End Role="OrderItem" EntitySet="OrderItems" />
           </AssociationSet>
           <AssociationSet Name="FK_OrderItems_Products" Association="TMD.Models.DomainModels.FK_OrderItems_Products">
             <End Role="Product" EntitySet="Products" />
@@ -1068,10 +1064,6 @@ warning 6002: The table/view 'IstInventory.dbo.ProductsStock' does not have a pr
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
           <EntitySet Name="Customers" EntityType="TMD.Models.DomainModels.Customer" />
-          <AssociationSet Name="FK_Orders_Customer" Association="TMD.Models.DomainModels.FK_Orders_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
           <AssociationSet Name="FK_InventoryItems_Vendors" Association="TMD.Models.DomainModels.FK_InventoryItems_Vendors">
             <End Role="Vendor" EntitySet="Vendors" />
             <End Role="InventoryItem" EntitySet="InventoryItems" />
@@ -1099,6 +1091,15 @@ warning 6002: The table/view 'IstInventory.dbo.ProductsStock' does not have a pr
             <End Role="Expense" EntitySet="Expenses" />
           </AssociationSet>
           <EntitySet Name="ProductsStocks" EntityType="TMD.Models.DomainModels.ProductsStock" />
+          <EntitySet Name="Orders" EntityType="TMD.Models.DomainModels.Order" />
+          <AssociationSet Name="FK_Orders_Customer" Association="TMD.Models.DomainModels.FK_Orders_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderItems_Orders" Association="TMD.Models.DomainModels.FK_OrderItems_Orders">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderItem" EntitySet="OrderItems" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AspNetRole">
           <Key>
@@ -1534,25 +1535,10 @@ warning 6002: The table/view 'IstInventory.dbo.ProductsStock' does not have a pr
           <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Order" Relationship="TMD.Models.DomainModels.FK_OrderItems_Orders" FromRole="OrderItem" ToRole="Order" />
           <NavigationProperty Name="Product" Relationship="TMD.Models.DomainModels.FK_OrderItems_Products" FromRole="OrderItem" ToRole="Product" />
           <Property Name="AmountGiven" Type="Decimal" Precision="9" Scale="2" />
           <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <EntityType Name="Order">
-          <Key>
-            <PropertyRef Name="OrderId" />
-          </Key>
-          <Property Name="OrderId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IsModified" Type="Boolean" Nullable="false" />
-          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="OrderItems" Relationship="TMD.Models.DomainModels.FK_OrderItems_Orders" FromRole="Order" ToRole="OrderItem" />
-          <Property Name="CustomerId" Type="Int64" />
-          <NavigationProperty Name="Customer" Relationship="TMD.Models.DomainModels.FK_Orders_Customer" FromRole="Order" ToRole="Customer" />
-          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Order" Relationship="TMD.Models.DomainModels.FK_OrderItems_Orders" FromRole="OrderItem" ToRole="Order" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -1684,18 +1670,6 @@ warning 6002: The table/view 'IstInventory.dbo.ProductsStock' does not have a pr
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_OrderItems_Orders">
-          <End Type="TMD.Models.DomainModels.Order" Role="Order" Multiplicity="1" />
-          <End Type="TMD.Models.DomainModels.OrderItem" Role="OrderItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Order">
-              <PropertyRef Name="OrderId" />
-            </Principal>
-            <Dependent Role="OrderItem">
-              <PropertyRef Name="OrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_OrderItems_Products">
           <End Type="TMD.Models.DomainModels.Product" Role="Product" Multiplicity="1" />
           <End Type="TMD.Models.DomainModels.OrderItem" Role="OrderItem" Multiplicity="*" />
@@ -1772,18 +1746,6 @@ warning 6002: The table/view 'IstInventory.dbo.ProductsStock' does not have a pr
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Orders" Relationship="TMD.Models.DomainModels.FK_Orders_Customer" FromRole="Customer" ToRole="Order" />
         </EntityType>
-        <Association Name="FK_Orders_Customer">
-          <End Type="TMD.Models.DomainModels.Customer" Role="Customer" Multiplicity="0..1" />
-          <End Type="TMD.Models.DomainModels.Order" Role="Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_InventoryItems_Vendors">
           <End Type="TMD.Models.DomainModels.Vendor" Role="Vendor" Multiplicity="0..1" />
           <End Type="TMD.Models.DomainModels.InventoryItem" Role="InventoryItem" Multiplicity="*" />
@@ -1948,6 +1910,46 @@ warning 6002: The table/view 'IstInventory.dbo.ProductsStock' does not have a pr
           <Property Name="SoldQty" Type="Int32" />
           <Property Name="AvailableQty" Type="Int64" Nullable="false" />
         </EntityType>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsModified" Type="Boolean" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerId" Type="Int64" />
+          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <NavigationProperty Name="Customer" Relationship="TMD.Models.DomainModels.FK_Orders_Customer" FromRole="Order" ToRole="Customer" />
+          <NavigationProperty Name="OrderItems" Relationship="TMD.Models.DomainModels.FK_OrderItems_Orders" FromRole="Order" ToRole="OrderItem" />
+        </EntityType>
+        <Association Name="FK_Orders_Customer">
+          <End Type="TMD.Models.DomainModels.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderItems_Orders">
+          <End Type="TMD.Models.DomainModels.Order" Role="Order" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.OrderItem" Role="OrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="OrderItem">
+              <PropertyRef Name="OrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2218,20 +2220,6 @@ warning 6002: The table/view 'IstInventory.dbo.ProductsStock' does not have a pr
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Order">
-              <MappingFragment StoreEntitySet="Orders">
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
-                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="IsModified" ColumnName="IsModified" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ProductCategories">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductCategory">
               <MappingFragment StoreEntitySet="ProductCategory">
@@ -2426,6 +2414,21 @@ warning 6002: The table/view 'IstInventory.dbo.ProductsStock' does not have a pr
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="IsModified" ColumnName="IsModified" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2448,7 +2451,7 @@ warning 6002: The table/view 'IstInventory.dbo.ProductsStock' does not have a pr
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="6c84cfef5aef40aa8729388622e77122" Name="Diagram1" ZoomLevel="47">
+      <Diagram DiagramId="6c84cfef5aef40aa8729388622e77122" Name="Diagram1" ZoomLevel="54">
         <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetRole" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetUserClaim" Width="1.5" PointX="5.25" PointY="2.875" IsExpanded="true" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.AspNetUserLogin" Width="1.5" PointX="5.25" PointY="5.625" IsExpanded="true" />
@@ -2467,7 +2470,6 @@ warning 6002: The table/view 'IstInventory.dbo.ProductsStock' does not have a pr
         <EntityTypeShape EntityType="TMD.Models.DomainModels.DataWarehouseFactSale" Width="1.5" PointX="10" PointY="1" IsExpanded="true" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.InventoryItem" Width="1.5" PointX="14.25" PointY="7.375" IsExpanded="true" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.OrderItem" Width="1.5" PointX="17.25" PointY="6.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.Order" Width="1.5" PointX="15" PointY="2.375" IsExpanded="true" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductCategory" Width="1.5" PointX="9.75" PointY="7.5" IsExpanded="true" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Product" Width="1.5" PointX="12" PointY="6.75" IsExpanded="true" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.StagingToyGraderItem" Width="1.5" PointX="5.25" PointY="14.875" IsExpanded="true" />
@@ -2488,13 +2490,11 @@ warning 6002: The table/view 'IstInventory.dbo.ProductsStock' does not have a pr
         <AssociationConnector Association="TMD.Models.DomainModels.FK_DataWarehouseFactSale_DataWarehouseDimDate" ManuallyRouted="false" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_DataWarehouseFactSale_DataWarehouseDimProduct" ManuallyRouted="false" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_DataWarehouseFactSale_DataWarehouseDimProductType" ManuallyRouted="false" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_OrderItems_Orders" ManuallyRouted="false" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_OrderItems_Products" ManuallyRouted="false" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_StagingEbayItems_StagingToyGraderItems" ManuallyRouted="false" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_StagingToyGraderItems_StagingToyGraderBatchImports" ManuallyRouted="false" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_InventoryItems_Products" ManuallyRouted="false" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Products_ProductCategory" ManuallyRouted="false" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_Orders_Customer" ManuallyRouted="false" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_InventoryItems_Vendors" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductConfiguration" Width="1.5" PointX="10.375" PointY="14.75" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.ExpenseCategory" Width="1.5" PointX="14.375" PointY="13.125" />
@@ -2507,6 +2507,9 @@ warning 6002: The table/view 'IstInventory.dbo.ProductsStock' does not have a pr
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Notes_NotesCategory" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Expenses_Vendors" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductsStock" Width="1.5" PointX="17.375" PointY="0.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Order" Width="1.5" PointX="15" PointY="2.25" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Orders_Customer" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_OrderItems_Orders" />
       </Diagram>
     </Diagrams>
   </Designer>

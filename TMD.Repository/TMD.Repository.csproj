@@ -143,6 +143,7 @@
     <Compile Include="Repositories\ExpenseCategoryRepository.cs" />
     <Compile Include="Repositories\ExpenseRepository.cs" />
     <Compile Include="Repositories\NotesCategoryRepository.cs" />
+    <Compile Include="Repositories\ProductsStockRepository.cs" />
     <Compile Include="Repositories\VendorRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
     <Compile Include="Repositories\ProductCategoryRepository.cs" />

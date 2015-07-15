@@ -182,9 +182,24 @@
                                 <li>
                                     <a class="WhiteColor" href="~/Reports/Sales">
                                         Sales <span class="selected">
+                                              </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="WhiteColor" href="~/Reports/Purchases">
+                                        Purchases <span class="selected">
+                                              </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="WhiteColor" href="~/Reports/Stocks">
+                                        Stocks <span class="selected">
                                         </span>
                                     </a>
                                 </li>
+                            </ul>
+                            <ul class="dropdown-menu pull-left">
+                                
                             </ul>
                         </li>
                     }
@@ -295,16 +310,15 @@
                     </span>
                 </div>
 
-                @*<input type="hidden" id="siteURL" value="@(ConfigurationManager.AppSettings["HostURL"].ToString())" />*@
                 @if (Request.Url.Host.ToLower().Contains("localhost"))
+                {
+                    <input type="hidden" id="siteURL" value="http://localhost:23867/" />
+                }
+                else
+                {
                     {
-                        <input type="hidden" id="siteURL" value="http://localhost:23867/" />        
-                    }
-                    else
-                    {
-                        <input type="hidden" id="siteURL" value="@( "http://"+Request.Url.Host.ToLower()+"/")" />        
-                    })
-                
+                    <input type="hidden" id="siteURL" value="@( "http://"+Request.Url.Host.ToLower()+"/")" />
+                })
                 
                 
             </div>
