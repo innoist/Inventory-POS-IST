@@ -145,8 +145,8 @@
             { "data": "TotalDiscount", "class": "textAlignRight" },
                 { "data": "NetSales", "class": "textAlignRight" },
             { "data": "TotalItems", "class": "textAlignRight" },
-            { "data": "RecCreatedBy" }
-                  { "data": "PrintString" }
+            { "data": "RecCreatedBy" },
+            { "data": "PrintString" }
         ];
         if (isAdmin == "True") {
             columns.push({
@@ -258,19 +258,10 @@
             }
         });//end delete
     });
-    function Completed(data, e, a) {
-        debugger
-        alert('123');
+    function Completed(data, e, a) {     
     }
 
     function fnLoadComplete(data,e,a) {
-        //debugger
-        //alert('123');
-        //if (e.TotalDiscount > 0) {
-        //    $(nRow).addClass('discountApplied');
-        //}
-        //return nRow;
-
     }
 
 </script>
