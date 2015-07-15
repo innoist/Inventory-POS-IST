@@ -311,9 +311,10 @@ legend {
 }
 .textAlignRight {
     text-align: right;
-  
 }
-
+.textAlignCenter {
+    text-align: center;
+}
 table.dataTable tbody th, table.dataTable tbody td {
     padding: 6px 6px !important;
 }

@@ -95,7 +95,11 @@
                                 <th class="textAlignRight tableHeaderWhite">Total Discount</th>
                                 <th class="textAlignRight tableHeaderWhite">Total Quantity</th>
                                 <th class="tableLeftAlignHeader tableHeaderWhite">Created By</th>
-                                <th></th>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <th></th>
+                                }
+                                
                             </tr>
                         </thead>
                         
@@ -111,24 +115,40 @@
 <script type="text/javascript">
 
     jQuery(document).ready(function($) {
-
-
-       
+        var isAdmin = '@User.IsInRole("Admin")';
         $("#OrderDate").datepicker({
                 changeMonth: true,
                 changeYear: true,
                 maxDate: new Date()
         });
-
         $("#OrderDate").datepicker().datepicker("setDate", new Date());
-            
-        
-        
         //, "class": "textAlignRight"
         var siteURL =  $('#siteURL').val();
         var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
         var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
         var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
+
+
+        var columns = [
+            { "data": "OrderIdValue" },
+            { "data": "OrderId" },
+            { "data": "RecCreatedDate" },
+            { "data": "CustomerName" },
+            { "data": "CustomerPhone" },
+            { "data": "CustomerEmail" },
+            { "data": "TotalSale", "class": "textAlignRight" },
+            { "data": "TotalDiscount", "class": "textAlignRight" },
+            { "data": "TotalItems", "class": "textAlignRight" },
+            { "data": "RecCreatedBy" }
+        ];
+        if (isAdmin == "True") {
+            columns.push({
+                "orderable": false,
+                "data": null,
+                "defaultContent": "<a class='delete' title='Delete' style='text-decoration: none;font-weight: bold;'  href='javascript:;'>X</a>",
+                "class": "textAlignCenter"
+            });
+        }
 
         var oTable = $('#dataTable').dataTable({
             "iDisplayLength": 11,
@@ -144,24 +164,7 @@
                    "searchable": false
                }
             ],
-            "columns": [
-                { "data": "OrderIdValue" },
-                { "data": "OrderId"},
-                { "data": "RecCreatedDate" },
-                { "data": "CustomerName" },
-                { "data": "CustomerPhone" },
-                { "data": "CustomerEmail" },
-                { "data": "TotalSale", "class": "textAlignRight" },
-                { "data": "TotalDiscount", "class": "textAlignRight" },
-                  { "data": "TotalItems", "class": "textAlignRight" },
-                  { "data": "RecCreatedBy" },
-                {
-                    "orderable": false,
-                    "data": null,
-                    "defaultContent": "<a class='delete' style='text-decoration: none;font-weight: bold;'  href='javascript:;'>X</a>",
-                    "class": "textAlignRight"
-                }
-            ],
+            "columns": columns,
             "processing": true,
             "serverSide": true,
             "fnRowCallback": fnLoadComplete,
@@ -176,18 +179,13 @@
                     }
                     params.PageSize = params.length;
                     params.SortBy = params.order[0].column;
-                    //if (params.SortBy === 0) {
-                    //    params.SortBy = 1;
-                    //}
                     params.IsAsc = params.order[0].dir === "asc";
 
                     params.OrderId= $('#OrderId').val();
                     params.OrderDate = $('#OrderDate').val();
                     params.ProductCode = $('#ProductCode').val();
                   }
-             
             }
-
         });
         $('#btnFltr').on('click', function(e) {
             oTable.fnDraw();

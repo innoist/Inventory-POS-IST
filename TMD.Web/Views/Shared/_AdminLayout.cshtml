@@ -71,15 +71,15 @@
                                     </span>
                         </a>
                     </li>
-                    <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "20") ? "active" : "")>
-                        <a href="~/Order/Index" class="WhiteColor">
-                            Orders <span class="selected">
-                            </span>
-                        </a>
-                    </li>
+                    
                     @if (User.IsInRole("Admin"))
                     {
-                      
+                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "20") ? "active" : "")>
+                            <a href="~/Order/Index" class="WhiteColor">
+                                Orders <span class="selected">
+                                </span>
+                            </a>
+                        </li>
                         <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "22") ? "active" : "")>
                             <a href="~/Customer/Index" class="WhiteColor">
                                 Customers <span class="selected">
