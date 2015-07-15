@@ -71,12 +71,15 @@
                                     </span>
                         </a>
                     </li>
-                    <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "20") ? "active" : "")>
-                        <a href="~/Order/Index" class="WhiteColor">
-                            Orders <span class="selected">
-                            </span>
-                        </a>
-                    </li>
+@if (User.IsInRole("Admin") || User.IsInRole("Employee"))
+{
+    <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "20") ? "active " : "")>
+        <a href="~/Order/Index" class="WhiteColor">
+            Orders <span class="selected">
+                   </span>
+        </a>
+    </li>
+}
                     @if (User.IsInRole("Admin"))
                     {
                       
@@ -282,7 +285,168 @@
     <!-- END HEADER -->
     <div class="clearfix"></div>
     <div class="page-container">
+        <!-- BEGIN Mobile SIDEBAR -->
+        <div class="page-sidebar-wrapper">
+            <!-- BEGIN HORIZONTAL RESPONSIVE MENU -->
+            <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+            <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+            <div class="page-sidebar navbar-collapse collapse">
+                <ul class="page-sidebar-menu" data-slide-speed="200" data-auto-scroll="true">
+                    <!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
+                    <!-- DOC: This is mobile version of the horizontal menu. The desktop version is defined(duplicated) in the header above -->
+                
+                    <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "1") ? "active" : "")>
+                        <a href="~/Admin/Home" class="WhiteColor">
+                            Home <span class="selected">
+                            </span>
+                        </a>
+                    </li>
+                    <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "2") ? "active" : "")>
+                        <a href="~/Account/Profile" class="WhiteColor">
+                            Profile <span class="selected">
+                            </span>
+                        </a>
+                    </li>
+                    @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
+                    {
+                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "20") ? "active " : "")>
+                            <a href="~/Order/Index" class="WhiteColor">
+                                Orders <span class="selected">
+                                </span>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole("Admin"))
+                    {
 
+                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "22") ? "active" : "")>
+                            <a href="~/Customer/Index" class="WhiteColor">
+                                Customers <span class="selected">
+                                </span>
+                            </a>
+                        </li>
+
+                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "3") ? "active" : "")>
+                            <a href="~/Account/Users" class="WhiteColor">
+                                Accounts <span class="selected">
+                                </span>
+                            </a>
+                        </li>
+                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "11") ? "active" : "")>
+                            <a class="WhiteColor" href="#">
+                                Inventory <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a class="WhiteColor" href="~/Inventory/Index">
+                                        Inventory List <span class="selected">
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="WhiteColor" href="~/Product/Index">
+                                        Products List  <span class="selected">
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="WhiteColor" href="~/ProductCategory/Index">
+                                        Products Category <span class="selected">
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "28") ? "active" : "")>
+                            <a href="~/Vendor/Index" class="WhiteColor">
+                                Vendors <span class="selected">
+                                </span>
+                            </a>
+                        </li>
+                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "24") ? "active" : "")>
+                            <a class="WhiteColor"href="#">
+                                Expense <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a class="WhiteColor" href="~/Expense/Index">
+                                        Expense <span class="selected">
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="WhiteColor" href="~/ExpenseCategory/Index">
+                                        Expense Category <span class="selected">
+                                        </span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "29") ? "active" : "")>
+                            <a class="WhiteColor"  href="#">
+                                Notes <span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a class="WhiteColor" href="~/Notes/Index">
+                                        Notes <span class="selected">
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="WhiteColor" href="~/NotesCategory/Index">
+                                        Notes Category <span class="selected">
+                                        </span>
+                                    </a>
+                                </li>
+
+                            </ul>
+                        </li>
+
+                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "21") ? "active" : "")>
+                            <a href="~/Configuration/Create" class="WhiteColor">
+                                Configuration <span class="selected">
+                                </span>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole("Report") || User.IsInRole("Admin"))
+                    {
+                        <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "31") ? "active" : "")>
+                            <a class="WhiteColor" href="#">
+                                Reports<span class="arrow"></span>
+                            </a>
+                            <ul class="sub-menu">
+                                <li>
+                                    <a class="WhiteColor" href="~/Reports/Sales">
+                                        Sales <span class="selected">
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="WhiteColor" href="~/Reports/Purchases">
+                                        Purchases <span class="selected">
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="WhiteColor" href="~/Reports/Stocks">
+                                        Stocks <span class="selected">
+                                        </span>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="dropdown-menu pull-left"></ul>
+                        </li>
+                    }
+                    
+
+                </ul>
+            </div>
+            <!-- END HORIZONTAL RESPONSIVE MENU -->
+        </div>
+        <!-- END Mobile SIDEBAR -->
         <div class="page-content-wrapper">
             <div class="page-content">
 
