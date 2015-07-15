@@ -255,6 +255,7 @@
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="CustomerId" Type="bigint" />
           <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
+          <Property Name="IsDeleted" Type="bit" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -1553,6 +1554,7 @@ warning 6002: The table/view 'IstInventory.dbo.ProductsStock' does not have a pr
           <Property Name="CustomerId" Type="Int64" />
           <NavigationProperty Name="Customer" Relationship="TMD.Models.DomainModels.FK_Orders_Customer" FromRole="Order" ToRole="Customer" />
           <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -2221,6 +2223,7 @@ warning 6002: The table/view 'IstInventory.dbo.ProductsStock' does not have a pr
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.Order">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Comments" ColumnName="Comments" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
