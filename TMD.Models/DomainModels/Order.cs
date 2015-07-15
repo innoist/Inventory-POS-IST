@@ -7,7 +7,7 @@ namespace TMD.Models.DomainModels
         public long OrderId { get; set; }
         public long ? CustomerId { get; set; }
         public bool IsModified { get; set; }
-        public bool IsDeleted { get; set; }
+        public bool? IsDeleted { get; set; }
         public System.DateTime RecCreatedDate { get; set; }
         public System.DateTime RecLastUpdatedDate { get; set; }
         public string Comments { get; set; }
