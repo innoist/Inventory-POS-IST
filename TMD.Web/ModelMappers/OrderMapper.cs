@@ -72,6 +72,7 @@ namespace TMD.Web.ModelMappers
                 CustomerName = source.CustomerId>0 ? source.Customer.Name : "",
                 CustomerEmail = source.CustomerId > 0 ? source.Customer.Email : "",
                 CustomerPhone = source.CustomerId > 0 ? source.Customer.Phone : "",
+                PrintString = @"<a title='Click to print order' target='_blank' href='" + hostURL + "Order/PrintOrder/" + source.OrderId + "'> Print</a>",
             };
         }
     }
