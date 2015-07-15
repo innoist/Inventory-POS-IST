@@ -791,6 +791,8 @@ namespace TMD.Web {
             
             private global::System.Data.DataColumn columnVendorName;
             
+            private global::System.Data.DataColumn columnPurchasePrice;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public PurchaseDataTable() {
@@ -874,6 +876,14 @@ namespace TMD.Web {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn PurchasePriceColumn {
+                get {
+                    return this.columnPurchasePrice;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             [global::System.ComponentModel.Browsable(false)]
             public int Count {
                 get {
@@ -909,7 +919,7 @@ namespace TMD.Web {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public PurchaseRow AddPurchaseRow(long VendorId, long ProductCode, string ProductName, long PurchasedQuantity, System.DateTime PurchasingDate, string VendorName) {
+            public PurchaseRow AddPurchaseRow(long VendorId, long ProductCode, string ProductName, long PurchasedQuantity, System.DateTime PurchasingDate, string VendorName, decimal PurchasePrice) {
                 PurchaseRow rowPurchaseRow = ((PurchaseRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         VendorId,
@@ -917,7 +927,8 @@ namespace TMD.Web {
                         ProductName,
                         PurchasedQuantity,
                         PurchasingDate,
-                        VendorName};
+                        VendorName,
+                        PurchasePrice};
                 rowPurchaseRow.ItemArray = columnValuesArray;
                 this.Rows.Add(rowPurchaseRow);
                 return rowPurchaseRow;
@@ -946,6 +957,7 @@ namespace TMD.Web {
                 this.columnPurchasedQuantity = base.Columns["PurchasedQuantity"];
                 this.columnPurchasingDate = base.Columns["PurchasingDate"];
                 this.columnVendorName = base.Columns["VendorName"];
+                this.columnPurchasePrice = base.Columns["PurchasePrice"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -963,6 +975,8 @@ namespace TMD.Web {
                 base.Columns.Add(this.columnPurchasingDate);
                 this.columnVendorName = new global::System.Data.DataColumn("VendorName", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnVendorName);
+                this.columnPurchasePrice = new global::System.Data.DataColumn("PurchasePrice", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnPurchasePrice);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -1897,6 +1911,22 @@ namespace TMD.Web {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal PurchasePrice {
+                get {
+                    try {
+                        return ((decimal)(this[this.tablePurchase.PurchasePriceColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("The value for column \'PurchasePrice\' in table \'Purchase\' is DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablePurchase.PurchasePriceColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsVendorIdNull() {
                 return this.IsNull(this.tablePurchase.VendorIdColumn);
             }
@@ -1965,6 +1995,18 @@ namespace TMD.Web {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetVendorNameNull() {
                 this[this.tablePurchase.VendorNameColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsPurchasePriceNull() {
+                return this.IsNull(this.tablePurchase.PurchasePriceColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetPurchasePriceNull() {
+                this[this.tablePurchase.PurchasePriceColumn] = global::System.Convert.DBNull;
             }
         }
         
