@@ -90,9 +90,11 @@
                                 <th class="tableLeftAlignHeader tableHeaderWhite">Customer Phone</th>
                                 <th class="tableLeftAlignHeader tableHeaderWhite">Email</th>
                               
-                                <th class="textAlignRight tableHeaderWhite">Total Sale</th>
-                                <th class="textAlignRight tableHeaderWhite">Total Discount</th>
-                                <th class="textAlignRight tableHeaderWhite">Total Quantity</th>
+                                <th class="textAlignRight tableHeaderWhite">Sale</th>
+                                <th class="textAlignRight tableHeaderWhite">Discount</th>
+                                
+                                <th class="textAlignRight tableHeaderWhite">Net Sale</th>
+                                <th class="textAlignRight tableHeaderWhite">Total Items</th>
                                 <th class="tableLeftAlignHeader tableHeaderWhite">Created By</th>
                                 <th class="tableLeftAlignHeader tableHeaderWhite">Print</th>
                               
@@ -113,19 +115,17 @@
     jQuery(document).ready(function($) {
 
 
-       
         $("#OrderDate").datepicker({
-                changeMonth: true,
-                changeYear: true,
-                maxDate: new Date()
+            changeMonth: true,
+            changeYear: true,
+            maxDate: new Date()
         });
 
         $("#OrderDate").datepicker().datepicker("setDate", new Date());
-            
-        
-        
-        //, "class": "textAlignRight"
-        var siteURL =  $('#siteURL').val();
+
+
+//, "class": "textAlignRight"
+        var siteURL = $('#siteURL').val();
         var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
         var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
         var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
@@ -148,15 +148,15 @@
                 { "data": "CustomerEmail" },
                 { "data": "TotalSale", "class": "textAlignRight" },
                 { "data": "TotalDiscount", "class": "textAlignRight" },
+                { "data": "NetSales", "class": "textAlignRight" },
                   { "data": "TotalItems", "class": "textAlignRight" },
-
                   { "data": "RecCreatedBy" },
                   { "data": "PrintString" }
                 //,{ "data": "EbayItemDetails" }
             ],
             "processing": true,
             "serverSide": true,
-            "fnRowCallback": fnLoadComplete,
+            "fnDrawCallback": fnLoadComplete,
             "ajax": {
                 url: siteURL + "Order/Index",
                 type: "POST",
@@ -176,7 +176,8 @@
                     params.OrderId= $('#OrderId').val();
                     params.OrderDate = $('#OrderDate').val();
                     params.ProductCode = $('#ProductCode').val();
-                  }
+                },
+                complete: Completed
              
             }
 
@@ -195,13 +196,18 @@
             oTable.fnFilter('');
         });
     });
+    function Completed(data, e, a) {
+        debugger
+        alert('123');
+    }
 
-    function fnLoadComplete(nRow, e) {
-
-        if (e.TotalDiscount > 0) {
-            $(nRow).addClass('discountApplied');
-        }
-        return nRow;
+    function fnLoadComplete(data,e,a) {
+        //debugger
+        //alert('123');
+        //if (e.TotalDiscount > 0) {
+        //    $(nRow).addClass('discountApplied');
+        //}
+        //return nRow;
 
     }
 

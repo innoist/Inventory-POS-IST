@@ -73,6 +73,7 @@ namespace TMD.Web.ModelMappers
                 CustomerEmail = source.CustomerId > 0 ? source.Customer.Email : "",
                 CustomerPhone = source.CustomerId > 0 ? source.Customer.Phone : "",
                 PrintString = @"<a title='Click to print order' target='_blank' href='" + hostURL + "Order/PrintOrder/" + source.OrderId + "'> Print</a>",
+                NetSales = double.Parse(item.Sum(x => x.SalePrice * x.Quantity).ToString()) - item.Sum(x => x.Discount),
             };
         }
     }

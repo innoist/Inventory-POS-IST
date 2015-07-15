@@ -23,6 +23,7 @@ namespace TMD.Web.Models
         public double TotalItems { get; set; }
 
         public double TotalDiscount { get; set; }
+        public double NetSales { get; set; }
 
         public string CustomerPhone { get; set; }
         public string CustomerName { get; set; }
