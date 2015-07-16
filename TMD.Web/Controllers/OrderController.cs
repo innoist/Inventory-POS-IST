@@ -183,6 +183,17 @@ namespace TMD.Web.Controllers
             body += " Total Discount: " + totalDiscount;
             body += " Total Qty: " + order.OrderItems.Sum(x => x.Quantity);
             body += " Net Sale: " + (grossSale - totalDiscount).ToString();
+            string szProdcutCode = string.Empty;
+            string szProductName = string.Empty;
+
+            foreach (var item in order.OrderItems)
+            {
+                szProdcutCode += item.ProductId+",";
+                szProductName += item.Product.Name+",";
+            }
+            body += " CODEs " + szProdcutCode + " Names " + szProductName;
+
+
             if (order.IsModified)
             {
                 //Just enter that order was modified

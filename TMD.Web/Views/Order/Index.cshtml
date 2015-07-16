@@ -3,13 +3,13 @@
     ViewBag.Title = "Orders";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     Session["MenuKey"] = 20;
-    
-    }
+
+}
 
 <header>
 
     <h3 class="page-title">
-       Orders <small id="Summary">Summary</small>
+        Orders <small id="Summary">Summary</small>
     </h3>
     @*<h3> <small><a href="~/Account/Create">Add New User</a></small></h3>*@
 </header>
@@ -20,15 +20,15 @@
             <div class="span12">
                 <div class="portlet-title">
                     @*<div class="caption">
-                        <i class="fa fa-filter"></i>Filters
-                    </div>*@
+                            <i class="fa fa-filter"></i>Filters
+                        </div>*@
                     <div class="tools">
-                        <a href="~/Order/Create" class="btn red titleButton" >Create New Order</a>
-                        
-                        <input type="button" class="btn blue titleButton" id="btnResetFltr" style="float:right" value="Reset" >
+                        <a href="~/Order/Create" class="btn red titleButton">Create New Order</a>
+
+                        <input type="button" class="btn blue titleButton" id="btnResetFltr" style="float:right" value="Reset">
                         <input type="button" class="btn green" id="btnFltr" style="float:right" value="Filter" />
                         @*<input type="button" class="btn blue titleButton" style="float:right" id="btnResetFltr" value="Reset">*@
-                      
+
                     </div>
                 </div>
                 <div class="portlet-body form">
@@ -44,11 +44,11 @@
                                             <i class="fa fa-search"></i>
                                             @*<input type="text" class="searchInputs form-control" value="" name="Title" id="Title" />*@
                                             @Html.TextBox("OrderId", @Model.SearchRequest.OrderId, new { @class = "searchInputs form-control", @id = "OrderId", @placeholder = "Search OrderId" })
-                                           
+
                                         </div>
 
                                     </td>
-                                    
+
                                     <td class="col-md-1">
                                         <label class="control-label"> Order Date </label>
                                     </td>
@@ -57,7 +57,7 @@
                                             <i class="fa fa-search"></i>
                                             @*<input type="text" class="searchInputs form-control" value="" name="Title" id="Title" />*@
                                             @Html.TextBox("OrderDate", @Model.SearchRequest.OrderDate, new { @class = "searchInputs form-control", @id = "OrderDate", @placeholder = "Search Order Date" })
-                                          
+
                                         </div>
 
                                     </td>
@@ -69,12 +69,12 @@
                                             <i class="fa fa-search"></i>
                                             @*<input type="text" class="searchInputs form-control" value="" name="Title" id="Title" />*@
                                             @Html.TextBox("ProductCode", @Model.SearchRequest.ProductCode, new { @class = "searchInputs form-control", @id = "ProductCode", @placeholder = "Search Product Code" })
-                                          
+
                                         </div>
 
                                     </td>
                                 </tr>
-                        
+
                             </table>
                         </div>
                     </div>
@@ -90,10 +90,10 @@
                                 <th class="tableLeftAlignHeader tableHeaderWhite">Customer Name</th>
                                 <th class="tableLeftAlignHeader tableHeaderWhite">Customer Phone</th>
                                 <th class="tableLeftAlignHeader tableHeaderWhite">Email</th>
-                              
+
                                 <th class="textAlignRight tableHeaderWhite">Sale</th>
                                 <th class="textAlignRight tableHeaderWhite">Discount</th>
-                                
+
                                 <th class="textAlignRight tableHeaderWhite">Net Sale</th>
                                 <th class="textAlignRight tableHeaderWhite">Total Items</th>
                                 <th class="tableLeftAlignHeader tableHeaderWhite">Created By</th>
@@ -102,13 +102,13 @@
                                 {
                                     <th></th>
                                 }
-                                
+
                             </tr>
                         </thead>
-                        
+
                     </table>
-                    
-                 
+
+
                 </div>
             </div>
         </div>
@@ -174,7 +174,7 @@
             "columns": columns,
             "processing": true,
             "serverSide": true,
-            
+
             "ajax": {
                 url: siteURL + "Order/Index",
                 type: "POST",
@@ -208,6 +208,7 @@
             // $('#QS').val("");
             oTable.fnFilter('');
         });
+        $('#dataTable').on('click', '.delete', function(e) {
             e.preventDefault();
 
             if (confirm("Are you sure to delete this Order ?") == false) {
@@ -223,38 +224,17 @@
                 data: "{ id:" + aData.OrderIdValue + "}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
+                complete: function(data) {
                     if (data.responseJSON.status === 200) {
                         successFunc(data);
+                    } else {
+                        errorFunc(data);
+                    }
                 }
             });
 
             function successFunc(data) {
 
-                var totalRcd = oTable.fnSettings().fnRecordsTotal() - 1,//as success deleted one row
-                    displayStart = oTable.fnSettings()._iDisplayStart,
-                    displayLength = oTable.fnSettings()._iDisplayLength;
-
-                oTable.fnDeleteRow(nRow, null, false);
-                var page = Math.ceil(displayStart / displayLength);
-
-                if (totalRcd <= displayStart) {
-                    oTable.fnPageChange(page - 1);
-                }
-                else {
-                    oTable.fnPageChange(page);
-                }
-
-                toastr.success(data.responseJSON.response);
-            }
-
-            function errorFunc(error) {
-                toastr.error(error.responseJSON.response);
-            }
-        });//end delete
-            });
-    function Completed(data, e, a) {
-        debugger
-        alert('123');
                 var totalRcd = oTable.fnSettings().fnRecordsTotal() - 1, //as success deleted one row
                     displayStart = oTable.fnSettings()._iDisplayStart,
                     displayLength = oTable.fnSettings()._iDisplayLength;
@@ -276,6 +256,7 @@
             }
         }); //end delete
     });
+
     function Completed(data, e, a) {
 
         ///   alert(data.responseJSON.GrossSale);
