@@ -208,7 +208,6 @@
             // $('#QS').val("");
             oTable.fnFilter('');
         });
-        $('#dataTable').on('click', '.delete', function(e) {
             e.preventDefault();
 
             if (confirm("Are you sure to delete this Order ?") == false) {
@@ -224,17 +223,38 @@
                 data: "{ id:" + aData.OrderIdValue + "}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                complete: function(data) {
                     if (data.responseJSON.status === 200) {
                         successFunc(data);
-                    } else {
-                        errorFunc(data);
-                    }
                 }
             });
 
             function successFunc(data) {
 
+                var totalRcd = oTable.fnSettings().fnRecordsTotal() - 1,//as success deleted one row
+                    displayStart = oTable.fnSettings()._iDisplayStart,
+                    displayLength = oTable.fnSettings()._iDisplayLength;
+
+                oTable.fnDeleteRow(nRow, null, false);
+                var page = Math.ceil(displayStart / displayLength);
+
+                if (totalRcd <= displayStart) {
+                    oTable.fnPageChange(page - 1);
+                }
+                else {
+                    oTable.fnPageChange(page);
+                }
+
+                toastr.success(data.responseJSON.response);
+            }
+
+            function errorFunc(error) {
+                toastr.error(error.responseJSON.response);
+            }
+        });//end delete
+            });
+    function Completed(data, e, a) {
+        debugger
+        alert('123');
                 var totalRcd = oTable.fnSettings().fnRecordsTotal() - 1, //as success deleted one row
                     displayStart = oTable.fnSettings()._iDisplayStart,
                     displayLength = oTable.fnSettings()._iDisplayLength;
@@ -256,7 +276,6 @@
             }
         }); //end delete
     });
-
     function Completed(data, e, a) {
 
         ///   alert(data.responseJSON.GrossSale);
