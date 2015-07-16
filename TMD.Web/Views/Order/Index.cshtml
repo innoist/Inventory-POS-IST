@@ -9,7 +9,7 @@
 <header>
 
     <h3 class="page-title">
-       Orders <small>Summary</small>
+       Orders <small id="Summary">Summary</small>
     </h3>
     @*<h3> <small><a href="~/Account/Create">Add New User</a></small></h3>*@
 </header>
@@ -116,7 +116,7 @@
 </div>
 
 <script type="text/javascript">
-
+    //"fnDrawCallback": fnLoadComplete,
     jQuery(document).ready(function($) {
         var isAdmin = '@User.IsInRole("Admin")';
         $("#OrderDate").datepicker({
@@ -143,7 +143,7 @@
             { "data": "CustomerEmail" },
             { "data": "TotalSale", "class": "textAlignRight" },
             { "data": "TotalDiscount", "class": "textAlignRight" },
-                { "data": "NetSales", "class": "textAlignRight" },
+            { "data": "NetSales", "class": "textAlignRight" },
             { "data": "TotalItems", "class": "textAlignRight" },
             { "data": "RecCreatedBy" },
             { "data": "PrintString" }
@@ -164,17 +164,17 @@
             "bLengthChange": false,
             "aaSorting": [sortBy],
             "aoColumnDefs": [
-               { 'bSortable': false, 'aTargets': [0,2, 3, 4, 5, 6, 7, 8] },
-               {
-                   "targets": [0],
-                   "visible": false,
-                   "searchable": false
-               }
+                { 'bSortable': false, 'aTargets': [0, 2, 3, 4, 5, 6, 7, 8] },
+                {
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false
+                }
             ],
             "columns": columns,
             "processing": true,
             "serverSide": true,
-            "fnDrawCallback": fnLoadComplete,
+            
             "ajax": {
                 url: siteURL + "Order/Index",
                 type: "POST",
@@ -188,7 +188,7 @@
                     params.SortBy = params.order[0].column;
                     params.IsAsc = params.order[0].dir === "asc";
 
-                    params.OrderId= $('#OrderId').val();
+                    params.OrderId = $('#OrderId').val();
                     params.OrderDate = $('#OrderDate').val();
                     params.ProductCode = $('#ProductCode').val();
                 },
@@ -205,10 +205,9 @@
             $('#ProductCode').val("");
             $("#OrderDate").datepicker().datepicker("setDate", new Date());
 
-           // $('#QS').val("");
+            // $('#QS').val("");
             oTable.fnFilter('');
         });
-        $('#dataTable').on('click', '.delete', function (e) {
             e.preventDefault();
 
             if (confirm("Are you sure to delete this Order ?") == false) {
@@ -224,13 +223,8 @@
                 data: "{ id:" + aData.OrderIdValue + "}",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
-                complete: function (data) {
                     if (data.responseJSON.status === 200) {
                         successFunc(data);
-                    }
-                    else {
-                        errorFunc(data);
-                    }
                 }
             });
 
@@ -257,11 +251,35 @@
                 toastr.error(error.responseJSON.response);
             }
         });//end delete
-    });
-    function Completed(data, e, a) {     
-    }
+            });
+    function Completed(data, e, a) {
+        debugger
+        alert('123');
+                var totalRcd = oTable.fnSettings().fnRecordsTotal() - 1, //as success deleted one row
+                    displayStart = oTable.fnSettings()._iDisplayStart,
+                    displayLength = oTable.fnSettings()._iDisplayLength;
 
-    function fnLoadComplete(data,e,a) {
+                oTable.fnDeleteRow(nRow, null, false);
+                var page = Math.ceil(displayStart / displayLength);
+
+                if (totalRcd <= displayStart) {
+                    oTable.fnPageChange(page - 1);
+                } else {
+                    oTable.fnPageChange(page);
+                }
+
+                toastr.success(data.responseJSON.response);
+            }
+
+            function errorFunc(error) {
+                toastr.error(error.responseJSON.response);
+            }
+        }); //end delete
+    });
+    function Completed(data, e, a) {
+
+        ///   alert(data.responseJSON.GrossSale);
+        $('#Summary').prop('title', data.responseJSON.GrossSale + "," + data.responseJSON.Discount + "," + data.responseJSON.NetSale);
     }
 
 </script>
