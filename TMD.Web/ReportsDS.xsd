@@ -52,6 +52,8 @@
               <xs:element name="ProductName" msprop:Generator_ColumnVarNameInTable="columnProductName" msprop:Generator_ColumnPropNameInRow="ProductName" msprop:Generator_ColumnPropNameInTable="ProductNameColumn" msprop:Generator_UserColumnName="ProductName" type="xs:string" minOccurs="0" />
               <xs:element name="PurchasedQuantity" msprop:Generator_ColumnVarNameInTable="columnPurchasedQuantity" msprop:Generator_ColumnPropNameInRow="PurchasedQuantity" msprop:Generator_ColumnPropNameInTable="PurchasedQuantityColumn" msprop:Generator_UserColumnName="PurchasedQuantity" type="xs:long" minOccurs="0" />
               <xs:element name="AvailableQuantity" msprop:Generator_ColumnVarNameInTable="columnAvailableQuantity" msprop:Generator_ColumnPropNameInRow="AvailableQuantity" msprop:Generator_ColumnPropNameInTable="AvailableQuantityColumn" msprop:Generator_UserColumnName="AvailableQuantity" type="xs:long" minOccurs="0" />
+              <xs:element name="PurchasedPrice" msprop:Generator_ColumnVarNameInTable="columnPurchasedPrice" msprop:Generator_ColumnPropNameInRow="PurchasedPrice" msprop:Generator_ColumnPropNameInTable="PurchasedPriceColumn" msprop:Generator_UserColumnName="PurchasedPrice" type="xs:decimal" minOccurs="0" />
+              <xs:element name="SalePrice" msprop:Generator_ColumnVarNameInTable="columnSalePrice" msprop:Generator_ColumnPropNameInRow="SalePrice" msprop:Generator_ColumnPropNameInTable="SalePriceColumn" msprop:Generator_UserColumnName="SalePrice" type="xs:decimal" minOccurs="0" />
             </xs:sequence>
           </xs:complexType>
         </xs:element>

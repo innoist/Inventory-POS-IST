@@ -192,8 +192,6 @@ namespace TMD.Web.Controllers
                 szProductName += item.Product.Name+",";
             }
             body += " CODEs " + szProdcutCode + " Names " + szProductName;
-
-
             if (order.IsModified)
             {
                 //Just enter that order was modified

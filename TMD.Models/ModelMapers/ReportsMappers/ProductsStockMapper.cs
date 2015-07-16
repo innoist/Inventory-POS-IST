@@ -12,7 +12,9 @@ namespace TMD.Models.ModelMapers.ReportsMappers
                ProductCode = source.ProductId,
                ProductName = source.Name,
                AvailableQuantity = source.AvailableQty,
-               PurchasedQuantity = source.PurchasedQty ?? 0
+               PurchasedQuantity = source.PurchasedQty ?? 0,
+               SalePrice = source.SalePrice,
+               PurchasedPrice = source.PurchasePrice//Opposite just for the report
             };
         }       
     }

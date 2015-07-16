@@ -8,8 +8,8 @@
   <Shapes>
     <Shape ID="DesignTable:Sales" ZOrder="4" X="340" Y="142" Height="276" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="272" />
     <Shape ID="DesignTable:Purchase" ZOrder="3" X="518" Y="144" Height="162" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="158" />
-    <Shape ID="DesignTable:Stocks" ZOrder="2" X="171" Y="144" Height="105" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="101" />
-    <Shape ID="DesignTable:Expense" ZOrder="1" X="719" Y="144" Height="86" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="82" />
+    <Shape ID="DesignTable:Stocks" ZOrder="1" X="171" Y="144" Height="143" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="139" />
+    <Shape ID="DesignTable:Expense" ZOrder="2" X="719" Y="144" Height="86" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="82" />
   </Shapes>
   <Connectors />
 </DiagramLayout>
