@@ -15,6 +15,9 @@ namespace TMD.Web.ViewModels
         public List<OrderListViewModel> data { get; set; }
 
         public double GrossSale { get; set; }
+        public double Discount{ get; set; }
+        public double NetSale { get; set; }
+
 
         /// <summary>
         /// Total Records in DB

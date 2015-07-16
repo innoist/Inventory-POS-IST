@@ -9,7 +9,7 @@
 <header>
 
     <h3 class="page-title">
-       Orders <small>Summary</small>
+       Orders <small id="Summary">Summary</small>
     </h3>
     @*<h3> <small><a href="~/Account/Create">Add New User</a></small></h3>*@
 </header>
@@ -197,8 +197,9 @@
         });
     });
     function Completed(data, e, a) {
-        debugger
-        alert('123');
+        
+     ///   alert(data.responseJSON.GrossSale);
+        $('#Summary').prop('title', data.responseJSON.GrossSale + "," + data.responseJSON.Discount + "," + data.responseJSON.NetSale);
     }
 
     function fnLoadComplete(data,e,a) {
