@@ -59,6 +59,7 @@ namespace TMD.Web.ModelMappers
                 IsModified = source.IsModified,
                 CustomerId = source.CustomerId,
                 Comments = source.Comments,
+                OrderIdValue=source.OrderId,
                 OrderId = @"<a title='Click to open order' href='" + hostURL + "Order/Create?id=" + source.OrderId + "'> " + source.OrderId + "</a>",
                 OrderOriginalId = source.OrderId,
                 RecCreatedBy = source.RecCreatedBy,

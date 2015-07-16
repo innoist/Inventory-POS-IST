@@ -31,14 +31,18 @@ namespace TMD.Repository.Repositories
 
         public long GetItemCountInOrders(long productId)
         {
-            return DbSet.Where(x => x.ProductId == productId).Select(r => r.Quantity).DefaultIfEmpty(0).Sum();
+            return DbSet.Where(x => x.ProductId == productId && (x.Order.IsDeleted != true)).Select(r => r.Quantity).DefaultIfEmpty(0).Sum();
         }
 
         public IEnumerable<OrderItem> GetOrderItemsReport(string productCode,DateTime startDate, DateTime endDate)
         {
             long productId;
             long.TryParse(productCode, out productId);
-            return DbSet.Where(x => (productId == 0 || productId == x.ProductId) && (DbFunctions.TruncateTime(x.RecCreatedDate) >= DbFunctions.TruncateTime(startDate)) && (DbFunctions.TruncateTime(x.RecCreatedDate) <= DbFunctions.TruncateTime(endDate))).ToList();
+            return DbSet.Where(x => (productId == 0 || productId == x.ProductId) 
+                && (DbFunctions.TruncateTime(x.Order.RecCreatedDate) >= DbFunctions.TruncateTime(startDate))
+                && (DbFunctions.TruncateTime(x.Order.RecCreatedDate) <= DbFunctions.TruncateTime(endDate))
+                && (x.Order.IsDeleted != true)
+                ).ToList();
         }
     }
 }

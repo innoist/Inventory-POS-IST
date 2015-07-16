@@ -13,6 +13,7 @@ namespace TMD.Web.Models
         [Required]
         [Display(Name = "Vendor")]
         public long VendorId { get; set; }
+        [Range(1, long.MaxValue, ErrorMessage = "Please enter valid quantity")]
         public long Quantity { get; set; }
         public string RecCreatedBy { get; set; }
         public string RecLastUpdatedBy { get; set; }

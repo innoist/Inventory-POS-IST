@@ -12,6 +12,7 @@ namespace TMD.Interfaces.IServices
 
         long AddService(Order order);
         bool UpdateService(Order order);
+        bool DeleteOrder(long orderId);
 
         OrderSearchResponse GetOrdersSearchResponse(OrderSearchRequest searchRequest);
     }

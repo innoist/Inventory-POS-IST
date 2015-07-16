@@ -1,5 +1,4 @@
-﻿using System;
-using TMD.Models.DomainModels;
+﻿using TMD.Models.DomainModels;
 using TMD.Models.ReportsModels;
 
 namespace TMD.Models.ModelMapers.ReportsMappers
@@ -15,6 +14,7 @@ namespace TMD.Models.ModelMapers.ReportsMappers
             report.ProductName = source.Product.Name;
             report.PurchasedQuantity = source.Quantity;
             report.PurchasingDate = source.PurchasingDate;
+            report.PurchasePrice = source.PurchasePrice;
             report.VendorName = source.Vendor.Name;
 
             return report;

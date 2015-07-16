@@ -84,6 +84,7 @@
                     <table id="dataTable" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr>
+                                <th></th>
                                 <th class="tableHeaderWhite">Order Id</th>
                                 <th class="tableHeaderWhite">Date</th>
                                 <th class="tableLeftAlignHeader tableHeaderWhite">Customer Name</th>
@@ -97,7 +98,11 @@
                                 <th class="textAlignRight tableHeaderWhite">Total Items</th>
                                 <th class="tableLeftAlignHeader tableHeaderWhite">Created By</th>
                                 <th class="tableLeftAlignHeader tableHeaderWhite">Print</th>
-                              
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <th></th>
+                                }
+                                
                             </tr>
                         </thead>
                         
@@ -113,14 +118,12 @@
 <script type="text/javascript">
 
     jQuery(document).ready(function($) {
-
-
+        var isAdmin = '@User.IsInRole("Admin")';
         $("#OrderDate").datepicker({
             changeMonth: true,
             changeYear: true,
             maxDate: new Date()
         });
-
         $("#OrderDate").datepicker().datepicker("setDate", new Date());
 
 
@@ -130,6 +133,30 @@
         var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
         var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
 
+
+        var columns = [
+            { "data": "OrderIdValue" },
+            { "data": "OrderId" },
+            { "data": "RecCreatedDate" },
+            { "data": "CustomerName" },
+            { "data": "CustomerPhone" },
+            { "data": "CustomerEmail" },
+            { "data": "TotalSale", "class": "textAlignRight" },
+            { "data": "TotalDiscount", "class": "textAlignRight" },
+                { "data": "NetSales", "class": "textAlignRight" },
+            { "data": "TotalItems", "class": "textAlignRight" },
+            { "data": "RecCreatedBy" },
+            { "data": "PrintString" }
+        ];
+        if (isAdmin == "True") {
+            columns.push({
+                "orderable": false,
+                "data": null,
+                "defaultContent": "<a class='delete' title='Delete' style='text-decoration: none;font-weight: bold;'  href='javascript:;'>X</a>",
+                "class": "textAlignCenter"
+            });
+        }
+
         var oTable = $('#dataTable').dataTable({
             "iDisplayLength": 11,
             "displayStart": start || 0,
@@ -137,23 +164,14 @@
             "bLengthChange": false,
             "aaSorting": [sortBy],
             "aoColumnDefs": [
-               { 'bSortable': false, 'aTargets': [2,3,4,5,6,7,8] },
-            
+               { 'bSortable': false, 'aTargets': [0,2, 3, 4, 5, 6, 7, 8] },
+               {
+                   "targets": [0],
+                   "visible": false,
+                   "searchable": false
+               }
             ],
-            "columns": [
-                 { "data": "OrderId"},
-                 { "data": "RecCreatedDate" },
-                { "data": "CustomerName" },
-                { "data": "CustomerPhone" },
-                { "data": "CustomerEmail" },
-                { "data": "TotalSale", "class": "textAlignRight" },
-                { "data": "TotalDiscount", "class": "textAlignRight" },
-                { "data": "NetSales", "class": "textAlignRight" },
-                  { "data": "TotalItems", "class": "textAlignRight" },
-                  { "data": "RecCreatedBy" },
-                  { "data": "PrintString" }
-                //,{ "data": "EbayItemDetails" }
-            ],
+            "columns": columns,
             "processing": true,
             "serverSide": true,
             "fnDrawCallback": fnLoadComplete,
@@ -168,9 +186,6 @@
                     }
                     params.PageSize = params.length;
                     params.SortBy = params.order[0].column;
-                    //if (params.SortBy === 0) {
-                    //    params.SortBy = 1;
-                    //}
                     params.IsAsc = params.order[0].dir === "asc";
 
                     params.OrderId= $('#OrderId').val();
@@ -178,9 +193,7 @@
                     params.ProductCode = $('#ProductCode').val();
                 },
                 complete: Completed
-             
             }
-
         });
         $('#btnFltr').on('click', function(e) {
             oTable.fnDraw();
@@ -195,21 +208,67 @@
            // $('#QS').val("");
             oTable.fnFilter('');
         });
+        $('#dataTable').on('click', '.delete', function (e) {
+            e.preventDefault();
+
+            if (confirm("Are you sure to delete this Order ?") == false) {
+                return;
+            }
+
+            var nRow = $(this).parents('tr')[0];
+            var aData = oTable.fnGetData(nRow);
+            var serviceUrl = siteURL + 'Order/Delete';
+            $.ajax({
+                type: "POST",
+                url: serviceUrl,
+                data: "{ id:" + aData.OrderIdValue + "}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                complete: function (data) {
+                    if (data.responseJSON.status === 200) {
+                        successFunc(data);
+                    }
+                    else {
+                        errorFunc(data);
+                    }
+                }
+            });
+
+            function successFunc(data) {
+
+                var totalRcd = oTable.fnSettings().fnRecordsTotal() - 1,//as success deleted one row
+                    displayStart = oTable.fnSettings()._iDisplayStart,
+                    displayLength = oTable.fnSettings()._iDisplayLength;
+
+                oTable.fnDeleteRow(nRow, null, false);
+                var page = Math.ceil(displayStart / displayLength);
+
+                if (totalRcd <= displayStart) {
+                    oTable.fnPageChange(page - 1);
+                }
+                else {
+                    oTable.fnPageChange(page);
+                }
+
+                toastr.success(data.responseJSON.response);
+            }
+
+            function errorFunc(error) {
+                toastr.error(error.responseJSON.response);
+            }
+        });//end delete
     });
+<<<<<<< HEAD
     function Completed(data, e, a) {
         
      ///   alert(data.responseJSON.GrossSale);
         $('#Summary').prop('title', data.responseJSON.GrossSale + "," + data.responseJSON.Discount + "," + data.responseJSON.NetSale);
+=======
+    function Completed(data, e, a) {     
+>>>>>>> 99168dc5329fffbcac73e112ffbc968a9126901e
     }
 
     function fnLoadComplete(data,e,a) {
-        //debugger
-        //alert('123');
-        //if (e.TotalDiscount > 0) {
-        //    $(nRow).addClass('discountApplied');
-        //}
-        //return nRow;
-
     }
 
 </script>
