@@ -145,8 +145,10 @@
     <Compile Include="MenuModels\UserMenuResponse.cs" />
     <Compile Include="ModelMapers\ReportsMappers\ProductsStockMapper.cs" />
     <Compile Include="ModelMapers\ReportsMappers\PurchaseReportMapper.cs" />
+    <Compile Include="ModelMapers\ReportsMappers\ExpenseReportMapper.cs" />
     <Compile Include="ModelMapers\ReportsMappers\SalesReportMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReportsModels\ExpenseReport.cs" />
     <Compile Include="ReportsModels\StockReport.cs" />
     <Compile Include="ReportsModels\PurchaseReport.cs" />
     <Compile Include="ReportsModels\SalesReport.cs" />

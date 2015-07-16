@@ -13,12 +13,14 @@ namespace TMD.Implementation.Services
         private readonly IOrderItemsRepository orderItemsRepository;
         private readonly IInventoryItemRepositoy inventoryItemRepositoy;
         private readonly IProductsStockRepository productsStockRepository;
+        private readonly IExpenseRepository expenseRepository;
 
-        public ReportsService(IOrderItemsRepository orderItemsRepository, IInventoryItemRepositoy inventoryItemRepositoy, IProductsStockRepository productsStockRepository)
+        public ReportsService(IOrderItemsRepository orderItemsRepository, IInventoryItemRepositoy inventoryItemRepositoy, IProductsStockRepository productsStockRepository, IExpenseRepository expenseRepository)
         {
             this.orderItemsRepository = orderItemsRepository;
             this.inventoryItemRepositoy = inventoryItemRepositoy;
             this.productsStockRepository = productsStockRepository;
+            this.expenseRepository = expenseRepository;
         }
 
         public IEnumerable<SalesReport> SalesReport(string productCode,DateTime startDate, DateTime endDate)
@@ -36,6 +38,12 @@ namespace TMD.Implementation.Services
         public IEnumerable<StockReport> StocksReport(string barCode, string productCode, string productName)
         {
             var report = productsStockRepository.StocksReport(barCode, productCode, productName).Select(x => x.CreateReport()).OrderByDescending(x => x.AvailableQuantity);
+            return report;
+        }
+        public IEnumerable<ExpenseReport> ExpensesReport(int year, int month, string vendor)
+        {
+            var report = expenseRepository.GetExpenses(year, month,vendor).Select(x => x.CreateReport());
+            //var report = expenseRepository.GetAll().ToList().Select(x => x.CreateReport());
             return report;
         }
     }

@@ -22,5 +22,9 @@ namespace TMD.Web.Controllers
         {
             return View();
         }
+        public ActionResult Expenses()
+        {
+            return View();
+        }
     }
 }

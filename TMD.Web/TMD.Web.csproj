@@ -134,7 +134,6 @@
     <Reference Include="Microsoft.Practices.Unity.RegistrationByConvention">
       <HintPath>..\packages\Unity.3.5.1404.0\lib\net45\Microsoft.Practices.Unity.RegistrationByConvention.dll</HintPath>
     </Reference>
-      
     <Reference Include="Microsoft.ReportViewer.WebForms">
       <HintPath>..\Solution Items\Microsoft.ReportViewer.WebForms.dll</HintPath>
     </Reference>
@@ -357,6 +356,13 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ReportsDS.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ReportsFiles\Expenses.aspx.cs">
+      <DependentUpon>Expenses.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ReportsFiles\Expenses.aspx.designer.cs">
+      <DependentUpon>Expenses.aspx</DependentUpon>
     </Compile>
     <Compile Include="ReportsFiles\Purchase.aspx.cs">
       <DependentUpon>Purchase.aspx</DependentUpon>
@@ -1679,6 +1685,7 @@
     <Content Include="Content\global\plugins\bootstrap-hover-dropdown\README.md" />
     <Content Include="Content\global\plugins\jquery-slimscroll\README.md" />
     <Content Include="Content\global\plugins\jquery-slimscroll\slimScroll.jquery.json" />
+    <Content Include="ReportsFiles\Expenses.aspx" />
     <Content Include="ReportsFiles\Purchase.aspx" />
     <Content Include="ReportsFiles\Sales.aspx" />
     <Content Include="ReportsFiles\Stocks.aspx" />
@@ -1747,6 +1754,7 @@
     <Content Include="Views\Notes\Create.cshtml" />
     <Content Include="Views\Reports\Purchases.cshtml" />
     <Content Include="Views\Reports\Stocks.cshtml" />
+    <Content Include="Views\Reports\Expenses.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />
@@ -2862,6 +2870,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="ReportsFiles\Expenses.rdlc" />
     <EmbeddedResource Include="ReportsFiles\Purchase.rdlc" />
     <EmbeddedResource Include="ReportsFiles\Sales.rdlc" />
     <EmbeddedResource Include="ReportsFiles\Stocks.rdlc" />

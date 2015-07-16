@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using Microsoft.Practices.Unity;
 using TMD.Interfaces.IRepository;
 using TMD.Models.DomainModels;
@@ -24,6 +26,15 @@ namespace TMD.Repository.Repositories
         {
             get { return db.Expenses; }
         }
-        #endregion        
+        #endregion
+
+        public IEnumerable<Expense> GetExpenses(int year, int month, string vendor)
+        {
+            IEnumerable<Expense> expenses = DbSet.Where(x => 
+                DbFunctions.TruncateTime(x.ExpenseDate).Value.Year == year & 
+                DbFunctions.TruncateTime(x.ExpenseDate).Value.Month == month &
+                ((x.Vendor != null && x.Vendor.Name.Contains(vendor)) | x.Vendor == null)).ToList();
+            return expenses;
+        }
     }
 }
