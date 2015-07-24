@@ -144,7 +144,7 @@ namespace TMD.Web.Controllers
                 return View();
 
             }
-            catch
+            catch (Exception ex)
             {
                 return View();
             }
@@ -189,7 +189,8 @@ namespace TMD.Web.Controllers
             foreach (var item in order.OrderItems)
             {
                 szProdcutCode += item.ProductId+",";
-                szProductName += item.Product.Name+",";
+                if(item.Product != null)
+                    szProductName += item.Product.Name+",";
             }
             body += " CODEs " + szProdcutCode + " Names " + szProductName;
             if (order.IsModified)
