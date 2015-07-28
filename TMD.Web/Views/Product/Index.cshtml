@@ -100,8 +100,8 @@
                                 @if (isAdmin)
                                 {
                                     <th class="tableHeaderWhite">Cost Price</th>
+                                    <th></th>
                                 }
-                                <th></th>
                             </tr>
                         </thead>
                         
@@ -129,6 +129,7 @@
         var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
 
         var columns;
+        var columnDefs;
         if ('@isAdmin' == "True") {
             columns = [
                 { "data": "ProductId" },
@@ -143,18 +144,18 @@
                     "class": "textAlignRight"
                 }
             ];
+            columnDefs = [
+                { 'bSortable': false, 'aTargets': [5] }
+            ];
         } else {
             columns = [
                 { "data": "ProductId" },
                 { "data": "Name" },
                 { "data": "CategoryName" },
-                { "data": "SalePrice" },
-                {
-                    "orderable": false,
-                    "data": null,
-                    "defaultContent": "<a class='edit'  href='javascript:;'>Edit</a>",
-                    "class": "textAlignRight"
-                }
+                { "data": "SalePrice" }
+            ];
+            columnDefs = [
+                { 'bSortable': false, 'aTargets': [3] }
             ];
         }
             
@@ -164,9 +165,7 @@
             "bFilter": false,
             "bLengthChange": false,
             "aaSorting": [sortBy],
-            "aoColumnDefs": [
-                { 'bSortable': false, 'aTargets': [4] }
-            ],
+            "aoColumnDefs": columnDefs,
             "columns": columns,
             "processing": true,
             "serverSide": true,
