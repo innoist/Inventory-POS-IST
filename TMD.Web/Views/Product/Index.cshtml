@@ -23,7 +23,10 @@
                     <div class="tools">
                         <input type="button" class="btn blue titleButton" id="btnResetFltr" style="float:right" value="Reset">
                         <input type="button" class="btn green" id="btnFltr" style="float:right" value="Filter" />
-                        <a href="~/Product/Create"  class="btn red titleButton">Add New Product</a>
+                        @if (isAdmin)
+                        {
+                            <a href="~/Product/Create" class="btn red titleButton">Add New Product</a>
+                        }
                     </div>
                 </div>
                 <div class="portlet-body form">
