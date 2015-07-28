@@ -83,45 +83,57 @@
 }
                     @if (User.IsInRole("Admin"))
                     {
-                      
+
                         <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "22") ? "active" : "")>
                             <a href="~/Customer/Index" class="WhiteColor">
                                 Customers <span class="selected">
-                                </span>
+                                          </span>
                             </a>
                         </li>
 
                         <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "3") ? "active" : "")>
                             <a href="~/Account/Users" class="WhiteColor">
                                 Accounts <span class="selected">
-                                </span>
+                                         </span>
                             </a>
                         </li>
+                    }
+                    @if (User.IsInRole("Admin") || User.IsInRole("Employee"))
+                    {
                         <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "11") ? "active" : "")>
                             <a class="WhiteColor" data-toggle="dropdown" href="javascript:;">
                                 Inventory <i class="fa fa-angle-down"></i>
                             </a>
                             <ul class="dropdown-menu pull-left">
-                                <li>
-                                    <a class="WhiteColor" href="~/Inventory/Index">
-                                        Inventory List <span class="selected">
-                                        </span>
-                                    </a>
-                                </li>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <li>
+                                        <a class="WhiteColor" href="~/Inventory/Index">
+                                            Inventory List <span class="selected">
+                                                           </span>
+                                        </a>
+                                    </li>
+                                }
                                 <li>
                                     <a class="WhiteColor" href="~/Product/Index">
                                         Products List  <span class="selected">
-                                        </span>
+                                                       </span>
                                     </a>
                                 </li>
-                                <li>
-                                    <a class="WhiteColor" href="~/ProductCategory/Index">
-                                        Products Category <span class="selected">
-                                        </span>
-                                    </a>
-                                </li>
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <li>
+                                        <a class="WhiteColor" href="~/ProductCategory/Index">
+                                            Products Category <span class="selected">
+                                                              </span>
+                                        </a>
+                                    </li>
+                                }
                             </ul>
                         </li>
+                    }
+                    @if (User.IsInRole("Admin"))
+                    {
                         <li class=@( (Session["MenuKey"] != null && Session["MenuKey"].ToString() == "28") ? "active" : "")>
                             <a href="~/Vendor/Index" class="WhiteColor">
                                 Vendors <span class="selected">

@@ -4,6 +4,7 @@
     ViewBag.Title = "Products";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     Session["MenuKey"] = 11;
+    var isAdmin = User.IsInRole("Admin");
  }
 
 
@@ -93,8 +94,10 @@
                                 <th class="tableHeaderWhite">Name</th>
                                 <th class="tableHeaderWhite">Category</th>
                                 <th class="tableHeaderWhite">Sale Price</th>
-                                <th class="tableHeaderWhite">Cost Price</th>
-                       
+                                @if (isAdmin)
+                                {
+                                    <th class="tableHeaderWhite">Cost Price</th>
+                                }
                                 <th></th>
                             </tr>
                         </thead>
@@ -122,21 +125,9 @@
         var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
         var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
 
-        var oTable = $('#dataTable').dataTable({
-            "iDisplayLength": 11,
-            "displayStart": start || 0,
-            "bFilter": false,
-            "bLengthChange": false,
-            "aaSorting": [sortBy],
-            "aoColumnDefs": [
-                { 'bSortable': false, 'aTargets': [4] },
-                //{
-                //    "targets": [0],
-                //    "visible": false,
-                //    "searchable": false
-                //}
-            ],
-            "columns": [
+        var columns;
+        if ('@isAdmin' == "True") {
+            columns = [
                 { "data": "ProductId" },
                 { "data": "Name" },
                 { "data": "CategoryName" },
@@ -148,7 +139,32 @@
                     "defaultContent": "<a class='edit'  href='javascript:;'>Edit</a>",
                     "class": "textAlignRight"
                 }
+            ];
+        } else {
+            columns = [
+                { "data": "ProductId" },
+                { "data": "Name" },
+                { "data": "CategoryName" },
+                { "data": "SalePrice" },
+                {
+                    "orderable": false,
+                    "data": null,
+                    "defaultContent": "<a class='edit'  href='javascript:;'>Edit</a>",
+                    "class": "textAlignRight"
+                }
+            ];
+        }
+            
+        var oTable = $('#dataTable').dataTable({
+            "iDisplayLength": 11,
+            "displayStart": start || 0,
+            "bFilter": false,
+            "bLengthChange": false,
+            "aaSorting": [sortBy],
+            "aoColumnDefs": [
+                { 'bSortable': false, 'aTargets': [4] }
             ],
+            "columns": columns,
             "processing": true,
             "serverSide": true,
             "ajax": {
