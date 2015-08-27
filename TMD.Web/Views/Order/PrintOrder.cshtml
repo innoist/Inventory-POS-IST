@@ -68,7 +68,7 @@
                     </ul>*@
             </div>
             <div class="col-xs-4 invoice-payment">
-                <h3>Payment Details:</h3>
+                <h3 style="margin-bottom: 5px!important">Payment Details:</h3>
                 <ul class="list-unstyled">
                     <li>
                         <strong>Total Qty:</strong>@Model.TotalItems
@@ -183,7 +183,9 @@
                         *ToysWorld reserves the right to replace the items or not.
                     </li>
                 </ul>
-                <a class="btn btn-lg blue hidden-print margin-bottom-5" onclick="javascript:window.print();">
+                @*<a class="btn btn-lg blue hidden-print margin-bottom-5" onclick="javascript:window.print();">*@
+                
+                <a class="btn btn-lg blue hidden-print margin-bottom-5" onclick="PrintElem(); return false;">
                     Print <i class="fa fa-print"></i>
                 </a>
                 <a class="btn btn-lg green hidden-print margin-bottom-5" href="/order/Index">
@@ -195,19 +197,171 @@
 
     </div>
   
+    
+
     <!-- END PAGE CONTENT-->
 </div>
+<div id="ToPrint" style="display: none" width="450px">
+   
+    <div class="invoice col-md-8" >
 
+        <div class="row invoice-logo">
+            
+            <div  class="col-xs-6 bold" style="border-color: black; border-style: solid; border-width: 2px">
+                
+                <div align="center" >
+                    <span style="text-decoration: underline">
+                        TOYS WORLD C-BLOCK DHA EME
+                    </span>
+                </div>
+                <p align="center" style="font-size: 12px">
+                    Order: #201-@Model.OrderOriginalId
+                    <span class="muted">
+                        @Model.RecCreatedDateFormatted
+                    </span>
+                    <span>
+                        <a style="font-size: 12px">Fb.com/TOYSWORLDPK 0321-44-99-439</a>
+                    </span>
+                </p>
+            </div>
+        </div>
+       
+            <div class="col-xs-12">
+                <table id="dataTable" width="100%" class="table table-striped table-hover"  cellspacing="0">
+                    <thead style="font-size: 14px !important">
+                        <tr>
+                            <th class="smallGridFont" >
+                                #
+                            </th>
+                            <th class="smallGridFont">
+                                Code
+                            </th>
+                            <th class="smallGridFont">
+                                Name
+                            </th>
+                            <th class="smallGridFont">
+                                Price
+                            </th>
+
+                            <th class="smallGridFont">
+                                Qty
+                            </th>
+                            <th class="smallGridFont">
+                                Sub
+                            </th>
+
+
+                            <th class="smallGridFont">
+                                Disc
+                            </th>
+                            <th class="smallGridFont">
+                                Total
+                            </th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody style="font-size: 12px !important">
+
+                        @for (int i = 0; i < Model.OrderItems.Count; i++)
+                        {
+
+                            var item = Model.OrderItems[i];
+
+                            <tr>
+                                <td class="smallGridFont">@(i + 1)</td>
+                                <td class="smallGridFont">TS @item.ProductId</td>
+                                <td class="smallGridFont">@item.Product.Name.Substring(0, item.Product.Name.Length <= 10 ? item.Product.Name.Length : 10)</td>
+                                <td class="smallGridFont">@item.SalePrice.ToString("N0")</td>
+                                <td class="smallGridFont">@item.Quantity</td>
+                                <td class="smallGridFont">@item.Subtotal.ToString("N0")</td>
+                                <td class="smallGridFont">@item.Discount.ToString("N0")</td>
+                                <td class="smallGridFont">@item.TotalItemAmount.ToString("N0")</td>
+                            </tr>
+
+                        }
+                    </tbody>
+
+                </table>
+
+            </div>
+     
+         
+          
+            <div >
+                
+                <table width="100%">
+                    <tr width="100%">
+                        <td width="30%">
+                            <table width="100%" style="font-size: 10px !important">
+                                <tr>
+                                    <td>
+                                        Details:
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Qty: @Model.TotalItems
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Sub: Rs. @Model.TotalSale
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        Disc: Rs. @Model.TotalDiscount
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        Payable:<span style="font-weight: bold"> &nbsp;&nbsp;Rs. @(Model.TotalSale - Model.TotalDiscount) </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+
+                        <td width="70%" style="font-size: 10px !important">
+
+                            <ul class="list-unstyled amounts col-xs-6" style="list-style-type: none;">
+
+                                <li class="TermsAndConditions">
+                                    *Items are only replaceable with in 2 days of purchase. No item is refundable.
+                                </li>
+                                <li class="TermsAndConditions">
+                                    *Items are not replaceable without receipt. Only check warranty in shop is valid.
+                                </li>
+                                <li class="TermsAndConditions">
+                                    *Items in Sale or having discounts are not replaceable
+                                </li>
+                                <li class="TermsAndConditions">
+                                    *ToysWorld reserves the right to replace the items or not.
+                                </li>
+                            </ul>
+
+
+                        </td>
+                    </tr>
+                               </table>
+
+                </div>
+        
+    </div>
+</div>
        
         <script type="text/javascript">
 
             function PrintElem(elem) {
-                Popup($(elem).html());
+                //Popup($(elem).html());
+                Popup($('#ToPrint').html());
             }
 
             function Popup(data) {
-                var mywindow = window.open('', 'my div', 'height=400,width=600');
-                mywindow.document.write('<html><head><title>my div</title>');
+                var mywindow = window.open('', 'my div', 'height=inherit,width=600');
+                mywindow.document.write('<html><head><style>ul{list-style-type: none;}</style> <title>my div</title>');
                 /*optional stylesheet*/ //mywindow.document.write('<link rel="stylesheet" href="main.css" type="text/css" />');
                 mywindow.document.write('</head><body >');
                 mywindow.document.write(data);
