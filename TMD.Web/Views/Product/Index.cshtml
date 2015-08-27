@@ -4,6 +4,7 @@
     ViewBag.Title = "Products";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     Session["MenuKey"] = 11;
+    var isAdmin = User.IsInRole("Admin");
  }
 
 
@@ -22,7 +23,10 @@
                     <div class="tools">
                         <input type="button" class="btn blue titleButton" id="btnResetFltr" style="float:right" value="Reset">
                         <input type="button" class="btn green" id="btnFltr" style="float:right" value="Filter" />
-                        <a href="~/Product/Create"  class="btn red titleButton">Add New Product</a>
+                        @if (isAdmin)
+                        {
+                            <a href="~/Product/Create" class="btn red titleButton">Add New Product</a>
+                        }
                     </div>
                 </div>
                 <div class="portlet-body form">
@@ -93,9 +97,11 @@
                                 <th class="tableHeaderWhite">Name</th>
                                 <th class="tableHeaderWhite">Category</th>
                                 <th class="tableHeaderWhite">Sale Price</th>
-                                <th class="tableHeaderWhite">Cost Price</th>
-                       
-                                <th></th>
+                                @if (isAdmin)
+                                {
+                                    <th class="tableHeaderWhite">Cost Price</th>
+                                    <th></th>
+                                }
                             </tr>
                         </thead>
                         
@@ -122,21 +128,10 @@
         var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
         var sortBy = ['@Model.SearchRequest.SortBy', isAsc ? 'asc' : 'desc'];
 
-        var oTable = $('#dataTable').dataTable({
-            "iDisplayLength": 11,
-            "displayStart": start || 0,
-            "bFilter": false,
-            "bLengthChange": false,
-            "aaSorting": [sortBy],
-            "aoColumnDefs": [
-                { 'bSortable': false, 'aTargets': [4] },
-                //{
-                //    "targets": [0],
-                //    "visible": false,
-                //    "searchable": false
-                //}
-            ],
-            "columns": [
+        var columns;
+        var columnDefs;
+        if ('@isAdmin' == "True") {
+            columns = [
                 { "data": "ProductId" },
                 { "data": "Name" },
                 { "data": "CategoryName" },
@@ -148,7 +143,30 @@
                     "defaultContent": "<a class='edit'  href='javascript:;'>Edit</a>",
                     "class": "textAlignRight"
                 }
-            ],
+            ];
+            columnDefs = [
+                { 'bSortable': false, 'aTargets': [5] }
+            ];
+        } else {
+            columns = [
+                { "data": "ProductId" },
+                { "data": "Name" },
+                { "data": "CategoryName" },
+                { "data": "SalePrice" }
+            ];
+            columnDefs = [
+                { 'bSortable': false, 'aTargets': [3] }
+            ];
+        }
+            
+        var oTable = $('#dataTable').dataTable({
+            "iDisplayLength": 11,
+            "displayStart": start || 0,
+            "bFilter": false,
+            "bLengthChange": false,
+            "aaSorting": [sortBy],
+            "aoColumnDefs": columnDefs,
+            "columns": columns,
             "processing": true,
             "serverSide": true,
             "ajax": {
