@@ -8,5 +8,6 @@ namespace TMD.Interfaces.IRepository
     {
         long GetItemCountInOrders(long productId);
         IEnumerable<OrderItem> GetOrderItemsReport(string productCode, DateTime startDate, DateTime endDate);
+        IEnumerable<OrderItem> GetSalesSummaryReport(DateTime startDate, DateTime endDate);
     }
 }
