@@ -353,7 +353,9 @@
 </div>
        
         <script type="text/javascript">
-
+            $(document).ready(function() {
+                PrintElem();
+            });
             function PrintElem(elem) {
                 //Popup($(elem).html());
                 Popup($('#ToPrint').html());
@@ -372,7 +374,7 @@
 
                 mywindow.print();
                 mywindow.close();
-
+                window.location.href = "../Create";
                 return true;
             }
 

@@ -148,8 +148,76 @@ else
                             </div>
                         </div>
                     </div>
-
                     <div class="col-md-5 col-sm-12">
+                        <div class="portlet blue-steel box">
+                            <div class="portlet-title">
+                                <div class="caption">
+                                    <i class="fa fa-cogs"></i>Pricing
+                                </div>
+
+                            </div>
+
+                            <div class="portlet-body">
+
+                                <div class="row static-info">
+                                    <div class="col-sm-2 name">
+                                        Sub Total
+                                    </div>
+                                    <div class="col-sm-4 value">
+                                        <input readonly="readonly" class="form-control" disabled="disabled" type="text" id="OrderSubTotal" />
+                                        @*@Model.ToyGraderItemId*@
+                                    </div>
+                                    <div class="col-sm-2 name">
+                                        Discount Rs
+                                    </div>
+                                    <div class="col-sm-4 value">
+                                        <input readonly="readonly" class="form-control" disabled="disabled" type="text" id="OrderTotalDisc" />
+                                    </div>
+
+                                </div>
+
+                                <div class="row static-info">
+                                    <div class="col-md-2 name">
+                                        Items Qty
+                                    </div>
+                                    <div class="col-md-4 value">
+                                        <input readonly="readonly" style="color:red" disabled="disabled" type="text" class="form-control" id="OrderItemsQty" />
+                                    </div>
+                                    <div class="col-md-2 name">
+                                        NET RS.
+                                    </div>
+                                    <div class="col-md-4 value">
+                                        <input readonly="readonly" style="color:red" disabled="disabled" type="text" class="form-control" id="OrderNetTotal" />
+                                    </div>
+
+
+
+                                </div>
+
+
+                                <div class="row static-info">
+
+                                    <div class="col-md-2 name">
+                                        Amount Given
+                                    </div>
+                                    <div class="col-md-4 value">
+                                        <input type="text" class="form-control" id="OrderAmountGiven" onchange="CalculateReturnAmount(this)" />
+                                    </div>
+
+                                    <div class="col-md-2 name">
+                                        Return
+                                    </div>
+                                    <div class="col-md-4 value">
+                                        <input readonly="readonly" disabled="disabled" type="text" class="form-control" id="OrderAmountReturn" />
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    @*<div class="col-md-5 col-sm-12">
                         <div class="portlet green-meadow box">
                             <div class="portlet-title">
                                 <div class="caption">
@@ -166,7 +234,6 @@ else
                                     </div>
                                     <div class="col-md-4 value">
                                         @Html.TextBoxFor(m => m.Customer.Phone, new { @class = "form-control", @height = "24px", @placeholder = "Enter Phone Number" })
-                                        @*@Model.ToyGraderItemId*@
                                     </div>
                                     <div class="col-md-2 name">
                                         Name
@@ -183,7 +250,7 @@ else
                                     </div>
                                     <div class="col-md-4 value">
                                         @Html.TextBoxFor(m => m.Customer.Email, new { @class = "form-control", @height = "24px", @placeholder = "Enter Email" })
-                                        @*@Model.ToyGraderItemId*@
+                    
                                     </div>
                                     <div class="col-md-2 name">
                                         Address
@@ -210,14 +277,14 @@ else
 
                             </div>
                         </div>
-                    </div>
+                    </div>*@
 
 
                 </div>
 
 
                 <div class="row">
-                    <div class="col-md-7 col-sm-12">
+                    <div class="col-md-12">
                         <div class="portlet purple-plum box">
                             <div class="portlet-title">
                                 <div class="caption">
@@ -317,75 +384,7 @@ else
                         </div>
                     </div>
 
-                    <div class="col-md-5 col-sm-12">
-                        <div class="portlet blue-steel box">
-                            <div class="portlet-title">
-                                <div class="caption">
-                                    <i class="fa fa-cogs"></i>Pricing
-                                </div>
-
-                            </div>
-
-                            <div class="portlet-body">
-
-                                <div class="row static-info">
-                                    <div class="col-sm-2 name">
-                                        Sub Total
-                                    </div>
-                                    <div class="col-sm-4 value">
-                                        <input readonly="readonly" class="form-control" disabled="disabled" type="text" id="OrderSubTotal" />
-                                        @*@Model.ToyGraderItemId*@
-                                    </div>
-                                    <div class="col-sm-2 name">
-                                        Discount Rs
-                                    </div>
-                                    <div class="col-sm-4 value">
-                                        <input readonly="readonly" class="form-control" disabled="disabled" type="text" id="OrderTotalDisc" />
-                                    </div>
-
-                                </div>
-
-                                <div class="row static-info">
-                                    <div class="col-md-2 name">
-                                        Items Qty
-                                    </div>
-                                    <div class="col-md-4 value">
-                                        <input readonly="readonly" style="color:red" disabled="disabled" type="text" class="form-control" id="OrderItemsQty" />
-                                    </div>
-                                    <div class="col-md-2 name">
-                                        NET RS.
-                                    </div>
-                                    <div class="col-md-4 value">
-                                        <input readonly="readonly" style="color:red" disabled="disabled" type="text" class="form-control" id="OrderNetTotal" />
-                                    </div>
-                                   
-
-
-                                </div>
-
-
-                                <div class="row static-info">
-
-                                    <div class="col-md-2 name">
-                                        Amount Given
-                                    </div>
-                                    <div class="col-md-4 value">
-                                        <input type="text" class="form-control" id="OrderAmountGiven" onchange="CalculateReturnAmount(this)" />
-                                    </div>
-
-                                    <div class="col-md-2 name">
-                                        Return
-                                    </div>
-                                    <div class="col-md-4 value">
-                                        <input readonly="readonly" disabled="disabled" type="text" class="form-control" id="OrderAmountReturn" />
-                                    </div>
-
-                                </div>
-
-
-                            </div>
-                        </div>
-                    </div>
+                 
 
 
                 </div>
@@ -393,6 +392,7 @@ else
             </div>
         </div>
         <script>
+            var emptyOrder = true;
             $(document).ajaxStop($.unblockUI);
             $(function () {
 
@@ -419,44 +419,44 @@ else
                 var obj = new Object();
                 if (ValidateItemAdd(obj)) {
                     var html = '<tr data-id="' + index + '">' +
-                    '<td style="display:none"><input name="OrderItems.Index" type="hidden" value="' + index + '"/>' +
+                        '<td style="display:none"><input name="OrderItems.Index" type="hidden" value="' + index + '"/>' +
                         '<input  name="OrderItems[' + index + '].OrderItemId" type="hidden" value="-1">' +
                         '</td>' +
                         //PRODUCT CODE
-                    '<td class="highlight">' +
-                    '<input class="TableTextBox valid" name="OrderItems[' + index + '].ProductId" readonly="readOnly" type="text" value="' + obj.itemCode + '">' +
-                    '</td>' +
-                    //Product Name
-                    '<td class="highlight">' + obj.itemName + '</td>' +
+                        '<td class="highlight">' +
+                        '<input class="TableTextBox valid" name="OrderItems[' + index + '].ProductId" readonly="readOnly" type="text" value="' + obj.itemCode + '">' +
+                        '</td>' +
+                        //Product Name
+                        '<td class="highlight">' + obj.itemName + '</td>' +
 
-                    //Product Price
-                      '<td class="highlight">' +
-                    '<input class="TableTextBox valid" name="OrderItems[' + index + '].Product.SalePrice" id="OrderItems_' + index + '__Product_SalePrice" readonly="readOnly" type="text" value="' + obj.salePrice + '">' +
-                    '</td>' +
-                    //Quantity
-                    '<td class="highlight">' +
-                    '<input class="TableTextBox valid GridValueChange" name="OrderItems[' + index + '].Quantity"  id="OrderItems_' + index + '__Quantity"  type="text" value="' + obj.itemQty + '">' +
-                    '</td>' +
+                        //Product Price
+                        '<td class="highlight">' +
+                        '<input class="TableTextBox valid" name="OrderItems[' + index + '].Product.SalePrice" id="OrderItems_' + index + '__Product_SalePrice" readonly="readOnly" type="text" value="' + obj.salePrice + '">' +
+                        '</td>' +
+                        //Quantity
+                        '<td class="highlight">' +
+                        '<input class="TableTextBox valid GridValueChange" name="OrderItems[' + index + '].Quantity"  id="OrderItems_' + index + '__Quantity"  type="text" value="' + obj.itemQty + '">' +
+                        '</td>' +
 
-                     //Sub Total
-                     '<td class="highlight">' +
-                    '<input class="TableTextBox valid"  readonly="readOnly" id="OrderItems_' + index + '__Subtotal" name="OrderItems[' + index + '].Subtotal"  type="text" value="' + obj.itemSubTotal + '">' +
-                    '</td>' +
+                        //Sub Total
+                        '<td class="highlight">' +
+                        '<input class="TableTextBox valid"  readonly="readOnly" id="OrderItems_' + index + '__Subtotal" name="OrderItems[' + index + '].Subtotal"  type="text" value="' + obj.itemSubTotal + '">' +
+                        '</td>' +
 
 
-                     //Discount Amount
-                     '<td class="highlight">' +
-                    '<input class="TableTextBox valid GridValueChange" id="OrderItems_' + index + '__Discount" name="OrderItems[' + index + '].Discount"  type="text" value="' + obj.itemDiscPrice + '">' +
-                    '</td>' +
-                    //Total
-                       '<td class="highlight">' +
-                    '<input class="TableTextBox valid" name="OrderItems[' + index + '].TotalItemAmount"  id="OrderItems_' + index + '__TotalItemAmount" readonly="readOnly" type="text" value="' + obj.itemTotalprice + '">' +
-                    '</td>' +
+                        //Discount Amount
+                        '<td class="highlight">' +
+                        '<input class="TableTextBox valid GridValueChange" id="OrderItems_' + index + '__Discount" name="OrderItems[' + index + '].Discount"  type="text" value="' + obj.itemDiscPrice + '">' +
+                        '</td>' +
+                        //Total
+                        '<td class="highlight">' +
+                        '<input class="TableTextBox valid" name="OrderItems[' + index + '].TotalItemAmount"  id="OrderItems_' + index + '__TotalItemAmount" readonly="readOnly" type="text" value="' + obj.itemTotalprice + '">' +
+                        '</td>' +
 
-                    '<td>' +
-                    '<a href="#" class="btn default btn-xs red deleteRow">' +
-                    '<i class="fa fa-trash-o"  ></i> Delete </a> </td> ' +
-                    '<input id="OrderItems_' + index + '__IsModified" name="OrderItems[' + index + '].IsModified" type="hidden" value="False">' +
+                        '<td>' +
+                        '<a href="#" class="btn default btn-xs red deleteRow">' +
+                        '<i class="fa fa-trash-o"  ></i> Delete </a> </td> ' +
+                        '<input id="OrderItems_' + index + '__IsModified" name="OrderItems[' + index + '].IsModified" type="hidden" value="False">' +
                         '</tr>';
                     $('#tblItemDetails').append(html);
                     $('#TotalCount').val(++index);
@@ -590,7 +590,7 @@ else
                 if (parseInt(discPerc) > parseInt(maxAllowedDiscPerc)) {
                     $('#OrderItems_' + counterID + '__Discount').val(0);
                     toastr.error("ORDER EXCEEDING SALE DISCOUNT LIMIT");
-                     discRS = $('#OrderItems_' + counterID + '__Discount').val();
+                    discRS = $('#OrderItems_' + counterID + '__Discount').val();
                 }
 
                 $('#OrderItems_' + counterID + '__IsModified').val('True');
@@ -624,7 +624,7 @@ else
                     $('#ItemDiscPrice').val(obj.itemDiscPrice);
 
                 }
-               else {
+                else {
                     //Means Rs change
                     obj.itemDiscPerc = Math.round((obj.itemDiscPrice * 100) / obj.itemSubTotal, 1);
                     $('#ItemDiscPerc').val(obj.itemDiscPerc);
@@ -641,14 +641,14 @@ else
             });
 
 
-          function  CalculateOrderTotals()
-          {
+            function  CalculateOrderTotals()
+            {
             
                 var itemSubTotal = 0;
                 var itemDisc = 0;
-              var itemQtyTotal = 0;
-              // var index = $("#tblItemDetails").children("tbody").children("tr").length; //Total for loop
-              var index = $('#TotalCount').val();
+                var itemQtyTotal = 0;
+                // var index = $("#tblItemDetails").children("tbody").children("tr").length; //Total for loop
+                var index = $('#TotalCount').val();
                 for (i = 0; i < index; i++) {
                     
                     itemSubTotal += parseInt($('#OrderItems_' + i + '__Subtotal').val()) || 0;
@@ -661,33 +661,39 @@ else
                 $('#OrderTotalDisc').val(itemDisc);
                 $('#OrderNetTotal').val(itemSubTotal - itemDisc);
                 $('#OrderItemsQty').val(itemQtyTotal);
-              CalculateReturnAmount();
+                CalculateReturnAmount();
 
-          }
-          function CalculateReturnAmount(agElement) {
+            }
+            function CalculateReturnAmount(agElement) {
               
-              var AmountPaid = $('#OrderAmountGiven').val();
-              var NetTotal = $('#OrderNetTotal').val();
-              var toGive = AmountPaid - NetTotal;
-              $('#OrderAmountReturn').val(toGive);
-          }
+                var AmountPaid = $('#OrderAmountGiven').val();
+                var NetTotal = $('#OrderNetTotal').val();
+                var toGive = AmountPaid - NetTotal;
+                $('#OrderAmountReturn').val(toGive);
+            }
 
-          $(document).on('click', '.deleteRow', function (a, b) {
-              //alert('123');
-              $(this).parent().parent().remove();
-              CalculateOrderTotals();
-          });
+            $(document).on('click', '.deleteRow', function (a, b) {
+                //alert('123');
+                $(this).parent().parent().remove();
+                CalculateOrderTotals();
+            });
 
 
-          function ValidateAmounts() {
-              var returnAmount = $('#OrderAmountReturn').val();
-              if (returnAmount == "" || parseInt(returnAmount) < 0) {
-                  toastr.error("Return Amount cannot be less than 0");
-                  return false;
-              }
-              return true;
-          }
-           </script>
+            function ValidateAmounts() {
+                var OrderNetTotal = $('#OrderNetTotal').val();
+                var returnAmount = $('#OrderAmountReturn').val();
+                //if ((returnAmount == "" || parseInt(returnAmount) < 0) && parseInt(OrderNetTotal) > 0) {
+                //    toastr.error("Return Amount cannot be less than 0");
+                //    return false;
+                //}
+                if (parseInt(OrderNetTotal) < 1) {
+                    toastr.error("Empty order can not be saved.");
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+        </script>
     </div>
 }
 
