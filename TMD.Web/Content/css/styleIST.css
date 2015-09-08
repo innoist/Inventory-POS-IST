@@ -355,6 +355,7 @@ body {
 .TermsAndConditions {
     font-style: italic;
     font-size: 10px;
+    align-content: center !important;
 }
 .smallGridFont {
   
