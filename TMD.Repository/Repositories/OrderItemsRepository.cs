@@ -44,5 +44,15 @@ namespace TMD.Repository.Repositories
                 && (x.Order.IsDeleted != true)
                 ).ToList();
         }
+
+        public IEnumerable<OrderItem> GetSalesSummaryReport(DateTime startDate, DateTime endDate)
+        {
+            var result = DbSet.Where(x => 
+                   (DbFunctions.TruncateTime(x.Order.RecCreatedDate) >= DbFunctions.TruncateTime(startDate))
+                && (DbFunctions.TruncateTime(x.Order.RecCreatedDate) <= DbFunctions.TruncateTime(endDate))
+                && (x.Order.IsDeleted != true)
+                ).ToList();
+            return result;
+        }
     }
 }

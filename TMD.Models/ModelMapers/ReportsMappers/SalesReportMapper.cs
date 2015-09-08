@@ -9,8 +9,6 @@ namespace TMD.Models.ModelMapers.ReportsMappers
         public static SalesReport CreateReport(this OrderItem source)
         {
             SalesReport salesReport = new SalesReport();
-            
-            var itemPurchasePrice = source.Product.PurchasePrice;
 
             salesReport.Id = source.OrderItemId;
             salesReport.Date = source.RecCreatedDate;
@@ -18,20 +16,13 @@ namespace TMD.Models.ModelMapers.ReportsMappers
             salesReport.ProductName = source.Product.Name;
             salesReport.Quantity = source.Quantity;
             salesReport.SalePrice = source.SalePrice;
-            salesReport.SubTotalSale = source.Quantity * source.SalePrice;
+            salesReport.SubTotalSale = (source.Quantity * source.SalePrice);
             salesReport.Discount = source.Discount;
-            salesReport.TotalSale = (source.Quantity * source.SalePrice) - source.Discount;
-            salesReport.PurchasePrice = itemPurchasePrice;
-            salesReport.TotalCost = source.Quantity * itemPurchasePrice;
-            salesReport.TotalProfit = salesReport.TotalSale - salesReport.TotalCost;
-            if (salesReport.TotalProfit > 0)
-            {
-                salesReport.ProfitPercentage = Math.Round(((salesReport.TotalProfit / salesReport.TotalCost) * 100), 2);    
-            }
-            else
-            {
-                salesReport.ProfitPercentage = 0;
-            }
+            salesReport.TotalSale = ((source.Quantity * source.SalePrice) - source.Discount);
+            salesReport.PurchasePrice = source.PurchasePrice;
+            salesReport.TotalCost = (source.Quantity * source.PurchasePrice);
+            salesReport.TotalProfit = (salesReport.TotalSale - salesReport.TotalCost);
+            salesReport.ProfitPercentage = salesReport.TotalProfit > 0 ? Math.Round(((salesReport.TotalProfit / salesReport.TotalCost) * 100), 2) : 0;
             
             salesReport.OrderId = source.OrderId;
 

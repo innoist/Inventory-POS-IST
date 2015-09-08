@@ -10,6 +10,7 @@ namespace TMD.Models.ModelMapers.ReportsMappers
             return new ExpenseReport
             {
                 ExpenseDate = source.ExpenseDate,
+                ExpenseDesc = source.Description,
                 ExpenseAmount = source.ExpenseAmount,
                 VendorName = source.Vendor != null ? source.Vendor.Name : string.Empty
             };
