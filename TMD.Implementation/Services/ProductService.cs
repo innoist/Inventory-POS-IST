@@ -69,10 +69,10 @@ namespace TMD.Implementation.Services
             return responseResult;
         }
 
-        public ProductSearchResponseByAnyCode GetProductByAnyCode(string code)
+        public ProductSearchResponseByAnyCode GetProductByAnyCode(string code, bool searchBarCode = true)
         {
             ProductSearchResponseByAnyCode response=new ProductSearchResponseByAnyCode();
-            var product = productRepository.GetProductByAnyCode(code);
+            var product = productRepository.GetProductByAnyCode(code, searchBarCode);
             if (product != null)
             {
                 response.Product = product;

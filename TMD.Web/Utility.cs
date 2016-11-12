@@ -107,7 +107,7 @@ namespace TMD.Web
             if (isAdmin)
             {
 
-                return "25";
+                return "60";
 
             }
             else if (Session[Utility.ProductConfiguration] == null)

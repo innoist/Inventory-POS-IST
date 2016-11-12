@@ -74,11 +74,13 @@ namespace TMD.Repository.Repositories
 
         }
 
-        public Product GetProductByAnyCode(string code)
+        public Product GetProductByAnyCode(string code, bool searchBarCode = true)
         {
             long productId;
             Int64.TryParse(code,out productId);//try parse, because code may contains some special characters
+            if(searchBarCode)
             return DbSet.FirstOrDefault(x => x.ProductId == productId || x.ProductBarCode == code);
+            return DbSet.FirstOrDefault(x => x.ProductId == productId );
         }
     }
 }

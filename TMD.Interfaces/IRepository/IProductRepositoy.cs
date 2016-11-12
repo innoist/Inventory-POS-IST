@@ -7,6 +7,6 @@ namespace TMD.Interfaces.IRepository
     public interface IProductRepository : IBaseRepository<Product, long>
     {
         ProductSearchResponse GetProductSearchResponse(ProductSearchRequest searchRequest);
-        Product GetProductByAnyCode(string code);
+        Product GetProductByAnyCode(string code, bool searchBarCode = true);
     }
 }

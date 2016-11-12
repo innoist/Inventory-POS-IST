@@ -6,12 +6,12 @@ function LoadProductByCode(control) {
     if (code == "")
         return;
     $.blockUI({ message: '<h3><img src="../Images/loading.gif" height=55px; width=55px; /> Fetching Product...</h2>' });
-
+    debugger
     if (code != "" && code != "0") {
         $.ajax({
             url: "/Api/Product",
             type: "GET",
-            data: { id: code },
+            data: { id: code},
             dataType: "json",
             success: ProductLoaded,
             error: function (textStatus, errorThrown) {

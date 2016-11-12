@@ -521,7 +521,7 @@ else
                     $.ajax({
                         url: "/Api/Product",
                         type: "GET",
-                        data: { id: productCode },
+                        data: { id: productCode, searchBarCode: false },
                         dataType: "json",
                         success: ProductLoaded,
                         error: function (textStatus, errorThrown) {

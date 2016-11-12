@@ -23,11 +23,11 @@ namespace TMD.Web.Areas.Api.Controllers
         }
 
         // GET api/<controller>/5
-        public ProductApiModel Get(string id)
+        public ProductApiModel Get(string id, bool searchBarCode =true)
         {
             if (string.IsNullOrEmpty(id)) return new ProductApiModel();
 
-            var response = productService.GetProductByAnyCode(id);
+            var response = productService.GetProductByAnyCode(id, searchBarCode);
             if (response.Product == null) return new ProductApiModel();
 
             var productApiModel = response.Product.CreateApiModelServerToClient();
