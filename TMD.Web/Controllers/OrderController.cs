@@ -112,12 +112,17 @@ namespace TMD.Web.Controllers
                         orderService.AddService(order);
                         orderDetail.OrderId = order.OrderId;
                         new Task(() => { SendEmail(order, email); }).Start();
+                        order.Comments = "fast speed";
+                        new Task(() => {
+                            UpdateCreatedOrder(order);
+                             }).Start();
                         TempData["message"] = new MessageViewModel
                         {
                             Message = "Order has been created with ID: " + order.OrderId,
                             IsSaved = true
                         };
-                        return RedirectToAction("PrintOrder", "Order", new { id = order.OrderId });
+                        TempData["order"] = order;
+                        return RedirectToAction("PrintOrder", "Order", new { id = order.OrderId});
                     }
                     else
                     {
@@ -150,8 +155,21 @@ namespace TMD.Web.Controllers
             }
         }
 
+        private void UpdateCreatedOrder(Order order) {
+            foreach (var item in order.OrderItems)
+            {
+                var product = productService.GetProduct(item.ProductId);
+                item.MinSalePriceAllowed = product.MinSalePriceAllowed;
+                item.PurchasePrice = product.PurchasePrice;
+                item.SalePrice = product.SalePrice;
+            }
+            orderService.UpdateService(order);
+
+
+        }
         private bool ValidateDiscount(Order order)
         {
+            return true;
             var maxDiscAllowed = decimal.Parse( new Utility().GetConfigMaxDiscount(Session, configurationService,User.IsInRole(Utility.AdminRoleName)))/100;
             var sumDiscount = order.OrderItems.Sum(x => x.Discount);
             var sumRs = order.OrderItems.Sum(x => x.SalePrice*x.Quantity);
@@ -164,6 +182,7 @@ namespace TMD.Web.Controllers
 
         private bool SendEmail(Order order,string email)
         {
+            throw new Exception("asd");
             if (string.IsNullOrEmpty(email) || email.ToLower() == "none")
             {
                 return false;
@@ -226,10 +245,10 @@ namespace TMD.Web.Controllers
                     item.RecCreatedDate = item.RecLastUpdatedDate = DateTime.Now;
                     item.RecCreatedBy = item.RecLastUpdatedBy = User.Identity.Name;
                     //GetSalePrice and set it
-                    var product = productService.GetProduct(item.ProductId);
-                    item.MinSalePriceAllowed = product.MinSalePriceAllowed;
-                    item.PurchasePrice = product.PurchasePrice;
-                    item.SalePrice = product.SalePrice;
+                    //var product = productService.GetProduct(item.ProductId);
+                    //item.MinSalePriceAllowed = product.MinSalePriceAllowed;
+                    //item.PurchasePrice = product.PurchasePrice;
+                    //item.SalePrice = product.SalePrice;
                     if(orderDetail.OrderId>0)
                         orderDetail.IsModified = true;//Means a previous order had a new entery. I know this because orderid >0 and orderitem id<=0
                 }
@@ -344,9 +363,19 @@ namespace TMD.Web.Controllers
 
         public ActionResult PrintOrder(long id)
         {
+            Order orderDetails = null;
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            if(TempData["order"] != null)
+            {
+                orderDetails = TempData["order"] as Order;
+            }
             OrderListViewModel oVM = new OrderListViewModel();
-            var orderDetails = orderService.GetOrders(id);
+            //Order orderDetails = null;
+            if (orderDetails == null || orderDetails.OrderId !=  id)
+            {
+                orderDetails = orderService.GetOrders(id);
+            }
+            
             oVM = orderDetails.CreateFromServerToLVClient();
             oVM.OrderItems = orderDetails.OrderItems.Select(x => x.CreateFromServerToClient()).ToList();
             return View(oVM);

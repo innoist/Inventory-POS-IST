@@ -115,7 +115,7 @@ namespace TMD.Repository.BaseRepository
         {
             try
             {
-                db.SaveChanges();
+               int result =  db.SaveChanges();
             }
             catch (Exception e)
             {
