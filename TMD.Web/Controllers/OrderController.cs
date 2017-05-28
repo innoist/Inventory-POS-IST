@@ -111,11 +111,12 @@ namespace TMD.Web.Controllers
 
                         orderService.AddService(order);
                         orderDetail.OrderId = order.OrderId;
-                        new Task(() => { SendEmail(order, email); }).Start();
+                       // new Task(() => { SendEmail(order, email); }).Start();
                         order.Comments = "fast speed";
                         new Task(() => {
                             UpdateCreatedOrder(order);
-                             }).Start();
+                            SendEmail(order, email);
+                        }).Start();
                         TempData["message"] = new MessageViewModel
                         {
                             Message = "Order has been created with ID: " + order.OrderId,
@@ -182,7 +183,6 @@ namespace TMD.Web.Controllers
 
         private bool SendEmail(Order order,string email)
         {
-            throw new Exception("asd");
             if (string.IsNullOrEmpty(email) || email.ToLower() == "none")
             {
                 return false;
