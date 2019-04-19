@@ -102,6 +102,8 @@ namespace TMD.Repository.BaseRepository
         public DbSet<StagingEbayItem> StagingEbayItems { get; set; }
 
         public DbSet<Configuration> Configurations { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
 
         /// <summary>
         /// Calls the database stored procedure spIsEbayLoadRunning

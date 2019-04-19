@@ -2,13 +2,13 @@
     [EbayItemtId]                  INT             IDENTITY (1, 1) NOT NULL,
     [EbayBatchImportId]            INT             NOT NULL,
     [ToyGraderItemId]              INT             NULL,
-    [CreatedBy]                    INT             NOT NULL,
+    [CreatedBy]                    NVARCHAR (128)  NOT NULL,
     [CreatedOn]                    DATETIME        CONSTRAINT [DF_STG_EBayItem_CreatedOn] DEFAULT (getutcdate()) NOT NULL,
-    [ModifiedBy]                   INT             NULL,
+    [ModifiedBy]                   NVARCHAR (128)  NULL,
     [ModifiedOn]                   DATETIME        CONSTRAINT [DF_STG_EBayItem_ModifiedOn] DEFAULT (getutcdate()) NULL,
     [Deleted]                      BIT             CONSTRAINT [DF_STG_EBayItem_Deleted] DEFAULT ((0)) NOT NULL,
     [DeletedOn]                    DATETIME        NULL,
-    [DeletedBy]                    INT             NULL,
+    [DeletedBy]                    NVARCHAR (128)  NULL,
     [Condition]                    NVARCHAR (50)   NULL,
     [CountryCode]                  NVARCHAR (50)   NULL,
     [GalleryURL]                   NCHAR (2048)    NULL,
@@ -33,10 +33,16 @@
     [SubTitle]                     NVARCHAR (1024) NULL,
     [Title]                        NVARCHAR (1024) NULL,
     [ViewItemUrl]                  NVARCHAR (2048) NULL,
+    [AFASerial]                    NVARCHAR (30)   NULL,
     CONSTRAINT [PK_STG_EBayItem] PRIMARY KEY CLUSTERED ([EbayItemtId] ASC),
+    CONSTRAINT [FK_StagingEbayItems_AspNetUsers_CreatedBy] FOREIGN KEY ([CreatedBy]) REFERENCES [dbo].[AspNetUsers] ([Id]),
+    CONSTRAINT [FK_StagingEbayItems_AspNetUsers_DeletedBy] FOREIGN KEY ([DeletedBy]) REFERENCES [dbo].[AspNetUsers] ([Id]),
+    CONSTRAINT [FK_StagingEbayItems_AspNetUsers_ModifiedBy] FOREIGN KEY ([ModifiedBy]) REFERENCES [dbo].[AspNetUsers] ([Id]),
     CONSTRAINT [FK_StagingEbayItems_StagingEbayBatchImports] FOREIGN KEY ([EbayBatchImportId]) REFERENCES [dbo].[StagingEbayBatchImports] ([EbayBatchImportId]),
     CONSTRAINT [FK_StagingEbayItems_StagingToyGraderItems] FOREIGN KEY ([ToyGraderItemId]) REFERENCES [dbo].[StagingToyGraderItems] ([ToyGraderItemId])
 );
+
+
 
 
 
