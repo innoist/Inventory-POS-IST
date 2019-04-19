@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using TMD.Web.ViewModels;
 
 namespace TMD.Web.Models
 {
     public class ProductModel
     {
-        
         public long ProductId { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
@@ -41,9 +42,10 @@ namespace TMD.Web.Models
         public System.DateTime RecLastUpdatedDate { get; set; }
         public string RecCreatedBy { get; set; }
         public string RecLastUpdatedBy { get; set; }
-
-
+        public string ImagePath { get; set; }
         //ADDED BY USMAN
         public string CategoryName { get; set; } //To display on Listview
     }
+
+    
 }

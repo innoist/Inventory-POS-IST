@@ -18,9 +18,12 @@ namespace TMD.Models.DomainModels
         public System.DateTime RecLastUpdatedDate { get; set; }
         public string RecCreatedBy { get; set; }
         public string RecLastUpdatedBy { get; set; }
+        public string Specification { get; set; }
+        public string ImagePath { get; set; }
 
         public virtual ICollection<OrderItem> OrderItems { get; set; }
         public virtual ICollection<InventoryItem> InventoryItems { get; set; }
+        public virtual ProductImage ProductImage { get; set; }
         public virtual ProductCategory ProductCategory { get; set; }
     }
 }

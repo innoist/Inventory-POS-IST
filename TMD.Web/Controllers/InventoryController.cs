@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using TMD.Interfaces.IServices;
 using TMD.Models.DomainModels;
@@ -13,7 +18,7 @@ using TMD.Web.ViewModels.Common;
 
 namespace TMD.Web.Controllers
 {
-     [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin")]
     public class InventoryController : BaseController
     {
         private readonly IInventoryItemService inventoryItemService;
@@ -45,7 +50,7 @@ namespace TMD.Web.Controllers
             viewModel.Vendors = vendors.Any()
                 ? vendors.Select(x => x.CreateFromServerToClient())
                 : new List<VendorModel>();
-            
+
             return View(viewModel);
         }
         [HttpPost]
@@ -104,7 +109,7 @@ namespace TMD.Web.Controllers
             if (lastSavedVendorID != null)
             {
                 if (inventoryItemViewModel.InventoryItem == null)
-                    inventoryItemViewModel.InventoryItem  = new InventoryItemModel();
+                    inventoryItemViewModel.InventoryItem = new InventoryItemModel();
                 inventoryItemViewModel.InventoryItem.VendorId = long.Parse(lastSavedVendorID.ToString());
             }
             return View(inventoryItemViewModel);
@@ -126,20 +131,20 @@ namespace TMD.Web.Controllers
                 inventoryItemViewModel.InventoryItem.RecLastUpdatedBy = User.Identity.Name;
                 inventoryItemViewModel.InventoryItem.RecLastUpdatedDate = DateTime.Now;
 
-               if (inventoryItemService.AddInventoryItem(inventoryItemViewModel.InventoryItem.CreateFromClientToServer()) > 0)
+                if (inventoryItemService.AddInventoryItem(inventoryItemViewModel.InventoryItem.CreateFromClientToServer()) > 0)
                 {
                     //Product Saved
                     TempData["message"] = new MessageViewModel { Message = "Inventory has been saved successfully.", IsSaved = true };
                 }
-               if (Request.Form["save"] != null)
-                   return RedirectToAction("Index");
-               if (isCreated)
-               {
-                   
+                if (Request.Form["save"] != null)
+                    return RedirectToAction("Index");
+                if (isCreated)
+                {
 
-                   TempData["LastSavedVendorId"] = inventoryItemViewModel.InventoryItem.VendorId;
-               }
-               return RedirectToAction("Create");
+
+                    TempData["LastSavedVendorId"] = inventoryItemViewModel.InventoryItem.VendorId;
+                }
+                return RedirectToAction("Create");
 
                 //return RedirectToAction("Index");
             }
@@ -192,5 +197,6 @@ namespace TMD.Web.Controllers
                 return View();
             }
         }
+
     }
 }

@@ -5,9 +5,12 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     Session["MenuKey"] = 11;
     var isAdmin = User.IsInRole("Admin");
- }
-
-
+}
+<style>
+    .modal, .modal-backdrop {
+        position: absolute !important;
+    }
+</style>
 
 <div class="container-fluid">
     <header>
@@ -21,8 +24,8 @@
             <div class="span12">
                 <div class="portlet-title">
                     <div class="tools">
-                        <input type="button" class="btn blue titleButton" id="btnResetFltr" style="float:right" value="Reset">
-                        <input type="button" class="btn green" id="btnFltr" style="float:right" value="Filter" />
+                        <input type="button" class="btn blue titleButton" id="btnResetFltr" style="float: right" value="Reset">
+                        <input type="button" class="btn green" id="btnFltr" style="float: right" value="Filter" />
                         @if (isAdmin)
                         {
                             <a href="~/Product/Create" class="btn red titleButton">Add New Product</a>
@@ -43,7 +46,7 @@
                                             @Html.TextBox("Barcode", "", new { @class = "searchInputs form-control listFilter", @id = "Barcode", @placeholder = "Barcode" })
                                         </div>
                                     </td>
-                                    
+
                                     <td class="col-md-1">
                                         <label class="control-label"> Product Code </label>
                                     </td>
@@ -64,27 +67,27 @@
                                         </div>
                                     </td>
                                 </tr>
-                                <tr style="height: 10px !important; "></tr>
-                                    <tr>
+                                <tr style="height: 10px !important;"></tr>
+                                <tr>
                                     <td class="col-md-1">
                                         <label class="control-label"> Category </label>
                                     </td>
-                                        <td class="col-md-2">
-                                            <div class="input-icon">
-                                                <i class="fa fa-search"></i>
-                                                @Html.DropDownListFor(x => x.SearchRequest.Category, new SelectList(Model.ProductCategories.OrderBy(x => x.NameWithMainCategory), "CategoryId", "NameWithMainCategory"), "Select Category", new { @class = "searchInputs form-control listFilter", @id = "Category" })
-                                            </div>
-                                        </td>
-                                        <td class="col-md-1">
-                                            <label class="control-label"> Price </label>
-                                        </td>
-                                        <td class="col-md-2">
-                                            <div class="input-icon">
-                                                <i class="fa fa-search"></i>
-                                                @Html.TextBox("ProductPrice", "", new { @class = "searchInputs form-control listFilter", @id = "ProductPrice", @placeholder = "Sale/Cost Price" })
-                                            </div>
-                                        </td>
-                                    </tr>
+                                    <td class="col-md-2">
+                                        <div class="input-icon">
+                                            <i class="fa fa-search"></i>
+                                            @Html.DropDownListFor(x => x.SearchRequest.Category, new SelectList(Model.ProductCategories.OrderBy(x => x.NameWithMainCategory), "CategoryId", "NameWithMainCategory"), "Select Category", new { @class = "searchInputs form-control listFilter", @id = "Category" })
+                                        </div>
+                                    </td>
+                                    <td class="col-md-1">
+                                        <label class="control-label"> Price </label>
+                                    </td>
+                                    <td class="col-md-2">
+                                        <div class="input-icon">
+                                            <i class="fa fa-search"></i>
+                                            @Html.TextBox("ProductPrice", "", new { @class = "searchInputs form-control listFilter", @id = "ProductPrice", @placeholder = "Sale/Cost Price" })
+                                        </div>
+                                    </td>
+                                </tr>
                             </table>
                         </div>
                     </div>
@@ -93,26 +96,57 @@
                     <table id="dataTable" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                                <th class="tableHeaderWhite">Product Code</th>
-                                <th class="tableHeaderWhite">Name</th>
-                                <th class="tableHeaderWhite">Category</th>
-                                <th class="tableHeaderWhite">Sale Price</th>
                                 @if (isAdmin)
                                 {
+                                    <th class="tableHeaderWhite">Product Code</th>
+                                    <th class="tableHeaderWhite">Name</th>
+                                    <th class="tableHeaderWhite">Category</th>
+                                    <th class="tableHeaderWhite">Sale Price</th>
                                     <th class="tableHeaderWhite">Cost Price</th>
+                                    <th class="tableHeaderWhite">Image</th>
                                     <th></th>
                                 }
+                                else
+                                {
+                                    <th class="tableHeaderWhite">Product Code</th>
+                                    <th class="tableHeaderWhite">Name</th>
+                                    <th class="tableHeaderWhite">Category</th>
+                                    <th class="tableHeaderWhite">Sale Price</th>
+                                    <th class="tableHeaderWhite">Image</th>
+                                }
+
                             </tr>
                         </thead>
-                        
+
                     </table>
-                    
-                 
+
+
                 </div>
             </div>
         </div>
     </form>
 </div>
+@section popups {
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title" id="itemName"></h4>
+                </div>
+                <div class="modal-body" id="inventoryImage">
+                    <img id="imgDiv" style="width: 100%; height: 100%" />
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+}
 
 <script type="text/javascript">
     jQuery(document).on('keyup', '.listFilter', function (ev) {
@@ -122,7 +156,7 @@
             return false;
         }
     });
-    jQuery(document).ready(function($) {
+    jQuery(document).ready(function ($) {
 
         var start = ('@Model.SearchRequest.PageNo' - 1) * '@Model.SearchRequest.PageSize';
         var isAsc = '@Model.SearchRequest.IsAsc' == "True" || '@Model.SearchRequest.IsAsc' == "true";
@@ -137,6 +171,7 @@
                 { "data": "CategoryName" },
                 { "data": "SalePrice" },
                 { "data": "PurchasePrice" },
+                { "data": "ImagePath" },
                 {
                     "orderable": false,
                     "data": null,
@@ -145,20 +180,41 @@
                 }
             ];
             columnDefs = [
-                { 'bSortable': false, 'aTargets': [5] }
+                { 'bSortable': false, 'aTargets': [6] },
+                {
+                    'bSortable': false,
+                    "targets": [5],
+                    "class": "textAlignRight",
+                    "mRender": function (data, type, row) {
+                        if (row.ImagePath == null) {
+                            return "";
+                        };
+                        return "<a type='button' class='itemImage' href='javascript'>View</button>";
+                    }
+                }
             ];
         } else {
             columns = [
                 { "data": "ProductId" },
                 { "data": "Name" },
                 { "data": "CategoryName" },
-                { "data": "SalePrice" }
+                { "data": "SalePrice" },
+                { "data": "ImagePath" }
             ];
             columnDefs = [
-                { 'bSortable': false, 'aTargets': [3] }
+                {
+                    "bSortable": false,
+                    "targets": [4],
+                    "mRender": function (data, type, row) {
+                        if (row.ImagePath == null) {
+                            return "";
+                        };
+                        return "<a type='button' class='itemImage' href='javascript'>View</button>";
+                    }
+                }
             ];
         }
-            
+
         var oTable = $('#dataTable').dataTable({
             "iDisplayLength": 11,
             "displayStart": start || 0,
@@ -173,7 +229,7 @@
                 url: "/Product/Index",
                 type: "POST",
                 dataType: "json",
-                data: function(params) {
+                data: function (params) {
                     params.PageNo = Math.ceil(params.start / params.length) + 1;
                     if (params.PageNo === 0) {
                         params.PageNo = 1;
@@ -187,14 +243,15 @@
                     params.Category = $('#Category').val();
                     params.Name = $('#ProductName').val();
                     params.PurchasePrice = $('#ProductPrice').val();
+                    params.ImagePath = $('#ImagePath').val();
                 }
             }
         });
-        $('#btnFltr').on('click', function(e) {
+        $('#btnFltr').on('click', function (e) {
             oTable.fnDraw();
         });
 
-        $('#btnResetFltr').on('click', function(e) {
+        $('#btnResetFltr').on('click', function (e) {
             $('#ProductCode').val("");
             $('#Barcode').val("");
             $('#Category').val("");
@@ -211,7 +268,25 @@
             $(location).attr('href', siteUrl);
 
         });
+
+        $('#dataTable').on('click', '.itemImage', function (e) {
+            e.preventDefault();
+            var imageDiv = document.getElementById("inventoryImage");
+            var nameDiv = document.getElementById("itemName");
+            var imgDiv = document.getElementById("imgDiv");
+            imageDiv.innerHTML = "";
+            nameDiv.innerHTML = "";
+            var nRow = $(this).parents('tr')[0];
+            var imageName = oTable.fnGetData(nRow).ImagePath;
+            var itemName = oTable.fnGetData(nRow).Name;
+            $("#itemName").append(itemName);
+            //var img = document.createElement("img");
+            imgDiv.src = "/Images/Inventory/" + imageName;
+            imageDiv.appendChild(imgDiv);
+            $('#myModal').modal('toggle');
+        });
+
     });
-    
-    function fnActivityComplete(data, e) {}
+
+    function fnActivityComplete(data, e) { }
 </script>

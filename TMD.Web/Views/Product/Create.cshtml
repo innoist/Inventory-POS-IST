@@ -5,17 +5,31 @@
     var isEdit = (Model.ProductModel != null && Model.ProductModel.ProductId > 0);
     Session["MenuKey"] = 11;
 }
+<style>
+    .files {
+        background-color: #eee;
+        width: 190px;
+        height: 30px;
+        float: left;
+        margin: 0 5px 5px 0;
+        padding: 2px;
+        font-size: 10px;
+    }
 
-
+    .progress {
+        width: 0%;
+        background-color: #03C;
+        height: 4px;
+        margin-top: 5px;
+    }
+</style>
 @using (Html.BeginForm("Create", "Product", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     <div class="portlet box blue-hoki">
         <div class="portlet-title">
-
             <div class="tools">
                 @*<a href="javascript:;" class="collapse">
                     </a>*@
-
                 <button type="submit" class="btn btn-circle blue" name="save" onclick="return(ValidateFields(event) && ValidateSalePrice()) ;">Save</button>
                 <button type="submit" class="btn btn-circle blue" name="saveCreate" onclick="return (ValidateFields(event) && ValidateSalePrice());">Save & Add New</button>
                 <a href="~/Product/Index">
@@ -26,21 +40,20 @@
                 <i class="fa fa-male"></i>Create/Update Product
             </div>
         </div>
-
         <div class="portlet-body form">
             <div class="container-fluid">
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(m => m.ProductModel.ProductId)
                 @Html.HiddenFor(m => m.ProductModel.RecCreatedBy)
                 @Html.HiddenFor(m => m.ProductModel.RecCreatedDate)
-                
+                @Html.HiddenFor(model => model.ProductImages, new { @id = "InventoryImage" })
+
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.ProductModel.ProductBarCode, new { @class = "col-md-3 control-label" })
                     <div class="col-md-4">
                         @Html.TextBoxFor(m => m.ProductModel.ProductBarCode, new { @class = "form-control input-circle searchBarcode", @autofocus = "autofocus", @id = "Barcode" })
                     </div>
                 </div>
-
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.ProductModel.Name, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
@@ -55,7 +68,7 @@
                         </div>
                     }
                 </div>
-                
+
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.ProductModel.PurchasePrice, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
@@ -63,20 +76,17 @@
                         @Html.ValidationMessageFor(model => model.ProductModel.PurchasePrice)
                     </div>
                 </div>
-
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.ProductModel.SalePrice, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
                         @Html.TextBoxFor(m => m.ProductModel.SalePrice, new { @class = "form-control input-circle mandatory", @id = "SalePrice", @onchange = "SetMinSalePrice();ShowProfit();" })
                         @Html.ValidationMessageFor(model => model.ProductModel.SalePrice)
                     </div>
-
                     @Html.Label("% Profit", new { @class = "col-md-1 control-label" })
                     <div class="col-md-2">
                         @Html.TextBox("Profit", null, new { @class = "form-control input-circle", @readonly = true, @tabindex = 100 })
                     </div>
                 </div>
-
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.ProductModel.MinSalePriceAllowed, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
@@ -84,14 +94,14 @@
                         @Html.ValidationMessageFor(model => model.ProductModel.MinSalePriceAllowed)
                     </div>
                 </div>
-                
+
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.ProductModel.CategoryId, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.DropDownListFor(model => model.ProductModel.CategoryId, new SelectList(Model.ProductCategories.OrderBy(x=>x.NameWithMainCategory), "CategoryId", "NameWithMainCategory"), "Select Category", new { @class = "form-control input-circle mandatory", @id = "Category" })
+                        @Html.DropDownListFor(model => model.ProductModel.CategoryId, new SelectList(Model.ProductCategories.OrderBy(x => x.NameWithMainCategory), "CategoryId", "NameWithMainCategory"), "Select Category", new { @class = "form-control input-circle mandatory", @id = "Category" })
                         @Html.ValidationMessageFor(model => model.ProductModel.CategoryId)
                     </div>
-                    
+
                 </div>
 
                 <div class="form-group margin-top-20">
@@ -100,16 +110,28 @@
                         @Html.TextBoxFor(m => m.ProductModel.Comments, new { @class = "form-control input-circle" })
                     </div>
                 </div>
-            </div>
 
+                <div class="form-group margin-top-20">
+                    <div class="span3">
+                        <label class="col-md-3 control-label" for="inputField">
+                            Upload Image<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
+                        </label>
+                    </div>
+                    <div class="span9 row-fluid">
+                        <div class="upload-boxes row-fluid">
+                            <div class="span3" id="upload"></div>
+                            <div class="span9" id="uploaded"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 }
-
 <script src="~/Scripts/InventoryScripts.js"></script>
 <script>
     jQuery(document).on('keydown', '.searchBarcode', function (ev) {
-        if (ev.which === 13 || ev.which==9) {
+        if (ev.which === 13 || ev.which == 9) {
             LoadProductByCode(this);
             // Avoid form submit
             return false;
@@ -131,7 +153,53 @@
             return true;
         toastr.error("Sale Price should be greater than Purchase Price");
         return false;
-
-
     }
+
+
+
+
+    var errors = "";
+    var url = "/Product/UploadInventoryImage";
+
+    var myArray = JSON.parse('@Html.Raw(Model.ProductImages)');
+    var newArray = [];
+    $('#upload').mfupload({
+        type: 'jpg,png,tif,jpeg', //all types
+        maxsize: 5,
+        post_upload: url,
+        folder: "./",
+        ini_text: "Drag your file here or click (max: 5MB)",
+        over_text: "Drop Here",
+        over_col: '#666666',
+        over_bkcol: '#f0f0f0',
+
+        init: function () {
+            $("#uploaded").empty();
+        },
+
+        start: function (result) {
+            $("#uploaded").append("<div id='FILE" + result.fileno + "' class='files'>" + result.filename + "<div class='progress progress-info progress-thin'><div class='bar' id='PRO" + result.fileno + "'></div></div></div>");
+        },
+
+        loaded: function (result) {
+            $("#PRO" + result.fileno).remove();
+            $("#FILE" + result.fileno).html("Uploaded: " + result.filename + " (" + result.size + ")");
+            myArray.add(result.filename);
+        },
+
+        progress: function (result) {
+            $("#PRO" + result.fileno).css("width", result.perc + "%");
+        },
+
+        error: function (error) {
+            errors += error.filename + ": " + error.err_des + "\n";
+        },
+
+        completed: function () {
+            if (errors !== "") {
+                alert(errors);
+                errors = "";
+            }
+        }
+    });
 </script>

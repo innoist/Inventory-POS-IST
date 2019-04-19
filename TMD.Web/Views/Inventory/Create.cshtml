@@ -2,20 +2,17 @@
 @{
     ViewBag.Title = "Create/Update Inventory";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
-    var isEdit = (Model.InventoryItem != null && Model.InventoryItem.ItemId > 0); 
+    var isEdit = (Model.InventoryItem != null && Model.InventoryItem.ItemId > 0);
     Session["MenuKey"] = 11;
 }
-
 
 @using (Html.BeginForm("Create", "Inventory", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     <div class="portlet box blue-hoki">
         <div class="portlet-title">
-
             <div class="tools">
                 @*<a href="javascript:;" class="collapse">
                     </a>*@
-
                 <button type="submit" id="btnInventoryItemSubmit" disabled="disabled" class="btn btn-circle blue" onclick="return(ValidateFields(event));">Save</button>
                 <button type="submit" class="btn btn-circle blue" name="saveCreate" onclick="return (ValidateFields(event));">Save & Add New</button>
                 <a href="~/Inventory/Index">
@@ -26,26 +23,25 @@
                 <i class="fa fa-male"></i>Create/Update Inventory
             </div>
         </div>
-
         <div class="portlet-body form">
             <div class="container-fluid">
                 @Html.AntiForgeryToken()
                 @Html.HiddenFor(m => m.InventoryItem.ItemId)
                 @Html.HiddenFor(m => m.InventoryItem.RecCreatedBy)
                 @Html.HiddenFor(m => m.InventoryItem.RecCreatedDate)
-                
+
                 <div class="form-group margin-top-20">
                     @Html.Label("Vendor Barcode", new { @class = "col-md-3 control-label" })
                     <div class="col-md-4">
-                        @Html.TextBox("Barcode", null, new { @id = "Barcode", @class = "form-control input-circle",@autofocus="autofocus", @onchange = "LoadProductByCode(this);" })
+                        @Html.TextBox("Barcode", null, new { @id = "Barcode", @class = "form-control input-circle", @autofocus = "autofocus", @onchange = "LoadProductByCode(this);" })
                     </div>
-                    
+
                     @Html.Label("Name", new { @class = "col-md-1 control-label" })
                     <div class="col-md-3">
                         @Html.TextBox("ProductName", null, new { @id = "ProductName", @class = "form-control input-circle", @readonly = true, @tabindex = 100 })
                     </div>
                 </div>
-                
+
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.InventoryItem.ProductId, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
@@ -57,35 +53,33 @@
                         @Html.TextArea("ProductDescription", null, new { @id = "ProductDescription", @class = "form-control input-circle", @readonly = true, @tabindex = 100 })
                     </div>
                 </div>
-
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.InventoryItem.Quantity, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
                         @Html.TextBoxFor(m => m.InventoryItem.Quantity, new { @class = "form-control input-circle mandatory" })
                         @Html.ValidationMessageFor(model => model.InventoryItem.Quantity)
                     </div>
-                    
+
                     @Html.Label("Available Stock", new { @class = "col-md-1 control-label" })
                     <div class="col-sm-2">
                         @Html.TextBox("Stock", null, new { @id = "AvailableItems", @class = "form-control input-circle", @readonly = true, @tabindex = 100 })
                     </div>
                 </div>
-
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.InventoryItem.PurchasePrice, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
-                        @Html.TextBoxFor(m => m.InventoryItem.PurchasePrice, new { @id = "PurchasePrice",@onchange="ShowProfit();", @class = "form-control input-circle mandatory" })
+                        @Html.TextBoxFor(m => m.InventoryItem.PurchasePrice, new { @id = "PurchasePrice", @onchange = "ShowProfit();", @class = "form-control input-circle mandatory" })
                         @Html.ValidationMessageFor(model => model.InventoryItem.PurchasePrice)
                     </div>
                 </div>
-                
+
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.InventoryItem.SalePrice, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
                         @Html.TextBoxFor(m => m.InventoryItem.SalePrice, new { @id = "SalePrice", @onchange = "ShowProfit();", @class = "form-control input-circle mandatory" })
                         @Html.ValidationMessageFor(model => model.InventoryItem.SalePrice)
                     </div>
-                    
+
                     @Html.Label("% Profit", new { @class = "col-md-1 control-label" })
                     <div class="col-md-2">
                         @Html.TextBox("Profit", null, new { @id = "Profit", @class = "form-control input-circle", @readonly = true, @tabindex = 100 })
@@ -97,9 +91,8 @@
                         @Html.DropDownListFor(model => model.InventoryItem.VendorId, new SelectList(Model.Vendors, "VendorId", "Name"), "Select Vendor", new { @class = "form-control input-circle mandatory", @id = "Vendors" })
                         @Html.ValidationMessageFor(model => model.InventoryItem.VendorId)
                     </div>
-                    
-                </div>
 
+                </div>
                 <div class="form-group margin-top-20">
                     @Html.LabelFor(m => m.InventoryItem.PurchasingDate, new { @class = "col-md-3 control-label requiredLabel" })
                     <div class="col-md-4">
@@ -113,19 +106,16 @@
                         @Html.TextAreaFor(m => m.InventoryItem.Comments, new { @class = "form-control input-circle" })
                     </div>
                 </div>
-
-                
-                
             </div>
-
         </div>
     </div>
 }
 <script src="~/Scripts/InventoryScripts.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         if ('@isEdit') {
             ShowProfit();
         }
     });
+
 </script>

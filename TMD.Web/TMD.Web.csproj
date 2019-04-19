@@ -22,6 +22,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -1599,6 +1600,7 @@
     <Content Include="Content\global\plugins\slider-revolution-slider\video-fullwidth.html" />
     <Content Include="Images\CompanyLogo\FrontPage.jpg" />
     <Content Include="Images\CompanyLogo\toysworldlogo.png" />
+    <Content Include="Images\Inventory\03132019094504Capture.PNG" />
     <Content Include="Images\loading.gif" />
     <Content Include="Images\photon\entypo.eot" />
     <Content Include="Images\photon\entypo.ttf" />

@@ -286,6 +286,14 @@
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="DefaultVendorId" Type="bigint" />
         </EntityType>
+        <EntityType Name="ProductImage">
+          <Key>
+            <PropertyRef Name="ItemImageID" />
+          </Key>
+          <Property Name="ItemImageID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ProductId" Type="bigint" Nullable="false" />
+          <Property Name="ImagePath" Type="nvarchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="ProductMainCategory">
           <Key>
             <PropertyRef Name="CategoryId" />
@@ -316,6 +324,8 @@
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
+          <Property Name="Specification" Type="nvarchar" MaxLength="2000" />
+          <Property Name="ImagePath" Type="nvarchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="StagingEbayBatchImports">
           <Key>
@@ -438,7 +448,7 @@
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'ToysWorldPk.dbo.ProductsStock' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'IstInventory.dbo.ProductsStock' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="ProductsStock">
           <Key>
             <PropertyRef Name="ProductId" />
@@ -457,7 +467,7 @@ warning 6002: The table/view 'ToysWorldPk.dbo.ProductsStock' does not have a pri
           <Property Name="AvailableQty" Type="bigint" Nullable="false" />
         </EntityType>
         <!--Errors Found During Generation:
-warning 6002: The table/view 'ToysWorldPk.dbo.SalesSummaryView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="SalesSummaryView">
           <Key>
             <PropertyRef Name="RowNo" />
@@ -695,6 +705,18 @@ warning 6002: The table/view 'ToysWorldPk.dbo.SalesSummaryView' does not have a 
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProductImage_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="ProductImage" Type="Self.ProductImage" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ProductImage">
+              <PropertyRef Name="ItemImageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Products_ProductCategory">
           <End Role="ProductCategory" Type="Self.ProductCategory" Multiplicity="1" />
           <End Role="Products" Type="Self.Products" Multiplicity="*" />
@@ -828,6 +850,7 @@ warning 6002: The table/view 'ToysWorldPk.dbo.SalesSummaryView' does not have a 
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductCategory" EntityType="Self.ProductCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductConfiguration" EntityType="Self.ProductConfiguration" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductImage" EntityType="Self.ProductImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductMainCategory" EntityType="Self.ProductMainCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StagingEbayBatchImports" EntityType="Self.StagingEbayBatchImports" Schema="dbo" store:Type="Tables" />
@@ -929,6 +952,10 @@ warning 6002: The table/view 'ToysWorldPk.dbo.SalesSummaryView' does not have a 
           <AssociationSet Name="FK_ProductCategory_ProductMainCategory" Association="Self.FK_ProductCategory_ProductMainCategory">
             <End Role="ProductMainCategory" EntitySet="ProductMainCategory" />
             <End Role="ProductCategory" EntitySet="ProductCategory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductImage_Products" Association="Self.FK_ProductImage_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ProductImage" EntitySet="ProductImage" />
           </AssociationSet>
           <AssociationSet Name="FK_Products_ProductCategory" Association="Self.FK_Products_ProductCategory">
             <End Role="ProductCategory" EntitySet="ProductCategory" />
@@ -1129,6 +1156,11 @@ warning 6002: The table/view 'ToysWorldPk.dbo.SalesSummaryView' does not have a 
             <End Role="OrderItem" EntitySet="OrderItems" />
           </AssociationSet>
           <EntitySet Name="SalesSummaryViews" EntityType="TMD.Models.DomainModels.SalesSummaryView" />
+          <EntitySet Name="ProductImages" EntityType="TMD.Models.DomainModels.ProductImage" />
+          <AssociationSet Name="FK_ProductImage_Products" Association="TMD.Models.DomainModels.FK_ProductImage_Products">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductImage" EntitySet="ProductImages" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AspNetRole">
           <Key>
@@ -1584,6 +1616,9 @@ warning 6002: The table/view 'ToysWorldPk.dbo.SalesSummaryView' does not have a 
           <NavigationProperty Name="ProductCategory" Relationship="TMD.Models.DomainModels.FK_Products_ProductCategory" FromRole="Product" ToRole="ProductCategory" />
           <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="OrderItems" Relationship="TMD.Models.DomainModels.FK_OrderItems_Products" FromRole="Product" ToRole="OrderItem" />
+          <Property Name="Specification" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="ImagePath" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ProductImage" Relationship="TMD.Models.DomainModels.FK_ProductImage_Products" FromRole="Product" ToRole="ProductImage" />
         </EntityType>
         <EntityType Name="StagingToyGraderItem">
           <Key>
@@ -1992,6 +2027,27 @@ warning 6002: The table/view 'ToysWorldPk.dbo.SalesSummaryView' does not have a 
           <Property Name="Profit" Type="Decimal" Precision="38" Scale="2" />
           <Property Name="ProfitPercentage" Type="Decimal" Precision="38" Scale="6" />
         </EntityType>
+        <EntityType Name="ProductImage">
+          <Key>
+            <PropertyRef Name="ItemImageID" />
+          </Key>
+          <Property Name="ItemImageID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductId" Type="Int64" Nullable="false" />
+          <Property Name="ImagePath" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Product" Relationship="TMD.Models.DomainModels.FK_ProductImage_Products" FromRole="ProductImage" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_ProductImage_Products">
+          <End Type="TMD.Models.DomainModels.Product" Role="Product" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.ProductImage" Role="ProductImage" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ProductImage">
+              <PropertyRef Name="ItemImageID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2259,6 +2315,8 @@ warning 6002: The table/view 'ToysWorldPk.dbo.SalesSummaryView' does not have a 
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.Product">
               <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="Specification" ColumnName="Specification" />
                 <ScalarProperty Name="Comments" ColumnName="Comments" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
@@ -2485,6 +2543,15 @@ warning 6002: The table/view 'ToysWorldPk.dbo.SalesSummaryView' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ProductImages">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductImage">
+              <MappingFragment StoreEntitySet="ProductImage">
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ItemImageID" ColumnName="ItemImageID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -2567,6 +2634,8 @@ warning 6002: The table/view 'ToysWorldPk.dbo.SalesSummaryView' does not have a 
         <AssociationConnector Association="TMD.Models.DomainModels.FK_OrderItems_Orders" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_OrderItems_Products" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.SalesSummaryView" Width="1.5" PointX="17.375" PointY="17.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductImage" Width="1.5" PointX="14.25" PointY="0.75" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductImage_Products" />
       </Diagram>
     </Diagrams>
   </Designer>

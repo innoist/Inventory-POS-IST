@@ -121,6 +121,7 @@
     <Compile Include="DomainModels\Product.cs" />
     <Compile Include="DomainModels\ProductCategory.cs" />
     <Compile Include="DomainModels\ProductConfiguration.cs" />
+    <Compile Include="DomainModels\ProductImage.cs" />
     <Compile Include="DomainModels\ProductMainCategory.cs" />
     <Compile Include="DomainModels\ProductsStock.cs" />
     <Compile Include="DomainModels\SalesSummaryView.cs" />

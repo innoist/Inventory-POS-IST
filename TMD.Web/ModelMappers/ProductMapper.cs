@@ -24,7 +24,8 @@ namespace TMD.Web.ModelMappers
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDate = source.RecLastUpdatedDate
+                RecLastUpdatedDate = source.RecLastUpdatedDate,
+                ImagePath = source.ImagePath
             };
         }
 
@@ -46,7 +47,8 @@ namespace TMD.Web.ModelMappers
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDate = source.RecLastUpdatedDate
+                RecLastUpdatedDate = source.RecLastUpdatedDate,
+                ImagePath = source.ImagePath
             };
         }
 

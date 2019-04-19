@@ -1,6 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using TMD.Interfaces.IServices;
 using TMD.Models.RequestModels;
@@ -65,10 +70,10 @@ namespace TMD.Web.Controllers
             }
         }
         // GET: Product/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+        //public ActionResult Details(int id)
+        //{
+        //    return View();
+        //}
 
         // GET: Product/Create
         public ActionResult Create(long? id)
@@ -80,12 +85,12 @@ namespace TMD.Web.Controllers
                 productViewModel.ProductCategories = responseResult.ProductCategories.Select(x => x.CreateFromServerToClient());
             if (responseResult.Product != null)
                 productViewModel.ProductModel = responseResult.Product.CreateFromServerToClient();
-            var lastSavedCategoryID = TempData["LastCategoryId"];
-            if (lastSavedCategoryID != null)
+            var lastSavedCategoryId = TempData["LastCategoryId"];
+            if (lastSavedCategoryId != null)
             {
                 if (productViewModel.ProductModel== null)
                     productViewModel.ProductModel = new ProductModel();
-                productViewModel.ProductModel.CategoryId = long.Parse(lastSavedCategoryID.ToString());
+                productViewModel.ProductModel.CategoryId = long.Parse(lastSavedCategoryId.ToString());
             }
 
 
@@ -145,48 +150,37 @@ namespace TMD.Web.Controllers
             }
         }
 
-        // GET: Product/Edit/5
-        public ActionResult Edit(int id)
+        #region Image Upload
+
+        public ActionResult UploadInventoryImage()
         {
-            return View();
+            HttpPostedFileBase inventoryPhoto = Request.Files[0];
+            if ((inventoryPhoto != null))
+            {
+                try
+                {
+                    //Save image to Folder
+                    string imagename = (DateTime.Now.ToString(CultureInfo.InvariantCulture).Replace(".", "") + inventoryPhoto.FileName)
+                        .Replace("/", "").Replace("-", "").Replace(":", "").Replace(" ", "").Replace("+", "");
+                    var filePathOriginal = Server.MapPath(ConfigurationManager.AppSettings["InventoryImage"]);
+                    string savedFileName = Path.Combine(filePathOriginal, imagename);
+                    inventoryPhoto.SaveAs(savedFileName);
+                    return Json(new { filename = imagename, size = inventoryPhoto.ContentLength / 1024 + "KB", response = "Successfully uploaded!", status = (int)HttpStatusCode.OK }, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception exp)
+                {
+                    return
+                        Json(
+                            new
+                            {
+                                response = "Failed to upload. Error: " + exp.Message,
+                                status = (int)HttpStatusCode.BadRequest
+                            }, JsonRequestBehavior.AllowGet);
+                }
+            }
+            return Json(new { response = "Failed to upload. Error: ", status = (int)HttpStatusCode.BadRequest }, JsonRequestBehavior.AllowGet);
         }
 
-        // POST: Product/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: Product/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: Product/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        #endregion
     }
 }
