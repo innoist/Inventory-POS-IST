@@ -6,6 +6,10 @@ namespace TMD.Web.Models
 {
     public class ProductModel
     {
+        public ProductModel()
+        {
+            ProductImages = new List<ProductImageModel>();
+        }
         public long ProductId { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
@@ -45,6 +49,8 @@ namespace TMD.Web.Models
         public string ImagePath { get; set; }
         //ADDED BY USMAN
         public string CategoryName { get; set; } //To display on Listview
+
+        public List<ProductImageModel> ProductImages { get; set; }
     }
 
     

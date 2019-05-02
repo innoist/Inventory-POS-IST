@@ -288,9 +288,9 @@
         </EntityType>
         <EntityType Name="ProductImage">
           <Key>
-            <PropertyRef Name="ItemImageID" />
+            <PropertyRef Name="ItemImageId" />
           </Key>
-          <Property Name="ItemImageID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemImageId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductId" Type="bigint" Nullable="false" />
           <Property Name="ImagePath" Type="nvarchar" MaxLength="100" />
         </EntityType>
@@ -707,13 +707,13 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
         </Association>
         <Association Name="FK_ProductImage_Products">
           <End Role="Products" Type="Self.Products" Multiplicity="1" />
-          <End Role="ProductImage" Type="Self.ProductImage" Multiplicity="0..1" />
+          <End Role="ProductImage" Type="Self.ProductImage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Products">
               <PropertyRef Name="ProductId" />
             </Principal>
             <Dependent Role="ProductImage">
-              <PropertyRef Name="ItemImageID" />
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1618,7 +1618,7 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
           <NavigationProperty Name="OrderItems" Relationship="TMD.Models.DomainModels.FK_OrderItems_Products" FromRole="Product" ToRole="OrderItem" />
           <Property Name="Specification" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="ImagePath" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="ProductImage" Relationship="TMD.Models.DomainModels.FK_ProductImage_Products" FromRole="Product" ToRole="ProductImage" />
+          <NavigationProperty Name="ProductImages" Relationship="TMD.Models.DomainModels.FK_ProductImage_Products" FromRole="Product" ToRole="ProductImage" />
         </EntityType>
         <EntityType Name="StagingToyGraderItem">
           <Key>
@@ -2029,22 +2029,22 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
         </EntityType>
         <EntityType Name="ProductImage">
           <Key>
-            <PropertyRef Name="ItemImageID" />
+            <PropertyRef Name="ItemImageId" />
           </Key>
-          <Property Name="ItemImageID" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemImageId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ProductId" Type="Int64" Nullable="false" />
           <Property Name="ImagePath" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Product" Relationship="TMD.Models.DomainModels.FK_ProductImage_Products" FromRole="ProductImage" ToRole="Product" />
         </EntityType>
         <Association Name="FK_ProductImage_Products">
           <End Type="TMD.Models.DomainModels.Product" Role="Product" Multiplicity="1" />
-          <End Type="TMD.Models.DomainModels.ProductImage" Role="ProductImage" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.ProductImage" Role="ProductImage" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Product">
               <PropertyRef Name="ProductId" />
             </Principal>
             <Dependent Role="ProductImage">
-              <PropertyRef Name="ItemImageID" />
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2548,7 +2548,7 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
               <MappingFragment StoreEntitySet="ProductImage">
                 <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="ItemImageID" ColumnName="ItemImageID" />
+                <ScalarProperty Name="ItemImageId" ColumnName="ItemImageId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
