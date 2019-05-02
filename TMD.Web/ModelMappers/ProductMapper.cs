@@ -1,5 +1,7 @@
-﻿using TMD.Models.DomainModels;
+﻿using System.Linq;
+using TMD.Models.DomainModels;
 using TMD.Web.Models;
+using TMD.Web.ViewModels;
 using TMD.Web.ViewModels.ApiModels;
 
 namespace TMD.Web.ModelMappers
@@ -25,7 +27,8 @@ namespace TMD.Web.ModelMappers
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
-                ImagePath = source.ImagePath
+                ImagePath = source.ImagePath,
+                ProductImages = source.ProductImages.Select(x=>x.CreateFromClientToServer(source.ProductId)).ToList()
             };
         }
 
@@ -69,6 +72,19 @@ namespace TMD.Web.ModelMappers
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
             };
+        }
+    }
+
+    public static class ProductImageMapper
+    {
+        public static ProductImage CreateFromClientToServer(this ProductImageModel source, long productId)
+        {
+            return new ProductImage
+            {
+                ImagePath = source.ItemImagePath,
+                ProductId = productId
+            };
+
         }
     }
 }

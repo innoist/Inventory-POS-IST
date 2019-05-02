@@ -113,7 +113,7 @@ OdyPortal/OdyPortal.csproj.orig
 *.cs.orig
 *.cs.orig
 *.cs.orig
-
+*.jfm
 # Ionic App
 # Cordova folders
 TMD.MobileApp/node_modules/

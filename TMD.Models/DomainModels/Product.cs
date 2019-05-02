@@ -23,7 +23,8 @@ namespace TMD.Models.DomainModels
 
         public virtual ICollection<OrderItem> OrderItems { get; set; }
         public virtual ICollection<InventoryItem> InventoryItems { get; set; }
-        public virtual ProductImage ProductImage { get; set; }
+        public virtual ICollection<ProductImage> ProductImages { get; set; }
+        public virtual ICollection<ShoppingCartItem> ShoppingCartItems { get; set; }
         public virtual ProductCategory ProductCategory { get; set; }
     }
 }

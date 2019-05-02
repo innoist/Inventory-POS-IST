@@ -9,19 +9,18 @@ namespace TMD.Web.ViewModels
         public ProductViewModel()
         {
             ProductCategories = new List<ProductCategoryModel>();
-            ProductImages = new List<string>();
+            //ProductModel.ProductImages = new List<ProductImageModel>();
         }
         public ProductModel ProductModel { get; set; }
         public IEnumerable<ProductCategoryModel> ProductCategories { get; set; }
         //public List<ProductImageModel> ProductImages { get; set; }
-        public List<string> ProductImages { get; set; }
 
     }
 
     public class ProductImageModel
     {
-        public long ItemImageID { get; set; }
+        public long ImageId { get; set; }
         public long ProductId { get; set; }
-        public string ImagePath { get; set; }
+        public string ItemImagePath { get; set; }
     }
 }

@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IRepository\IExpenseRepository.cs" />
+    <Compile Include="IRepository\IProductImageRepository.cs" />
     <Compile Include="IRepository\ISalesSummaryViewRepository.cs" />
     <Compile Include="IRepository\IProductsStockRepository.cs" />
     <Compile Include="IRepository\INoteRepository.cs" />
