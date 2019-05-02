@@ -114,5 +114,17 @@ OdyPortal/OdyPortal.csproj.orig
 *.cs.orig
 *.cs.orig
 
+# Ionic App
+# Cordova folders
+TMD.MobileApp/node_modules/
+TMD.MobileApp/platforms/
+TMD.MobileApp/plugins/
+TMD.MobileApp/.sourcemaps/
 
-GPAA.v12.suo
+# when use sass, do not commit css files
+TMD.MobileApp/www/css/
+TMD.MobileApp/www/lib/
+
+# do not commit generated images
+TMD.MobileApp/resources/android/
+TMD.MobileApp/resources/ios/

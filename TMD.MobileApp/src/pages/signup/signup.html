@@ -1,0 +1,35 @@
+<ion-header>
+    <ion-navbar header-color>
+        <ion-title text-left>{{ 'SIGNUP_TITLE' | translate }}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content has-header white-background>
+    <ion-grid>
+        <ion-row wrap padding>
+            <ion-col col-12 col-sm-12 col-md-12 offset-lg-3 col-lg-6 offset-xl-3 col-xl-6>
+                <!---Logo-->
+                <img src="assets/icon/icon.png">
+                <!---Input field username-->
+                <ion-item no-padding transparent>
+                    <ion-label floating>{{ 'NAME' | translate }}</ion-label>
+                    <ion-input required type="text" [(ngModel)]="account.name" name="name"></ion-input>
+                </ion-item>
+                <!---Input field email-->
+                <ion-item no-padding transparent>
+                    <ion-label floating>{{ 'EMAIL' | translate }}</ion-label>
+                    <ion-input required type="email" [(ngModel)]="account.email" name="email"></ion-input>
+                </ion-item>
+                <!---Input field password-->
+                <ion-item no-padding transparent>
+                    <ion-label floating>{{ 'PASSWORD' | translate }}</ion-label>
+                    <ion-input required type="password" [(ngModel)]="account.password" name="password"></ion-input>
+                </ion-item>
+
+                <!---Signup button-->
+                <button ion-button float-left button-clear-outline round outline (click)="doSignup()">{{
+                    'SIGNUP_BUTTON' | translate }}</button>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
