@@ -33,7 +33,7 @@ namespace TMD.Implementation
             unityContainer.RegisterType<INotesCategoryService, NotesCategoryService>();
             unityContainer.RegisterType<INoteService, NoteService>();
             unityContainer.RegisterType<ISalesSummaryViewService, SalesSummaryViewService>();
-            
+            unityContainer.RegisterType<IShoppingCartService, ShoppingCartService>();
         }
     }
 }

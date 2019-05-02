@@ -31,6 +31,8 @@ namespace TMD.Repository
             unityContainer.RegisterType<IProductsStockRepository, ProductsStockRepository>();
             unityContainer.RegisterType<ISalesSummaryViewRepository, SalesSummaryViewRepository>();
             unityContainer.RegisterType<IProductImageRepository, ProductImageRepository>();
+            unityContainer.RegisterType<IShoppingCartRepository, ShoppingCartRepository>();
+            unityContainer.RegisterType<IShoppingCartItemRepository, ShoppingCartItemRepository>();
         }
     }
 }

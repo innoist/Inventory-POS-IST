@@ -327,6 +327,32 @@
           <Property Name="Specification" Type="nvarchar" MaxLength="2000" />
           <Property Name="ImagePath" Type="nvarchar" MaxLength="100" />
         </EntityType>
+        <EntityType Name="ShoppingCart">
+          <Key>
+            <PropertyRef Name="CartId" />
+          </Key>
+          <Property Name="CartId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserCartId" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="TransactionId" Type="nvarchar" MaxLength="100" />
+          <Property Name="Status" Type="int" Nullable="false" />
+          <Property Name="AmountPaid" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="CurrencyCode" Type="nvarchar" MaxLength="5" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ShoppingCartItem">
+          <Key>
+            <PropertyRef Name="CartItemId" />
+          </Key>
+          <Property Name="CartItemId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CartId" Type="bigint" Nullable="false" />
+          <Property Name="ProductId" Type="bigint" Nullable="false" />
+          <Property Name="SizeId" Type="bigint" />
+          <Property Name="UnitPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="Quantity" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="StagingEbayBatchImports">
           <Key>
             <PropertyRef Name="EbayBatchImportId" />
@@ -729,6 +755,18 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ShoppingCartItem_ShoppingCart">
+          <End Role="ShoppingCart" Type="Self.ShoppingCart" Multiplicity="1" />
+          <End Role="ShoppingCartItem" Type="Self.ShoppingCartItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShoppingCart">
+              <PropertyRef Name="CartId" />
+            </Principal>
+            <Dependent Role="ShoppingCartItem">
+              <PropertyRef Name="CartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_StagingEbayBatchImports_AspNetUsers_CreatedBy">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="0..1" />
           <End Role="StagingEbayBatchImports" Type="Self.StagingEbayBatchImports" Multiplicity="*" />
@@ -853,6 +891,8 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
           <EntitySet Name="ProductImage" EntityType="Self.ProductImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductMainCategory" EntityType="Self.ProductMainCategory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShoppingCart" EntityType="Self.ShoppingCart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ShoppingCartItem" EntityType="Self.ShoppingCartItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StagingEbayBatchImports" EntityType="Self.StagingEbayBatchImports" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StagingEbayItems" EntityType="Self.StagingEbayItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="StagingToyGraderBatchImports" EntityType="Self.StagingToyGraderBatchImports" Schema="dbo" store:Type="Tables" />
@@ -960,6 +1000,10 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
           <AssociationSet Name="FK_Products_ProductCategory" Association="Self.FK_Products_ProductCategory">
             <End Role="ProductCategory" EntitySet="ProductCategory" />
             <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShoppingCartItem_ShoppingCart" Association="Self.FK_ShoppingCartItem_ShoppingCart">
+            <End Role="ShoppingCart" EntitySet="ShoppingCart" />
+            <End Role="ShoppingCartItem" EntitySet="ShoppingCartItem" />
           </AssociationSet>
           <AssociationSet Name="FK_StagingEbayBatchImports_AspNetUsers_CreatedBy" Association="Self.FK_StagingEbayBatchImports_AspNetUsers_CreatedBy">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -1156,6 +1200,16 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
             <End Role="OrderItem" EntitySet="OrderItems" />
           </AssociationSet>
           <EntitySet Name="SalesSummaryViews" EntityType="TMD.Models.DomainModels.SalesSummaryView" />
+          <EntitySet Name="ShoppingCarts" EntityType="TMD.Models.DomainModels.ShoppingCart" />
+          <EntitySet Name="ShoppingCartItems" EntityType="TMD.Models.DomainModels.ShoppingCartItem" />
+          <AssociationSet Name="FK_ShoppingCartItem_Products" Association="TMD.Models.DomainModels.FK_ShoppingCartItem_Products">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ShoppingCartItem" EntitySet="ShoppingCartItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShoppingCartItem_ShoppingCart" Association="TMD.Models.DomainModels.FK_ShoppingCartItem_ShoppingCart">
+            <End Role="ShoppingCart" EntitySet="ShoppingCarts" />
+            <End Role="ShoppingCartItem" EntitySet="ShoppingCartItems" />
+          </AssociationSet>
           <EntitySet Name="ProductImages" EntityType="TMD.Models.DomainModels.ProductImage" />
           <AssociationSet Name="FK_ProductImage_Products" Association="TMD.Models.DomainModels.FK_ProductImage_Products">
             <End Role="Product" EntitySet="Products" />
@@ -1618,6 +1672,7 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
           <NavigationProperty Name="OrderItems" Relationship="TMD.Models.DomainModels.FK_OrderItems_Products" FromRole="Product" ToRole="OrderItem" />
           <Property Name="Specification" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
           <Property Name="ImagePath" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ShoppingCartItems" Relationship="TMD.Models.DomainModels.FK_ShoppingCartItem_Products" FromRole="Product" ToRole="ShoppingCartItem" />
           <NavigationProperty Name="ProductImages" Relationship="TMD.Models.DomainModels.FK_ProductImage_Products" FromRole="Product" ToRole="ProductImage" />
         </EntityType>
         <EntityType Name="StagingToyGraderItem">
@@ -2027,6 +2082,59 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
           <Property Name="Profit" Type="Decimal" Precision="38" Scale="2" />
           <Property Name="ProfitPercentage" Type="Decimal" Precision="38" Scale="6" />
         </EntityType>
+        <EntityType Name="ShoppingCart">
+          <Key>
+            <PropertyRef Name="CartId" />
+          </Key>
+          <Property Name="CartId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserCartId" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="TransactionId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="AmountPaid" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="CurrencyCode" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ShoppingCartItems" Relationship="TMD.Models.DomainModels.FK_ShoppingCartItem_ShoppingCart" FromRole="ShoppingCart" ToRole="ShoppingCartItem" />
+        </EntityType>
+        <EntityType Name="ShoppingCartItem">
+          <Key>
+            <PropertyRef Name="CartItemId" />
+          </Key>
+          <Property Name="CartItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CartId" Type="Int64" Nullable="false" />
+          <Property Name="ProductId" Type="Int64" Nullable="false" />
+          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="Quantity" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="TMD.Models.DomainModels.FK_ShoppingCartItem_Products" FromRole="ShoppingCartItem" ToRole="Product" />
+          <NavigationProperty Name="ShoppingCart" Relationship="TMD.Models.DomainModels.FK_ShoppingCartItem_ShoppingCart" FromRole="ShoppingCartItem" ToRole="ShoppingCart" />
+          <Property Name="SizeId" Type="Int64" />
+        </EntityType>
+        <Association Name="FK_ShoppingCartItem_Products">
+          <End Type="TMD.Models.DomainModels.Product" Role="Product" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.ShoppingCartItem" Role="ShoppingCartItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ShoppingCartItem">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ShoppingCartItem_ShoppingCart">
+          <End Type="TMD.Models.DomainModels.ShoppingCart" Role="ShoppingCart" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.ShoppingCartItem" Role="ShoppingCartItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ShoppingCart">
+              <PropertyRef Name="CartId" />
+            </Principal>
+            <Dependent Role="ShoppingCartItem">
+              <PropertyRef Name="CartId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityType Name="ProductImage">
           <Key>
             <PropertyRef Name="ItemImageId" />
@@ -2543,6 +2651,34 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ShoppingCarts">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ShoppingCart">
+              <MappingFragment StoreEntitySet="ShoppingCart">
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="CurrencyCode" ColumnName="CurrencyCode" />
+                <ScalarProperty Name="AmountPaid" ColumnName="AmountPaid" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="UserCartId" ColumnName="UserCartId" />
+                <ScalarProperty Name="CartId" ColumnName="CartId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ShoppingCartItems">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.ShoppingCartItem">
+              <MappingFragment StoreEntitySet="ShoppingCartItem">
+                <ScalarProperty Name="SizeId" ColumnName="SizeId" />
+                <ScalarProperty Name="Quantity" ColumnName="Quantity" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="CartId" ColumnName="CartId" />
+                <ScalarProperty Name="CartItemId" ColumnName="CartItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="ProductImages">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductImage">
               <MappingFragment StoreEntitySet="ProductImage">
@@ -2634,6 +2770,10 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
         <AssociationConnector Association="TMD.Models.DomainModels.FK_OrderItems_Orders" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_OrderItems_Products" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.SalesSummaryView" Width="1.5" PointX="17.375" PointY="17.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.ShoppingCart" Width="1.5" PointX="12.5" PointY="21" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.ShoppingCartItem" Width="1.5" PointX="14.625" PointY="21" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_ShoppingCartItem_Products" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_ShoppingCartItem_ShoppingCart" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductImage" Width="1.5" PointX="14.25" PointY="0.75" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductImage_Products" />
       </Diagram>

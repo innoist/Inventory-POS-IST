@@ -62,6 +62,8 @@
     <Folder Include="dbo\" />
     <Folder Include="dbo\Tables\" />
     <Folder Include="dbo\Stored Procedures\" />
+    <Folder Include="dbo\Views\" />
+    <Folder Include="Security\" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\AspNetRoles.sql" />
@@ -83,5 +85,30 @@
     <Build Include="dbo\Tables\Configurations.sql" />
     <Build Include="dbo\Stored Procedures\spUpsertEbayLoadStartTimeFromConfiguration.sql" />
     <Build Include="dbo\Stored Procedures\spGetEbayLoadStartTimeFrom.sql" />
+    <Build Include="dbo\Tables\Vendors.sql" />
+    <Build Include="dbo\Tables\ShoppingCartItem.sql" />
+    <Build Include="dbo\Tables\ShoppingCart.sql" />
+    <Build Include="dbo\Tables\Products.sql" />
+    <Build Include="dbo\Tables\ProductMainCategory.sql" />
+    <Build Include="dbo\Tables\ProductImage.sql" />
+    <Build Include="dbo\Tables\ProductConfiguration.sql" />
+    <Build Include="dbo\Tables\ProductCategory.sql" />
+    <Build Include="dbo\Tables\Orders.sql" />
+    <Build Include="dbo\Tables\OrderItems.sql" />
+    <Build Include="dbo\Tables\NotesCategory.sql" />
+    <Build Include="dbo\Tables\Notes.sql" />
+    <Build Include="dbo\Tables\Log.sql" />
+    <Build Include="dbo\Tables\InventoryItems.sql" />
+    <Build Include="dbo\Tables\Expenses.sql" />
+    <Build Include="dbo\Tables\ExpenseCategory.sql" />
+    <Build Include="dbo\Tables\Customer.sql" />
+    <Build Include="dbo\Tables\CategoryLog.sql" />
+    <Build Include="dbo\Tables\Category.sql" />
+    <Build Include="dbo\Views\SalesSummaryView.sql" />
+    <Build Include="dbo\Views\ProductsStock.sql" />
+    <Build Include="Security\ToysWorldPk.sql" />
+    <Build Include="Security\toysworld.sql" />
+    <Build Include="Security\RoleMemberships.sql" />
+    <Build Include="Security\ToysWorldPk_1.sql" />
   </ItemGroup>
 </Project>
