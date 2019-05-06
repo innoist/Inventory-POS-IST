@@ -8,8 +8,7 @@ import { Storage } from '@ionic/storage';
  */
 @Injectable()
 export class Api {
-  //url: string = 'http://hr.d-starltd.com';
-  url: string = 'http://localhost:43064';
+  url: string = 'http://localhost:23868';
   public token: string = '';
   constructor(public http: HttpClient, private _http: Http, private storage: Storage) {
     this.storage.get('authData').then((data) => {
