@@ -6,9 +6,7 @@ import { Config, Nav, Platform, Events, MenuController } from 'ionic-angular';
 import { Settings, LoadingHelper } from '../providers';
 import { Storage } from '@ionic/storage';
 import { FirstRunPage, HomePage } from '../pages'; 
-import { Api } from '../providers/api/api';
 import { MenuService } from '../services/menu-service';
-import { ToastService } from '../services/toast-service';
 
 @Component({
   template: `
@@ -118,7 +116,7 @@ export class MyApp {
   updateCultureErrorString: string = "";
 
   constructor(private translate: TranslateService, 
-    private platform: Platform, 
+    platform: Platform, 
     private settings: Settings, 
     private config: Config, 
     private statusBar: StatusBar, 
@@ -126,10 +124,7 @@ export class MyApp {
     private events: Events,
     private storage: Storage,
     private loader: LoadingHelper,
-    private menuCtrl: MenuController,
-    private api: Api,
-    private toastCtrl: ToastService,
-    private menuService: MenuService) {
+    private menuCtrl: MenuController) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -166,26 +161,11 @@ export class MyApp {
     this.translate.get(['BACK_BUTTON_TEXT']).subscribe(values => {
       this.config.set('ios', 'backButtonText', values.BACK_BUTTON_TEXT);
     });
-
-    this.translate.get(['USER_PREFERRED_LANGUAGE_UPDATE_ERROR']).subscribe(values => {
-      this.updateCultureErrorString = values.USERPREFERREDLANGUAGEUPDATE_ERROR;
-    });
   }
 
   initApp(){
-    this.menuService.load(null).subscribe(snapshot => {
-      if(!snapshot){
-        return;
-      }
-      this.menuHeaderParams = snapshot;
-      this.pages = snapshot.RootMenuItems;
-      this.childMenuItems = snapshot.ChildMenuItems;
-      this.nav.setRoot(HomePage);  
-      if(snapshot.UserPreferredCulture && snapshot.UserPreferredCulture !== "en"){
-        this.changeLanguage(snapshot.UserPreferredCulture);
-      }
-    });
     this.settings.load();
+    this.nav.setRoot(HomePage); 
   }
 
   openSubMenu(page){
@@ -223,30 +203,4 @@ export class MyApp {
     // Navigate to login page
     this.nav.setRoot("WelcomePage");
   }  
-
-  updateUserCulturePreference(language){
-    this.loader.presentLoader();
-    this.api.post('api/UserPreferenceApi', { MobileCulture: language }).subscribe((response) => {
-      this.changeLanguage(language);
-      this.loader.dismissLoader();
-    }, (error) => {
-      this.loader.dismissLoader();      
-      this.toastCtrl.presentToast(this.updateCultureErrorString);
-    });
-  }
-
-  changeLanguage(language){
-    this.menuCtrl.enable(false);
-    this.defaultLanguage = language;
-    if(language === "ar"){
-      this.platform.setDir('rtl', true);
-    }
-    else{
-      this.platform.setDir('ltr', true);
-    }    
-    this.translate.use(language);
-    this.translate.get(['BACK_BUTTON_TEXT']).subscribe(values => {
-      this.config.set('ios', 'backButtonText', values.BACK_BUTTON_TEXT);
-    });
-  }
 }
