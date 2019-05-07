@@ -1,12 +1,13 @@
-﻿using System.Web.Http;
-using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Http;
 using TMD.Interfaces.IServices;
+using TMD.Models.RequestModels;
 using TMD.Web.ModelMappers;
-using TMD.Web.Models;
 using TMD.Web.ViewModels.ApiModels;
 
 namespace TMD.Web.Areas.Api.Controllers
 {
+    [Authorize]
     public class ProductController : ApiController
     {
         private readonly IProductService productService;
@@ -17,9 +18,11 @@ namespace TMD.Web.Areas.Api.Controllers
         }
 
         // GET api/<controller>
-        public ProductModel Get()
+        public IHttpActionResult Get([FromUri] ProductSearchRequest request)
         {
-            return new ProductModel{Name = "Custom"};
+            var response = productService.GetProductSearchResponse(request);
+            var products = response.Products.Select(p => p.CreateFromServerToClient()).ToList();
+            return Ok(new { Products = products, response.TotalCount });
         }
 
         // GET api/<controller>/5

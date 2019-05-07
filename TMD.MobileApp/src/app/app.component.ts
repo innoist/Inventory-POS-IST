@@ -5,16 +5,15 @@ import { TranslateService } from '@ngx-translate/core';
 import { Config, Nav, Platform, Events, MenuController } from 'ionic-angular';
 import { Settings, LoadingHelper } from '../providers';
 import { Storage } from '@ionic/storage';
-import { FirstRunPage, HomePage } from '../pages'; 
+import { FirstRunPage, HomePage } from '../pages';
 import { MenuService } from '../services/menu-service';
 
 @Component({
-  template: `
-  
-    <ion-menu *ngIf="defaultLanguage === 'en'" side="left" [content]="content">
-    <ion-header header-background-image [ngStyle]="{'background-image': 'url(' + menuHeaderParams.background + ')'}">
+  template: `  
+    <ion-menu side="left" [content]="content">
+    <ion-header header-background-image style="'background-image':'url(assets/icon/toysworldlogo.png)'">
       <ion-thumbnail>
-          <img [src]="menuHeaderParams.image">
+          <img src="assets/icon/toysworldlogo.png">
       </ion-thumbnail>
       <ion-buttons start *ngIf="selectedMenu" >
         <button ion-button icon-only (click)="selectedMenu = undefined">
@@ -25,15 +24,16 @@ import { MenuService } from '../services/menu-service';
     </ion-header>
     <ion-content main-menu>
       <ion-list no-margin no-padding *ngIf="!selectedMenu">
-        <button ion-item paddinge-left no-lines item-title *ngFor="let p of pages" (click)="openSubMenu(p)">
+        <button ion-item paddinge-left no-lines item-title *ngFor="let p of pages" (click)="openMenuItem(p)">
           <ion-icon icon-small item-left>
             <i class="icon {{p.icon}}"></i>
           </ion-icon>
           {{p.title}}
         </button>
       </ion-list>
-      <ion-list no-margin no-padding *ngIf="selectedMenu">
-        <button ion-item paddinge-left no-lines item-title *ngFor="let p of subPages" (click)="openPage(p)" menuToggle>
+      <ion-list no-margin no-padding *ngIf="selectedMenu && selectedMenu.subMenuItems">
+        <button ion-item paddinge-left no-lines item-title *ngFor="let p of selectedMenu.subMenuItems" 
+            (click)="openPage(p)" menuToggle>
           {{p.title}}
         </button>
       </ion-list>
@@ -41,99 +41,54 @@ import { MenuService } from '../services/menu-service';
         <ion-item>
           <button item-start ion-button icon-only (click)="logout()">
             <ion-icon name="log-out"></ion-icon>
-          </button>
-          <button item-end ion-button icon-left (click)="updateUserCulturePreference('ar')">
-            <ion-icon name="globe" md="md-globe"></ion-icon>
-            AR
-          </button>
-        </ion-item>
-      </ion-list>      
-    </ion-content>
-  </ion-menu>
-  <ion-menu *ngIf="defaultLanguage === 'ar'" side="right" [content]="content">
-    <ion-header header-background-image [ngStyle]="{'background-image': 'url(' + menuHeaderParams.background + ')'}">
-      <ion-thumbnail>
-          <img [src]="menuHeaderParams.image">
-      </ion-thumbnail>
-      <ion-buttons start *ngIf="selectedMenu" >
-        <button ion-button icon-only (click)="selectedMenu = undefined">
-          <ion-icon name="arrow-back"></ion-icon>
-        </button>
-      </ion-buttons>
-      <h2 item-title text-center>{{ "MENU_TITLE" | translate }}</h2>
-    </ion-header>
-    <ion-content main-menu>
-      <ion-list no-margin no-padding *ngIf="!selectedMenu">
-        <button ion-item paddinge-left no-lines item-title  *ngFor="let p of pages" (click)="openSubMenu(p)">
-          <ion-icon icon-small item-left>
-            <i class="icon {{p.icon}}"></i>
-          </ion-icon>
-          {{p.titleAr}}
-        </button>
-      </ion-list>
-      <ion-list no-margin no-padding *ngIf="selectedMenu">
-        <button ion-item paddinge-left no-lines item-title  *ngFor="let p of subPages" (click)="openPage(p)" menuToggle>
-          {{p.titleAr}}
-        </button>
-      </ion-list>
-      <ion-list no-lines>
-        <ion-item>
-          <button item-start ion-button icon-only (click)="logout()">
-            <ion-icon name="log-out"></ion-icon>
-          </button>
-          <button item-end ion-button icon-left (click)="updateUserCulturePreference('en')">
-            <ion-icon name="globe" md="md-globe"></ion-icon>
-            EN
           </button>
         </ion-item>
       </ion-list>      
     </ion-content>
    </ion-menu>
    <ion-nav #content [root]="rootPage" main swipeBackEnabled="false"></ion-nav>
- `, 
- providers: [MenuService]
+ `,
+  providers: [MenuService]
 })
 export class MyApp {
-  
+
   rootPage: string = FirstRunPage;
 
   selectedMenu: any;
 
-  defaultLanguage: string = "en";
-
-  // Modules - Main Category Menu Items
+  // Menu Items
   pages: any[] = [];
-
-  // Sub Categories - Menu Items
-  subPages: any[] = [];
-
-  childMenuItems: any[] = [];
 
   @ViewChild(Nav) nav: Nav;
 
-  menuHeaderParams: any = { image: "", background: "" };
-
-  updateCultureErrorString: string = "";
-
-  constructor(private translate: TranslateService, 
-    platform: Platform, 
-    private settings: Settings, 
-    private config: Config, 
-    private statusBar: StatusBar, 
+  constructor(private translate: TranslateService,
+    platform: Platform,
+    private settings: Settings,
+    private config: Config,
+    private statusBar: StatusBar,
     private splashScreen: SplashScreen,
     private events: Events,
     private storage: Storage,
     private loader: LoadingHelper,
-    private menuCtrl: MenuController) {
+    private menuCtrl: MenuController,
+    private menuService: MenuService) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-    });
-    this.initTranslate();    
-    this.events.subscribe("User_LoggedIn", () => {
-      this.initApp();        
+      this.initTranslate();      
+      // If user is authorized then set menu else go to login page
+      this.storage.get('authData').then((data) => {
+        if (!data || !data.access_token) {
+          this.nav.setRoot(FirstRunPage);
+        }
+      }).catch(function () {
+        this.nav.setRoot(FirstRunPage);
+      });
+      this.events.subscribe("User_LoggedIn", () => {
+        this.initApp();
+      });
     });
   }
 
@@ -163,44 +118,34 @@ export class MyApp {
     });
   }
 
-  initApp(){
+  initApp() {
     this.settings.load();
-    this.nav.setRoot(HomePage); 
+    this.pages = this.menuService.load();
+    this.nav.setRoot(HomePage);
   }
 
-  openSubMenu(page){
+  openMenuItem(page: any) {
     this.selectedMenu = page;
-    if(this.selectedMenu.component){
+    if (this.selectedMenu.component) {
       // Reset Menu State
       this.selectedMenu = undefined;
       this.menuCtrl.toggle();
-      this.openPage(page);   
+      this.openPage(page);
       return;
     }
-
-    // Reset Child Menu
-    this.subPages = [];
-    this.childMenuItems.filter((element) => element.ParentMenuId === this.selectedMenu.id).forEach(element => {
-      this.subPages.push({ 
-        title: element.Name, 
-        component: element.Component,
-        titleAr: element.NameAr,
-        icon: element.Icon
-       });  
-    });
   }
 
-  openPage(page){
+  openPage(page: any) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
 
-  logout(){
+  logout() {
     this.loader.presentLoader(true);
     // log out user and reset the user info
     this.storage.set('authData', "");
     // Navigate to login page
-    this.nav.setRoot("WelcomePage");
-  }  
+    this.nav.setRoot(this.rootPage);
+  }
 }

@@ -1,0 +1,28 @@
+<!-- Themes Expandable Full image with CTA & Infinite Scroll -->
+<ion-content has-header>
+    <ion-grid no-padding *ngIf="data != null">
+        <ion-row>
+            <ion-col col-12 no-padding no-margin>
+                <ion-list>
+                    <ul no-margin no-padding class="collapsible">
+                        <li margin *ngFor="let product of products">
+                            <!-- Expandable Full image with CTA Header-->
+                            <div class="collapsible-header">
+                                <ion-item no-margin padding no-lines [ngClass]="animateClass" background-size [ngStyle]="{ 'background-image': 
+                                        product.ImagePath ? 'url(' + api.url + '/Images/Inventory/' + product.ImagePath + ')' : '' }">
+                                    <h2 item-title float-left>{{product.ProductId}} - {{product.Name}}</h2>
+                                    <button ion-button float-right button-clear-outline outline round (click)="addToCart(product)">
+                                        {{ 'PRODUCT_LIST_ADD_TO_CART' | translate }}
+                                  </button>
+                                </ion-item>
+                            </div>
+                        </li>
+                    </ul>
+                </ion-list>                
+                <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+                    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+                </ion-infinite-scroll>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>
