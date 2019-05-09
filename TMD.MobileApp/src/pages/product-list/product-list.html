@@ -4,9 +4,9 @@
         <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-        <ion-title text-left>{{ 'PRODUCT_LIST_TITLE' | translate }}</ion-title>
+        <ion-title text-left>{{ productCategory.Name }}</ion-title>
     </ion-navbar>
 </ion-header>
 <!--Content-->
-<products>
+<products [category]="productCategory">
 </products>

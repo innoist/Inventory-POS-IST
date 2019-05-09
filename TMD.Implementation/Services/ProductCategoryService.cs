@@ -3,6 +3,7 @@ using System.Linq;
 using TMD.Interfaces.IRepository;
 using TMD.Interfaces.IServices;
 using TMD.Models.DomainModels;
+using TMD.Models.RequestModels;
 using TMD.Models.ResponseModels;
 
 namespace TMD.Implementation.Services
@@ -48,6 +49,14 @@ namespace TMD.Implementation.Services
             
             productCategoryRepository.SaveChanges();
             return productCategory.CategoryId;
+        }
+
+        /// <summary>
+        /// Get All Product Categories 
+        /// </summary>
+        public ProductCategorySearchResponse GetAll(ProductCategorySearchRequest request)
+        {
+            return productCategoryRepository.GetAll(request);
         }
     }
 }

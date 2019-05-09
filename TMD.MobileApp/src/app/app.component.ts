@@ -2,10 +2,10 @@ import { Component, ViewChild } from '@angular/core';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { TranslateService } from '@ngx-translate/core';
-import { Config, Nav, Platform, Events, MenuController } from 'ionic-angular';
+import { Config, Nav, Platform, MenuController } from 'ionic-angular';
 import { Settings, LoadingHelper } from '../providers';
 import { Storage } from '@ionic/storage';
-import { FirstRunPage, HomePage } from '../pages';
+import { HomePage, ProductCategoryListPage } from '../pages';
 import { MenuService } from '../services/menu-service';
 
 @Component({
@@ -52,7 +52,7 @@ import { MenuService } from '../services/menu-service';
 })
 export class MyApp {
 
-  rootPage: string = FirstRunPage;
+  rootPage: string = ProductCategoryListPage;
 
   selectedMenu: any;
 
@@ -67,7 +67,6 @@ export class MyApp {
     private config: Config,
     private statusBar: StatusBar,
     private splashScreen: SplashScreen,
-    private events: Events,
     private storage: Storage,
     private loader: LoadingHelper,
     private menuCtrl: MenuController,
@@ -77,18 +76,7 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
-      this.initTranslate();      
-      // If user is authorized then set menu else go to login page
-      this.storage.get('authData').then((data) => {
-        if (!data || !data.access_token) {
-          this.nav.setRoot(FirstRunPage);
-        }
-      }).catch(function () {
-        this.nav.setRoot(FirstRunPage);
-      });
-      this.events.subscribe("User_LoggedIn", () => {
-        this.initApp();
-      });
+      this.initTranslate();  
     });
   }
 

@@ -25,7 +25,7 @@
   "SIGNUP_ERROR": "Unable to create account. Please check your account information and try again.",
   "SIGNUP_BUTTON": "Sign up",
   "PRODUCT_LIST_TITLE": "Products List",
-  "PRODUCT_LIST_ADD_TO_CART": "Add to cart",
+  "PRODUCT_CATEGORY_LIST_VIEW_ALL_BUTTON": "View All",
   "DONE_BUTTON": "Done",
   "CANCEL_BUTTON": "Cancel",
   "DELETE_BUTTON": "Delete",

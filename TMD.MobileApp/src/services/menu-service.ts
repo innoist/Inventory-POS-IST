@@ -30,15 +30,6 @@ export class MenuService implements IService {
         title: 'Home',
         component: 'ContentPage',
         icon: 'icon-home'
-      },
-      {
-        title: 'Inventory',
-        icon: 'icon-basket',
-        subMenuItems: [{
-          title: 'Products List',
-          component: 'ProductListPage',
-          icon: 'icon-th-3'
-        }]
       }
     ];
   }

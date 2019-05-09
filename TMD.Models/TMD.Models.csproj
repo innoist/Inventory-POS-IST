@@ -170,6 +170,7 @@
     <Compile Include="ResponseModels\InventoryItemSearchResponse.cs" />
     <Compile Include="ResponseModels\OrderSearchResponse.cs" />
     <Compile Include="ResponseModels\ProductResponse.cs" />
+    <Compile Include="ResponseModels\ProductCategorySearchResponse.cs" />
     <Compile Include="ResponseModels\ProductSearchResponse.cs" />
     <Compile Include="ResponseModels\BatchImportSearchResponse.cs" />
     <Compile Include="ResponseModels\ProductSearchResponseByAnyCode.cs" />

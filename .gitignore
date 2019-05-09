@@ -113,6 +113,9 @@ UpgradeLog.htm
 *.cs.orig
 *.jfm
 
+# Images upload folder
+TMD.Web/Images/
+
 # Ionic App
 # Cordova folders
 TMD.MobileApp/node_modules/

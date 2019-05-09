@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Web.Http;
 using TMD.Interfaces.IServices;
 using TMD.Models.RequestModels;
@@ -7,22 +8,36 @@ using TMD.Web.ViewModels.ApiModels;
 
 namespace TMD.Web.Areas.Api.Controllers
 {
-    [Authorize]
     public class ProductController : ApiController
     {
         private readonly IProductService productService;
+        private readonly IProductCategoryService productCategoryService;
 
-        public ProductController(IProductService productService)
+        public ProductController(IProductService productService, IProductCategoryService productCategoryService)
         {
+            if (productCategoryService == null)
+            {
+                throw new ArgumentNullException(nameof(productCategoryService));
+            }
             this.productService = productService;
+            this.productCategoryService = productCategoryService;
         }
 
         // GET api/<controller>
         public IHttpActionResult Get([FromUri] ProductSearchRequest request)
         {
             var response = productService.GetProductSearchResponse(request);
-            var products = response.Products.Select(p => p.CreateFromServerToClient()).ToList();
-            return Ok(new { Products = products, response.TotalCount });
+            var products = response.Products.Select(p => p.CreateFromServerToClient()).OrderBy(p => p.Name).ToList();
+            return Ok(new { Products = products, response.FilteredCount });
+        }
+
+        // GET api/<controller>
+        [Route("~/api/Product/ByCategory")]
+        public IHttpActionResult Get([FromUri] ProductCategorySearchRequest request)
+        {
+            var response = productCategoryService.GetAll(request);
+            var productCategories = response.ProductCategories.Select(p => p.CreateFromServerToClient(false)).ToList();
+            return Ok(new { ProductCategories = productCategories, response.FilteredCount });
         }
 
         // GET api/<controller>/5

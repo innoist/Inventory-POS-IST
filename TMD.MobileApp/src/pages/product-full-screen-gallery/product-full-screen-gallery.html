@@ -1,0 +1,12 @@
+<!--Full gallery component-->
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{ params && params.data ? params.data.name : "Images" }}</ion-title>
+    </ion-navbar>
+</ion-header>
+<ion-content>
+    <full-screen-gallery [data]="params.data"></full-screen-gallery>
+</ion-content>

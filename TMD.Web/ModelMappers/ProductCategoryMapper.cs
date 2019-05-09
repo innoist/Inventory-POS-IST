@@ -1,4 +1,5 @@
-﻿using TMD.Models.DomainModels;
+﻿using System.Linq;
+using TMD.Models.DomainModels;
 using TMD.Web.Models;
 
 namespace TMD.Web.ModelMappers
@@ -21,9 +22,9 @@ namespace TMD.Web.ModelMappers
             };
         }
 
-        public static ProductCategoryModel CreateFromServerToClient(this ProductCategory source)
+        public static ProductCategoryModel CreateFromServerToClient(this ProductCategory source, bool headersOnly = true)
         {
-            return new ProductCategoryModel
+            var response = new ProductCategoryModel
             {
                 CategoryId = source.CategoryId,
                 Description = source.Description,
@@ -36,6 +37,17 @@ namespace TMD.Web.ModelMappers
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
                 ProductMainCategoryName = source.ProductMainCategory==null ?"": source.ProductMainCategory.Name
             };
+            if (headersOnly)
+            {
+                return response;
+            }
+            response.Products = source.Products
+                                      .Where(p => p.ProductImages.Any(pi => !string.IsNullOrEmpty(pi.ImagePath)))
+                                      .OrderBy(p => p.Name)
+                                      .Take(3)
+                                      .Select(product => product.CreateFromServerToClient())
+                                      .ToList();
+            return response;
         }
         #endregion
 

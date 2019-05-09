@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TMD.Models.DomainModels;
+using TMD.Models.RequestModels;
 using TMD.Models.ResponseModels;
 
 namespace TMD.Interfaces.IServices
@@ -10,5 +11,6 @@ namespace TMD.Interfaces.IServices
         CreateCategoryResponseModel GetProductCategoryResponse(long? productCategoryId);
         IEnumerable<ProductCategory> GetAllProductCategories();
         long AddProductCategory(ProductCategory productCategory);
+        ProductCategorySearchResponse GetAll(ProductCategorySearchRequest request);
     }
 }
