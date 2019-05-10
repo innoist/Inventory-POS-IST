@@ -71,8 +71,6 @@
     <Build Include="dbo\Tables\AspNetUserLogins.sql" />
     <Build Include="dbo\Tables\AspNetUserRoles.sql" />
     <Build Include="dbo\Tables\AspNetUsers.sql" />
-    <Build Include="dbo\Stored Procedures\spIsEbayLoadRunning.sql" />
-    <Build Include="dbo\Stored Procedures\spEbayItemExists.sql" />
     <Build Include="dbo\Tables\StagingToyGraderItems.sql" />
     <Build Include="dbo\Tables\StagingToyGraderBatchImports.sql" />
     <Build Include="dbo\Tables\StagingEbayItems.sql" />
@@ -83,8 +81,6 @@
     <Build Include="dbo\Tables\DataWarehouseDimDate.sql" />
     <Build Include="dbo\Tables\DataWarehouseDimComapany.sql" />
     <Build Include="dbo\Tables\Configurations.sql" />
-    <Build Include="dbo\Stored Procedures\spUpsertEbayLoadStartTimeFromConfiguration.sql" />
-    <Build Include="dbo\Stored Procedures\spGetEbayLoadStartTimeFrom.sql" />
     <Build Include="dbo\Tables\Vendors.sql" />
     <Build Include="dbo\Tables\ShoppingCartItem.sql" />
     <Build Include="dbo\Tables\ShoppingCart.sql" />

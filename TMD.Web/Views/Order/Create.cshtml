@@ -4,18 +4,16 @@
     ViewBag.Title = "Create/Update Order";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
     Session["MenuKey"] = 20;
+    var isOnline = Model.IsOnline;
 }
-
 
 @using (Html.BeginForm("Create", "Order", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     <div class="portlet box blue-hoki">
         <div class="portlet-title">
-
             <div class="tools">
                 @*<a href="javascript:;" class="collapse">
                     </a>*@
-
                 <button type="submit" class="btn btn-circle blue" onclick="return ValidateAmounts();">Save</button>
                 <a href="~/Order/Index">
                     <button type="button" class="btn btn-circle default">Cancel</button>
@@ -25,7 +23,6 @@
                 <i class="fa fa-male"></i>Create/Update Order
             </div>
         </div>
-
         <div class="portlet-body form">
             <div class="container-fluid">
                 @Html.AntiForgeryToken()
@@ -34,7 +31,6 @@
                 @Html.HiddenFor(m => m.RecCreatedDate)
                 @Html.HiddenFor(m => m.CustomerId)
                 @Html.HiddenFor(m => m.AllowedMaxDiscount)
-                
 
                 <div class="row">
                     <div class="col-md-7 col-sm-12">
@@ -51,7 +47,6 @@
                             </div>
 
                             <div class="portlet-body" id="OrderItemAddInfo">
-
                                 <div class="row static-info">
                                     <div class="col-md-2 name">
                                         Code
@@ -59,14 +54,11 @@
                                     <div class="col-md-2 value">
                                         @**@
                                         <input type="text" value="" class="form-control mandatoryItem searchBarcode" onchange="LoadProductByCode(this)" autofocus="autofocus" id="ItemCode" />
-                                   
-                                        <input type="hidden" value="" id="ItemId"/>
+
+                                        <input type="hidden" value="" id="ItemId" />
                                     </div>
                                     <div class="col-md-5 value">
-
-                                        <input type="text" value="" class="form-control mandatoryItem" id="ItemName" disabled="disabled"/>
-
-                                 
+                                        <input type="text" value="" class="form-control mandatoryItem" id="ItemName" disabled="disabled" />
                                     </div>
                                     <div class="col-md-1 name">
                                         Price
@@ -98,11 +90,9 @@
                                         }
                                     </div>
                                     <div class="col-md-2 value">
-                                        <label tabindex="-1" title="Items in Stock"  style="font-style: italic" class="form-control" id="itemInStock"></label>
+                                        <label tabindex="-1" title="Items in Stock" style="font-style: italic" class="form-control" id="itemInStock"></label>
                                     </div>
-
                                 </div>
-
 
                                 <div class="row static-info">
                                     <div class="col-md-2 name">
@@ -123,28 +113,19 @@
                                         Grand TOTAL
                                     </div>
                                     <div class="col-md-7 value">
-                                        @*<input type="text" tabindex="-1" readonly="readonly" value="" class="form-control mandatoryItem" id="GrandTotal" />*@
-@if (User.IsInRole("Admin"))
-{
-                                        <input type="text" tabindex="-1"  value="" class="form-control mandatoryItem" id="GrandTotal" />
-}
-else
-{
-                                        <input type="text" tabindex="-1" readonly="readonly" value="" class="form-control mandatoryItem" id="GrandTotal" />
-}
-    
+                                        @if (User.IsInRole("Admin"))
+                                        {
+                                            <input type="text" tabindex="-1" value="" class="form-control mandatoryItem" id="GrandTotal" />
+                                        }
+                                        else
+                                        {
+                                            <input type="text" tabindex="-1" readonly="readonly" value="" class="form-control mandatoryItem" id="GrandTotal" />
+                                        }
                                     </div>
-
                                     <div class="col-md-2 value">
                                         <button type="button" class="btn btn-circle red" id="addItem">Add Item</button>
                                     </div>
-                                    
-                                 
                                 </div>
-
-
-
-
                             </div>
                         </div>
                     </div>
@@ -154,18 +135,14 @@ else
                                 <div class="caption">
                                     <i class="fa fa-cogs"></i>Pricing
                                 </div>
-
                             </div>
-
                             <div class="portlet-body">
-
                                 <div class="row static-info">
                                     <div class="col-sm-2 name">
                                         Sub Total
                                     </div>
                                     <div class="col-sm-4 value">
                                         <input readonly="readonly" class="form-control" disabled="disabled" type="text" id="OrderSubTotal" />
-                                        @*@Model.ToyGraderItemId*@
                                     </div>
                                     <div class="col-sm-2 name">
                                         Discount Rs
@@ -173,28 +150,21 @@ else
                                     <div class="col-sm-4 value">
                                         <input readonly="readonly" class="form-control" disabled="disabled" type="text" id="OrderTotalDisc" />
                                     </div>
-
                                 </div>
-
                                 <div class="row static-info">
                                     <div class="col-md-2 name">
                                         Items Qty
                                     </div>
                                     <div class="col-md-4 value">
-                                        <input readonly="readonly" style="color:red" disabled="disabled" type="text" class="form-control" id="OrderItemsQty" />
+                                        <input readonly="readonly" style="color: red" disabled="disabled" type="text" class="form-control" id="OrderItemsQty" />
                                     </div>
                                     <div class="col-md-2 name">
                                         NET RS.
                                     </div>
                                     <div class="col-md-4 value">
-                                        <input readonly="readonly" style="color:red" disabled="disabled" type="text" class="form-control" id="OrderNetTotal" />
+                                        <input readonly="readonly" style="color: red" disabled="disabled" type="text" class="form-control" id="OrderNetTotal" />
                                     </div>
-
-
-
                                 </div>
-
-
                                 <div class="row static-info">
 
                                     <div class="col-md-2 name">
@@ -210,78 +180,60 @@ else
                                     <div class="col-md-4 value">
                                         <input readonly="readonly" disabled="disabled" type="text" class="form-control" id="OrderAmountReturn" />
                                     </div>
-
                                 </div>
-
-
                             </div>
                         </div>
                     </div>
-                    @*<div class="col-md-5 col-sm-12">
-                        <div class="portlet green-meadow box">
-                            <div class="portlet-title">
-                                <div class="caption">
-                                    <i class="fa fa-cogs"></i>Customer
-                                </div>
-
-                            </div>
-
-                            <div class="portlet-body">
-
-                                <div class="row static-info">
-                                    <div class="col-md-2 name">
-                                        Phone
-                                    </div>
-                                    <div class="col-md-4 value">
-                                        @Html.TextBoxFor(m => m.Customer.Phone, new { @class = "form-control", @height = "24px", @placeholder = "Enter Phone Number" })
-                                    </div>
-                                    <div class="col-md-2 name">
-                                        Name
-                                    </div>
-                                    <div class="col-md-4 value">
-                                        @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control", @height = "24px", @placeholder = "Enter Phone Number" })
-                                    </div>
-
-                                </div>
-
-                                <div class="row static-info">
-                                    <div class="col-md-2 name">
-                                        Email
-                                    </div>
-                                    <div class="col-md-4 value">
-                                        @Html.TextBoxFor(m => m.Customer.Email, new { @class = "form-control", @height = "24px", @placeholder = "Enter Email" })
-                    
-                                    </div>
-                                    <div class="col-md-2 name">
-                                        Address
-                                    </div>
-                                    <div class="col-md-4 value">
-                                        @Html.TextBoxFor(m => m.Customer.Address, new { @class = "form-control", @height = "24px", @placeholder = "Enter Address" })
-                                    </div>
-
-                                </div>
-
-                                <div class="row static-info">
-                                    <div class="col-md-4 name">
-                                        <a href="#" target="_blank" class="">View Customers</a>
-                                    </div>
-
-
-                                </div>
-
-
-
-
-
-
-
-                            </div>
-                        </div>
-                    </div>*@
-
-
                 </div>
 
+                @if (isOnline)
+                {
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="portlet green-meadow box">
+                                <div class="portlet-title">
+                                    <div class="caption">
+                                        <i class="fa fa-cogs"></i>Customer Details
+                                    </div>
+
+                                </div>
+                                <div class="portlet-body">
+                                    <div class="row static-info">
+                                        <div class="col-md-2 name">
+                                            Name
+                                        </div>
+                                        <div class="col-md-4 value">
+                                            @Html.TextBoxFor(m => m.Customer.Name, new { @class = "form-control", @height = "24px", @placeholder = "Enter Phone Number", @disabled = "disabled" })
+                                        </div>
+                                        <div class="col-md-2 name">
+                                            Phone
+                                        </div>
+                                        <div class="col-md-4 value">
+                                            @Html.TextBoxFor(m => m.Customer.Phone, new { @class = "form-control", @height = "24px", @placeholder = "Enter Phone Number", @disabled = "disabled" })
+                                        </div>
+                                    </div>
+
+                                    <div class="row static-info">
+                                        <div class="col-md-2 name">
+                                            Email
+                                        </div>
+                                        <div class="col-md-4 value">
+                                            @Html.TextBoxFor(m => m.Customer.Email, new { @class = "form-control", @height = "24px", @placeholder = "Enter Email", @disabled = "disabled" })
+
+                                        </div>
+                                        <div class="col-md-2 name">
+                                            Address
+                                        </div>
+                                        <div class="col-md-4 value">
+                                            @Html.TextAreaFor(m => m.Customer.Address, new { @class = "form-control", @height = "24px", @placeholder = "Enter Address", @disabled = "disabled" })
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
 
                 <div class="row">
                     <div class="col-md-12">
@@ -290,7 +242,6 @@ else
                                 <div class="caption">
                                     <i class="fa fa-cogs"></i>Order Details
                                 </div>
-
                             </div>
                             <input type="hidden" id="TotalCount" value="@Model.OrderItems.Count" />
                             <div class="portlet-body">
@@ -298,10 +249,8 @@ else
                                     <table id="tblItemDetails" class="table table-striped table-bordered table-advance table-hover">
                                         <thead>
                                             <tr>
-                                                <th style='display:none'>
-
+                                                <th style='display: none'>
                                                 </th>
-
                                                 <th>
                                                     Code
                                                 </th>
@@ -311,14 +260,12 @@ else
                                                 <th>
                                                     Price
                                                 </th>
-
                                                 <th>
                                                     Quantity
                                                 </th>
                                                 <th>
                                                     Sub Total
                                                 </th>
-                                                
 
                                                 <th>
                                                     Disc Amount
@@ -326,7 +273,6 @@ else
                                                 <th>
                                                     Total
                                                 </th>
-
                                                 <th>
                                                 </th>
                                             </tr>
@@ -334,46 +280,37 @@ else
                                         <tbody>
                                             @for (int i = 0; i < Model.OrderItems.Count; i++)
                                             {
-                                              
-                                                
-                                                
                                                 <tr data-id="@i">
-                                                    @Html.HiddenFor(model => model.OrderItems[i].OrderItemId )
-                                                    <td style='display:none'>
+                                                    @Html.HiddenFor(model => model.OrderItems[i].OrderItemId)
+                                                    <td style='display: none'>
                                                         <input name='OrderItems.Index' type='hidden' value='@i' />
                                                         @Html.HiddenFor(model => model.OrderItems[i].OrderItemId)
                                                     </td>
                                                     <td class="highlight">
-                                                        @Html.TextBoxFor(model => model.OrderItems[i].ProductId, new { @readOnly = "readOnly", @class = "TableTextBox"})
+                                                        @Html.TextBoxFor(model => model.OrderItems[i].ProductId, new { @readOnly = "readOnly", @class = "TableTextBox" })
                                                     </td>
                                                     <td class="hidden-xs">
                                                         @Html.DisplayFor(model => model.OrderItems[i].Product.Name)
                                                     </td>
-
                                                     <td class="highlight">
                                                         @Html.TextBoxFor(model => model.OrderItems[i].Product.SalePrice, new { @readOnly = "readOnly", @class = "TableTextBox" })
-                                                        
+
                                                     </td>
                                                     <td>
-
                                                         @Html.TextBoxFor(model => model.OrderItems[i].Quantity, new { @class = "TableTextBox GridValueChange" })
                                                     </td>
                                                     <td>
-
                                                         @Html.TextBoxFor(model => model.OrderItems[i].Subtotal, new { @readOnly = "readOnly", @class = "TableTextBox" })
                                                     </td>
                                                     <td>
-
                                                         @Html.TextBoxFor(model => model.OrderItems[i].Discount, new { @class = "TableTextBox GridValueChange" })
                                                     </td>
-
                                                     <td>
                                                         @Html.TextBoxFor(model => model.OrderItems[i].TotalItemAmount, new { @readOnly = "readOnly", @class = "TableTextBox" })
                                                     </td>
-                                                  
 
                                                     <td>
-                                                        @Html.HiddenFor(model=>model.OrderItems[i].IsModified)
+                                                        @Html.HiddenFor(model => model.OrderItems[i].IsModified)
                                                     </td>
                                                 </tr>
                                             }
@@ -383,317 +320,291 @@ else
                             </div>
                         </div>
                     </div>
-
-                 
-
-
                 </div>
-
             </div>
         </div>
-        <script>
-            var emptyOrder = true;
-            $(document).ajaxStop($.unblockUI);
-            $(function () {
+    </div>
 
+    <script>
+        var emptyOrder = true;
+        $(document).ajaxStop($.unblockUI);
+        $(function () {
+
+            CalculateOrderTotals();
+        });
+
+
+        $('#addItem').on("click", function (event) {
+
+            AddItemToGrid();
+        });
+
+        function AddItemToGrid() {
+            var index = $('#TotalCount').val();
+            var obj = new Object();
+            if (ValidateItemAdd(obj)) {
+                var html = '<tr data-id="' + index + '">' +
+                    '<td style="display:none"><input name="OrderItems.Index" type="hidden" value="' + index + '"/>' +
+                    '<input  name="OrderItems[' + index + '].OrderItemId" type="hidden" value="-1">' +
+                    '</td>' +
+                    //PRODUCT CODE
+                    '<td class="highlight">' +
+                    '<input class="TableTextBox valid" name="OrderItems[' + index + '].ProductId" readonly="readOnly" type="text" value="' + obj.itemCode + '">' +
+                    '</td>' +
+                    //Product Name
+                    '<td class="highlight">' + obj.itemName + '</td>' +
+
+                    //Product Price
+                    '<td class="highlight">' +
+                    '<input class="TableTextBox valid" name="OrderItems[' + index + '].Product.SalePrice" id="OrderItems_' + index + '__Product_SalePrice" readonly="readOnly" type="text" value="' + obj.salePrice + '">' +
+                    '</td>' +
+                    //Quantity
+                    '<td class="highlight">' +
+                    '<input class="TableTextBox valid GridValueChange" name="OrderItems[' + index + '].Quantity"  id="OrderItems_' + index + '__Quantity"  type="text" value="' + obj.itemQty + '">' +
+                    '</td>' +
+
+                    //Sub Total
+                    '<td class="highlight">' +
+                    '<input class="TableTextBox valid"  readonly="readOnly" id="OrderItems_' + index + '__Subtotal" name="OrderItems[' + index + '].Subtotal"  type="text" value="' + obj.itemSubTotal + '">' +
+                    '</td>' +
+
+
+                    //Discount Amount
+                    '<td class="highlight">' +
+                    '<input class="TableTextBox valid GridValueChange" id="OrderItems_' + index + '__Discount" name="OrderItems[' + index + '].Discount"  type="text" value="' + obj.itemDiscPrice + '">' +
+                    '</td>' +
+                    //Total
+                    '<td class="highlight">' +
+                    '<input class="TableTextBox valid" name="OrderItems[' + index + '].TotalItemAmount"  id="OrderItems_' + index + '__TotalItemAmount" readonly="readOnly" type="text" value="' + obj.itemTotalprice + '">' +
+                    '</td>' +
+                    '<td>' +
+                    '<a href="#" class="btn default btn-xs red deleteRow">' +
+                    '<i class="fa fa-trash-o"  ></i> Delete </a> </td> ' +
+                    '<input id="OrderItems_' + index + '__IsModified" name="OrderItems[' + index + '].IsModified" type="hidden" value="False">' +
+                    '</tr>';
+                $('#tblItemDetails').append(html);
+                $('#TotalCount').val(++index);
                 CalculateOrderTotals();
-            });
-
-            //$(document).ready(function () {
-            //    $(window).keydown(function (event) {
-            //        if (event.keyCode == 13) {
-            //            event.preventDefault();
-            //            return false;
-            //        }
-            //    });
-            //});
-        
-            $('#addItem').on("click", function (event) {
-
-                AddItemToGrid();
-            });
-
-            function AddItemToGrid() {
-                var index = $('#TotalCount').val();
-                //var index = $("#tblItemDetails").children("tbody").children("tr").length;
-                var obj = new Object();
-                if (ValidateItemAdd(obj)) {
-                    var html = '<tr data-id="' + index + '">' +
-                        '<td style="display:none"><input name="OrderItems.Index" type="hidden" value="' + index + '"/>' +
-                        '<input  name="OrderItems[' + index + '].OrderItemId" type="hidden" value="-1">' +
-                        '</td>' +
-                        //PRODUCT CODE
-                        '<td class="highlight">' +
-                        '<input class="TableTextBox valid" name="OrderItems[' + index + '].ProductId" readonly="readOnly" type="text" value="' + obj.itemCode + '">' +
-                        '</td>' +
-                        //Product Name
-                        '<td class="highlight">' + obj.itemName + '</td>' +
-
-                        //Product Price
-                        '<td class="highlight">' +
-                        '<input class="TableTextBox valid" name="OrderItems[' + index + '].Product.SalePrice" id="OrderItems_' + index + '__Product_SalePrice" readonly="readOnly" type="text" value="' + obj.salePrice + '">' +
-                        '</td>' +
-                        //Quantity
-                        '<td class="highlight">' +
-                        '<input class="TableTextBox valid GridValueChange" name="OrderItems[' + index + '].Quantity"  id="OrderItems_' + index + '__Quantity"  type="text" value="' + obj.itemQty + '">' +
-                        '</td>' +
-
-                        //Sub Total
-                        '<td class="highlight">' +
-                        '<input class="TableTextBox valid"  readonly="readOnly" id="OrderItems_' + index + '__Subtotal" name="OrderItems[' + index + '].Subtotal"  type="text" value="' + obj.itemSubTotal + '">' +
-                        '</td>' +
-
-
-                        //Discount Amount
-                        '<td class="highlight">' +
-                        '<input class="TableTextBox valid GridValueChange" id="OrderItems_' + index + '__Discount" name="OrderItems[' + index + '].Discount"  type="text" value="' + obj.itemDiscPrice + '">' +
-                        '</td>' +
-                        //Total
-                        '<td class="highlight">' +
-                        '<input class="TableTextBox valid" name="OrderItems[' + index + '].TotalItemAmount"  id="OrderItems_' + index + '__TotalItemAmount" readonly="readOnly" type="text" value="' + obj.itemTotalprice + '">' +
-                        '</td>' +
-
-                        '<td>' +
-                        '<a href="#" class="btn default btn-xs red deleteRow">' +
-                        '<i class="fa fa-trash-o"  ></i> Delete </a> </td> ' +
-                        '<input id="OrderItems_' + index + '__IsModified" name="OrderItems[' + index + '].IsModified" type="hidden" value="False">' +
-                        '</tr>';
-                    $('#tblItemDetails').append(html);
-                    $('#TotalCount').val(++index);
-                    CalculateOrderTotals();
-                    ResetItemDetail();
-                }
+                ResetItemDetail();
             }
-           
-            function ValidateItemAdd(obj) {
+        }
 
-                if (ValidateFieldsByClass('mandatoryItem')) {
-                    obj.itemCode = $('#ItemCode').val();
-                    obj.salePrice = $('#SalePrice').val();
-                    obj.itemQty = $('#ItemQty').val();
-                    obj.itemSubTotal = $('#TotalPrice').val();
-                    obj.itemDiscPerc = $('#ItemDiscPerc').val();
-                    obj.itemDiscPrice = $('#ItemDiscPrice').val();
-                    obj.itemTotalprice = $('#GrandTotal').val();
-                    obj.itemName = $('#ItemName').val();
-                    
-                    return true;
-                }
-                return false;
+        function ValidateItemAdd(obj) {
 
-
-            }
-     
-            function ResetItemDetail() {
-                //var div = $('#OrderItemAddInfo');
-                $('#OrderItemAddInfo').find('input:text').val('0');
-                $('#OrderItemAddInfo').find('label').val('');
-                $('#ItemQty').val('1');
-                $('#ItemCode').val('');
-
-            }
-
-
-            jQuery(document).on('keydown',  function (ev) {
-                if (ev.which === 13) {
-                    
-                    // Avoid form submit
-                    return false;
-                }
-            });
-            var isBarCode = false;
-            jQuery('.searchBarcode').on('keydown', function (ev) {
-                if (ev.which === 13) {
-                    isBarCode = true;
-                    LoadProductByCode(document.getElementById('ItemCode'));
-                    // Avoid form submit
-                    return false;
-                }
-            });
-            
-
-            function LoadProductByCode(control) {
-                var productCode = $("#" + control.id).val();
-                if (productCode == "")
-                    return;
-                $.blockUI({ message: '<h3><img src="../Images/loading.gif" height=55px; width=55px; /> Fetching Product...</h2>' });
-                if (productCode != "" && productCode != "0") {
-                    $.ajax({
-                        url: "/Api/Product",
-                        type: "GET",
-                        data: { id: productCode, searchBarCode: false },
-                        dataType: "json",
-                        success: ProductLoaded,
-                        error: function (textStatus, errorThrown) {
-                            $.unblockUI();
-                            alert("Status: " + textStatus); alert("Error: " + errorThrown);
-                        }
-                    });
-                }
-            }
-
-            function ProductLoaded(data) {
-             
-                $.unblockUI();
-               
-                
-                $("#ItemCode").val(data.ProductId);
-                $("#ItemName").val(data.Name);
-                $("#SalePrice").val(data.SalePrice);
-                $("#itemInStock").text((data.AvailableItems-1) +" Left");
-                CalculateTotals();
-                if (data.ProductId <= 0) {
-                    toastr.error("No Product found with given Code");
-                    $('#ItemQty').val(1);
-                } else {
-                    toastr.success("Product found successfully");
-                    if(isBarCode)
-                        AddItemToGrid();
-                   
-                }
-                isBarCode = false;
-            }
-        
-            function CalculateTotals() {
-                
-                var obj = new Object();
+            if (ValidateFieldsByClass('mandatoryItem')) {
+                obj.itemCode = $('#ItemCode').val();
                 obj.salePrice = $('#SalePrice').val();
                 obj.itemQty = $('#ItemQty').val();
-                obj.itemSubTotal = obj.salePrice * obj.itemQty;
-                obj.itemDiscPrice = $('#ItemDiscPrice').val();
-                obj.GrandTotal = obj.itemSubTotal - obj.itemDiscPrice;
-
-                $('#GrandTotal').val(obj.GrandTotal);
-                $('#TotalPrice').val(obj.itemSubTotal);
-            }
-
-            $('.calcPrice').change(function () {
-
-                CalculateTotals();
-            });
-
-
-            //$('.GridValueChange').change(function (a, b) {
-            $(document).on('change', '.GridValueChange', function (a, b) {
-                
-                var counterID = $('#' + this.id).parent().parent().attr("data-id");
-                var qty = $('#OrderItems_' + counterID + '__Quantity').val();
-                
-                var price = $('#OrderItems_' + counterID + '__Product_SalePrice').val();
-                var discRS = $('#OrderItems_' + counterID + '__Discount').val();
-                var subTotal = price * qty;
-
-                var discPerc = (discRS * 100) / subTotal;
-
-                //Checking max allowed... if any problem i will revert it to 0
-                var maxAllowedDiscPerc = $('#AllowedMaxDiscount').val();
-                if (parseInt(discPerc) > parseInt(maxAllowedDiscPerc)) {
-                    $('#OrderItems_' + counterID + '__Discount').val(0);
-                    toastr.error("ORDER EXCEEDING SALE DISCOUNT LIMIT");
-                    discRS = $('#OrderItems_' + counterID + '__Discount').val();
-                }
-
-                $('#OrderItems_' + counterID + '__IsModified').val('True');
-             
-                $('#OrderItems_' + counterID + '__Subtotal').val(subTotal);
-                var Total = subTotal - discRS;
-                $('#OrderItems_' + counterID + '__TotalItemAmount').val(Total);
-
-
-
-                CalculateOrderTotals();
-                
-                return false;
-
-            });
-
-            $('.calcDisc').change(function (a, b) {
-                var obj = new Object();
-                
-                obj.salePrice = $('#SalePrice').val();
-                obj.itemQty = $('#ItemQty').val();
-                obj.itemSubTotal = obj.salePrice * obj.itemQty;
+                obj.itemSubTotal = $('#TotalPrice').val();
                 obj.itemDiscPerc = $('#ItemDiscPerc').val();
                 obj.itemDiscPrice = $('#ItemDiscPrice').val();
+                obj.itemTotalprice = $('#GrandTotal').val();
+                obj.itemName = $('#ItemName').val();
 
-                
+                return true;
+            }
+            return false;
+        }
 
-                if (this.id == "ItemDiscPerc") {
-                    //Means perc changes
-                    obj.itemDiscPrice = Math.floor(obj.itemSubTotal * (obj.itemDiscPerc / 100));
-                    $('#ItemDiscPrice').val(obj.itemDiscPrice);
+        function ResetItemDetail() {
+            //var div = $('#OrderItemAddInfo');
+            $('#OrderItemAddInfo').find('input:text').val('0');
+            $('#OrderItemAddInfo').find('label').val('');
+            $('#ItemQty').val('1');
+            $('#ItemCode').val('');
 
-                }
-                else {
-                    //Means Rs change
-                    obj.itemDiscPerc = Math.round((obj.itemDiscPrice * 100) / obj.itemSubTotal, 1);
-                    $('#ItemDiscPerc').val(obj.itemDiscPerc);
-                }
-                //CHECKING MAX ALLOWED
-                var maxAllowedDiscPerc = $('#AllowedMaxDiscount').val();
-                
-                if ( parseInt(obj.itemDiscPerc) > parseInt(maxAllowedDiscPerc)) {
-                    $('#ItemDiscPerc').val(0);
-                    $('#ItemDiscPrice').val(0);
-                    toastr.error("ORDER EXCEEDING SALE DISCOUNT LIMIT");
-                }
-                CalculateTotals();
-            });
+        }
+
+        jQuery(document).on('keydown', function (ev) {
+            if (ev.which === 13) {
+
+                // Avoid form submit
+                return false;
+            }
+        });
+        var isBarCode = false;
+        jQuery('.searchBarcode').on('keydown', function (ev) {
+            if (ev.which === 13) {
+                isBarCode = true;
+                LoadProductByCode(document.getElementById('ItemCode'));
+                // Avoid form submit
+                return false;
+            }
+        });
+
+        function LoadProductByCode(control) {
+            var productCode = $("#" + control.id).val();
+            if (productCode == "")
+                return;
+            $.blockUI({ message: '<h3><img src="../Images/loading.gif" height=55px; width=55px; /> Fetching Product...</h2>' });
+            if (productCode != "" && productCode != "0") {
+                $.ajax({
+                    url: "/Api/Product",
+                    type: "GET",
+                    data: { id: productCode, searchBarCode: false },
+                    dataType: "json",
+                    success: ProductLoaded,
+                    error: function (textStatus, errorThrown) {
+                        $.unblockUI();
+                        alert("Status: " + textStatus);
+                        alert("Error: " + errorThrown);
+                    }
+                });
+            }
+        }
+
+        function ProductLoaded(data) {
+
+            $.unblockUI();
 
 
-            function  CalculateOrderTotals()
-            {
-            
-                var itemSubTotal = 0;
-                var itemDisc = 0;
-                var itemQtyTotal = 0;
-                // var index = $("#tblItemDetails").children("tbody").children("tr").length; //Total for loop
-                var index = $('#TotalCount').val();
-                for (i = 0; i < index; i++) {
-                    
-                    itemSubTotal += parseInt($('#OrderItems_' + i + '__Subtotal').val()) || 0;
-                    itemDisc += parseInt($('#OrderItems_' + i + '__Discount').val()) || 0;
-                    itemQtyTotal += parseInt($('#OrderItems_' + i + '__Quantity').val()) || 0;
-                }
-
-
-                $('#OrderSubTotal').val(itemSubTotal);
-                $('#OrderTotalDisc').val(itemDisc);
-                $('#OrderNetTotal').val(itemSubTotal - itemDisc);
-                $('#OrderItemsQty').val(itemQtyTotal);
-                CalculateReturnAmount();
+            $("#ItemCode").val(data.ProductId);
+            $("#ItemName").val(data.Name);
+            $("#SalePrice").val(data.SalePrice);
+            $("#itemInStock").text((data.AvailableItems - 1) + " Left");
+            CalculateTotals();
+            if (data.ProductId <= 0) {
+                toastr.error("No Product found with given Code");
+                $('#ItemQty').val(1);
+            } else {
+                toastr.success("Product found successfully");
+                if (isBarCode)
+                    AddItemToGrid();
 
             }
-            function CalculateReturnAmount(agElement) {
-              
-                var AmountPaid = $('#OrderAmountGiven').val();
-                var NetTotal = $('#OrderNetTotal').val();
-                var toGive = AmountPaid - NetTotal;
-                $('#OrderAmountReturn').val(toGive);
+            isBarCode = false;
+        }
+
+        function CalculateTotals() {
+
+            var obj = new Object();
+            obj.salePrice = $('#SalePrice').val();
+            obj.itemQty = $('#ItemQty').val();
+            obj.itemSubTotal = obj.salePrice * obj.itemQty;
+            obj.itemDiscPrice = $('#ItemDiscPrice').val();
+            obj.GrandTotal = obj.itemSubTotal - obj.itemDiscPrice;
+
+            $('#GrandTotal').val(obj.GrandTotal);
+            $('#TotalPrice').val(obj.itemSubTotal);
+        }
+
+        $('.calcPrice').change(function () {
+
+            CalculateTotals();
+        });
+
+
+        //$('.GridValueChange').change(function (a, b) {
+        $(document).on('change', '.GridValueChange', function (a, b) {
+
+            var counterID = $('#' + this.id).parent().parent().attr("data-id");
+            var qty = $('#OrderItems_' + counterID + '__Quantity').val();
+
+            var price = $('#OrderItems_' + counterID + '__Product_SalePrice').val();
+            var discRS = $('#OrderItems_' + counterID + '__Discount').val();
+            var subTotal = price * qty;
+
+            var discPerc = (discRS * 100) / subTotal;
+
+            //Checking max allowed... if any problem i will revert it to 0
+            var maxAllowedDiscPerc = $('#AllowedMaxDiscount').val();
+            if (parseInt(discPerc) > parseInt(maxAllowedDiscPerc)) {
+                $('#OrderItems_' + counterID + '__Discount').val(0);
+                toastr.error("ORDER EXCEEDING SALE DISCOUNT LIMIT");
+                discRS = $('#OrderItems_' + counterID + '__Discount').val();
             }
 
-            $(document).on('click', '.deleteRow', function (a, b) {
-                //alert('123');
-                $(this).parent().parent().remove();
-                CalculateOrderTotals();
-            });
+            $('#OrderItems_' + counterID + '__IsModified').val('True');
+
+            $('#OrderItems_' + counterID + '__Subtotal').val(subTotal);
+            var Total = subTotal - discRS;
+            $('#OrderItems_' + counterID + '__TotalItemAmount').val(Total);
 
 
-            function ValidateAmounts() {
-                var OrderNetTotal = $('#OrderNetTotal').val();
-                var returnAmount = $('#OrderAmountReturn').val();
-                //if ((returnAmount == "" || parseInt(returnAmount) < 0) && parseInt(OrderNetTotal) > 0) {
-                //    toastr.error("Return Amount cannot be less than 0");
-                //    return false;
-                //}
-                if (parseInt(OrderNetTotal) < 1) {
-                    toastr.error("Empty order can not be saved.");
-                    return false;
-                } else {
-                    return true;
-                }
+            CalculateOrderTotals();
+
+            return false;
+
+        });
+
+        $('.calcDisc').change(function (a, b) {
+            var obj = new Object();
+
+            obj.salePrice = $('#SalePrice').val();
+            obj.itemQty = $('#ItemQty').val();
+            obj.itemSubTotal = obj.salePrice * obj.itemQty;
+            obj.itemDiscPerc = $('#ItemDiscPerc').val();
+            obj.itemDiscPrice = $('#ItemDiscPrice').val();
+
+
+            if (this.id == "ItemDiscPerc") {
+                //Means perc changes
+                obj.itemDiscPrice = Math.floor(obj.itemSubTotal * (obj.itemDiscPerc / 100));
+                $('#ItemDiscPrice').val(obj.itemDiscPrice);
+
+            } else {
+                //Means Rs change
+                obj.itemDiscPerc = Math.round((obj.itemDiscPrice * 100) / obj.itemSubTotal, 1);
+                $('#ItemDiscPerc').val(obj.itemDiscPerc);
             }
-        </script>
-    </div>
+            //CHECKING MAX ALLOWED
+            var maxAllowedDiscPerc = $('#AllowedMaxDiscount').val();
+
+            if (parseInt(obj.itemDiscPerc) > parseInt(maxAllowedDiscPerc)) {
+                $('#ItemDiscPerc').val(0);
+                $('#ItemDiscPrice').val(0);
+                toastr.error("ORDER EXCEEDING SALE DISCOUNT LIMIT");
+            }
+            CalculateTotals();
+        });
+
+
+        function CalculateOrderTotals() {
+
+            var itemSubTotal = 0;
+            var itemDisc = 0;
+            var itemQtyTotal = 0;
+            var index = $('#TotalCount').val();
+            for (i = 0; i < index; i++) {
+
+                itemSubTotal += parseInt($('#OrderItems_' + i + '__Subtotal').val()) || 0;
+                itemDisc += parseInt($('#OrderItems_' + i + '__Discount').val()) || 0;
+                itemQtyTotal += parseInt($('#OrderItems_' + i + '__Quantity').val()) || 0;
+            }
+
+
+            $('#OrderSubTotal').val(itemSubTotal);
+            $('#OrderTotalDisc').val(itemDisc);
+            $('#OrderNetTotal').val(itemSubTotal - itemDisc);
+            $('#OrderItemsQty').val(itemQtyTotal);
+            CalculateReturnAmount();
+
+        }
+
+        function CalculateReturnAmount(agElement) {
+
+            var AmountPaid = $('#OrderAmountGiven').val();
+            var NetTotal = $('#OrderNetTotal').val();
+            var toGive = AmountPaid - NetTotal;
+            $('#OrderAmountReturn').val(toGive);
+        }
+
+        $(document).on('click', '.deleteRow', function (a, b) {
+            //alert('123');
+            $(this).parent().parent().remove();
+            CalculateOrderTotals();
+        });
+
+
+        function ValidateAmounts() {
+            var OrderNetTotal = $('#OrderNetTotal').val();
+            var returnAmount = $('#OrderAmountReturn').val();
+            if (parseInt(OrderNetTotal) < 1) {
+                toastr.error("Empty order can not be saved.");
+                return false;
+            } else {
+                return true;
+            }
+        }
+    </script>
 }
-

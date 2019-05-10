@@ -256,6 +256,8 @@
           <Property Name="CustomerId" Type="bigint" />
           <Property Name="Comments" Type="nvarchar" MaxLength="1000" />
           <Property Name="IsDeleted" Type="bit" />
+          <Property Name="IsOnline" Type="bit" Nullable="false" />
+          <Property Name="IsOpen" Type="bit" />
         </EntityType>
         <EntityType Name="ProductCategory">
           <Key>
@@ -349,7 +351,6 @@
           <Property Name="CartItemId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CartId" Type="bigint" Nullable="false" />
           <Property Name="ProductId" Type="bigint" Nullable="false" />
-          <Property Name="SizeId" Type="bigint" />
           <Property Name="UnitPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
         </EntityType>
@@ -755,6 +756,18 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ShoppingCartItem_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="ShoppingCartItem" Type="Self.ShoppingCartItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ShoppingCartItem">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ShoppingCartItem_ShoppingCart">
           <End Role="ShoppingCart" Type="Self.ShoppingCart" Multiplicity="1" />
           <End Role="ShoppingCartItem" Type="Self.ShoppingCartItem" Multiplicity="*" />
@@ -1000,6 +1013,10 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
           <AssociationSet Name="FK_Products_ProductCategory" Association="Self.FK_Products_ProductCategory">
             <End Role="ProductCategory" EntitySet="ProductCategory" />
             <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ShoppingCartItem_Products" Association="Self.FK_ShoppingCartItem_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="ShoppingCartItem" EntitySet="ShoppingCartItem" />
           </AssociationSet>
           <AssociationSet Name="FK_ShoppingCartItem_ShoppingCart" Association="Self.FK_ShoppingCartItem_ShoppingCart">
             <End Role="ShoppingCart" EntitySet="ShoppingCart" />
@@ -2011,6 +2028,8 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
           <Property Name="IsDeleted" Type="Boolean" />
           <NavigationProperty Name="Customer" Relationship="TMD.Models.DomainModels.FK_Orders_Customer" FromRole="Order" ToRole="Customer" />
           <NavigationProperty Name="OrderItems" Relationship="TMD.Models.DomainModels.FK_OrderItems_Orders" FromRole="Order" ToRole="OrderItem" />
+          <Property Name="IsOnline" Type="Boolean" Nullable="false" />
+          <Property Name="IsOpen" Type="Boolean" Nullable="true" />
         </EntityType>
         <Association Name="FK_Orders_Customer">
           <End Type="TMD.Models.DomainModels.Customer" Role="Customer" Multiplicity="0..1" />
@@ -2109,7 +2128,6 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="TMD.Models.DomainModels.FK_ShoppingCartItem_Products" FromRole="ShoppingCartItem" ToRole="Product" />
           <NavigationProperty Name="ShoppingCart" Relationship="TMD.Models.DomainModels.FK_ShoppingCartItem_ShoppingCart" FromRole="ShoppingCartItem" ToRole="ShoppingCart" />
-          <Property Name="SizeId" Type="Int64" />
         </EntityType>
         <Association Name="FK_ShoppingCartItem_Products">
           <End Type="TMD.Models.DomainModels.Product" Role="Product" Multiplicity="1" />
@@ -2605,6 +2623,8 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
           <EntitySetMapping Name="Orders">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.Order">
               <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="IsOpen" ColumnName="IsOpen" />
+                <ScalarProperty Name="IsOnline" ColumnName="IsOnline" />
                 <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="Comments" ColumnName="Comments" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
@@ -2670,7 +2690,6 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
           <EntitySetMapping Name="ShoppingCartItems">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.ShoppingCartItem">
               <MappingFragment StoreEntitySet="ShoppingCartItem">
-                <ScalarProperty Name="SizeId" ColumnName="SizeId" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
@@ -2774,7 +2793,7 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
         <EntityTypeShape EntityType="TMD.Models.DomainModels.ShoppingCartItem" Width="1.5" PointX="14.625" PointY="21" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_ShoppingCartItem_Products" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_ShoppingCartItem_ShoppingCart" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductImage" Width="1.5" PointX="14.25" PointY="0.75" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductImage" Width="1.5" PointX="10.5" PointY="4.375" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductImage_Products" />
       </Diagram>
     </Diagrams>

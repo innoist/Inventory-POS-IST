@@ -8,7 +8,10 @@
     [CustomerId]         BIGINT          NULL,
     [Comments]           NVARCHAR (1000) NULL,
     [IsDeleted]          BIT             NULL,
+    [IsOnline]           BIT             CONSTRAINT [DF_Orders_IsOnline] DEFAULT ((0)) NOT NULL,
     CONSTRAINT [PK_Orders] PRIMARY KEY CLUSTERED ([OrderId] ASC),
     CONSTRAINT [FK_Orders_Customer] FOREIGN KEY ([CustomerId]) REFERENCES [dbo].[Customer] ([Id])
 );
+
+
 

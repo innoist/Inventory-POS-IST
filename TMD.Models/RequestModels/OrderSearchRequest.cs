@@ -8,6 +8,8 @@ namespace TMD.Models.RequestModels
         public string  OrderId { get; set; }
         public DateTime ? OrderDate { get; set; }
         public string  ProductCode { get; set; }
+        public int IsOnline { get; set; }
+        public int? IsOpen { get; set; }
 
 
         public OrdersByColumn OrdersOrderBy

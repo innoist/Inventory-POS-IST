@@ -202,7 +202,6 @@
                 '<td style="display:none">' +
                 '<input name="ProductModel.ProductImages.Index" type="hidden" value="' + index + '" />' +
                 '</td>' +
-                //'<input type="hidden" id="ProductModel.ProductImages_' + index + '__ItemImagePath" name = "ProductModel.ProductImages[' + index + '].ItemImagePath" class = "auto-resize ItemImagePath">' +
                 '<input id="ProductModel.ProductImages_' + index + '__ImageId" name = "ProductModel.ProductImages[' + index + '].ImageId type="hidden" />' +
                 imageName +
                 '<td>' +
@@ -252,7 +251,6 @@
             imagePath = result.filename;
 
             AddRow(imagePath, imageName);
-            //yourJavaScriptArray.push(result.filename);
         },
 
         progress: function(result) {
