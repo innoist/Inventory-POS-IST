@@ -1,14 +1,8 @@
 <!--Product Categories List-->
-<ion-header>
-    <ion-navbar>
-        <button ion-button menuToggle>
-            <ion-icon name="menu"></ion-icon>
-        </button>
-        <ion-title text-left>{{ 'HOMEPAGE_TITLE' | translate }}</ion-title>
-    </ion-navbar>
-</ion-header>
+<app-header [title]="('HOMEPAGE_TITLE' | translate)">
+</app-header>
 <!--Content-->
-<ion-content>
+<ion-content has-header>
     <ion-grid no-padding *ngIf="data != null">
         <ion-row>
             <ion-col col-12 no-padding no-margin>

@@ -20,7 +20,7 @@
                                             <h2 item-title>{{product.Name}}</h2>
                                             <p>{{product.SalePrice}} PKR</p>
                                         </div>
-                                        <ion-icon white float-right>
+                                        <ion-icon (click)="addToCart(product, $event)" white float-right>
                                             <i class="icon icon-cart"></i>
                                         </ion-icon>
                                     </div>

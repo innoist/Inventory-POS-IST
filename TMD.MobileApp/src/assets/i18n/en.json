@@ -23,9 +23,7 @@
   "LOGIN_BUTTON": "Sign in",
   "SIGNUP_TITLE": "Sign up",
   "SIGNUP_ERROR": "Unable to create account. Please check your account information and try again.",
-  "SIGNUP_BUTTON": "Sign up",
-  "PRODUCT_LIST_TITLE": "Products List",
-  "PRODUCT_CATEGORY_LIST_VIEW_ALL_BUTTON": "View All",
+  "SIGNUP_BUTTON": "Sign up",  
   "DONE_BUTTON": "Done",
   "CANCEL_BUTTON": "Cancel",
   "DELETE_BUTTON": "Delete",
@@ -36,5 +34,8 @@
   "HOMEPAGE_CONTENT": "Welcome to Toys World.",
   "HOMEPAGE_SUBCONTENT": "Make your selection from menu.",
   "LOADING_CONTENT": "Please wait...",
-  "MENU_TITLE": "MENU"  
+  "MENU_TITLE": "MENU",
+  "PRODUCT_LIST_TITLE": "Products List",
+  "PRODUCT_CATEGORY_LIST_VIEW_ALL_BUTTON": "View All",
+  "ITEM_ADDED_TO_CART": "Item has been added to cart successfully!"  
 }

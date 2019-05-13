@@ -1,12 +1,6 @@
 <!--Product List-->
-<ion-header>
-    <ion-navbar>
-        <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-        <ion-title text-left>{{ productCategory.Name }}</ion-title>
-    </ion-navbar>
-</ion-header>
+<app-header [title]="productCategory.Name">
+</app-header>
 <!--Content-->
 <products [category]="productCategory">
 </products>

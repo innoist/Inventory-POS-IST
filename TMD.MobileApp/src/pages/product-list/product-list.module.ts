@@ -3,6 +3,7 @@ import { IonicPageModule } from 'ionic-angular';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProductListPage } from './product-list';
 import { ProductModule } from '../../components/product/product.module';
+import { AppHeaderModule } from '../../components/header/header.module';
 
 
 @NgModule({
@@ -12,6 +13,7 @@ import { ProductModule } from '../../components/product/product.module';
   imports: [
     IonicPageModule.forChild(ProductListPage),
     ProductModule,
+    AppHeaderModule,
     TranslateModule.forChild()
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

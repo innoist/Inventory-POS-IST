@@ -4,12 +4,13 @@ import { ProductService } from '../../services/product-service';
 import { Api } from '../../providers';
 import 'rxjs/add/operator/debounceTime';
 import { FormControl } from '@angular/forms';
+import { CartService } from '../../services/cart-service';
 
 @IonicPage()
 @Component({
     selector: 'products',
     templateUrl: 'product.html',
-    providers: [ProductService]
+    providers: [ProductService, CartService]
 })
 export class Product {
     @ViewChild(Content) content: Content;
@@ -23,7 +24,8 @@ export class Product {
     searchInput = new FormControl();
     activeInfiniteScroll: InfiniteScroll;
 
-    constructor(private productService: ProductService, public api: Api, private navCtrl: NavController) { 
+    constructor(private productService: ProductService, public api: Api, private navCtrl: NavController,
+        private cartService: CartService) { 
         this.animateClass = { 'fade-in-item': true };
     }
 
@@ -106,6 +108,13 @@ export class Product {
             'items': product.ProductImages,
             'name': product.Name
         });
+    }
+
+    addToCart(product: any, event: any) {
+        if (event) {
+            event.stopPropagation();
+        }
+        this.cartService.addToCart(product);
     }
 
 }
