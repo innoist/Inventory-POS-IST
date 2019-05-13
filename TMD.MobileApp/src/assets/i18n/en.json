@@ -37,5 +37,7 @@
   "MENU_TITLE": "MENU",
   "PRODUCT_LIST_TITLE": "Products List",
   "PRODUCT_CATEGORY_LIST_VIEW_ALL_BUTTON": "View All",
-  "ITEM_ADDED_TO_CART": "Item has been added to cart successfully!"  
+  "ITEM_ADDED_TO_CART": "Item has been added to cart successfully!",
+  "MY_CART_TITLE": "My Cart",
+  "PROCEED_BUTTON_TEXT": "Proceed"  
 }

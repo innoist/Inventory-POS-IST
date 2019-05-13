@@ -1,0 +1,76 @@
+/*  #Theme Products + CTA footer
+===========================================*/
+my-cart {
+    ion-label {
+      min-height: 120px;
+      margin: 0 !important;
+    }
+  
+    .label-ios {
+      min-height: 100px;
+    }
+  
+    [item-top] {
+      margin-top: 15px;
+    }
+  
+    [new-price] {
+      font-size: 18px !important;
+    }
+  
+    [old-price] {
+      clear: both;
+      display: block;
+      margin-top: 60px;
+      font-weight: 300;
+      color: theme-colors('textColors', 'secondary');
+      font-size: $h5-font-size;
+    }
+  
+    .input-wrapper {
+      position: relative;
+  
+      [item-subtitle] {
+        text-transform: capitalize;
+        position: absolute;
+        bottom: 10px;
+      }
+    }
+
+    ion-thumbnail {
+        filter: none;
+    }
+
+    [container-hearder-image] {
+        position: relative;
+        @include black-white-mode;
+        height: 140px;
+        padding: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    
+        ion-col {
+          z-index: 9999;
+          position: relative;
+    
+          [span-large] {
+            display: block;
+            margin-bottom: 20px;
+          }
+        }
+    
+        [header-title] {
+          margin: 0;
+          text-transform: uppercase;
+        }
+    
+        [header-subtitle] {
+          color: theme-colors('mainColors', 'secondary');
+          font-size: $text-font-size;
+          font-weight: 300;
+          margin: 0;
+        }
+      }
+  }
+  

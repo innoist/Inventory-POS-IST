@@ -1,4 +1,4 @@
-import { IonicPage } from "ionic-angular";
+import { IonicPage, NavController } from "ionic-angular";
 import { Component, Input } from "@angular/core";
 import { CartService } from "../../services/cart-service";
 import { Events } from "ionic-angular/util/events";
@@ -16,7 +16,7 @@ export class AppHeader {
     /**
      * Constructor
      */
-    constructor(private cartService: CartService, events: Events) {        
+    constructor(private cartService: CartService, events: Events, private navCtrl: NavController) {        
         // Subscribe to cart changes (if item is added/removed from cart)
         events.subscribe("item_added_to_cart", () => {
             this.getItemsCount();
@@ -33,5 +33,10 @@ export class AppHeader {
         this.cartService.getItemsCountInCart().subscribe(itemsCount => {
             this.itemsInCart = itemsCount;
         });
+    }
+
+    // Go to my cart
+    gotoMyCart() {
+        this.navCtrl.setRoot("MyCartPage");
     }
 }

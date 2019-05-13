@@ -8,7 +8,7 @@
             {{ title }}
         </ion-title>
         <ion-icon white float-right>
-            <i class="icon icon-cart">
+            <i class="icon icon-cart" (click)="gotoMyCart()">
                 <span *ngIf="itemsInCart" class="badge badge-assertive icon-badge">{{itemsInCart}}</span>
             </i>
         </ion-icon>
