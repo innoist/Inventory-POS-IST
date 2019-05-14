@@ -28,7 +28,7 @@ export class MenuService implements IService {
     return [
       {
         title: 'Home',
-        component: 'ContentPage',
+        component: 'ProductCategoryListPage',
         icon: 'icon-home'
       }
     ];

@@ -77,6 +77,7 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.initTranslate();  
+      this.pages = this.menuService.load();
     });
   }
 

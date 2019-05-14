@@ -1,18 +1,9 @@
-<ion-header>
-  <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon class="icon-menu" name="menu"></ion-icon>
-    </button>
-    <ion-title>
-      {{ 'HOMEPAGE_TITLE' | translate }}
-    </ion-title>
-  </ion-navbar>
-</ion-header>
+<app-header [title]="('HOMEPAGE_TITLE' | translate)">
+</app-header>
 <ion-content>
   <div background-size default-background>
     <div class="ionic-descript" text-center>
-      <h2 item-title>{{ "HOMEPAGE_CONTENT" | translate }}</h2>
-      <p item-subtitle>{{ "HOMEPAGE_SUBCONTENT" | translate }}</p>
+      <h2 item-title>{{ "ORDER_PLACED" | translate }}</h2>
     </div>
   </div>
 </ion-content>

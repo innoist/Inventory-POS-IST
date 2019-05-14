@@ -13,6 +13,7 @@ using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
+using TMD.Implementation.Identity;
 using TMD.Models.DomainModels;
 using TMD.Web.Areas.Api.Models;
 using TMD.Web.Providers;
@@ -23,7 +24,7 @@ namespace TMD.Web.Areas.Api.Controllers
     [RoutePrefix("api/Accounts")]
     public class AccountsController : ApiController
     {
-        public Implementation.Identity.ApplicationUserManager UserManager => Request.GetOwinContext().GetUserManager<Implementation.Identity.ApplicationUserManager>();
+        public ApplicationUserManager UserManager => Request.GetOwinContext().GetUserManager<ApplicationUserManager>();
 
         public ISecureDataFormat<AuthenticationTicket> AccessTokenFormat { get; private set; }
 
@@ -57,6 +58,34 @@ namespace TMD.Web.Areas.Api.Controllers
             Authentication.SignOut(CookieAuthenticationDefaults.AuthenticationType);
             Authentication.SignOut(OAuthDefaults.AuthenticationType);
             return Ok();
+        }
+
+        // POST api/Accounts/Register
+        [AllowAnonymous]
+        [HttpPost, Route("Register")]
+        public async Task<IHttpActionResult> Register(AccountViewModels.RegisterViewModel user)
+        {
+            if (string.IsNullOrEmpty(user?.Email) || string.IsNullOrEmpty(user.Password))
+            {
+                return BadRequest();
+            }
+
+            var response = await UserManager.CreateAsync(new AspNetUser { Email = user.Email, UserName = user.UserName, EmailConfirmed = true, Address = user.Address }, user.Password);
+            if (!response.Succeeded) return BadRequest();
+
+            var registeredUser = await UserManager.FindByEmailAsync(user.Email);
+            if (registeredUser == null)
+            {
+                return BadRequest("Failed to register user.");
+            }
+
+            var addToRoleResponse = await UserManager.AddToRoleAsync(registeredUser.Id, "Customer");
+            if (!addToRoleResponse.Succeeded)
+            {
+                return BadRequest("Failed to assign role to added user.");
+            }
+
+            return Ok(true);
         }
 
         // GET api/Accounts/ExternalLogin

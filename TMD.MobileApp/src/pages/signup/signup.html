@@ -1,9 +1,12 @@
 <ion-header>
     <ion-navbar header-color>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
         <ion-title text-left>{{ 'SIGNUP_TITLE' | translate }}</ion-title>
     </ion-navbar>
 </ion-header>
-
+<!-- Content -->
 <ion-content has-header white-background>
     <ion-grid>
         <ion-row wrap padding>
@@ -13,7 +16,7 @@
                 <!---Input field username-->
                 <ion-item no-padding transparent>
                     <ion-label floating>{{ 'NAME' | translate }}</ion-label>
-                    <ion-input required type="text" [(ngModel)]="account.name" name="name"></ion-input>
+                    <ion-input required type="text" [(ngModel)]="account.username" name="username"></ion-input>
                 </ion-item>
                 <!---Input field email-->
                 <ion-item no-padding transparent>
@@ -25,7 +28,11 @@
                     <ion-label floating>{{ 'PASSWORD' | translate }}</ion-label>
                     <ion-input required type="password" [(ngModel)]="account.password" name="password"></ion-input>
                 </ion-item>
-
+                <!---Input field address-->
+                <ion-item no-padding transparent>
+                    <ion-label floating>{{ 'ADDRESS' | translate }}</ion-label>
+                    <ion-input required type="text" [(ngModel)]="account.address" name="address"></ion-input>
+                </ion-item>
                 <!---Signup button-->
                 <button ion-button float-left button-clear-outline round outline (click)="doSignup()">{{
                     'SIGNUP_BUTTON' | translate }}</button>

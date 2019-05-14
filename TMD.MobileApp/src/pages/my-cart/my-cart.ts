@@ -1,13 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, Content, FabButton } from 'ionic-angular';
+import { IonicPage, Content, FabButton, NavController } from 'ionic-angular';
 import { CartService } from '../../services/cart-service';
 import { Api } from '../../providers';
+import { LoginService } from '../../services/login-service';
+import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
     selector: 'my-cart',
     templateUrl: 'my-cart.html',
-    providers: [CartService]
+    providers: [CartService, LoginService]
 })
 export class MyCartPage {
     @ViewChild(Content)
@@ -17,7 +19,8 @@ export class MyCartPage {
     items: any;
     totalPrice: number = 0;
 
-    constructor(private cartService: CartService, public api: Api) { }
+    constructor(private cartService: CartService, public api: Api, private navCtrl: NavController,
+        private loginService: LoginService, private storage: Storage) { }
 
     delete = (item: any): void => {
     }
@@ -37,6 +40,29 @@ export class MyCartPage {
     calculateTotalPrice() {
         this.items.forEach((item: any) => {
             this.totalPrice += item.Quantity * item.SalePrice;
-        });        
+        });
+    }
+
+    // Proceed to checkout
+    proceed() {
+        this.storage.get('authData').then((data) => {
+            if (data && data.access_token) {
+                this.navCtrl.setRoot("ContentPage");
+            }
+            else {
+                this.gotoLoginPage();
+            }
+        }).catch(function () {
+            console.log('Failed to fetch token');
+            this.gotoLoginPage();
+        });
+    }
+
+    // Go to login page
+    gotoLoginPage() {
+        this.navCtrl.push("ItemDetailsPageLogin", {
+            service: this.loginService,
+            page: { "theme": "layout1", "title": "Login" }
+        });
     }
 }

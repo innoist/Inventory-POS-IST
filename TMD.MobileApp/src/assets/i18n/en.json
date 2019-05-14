@@ -7,6 +7,7 @@
   "EMAIL": "Email",
   "USERNAME": "Username",
   "PASSWORD": "Password",
+  "ADDRESS": "Address",
   "LOGIN": "Sign in",
   "SIGNUP": "Sign up",
   "WELCOME_INTRO": "Welcome to Toys World",
@@ -39,5 +40,6 @@
   "PRODUCT_CATEGORY_LIST_VIEW_ALL_BUTTON": "View All",
   "ITEM_ADDED_TO_CART": "Item has been added to cart successfully!",
   "MY_CART_TITLE": "My Cart",
-  "PROCEED_BUTTON_TEXT": "Proceed"  
+  "PROCEED_BUTTON_TEXT": "Proceed",
+  "ORDER_PLACED": "Your order has been placed successfully!"  
 }

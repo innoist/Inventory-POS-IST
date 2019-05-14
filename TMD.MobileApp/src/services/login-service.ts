@@ -59,48 +59,33 @@ export class LoginService implements IService {
         };
     };
 
-    getEventsForTheme = (menuItem: any): any => {
-        var that = this;
+    getEventsForTheme = (): any => {
         return {
-            onLogin: function (params) {
-                that.loader.presentLoader();
-                that.user.login(params).subscribe((resp) => {
-                    // An Event is raised from within user service after successful login
-                    // which takes user to HomePage i.e. ContentPage
-                    // Do something here if needed  
-                    that.loader.dismissLoader();
-                }, (err) => {
-                    that.loader.dismissLoader();
-                    that.toastCtrl.presentToast(that.loginErrorString);
-                });
-            },
-            onRegister: function (params) {
-                that.toastCtrl.presentToast('onRegister:' + JSON.stringify(params));
-            },
-            onSkip: function (params) {
-                that.toastCtrl.presentToast('onSkip:' + JSON.stringify(params));
-            },
-            onFacebook: function (params) {
-                that.toastCtrl.presentToast('onFacebook:' + JSON.stringify(params));
-            },
-            onTwitter: function (params) {
-                that.toastCtrl.presentToast('onTwitter:' + JSON.stringify(params));
-            },
-            onGoogle: function (params) {
-                that.toastCtrl.presentToast('onGoogle:' + JSON.stringify(params));
-            },
-            onPinterest: function (params) {
-                that.toastCtrl.presentToast('onPinterest:' + JSON.stringify(params));
-            },
+            onLogin: function(params: any) {
+                this.doLogin(params);
+            }
         };
     };
+
+    doLogin(params: any) {
+        this.loader.presentLoader();
+        this.user.login(params).subscribe(() => {
+            // An Event is raised from within user service after successful login
+            // which takes user to HomePage i.e. ContentPage
+            // Do something here if needed  
+            this.loader.dismissLoader();
+        }, () => {
+            this.loader.dismissLoader();
+            this.toastCtrl.presentToast(this.loginErrorString);
+        });
+    }
 
     prepareParams = (item: any) => {
         let result = {
             title: item.title,
             theme: item.theme,
             data: {},
-            events: this.getEventsForTheme(item)
+            events: this.getEventsForTheme()
         };
         result[this.getShowItemId(item)] = true;
         return result;

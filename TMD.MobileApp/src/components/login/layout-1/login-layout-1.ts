@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -12,12 +12,16 @@ export class LoginLayout1 {
 
     public username: string;
     public password: string;
-    constructor() {
+    constructor(private navCtrl: NavController) {
 
     }
 
     onEvent = (event: string): void => {
-        if (this.events[event]) {
+        if (event === "onRegister") {
+            // redirect to register page
+            this.navCtrl.push("SignupPage");
+        }
+        else if (this.events[event]) {
             this.events[event]({
                 'username': this.username,
                 'password': this.password

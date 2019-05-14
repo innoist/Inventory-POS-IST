@@ -37,7 +37,7 @@ export class User {
    */
   login(accountInfo: any) {
     let seq = this.api.login(accountInfo).share();
-    
+
     seq.subscribe((res: any) => {
       // If the API returned a successful response, mark the user as logged in
       this._loggedIn(res);
@@ -55,13 +55,11 @@ export class User {
    * the user entered on the form.
    */
   signup(accountInfo: any) {
-    let seq = this.api.post('signup', accountInfo).share();
+    let seq = this.api.post('api/accounts/register', accountInfo).share();
 
-    seq.subscribe((res: any) => {
-      // If the API returned a successful response, mark the user as logged in
-      if (res.status == 'success') {
-        this._loggedIn(res);
-      }
+    seq.subscribe(() => {
+      // If the API returned a successful response, login that user
+      console.log('user created successfully!');
     }, err => {
       console.error('ERROR', err);
     });
@@ -83,7 +81,7 @@ export class User {
     this._user = resp;
     this.storage.set('authData', this._user).then((res) => {
       // Raise event to notify subscribers - myApp to update menu
-      this.events.publish("User_LoggedIn"); 
+      this.events.publish("User_LoggedIn");
       console.log('Saved data for user', res);
     })
   }
