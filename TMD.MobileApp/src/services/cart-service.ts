@@ -106,4 +106,8 @@ export class CartService {
             return cart.items;
         }));
     }
+
+    reset() {
+        this.storage.set("cart", "");
+    }
 }

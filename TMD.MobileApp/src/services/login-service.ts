@@ -16,6 +16,7 @@ export class LoginService implements IService {
         this.translateService.get('LOGIN_ERROR').subscribe((value) => {
             this.loginErrorString = value;
         });
+        this.doLogin.bind(this);
     }
 
     getId = (): string => 'login';
@@ -60,9 +61,10 @@ export class LoginService implements IService {
     };
 
     getEventsForTheme = (): any => {
+        var that = this;
         return {
             onLogin: function(params: any) {
-                this.doLogin(params);
+                that.doLogin(params);
             }
         };
     };

@@ -47,7 +47,7 @@ export class MyCartPage {
     proceed() {
         this.storage.get('authData').then((data) => {
             if (data && data.access_token) {
-                this.navCtrl.setRoot("ContentPage");
+                this.navCtrl.setRoot("OrderDetailsPage");
             }
             else {
                 this.gotoLoginPage();

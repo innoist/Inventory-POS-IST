@@ -13,7 +13,7 @@
             </ion-col>
             <ion-col col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 text-right>
                 <span span-large>{{ totalPrice }} PKR</span>
-                <button (click)="proceed()" ion-button button-clear-outline round outline>
+                <button [disabled]="!items || items.length == 0 ? 'true' : ''" (click)="proceed()" ion-button button-clear-outline round outline>
                     {{ "PROCEED_BUTTON_TEXT" | translate }}
                 </button>
             </ion-col>

@@ -41,5 +41,11 @@
   "ITEM_ADDED_TO_CART": "Item has been added to cart successfully!",
   "MY_CART_TITLE": "My Cart",
   "PROCEED_BUTTON_TEXT": "Proceed",
-  "ORDER_PLACED": "Your order has been placed successfully!"  
+  "ORDER_PLACED": "Your order has been placed successfully!",
+  "ORDER_ITEMS": "Order Items",
+  "ORDER_SUMMARY": "Order Summary",
+  "CART_TOTAL": "Cart Total",
+  "ORDER_TOTAL": "Order Total",
+  "ORDER_TOTAL_PAYABLE": "Total Payable",
+  "CONTINUE_BUTTON_TEXT": "Continue"
 }

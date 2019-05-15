@@ -36,7 +36,7 @@ export class SignupPage {
     });
     // Subscribe to user_loggedin event
     event.subscribe("User_LoggedIn", () => {
-      navCtrl.setRoot(HomePage);
+      navCtrl.setRoot("OrderDetailsPage");
     });
   }
 

@@ -1,0 +1,62 @@
+<!--SwipeToDismiss component-->
+<app-header [title]="('HOMEPAGE_TITLE' | translate)">
+</app-header>
+<!--Content-->
+<ion-content has-header>
+    <ion-grid no-padding *ngIf="items != null">
+        <ion-row>
+            <ion-col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12>
+                <ion-list no-margin>
+                    <ion-list-header>
+                        <ion-label class="header">{{ "ORDER_ITEMS" | translate }}</ion-label>
+                    </ion-list-header>
+                    <ion-item *ngFor="let item of items" no-lines no-padding no-margin>
+                        <ion-thumbnail item-start>
+                            <img src="{{ api.url + '/Images/Inventory/' + item.ImagePath }}">
+                        </ion-thumbnail>
+                        <div item-top>
+                            <h2 item-title padding-left>{{item.Name}}</h2>
+                        </div>
+                    </ion-item>
+                </ion-list>
+                <ion-list>
+                    <ion-list-header>
+                        <ion-label class="header">{{ "ORDER_SUMMARY" | translate }}</ion-label>
+                    </ion-list-header>
+                    <ion-item class="dotted-bottom-border">
+                        <ion-label class="header">
+                            <h3 class="bold">{{ items != null ? items.length : 0 }} Items</h3>
+                        </ion-label>
+                    </ion-item>
+                    <ion-item class="no-bottom-border">
+                        <ion-label class="header">
+                            <h4>{{ "CART_TOTAL" | translate }}</h4>
+                        </ion-label>
+                        <item-content item-end>
+                            <h4>{{ totalPrice }} PKR</h4>
+                        </item-content>
+                    </ion-item>
+                    <ion-item class="dotted-bottom-border">
+                        <ion-label class="header">
+                            <h4>{{ "ORDER_TOTAL" | translate }}</h4>
+                        </ion-label>
+                        <item-content item-end>
+                            <h4>{{ totalPrice }} PKR</h4>  
+                        </item-content>
+                    </ion-item>
+                    <ion-item class="no-bottom-border">
+                        <ion-label class="header">
+                            <h2 class="bold">{{ "ORDER_TOTAL_PAYABLE" | translate }}</h2> 
+                        </ion-label>
+                        <item-content item-end>
+                            <h2 class="bold">{{ totalPrice }} PKR</h2>  
+                        </item-content>
+                    </ion-item>
+                    <button ion-button button-clear-outline round outline (click)="proceed()">
+                        {{ "CONTINUE_BUTTON_TEXT" | translate }}
+                    </button>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

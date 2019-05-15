@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController, Events } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -12,8 +12,11 @@ export class LoginLayout1 {
 
     public username: string;
     public password: string;
-    constructor(private navCtrl: NavController) {
-
+    constructor(private navCtrl: NavController, event: Events) {
+        // Subscribe to user_loggedin event
+        event.subscribe("User_LoggedIn", () => {
+            navCtrl.setRoot("OrderDetailsPage");
+        });
     }
 
     onEvent = (event: string): void => {
