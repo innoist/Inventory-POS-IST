@@ -181,17 +181,7 @@
             ];
             columnDefs = [
                 { 'bSortable': false, 'aTargets': [6] },
-                {
-                    'bSortable': false,
-                    "targets": [5],
-                    "class": "textAlignRight",
-                    "mRender": function (data, type, row) {
-                        if (row.ImagePath == null) {
-                            return "";
-                        };
-                        return "<a type='button' class='itemImage' href='javascript'>View</button>";
-                    }
-                }
+                { 'bSortable': false, 'aTargets': [5] },
             ];
         } else {
             columns = [

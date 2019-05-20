@@ -51,7 +51,7 @@ namespace TMD.Web.ModelMappers
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
-                ImagePath = source.ImagePath
+                ImagePath = source.ProductImages.Any() ? "Yes" : "No"
             };
         }
 

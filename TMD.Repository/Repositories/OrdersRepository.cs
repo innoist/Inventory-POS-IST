@@ -45,16 +45,16 @@ namespace TMD.Repository.Repositories
         {
             int fromRow = (searchRequest.PageNo - 1) * searchRequest.PageSize;
             int toRow = searchRequest.PageSize;
-            bool? isOpen = null;
-            if (searchRequest.IsOpen != null)
-                isOpen = Convert.ToBoolean(searchRequest.IsOpen);
+            bool? isOpen = Convert.ToBoolean(searchRequest.IsOpen);
+            bool? isOnline = Convert.ToBoolean(searchRequest.IsOnline);
             Expression<Func<Order, bool>> query =
                     s => (
                             (
                              (string.IsNullOrEmpty(searchRequest.OrderId) || s.OrderId.ToString().Equals(searchRequest.OrderId)) &&
                             (string.IsNullOrEmpty(searchRequest.ProductCode) || s.OrderItems.Where(x => x.ProductId.ToString() == searchRequest.ProductCode).Any())
                             && (searchRequest.OrderDate == null || DbFunctions.TruncateTime(s.RecCreatedDate) == DbFunctions.TruncateTime(searchRequest.OrderDate.Value))
-                            && (isOpen != null || s.IsOpen == isOpen)
+                            && (searchRequest.IsOpen == null || s.IsOpen == isOpen)
+                            && (searchRequest.IsOnline == null || s.IsOnline == isOnline)
                             && (s.IsDeleted != true)
                             )
                         );

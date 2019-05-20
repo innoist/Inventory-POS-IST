@@ -1202,16 +1202,7 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
             <End Role="Expense" EntitySet="Expenses" />
           </AssociationSet>
           <EntitySet Name="ProductsStocks" EntityType="TMD.Models.DomainModels.ProductsStock" />
-          <EntitySet Name="Orders" EntityType="TMD.Models.DomainModels.Order" />
-          <AssociationSet Name="FK_Orders_Customer" Association="TMD.Models.DomainModels.FK_Orders_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
           <EntitySet Name="OrderItems" EntityType="TMD.Models.DomainModels.OrderItem" />
-          <AssociationSet Name="FK_OrderItems_Orders" Association="TMD.Models.DomainModels.FK_OrderItems_Orders">
-            <End Role="Order" EntitySet="Orders" />
-            <End Role="OrderItem" EntitySet="OrderItems" />
-          </AssociationSet>
           <AssociationSet Name="FK_OrderItems_Products" Association="TMD.Models.DomainModels.FK_OrderItems_Products">
             <End Role="Product" EntitySet="Products" />
             <End Role="OrderItem" EntitySet="OrderItems" />
@@ -1231,6 +1222,15 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
           <AssociationSet Name="FK_ProductImage_Products" Association="TMD.Models.DomainModels.FK_ProductImage_Products">
             <End Role="Product" EntitySet="Products" />
             <End Role="ProductImage" EntitySet="ProductImages" />
+          </AssociationSet>
+          <EntitySet Name="Orders" EntityType="TMD.Models.DomainModels.Order" />
+          <AssociationSet Name="FK_Orders_Customer" Association="TMD.Models.DomainModels.FK_Orders_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_OrderItems_Orders" Association="TMD.Models.DomainModels.FK_OrderItems_Orders">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="OrderItem" EntitySet="OrderItems" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="AspNetRole">
@@ -2013,36 +2013,6 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
           <Property Name="SoldQty" Type="Int32" Nullable="false" />
           <Property Name="AvailableQty" Type="Int64" Nullable="false" />
         </EntityType>
-        <EntityType Name="Order">
-          <Key>
-            <PropertyRef Name="OrderId" />
-          </Key>
-          <Property Name="OrderId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="IsModified" Type="Boolean" Nullable="false" />
-          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="CustomerId" Type="Int64" />
-          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="IsDeleted" Type="Boolean" />
-          <NavigationProperty Name="Customer" Relationship="TMD.Models.DomainModels.FK_Orders_Customer" FromRole="Order" ToRole="Customer" />
-          <NavigationProperty Name="OrderItems" Relationship="TMD.Models.DomainModels.FK_OrderItems_Orders" FromRole="Order" ToRole="OrderItem" />
-          <Property Name="IsOnline" Type="Boolean" Nullable="false" />
-          <Property Name="IsOpen" Type="Boolean" Nullable="true" />
-        </EntityType>
-        <Association Name="FK_Orders_Customer">
-          <End Type="TMD.Models.DomainModels.Customer" Role="Customer" Multiplicity="0..1" />
-          <End Type="TMD.Models.DomainModels.Order" Role="Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="CustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="OrderItem">
           <Key>
             <PropertyRef Name="OrderItemId" />
@@ -2061,21 +2031,9 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="AmountGiven" Type="Decimal" Precision="9" Scale="2" />
           <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Order" Relationship="TMD.Models.DomainModels.FK_OrderItems_Orders" FromRole="OrderItem" ToRole="Order" />
           <NavigationProperty Name="Product" Relationship="TMD.Models.DomainModels.FK_OrderItems_Products" FromRole="OrderItem" ToRole="Product" />
+          <NavigationProperty Name="Order" Relationship="TMD.Models.DomainModels.FK_OrderItems_Orders" FromRole="OrderItem" ToRole="Order" />
         </EntityType>
-        <Association Name="FK_OrderItems_Orders">
-          <End Type="TMD.Models.DomainModels.Order" Role="Order" Multiplicity="1" />
-          <End Type="TMD.Models.DomainModels.OrderItem" Role="OrderItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Order">
-              <PropertyRef Name="OrderId" />
-            </Principal>
-            <Dependent Role="OrderItem">
-              <PropertyRef Name="OrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_OrderItems_Products">
           <End Type="TMD.Models.DomainModels.Product" Role="Product" Multiplicity="1" />
           <End Type="TMD.Models.DomainModels.OrderItem" Role="OrderItem" Multiplicity="*" />
@@ -2171,6 +2129,48 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
             </Principal>
             <Dependent Role="ProductImage">
               <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="OrderId" />
+          </Key>
+          <Property Name="OrderId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IsModified" Type="Boolean" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerId" Type="Int64" />
+          <Property Name="Comments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="IsDeleted" Type="Boolean" />
+          <Property Name="IsOnline" Type="Boolean" Nullable="false" />
+          <Property Name="IsOpen" Type="Boolean" />
+          <NavigationProperty Name="Customer" Relationship="TMD.Models.DomainModels.FK_Orders_Customer" FromRole="Order" ToRole="Customer" />
+          <NavigationProperty Name="OrderItems" Relationship="TMD.Models.DomainModels.FK_OrderItems_Orders" FromRole="Order" ToRole="OrderItem" />
+        </EntityType>
+        <Association Name="FK_Orders_Customer">
+          <End Type="TMD.Models.DomainModels.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_OrderItems_Orders">
+          <End Type="TMD.Models.DomainModels.Order" Role="Order" Multiplicity="1" />
+          <End Type="TMD.Models.DomainModels.OrderItem" Role="OrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="OrderId" />
+            </Principal>
+            <Dependent Role="OrderItem">
+              <PropertyRef Name="OrderId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2620,23 +2620,6 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Order">
-              <MappingFragment StoreEntitySet="Orders">
-                <ScalarProperty Name="IsOpen" ColumnName="IsOpen" />
-                <ScalarProperty Name="IsOnline" ColumnName="IsOnline" />
-                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
-                <ScalarProperty Name="Comments" ColumnName="Comments" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
-                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="IsModified" ColumnName="IsModified" />
-                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="OrderItems">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.OrderItem">
               <MappingFragment StoreEntitySet="OrderItems">
@@ -2704,6 +2687,23 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
                 <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
                 <ScalarProperty Name="ItemImageId" ColumnName="ItemImageId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="TMD.Models.DomainModels.Order">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="IsOpen" ColumnName="IsOpen" />
+                <ScalarProperty Name="IsOnline" ColumnName="IsOnline" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
+                <ScalarProperty Name="Comments" ColumnName="Comments" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="IsModified" ColumnName="IsModified" />
+                <ScalarProperty Name="OrderId" ColumnName="OrderId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2783,10 +2783,7 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Notes_NotesCategory" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Expenses_Vendors" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductsStock" Width="1.5" PointX="17.375" PointY="0.75" />
-        <EntityTypeShape EntityType="TMD.Models.DomainModels.Order" Width="1.5" PointX="15" PointY="2.25" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_Orders_Customer" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.OrderItem" Width="1.5" PointX="17.25" PointY="4.625" />
-        <AssociationConnector Association="TMD.Models.DomainModels.FK_OrderItems_Orders" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_OrderItems_Products" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.SalesSummaryView" Width="1.5" PointX="17.375" PointY="17.75" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.ShoppingCart" Width="1.5" PointX="12.5" PointY="21" />
@@ -2795,6 +2792,9 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
         <AssociationConnector Association="TMD.Models.DomainModels.FK_ShoppingCartItem_ShoppingCart" />
         <EntityTypeShape EntityType="TMD.Models.DomainModels.ProductImage" Width="1.5" PointX="10.5" PointY="4.375" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_ProductImage_Products" />
+        <EntityTypeShape EntityType="TMD.Models.DomainModels.Order" Width="1.5" PointX="15" PointY="2" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_Orders_Customer" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_OrderItems_Orders" />
       </Diagram>
     </Diagrams>
   </Designer>
