@@ -1,0 +1,14 @@
+<ion-content scroll="false">
+  <div class="splash-bg"></div>
+  <div class="splash-info">
+    <div class="splash-logo" [ngStyle]="{'background-repeat': 'no-repeat', 'background-image': 'url(assets/icon/toysworldlogo.png)'}"></div>
+    <div class="splash-intro">
+      {{ 'WELCOME_INTRO' | translate }}
+    </div>
+  </div>
+  <div padding>
+    <button ion-button float-left button-clear-outline round outline (click)="signup()">{{ 'SIGNUP' | translate }}</button>
+    <button ion-button float-left button-clear-outline round outline (click)="login()" class="login">{{ 'LOGIN' |
+      translate }}</button>
+  </div>
+</ion-content>

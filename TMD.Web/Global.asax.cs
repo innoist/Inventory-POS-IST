@@ -63,6 +63,7 @@ namespace IdentitySample
         protected void Application_Start()
         {
             RegisterIoC();
+            GlobalConfiguration.Configure(TMD.Web.WebApiConfig.Register);
             AreaRegistration.RegisterAllAreas();
             ConfigureLogger();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters, container);

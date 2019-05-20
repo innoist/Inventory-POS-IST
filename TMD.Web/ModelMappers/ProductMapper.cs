@@ -52,6 +52,7 @@ namespace TMD.Web.ModelMappers
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
                 ImagePath = source.ProductImages.Any() ? "Yes" : "No"
+                ProductImages = source.ProductImages?.Select(x => x.CreateFromServerToClient()).ToList()
             };
         }
 
@@ -83,6 +84,16 @@ namespace TMD.Web.ModelMappers
             {
                 ImagePath = source.ItemImagePath,
                 ProductId = productId
+            };
+
+        }
+
+        public static ProductImageModel CreateFromServerToClient(this ProductImage source)
+        {
+            return new ProductImageModel
+            {
+                ItemImagePath = source.ImagePath,
+                ProductId = source.ProductId
             };
 
         }

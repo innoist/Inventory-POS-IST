@@ -1,0 +1,6 @@
+<!--Full gallery component-->
+<app-header [title]="(params && params.data ? params.data.name : 'Images')">
+</app-header>
+<ion-content>
+    <full-screen-gallery [data]="params.data"></full-screen-gallery>
+</ion-content>

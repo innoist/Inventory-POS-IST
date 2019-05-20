@@ -1,0 +1,66 @@
+/*  Order Details
+===========================================*/
+order-details {
+
+    ion-list-header {
+      margin-bottom: 0 !important;
+      border-top: none !important;
+      margin-top: 0 !important;
+    }
+
+    ion-label:not(.header) {
+      min-height: 120px;
+      margin: 0 !important;
+    }
+  
+    .label-ios:not(.header) {
+      min-height: 100px;
+    }
+
+    .header {
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+
+    .bold {
+      font-weight: bold;
+    }
+  
+    [item-top] {
+      margin-top: 15px;
+    }
+  
+    .input-wrapper {
+      position: relative;
+  
+      [item-subtitle] {
+        text-transform: capitalize;
+        position: absolute;
+        bottom: 10px;
+      }
+    }
+
+    ion-thumbnail {
+        filter: none;
+        margin: 0 0 8px 8px !important;
+    }
+
+    [button-clear-outline] {
+      margin: 0 8px 8px 8px;
+      width: 95%;
+    }
+
+    ion-item.no-bottom-border {
+      .item-inner {
+        border-bottom: none !important;
+      }
+    }
+
+    ion-item.dotted-bottom-border {
+      .item-inner {
+        border-bottom: 1px dotted #dedede !important;
+      }
+    }
+
+  }
+  

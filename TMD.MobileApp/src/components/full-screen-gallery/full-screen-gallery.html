@@ -1,0 +1,6 @@
+<!--Screen Gallery-->
+<ion-slides #slider pager="true" zoom="true">
+    <ion-slide *ngFor="let item of data.items">
+        <img [src]="api.url + '/Images/Inventory/' + item.ItemImagePath" />
+    </ion-slide>
+</ion-slides>

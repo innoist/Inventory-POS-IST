@@ -1,12 +1,16 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using Microsoft.Practices.Unity;
 using TMD.Interfaces.IRepository;
 using TMD.Models.DomainModels;
+using TMD.Models.RequestModels;
+using TMD.Models.ResponseModels;
 using TMD.Repository.BaseRepository;
 
 namespace TMD.Repository.Repositories
 {
-    public sealed class ProductCategoryRepository: BaseRepository<ProductCategory>, IProductCategoryRepository
+    public sealed class ProductCategoryRepository : BaseRepository<ProductCategory>, IProductCategoryRepository
     {
         #region Constructor
         /// <summary>
@@ -20,10 +24,30 @@ namespace TMD.Repository.Repositories
         /// <summary>
         /// Primary database set
         /// </summary>
-        protected override IDbSet<ProductCategory> DbSet
+        protected override IDbSet<ProductCategory> DbSet => db.ProductCategories;
+
+        #endregion
+
+        #region Public
+
+        /// <summary>
+        /// Get All Product Categories
+        /// </summary>
+        public ProductCategorySearchResponse GetAll(ProductCategorySearchRequest searchRequest)
         {
-            get { return db.ProductCategories; }
+            int fromRow = (searchRequest.PageNo - 1) * searchRequest.PageSize;
+            int toRow = searchRequest.PageSize;
+            IEnumerable<ProductCategory> result =
+                        DbSet
+                        .OrderBy(pc => pc.Name)
+                        .Skip(fromRow)
+                        .Take(toRow)
+                        .ToList();
+            var totalCount = DbSet.Count();
+
+            return new ProductCategorySearchResponse { ProductCategories = result, TotalCount = totalCount, FilteredCount = totalCount };
         }
+
         #endregion
     }
 }

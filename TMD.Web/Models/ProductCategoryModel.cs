@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TMD.Web.Models
 {
@@ -16,5 +17,6 @@ namespace TMD.Web.Models
         public string RecCreatedBy { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public string ProductMainCategoryName { get; set; }
+        public List<ProductModel> Products { get; set; }
     }
 }

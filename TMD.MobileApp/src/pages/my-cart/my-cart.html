@@ -1,0 +1,43 @@
+<!--SwipeToDismiss component-->
+<app-header [title]="('HOMEPAGE_TITLE' | translate)">
+</app-header>
+<!--Content-->
+<!-- Products + CTA footer -->
+<ion-content has-header>
+    <ion-grid no-padding *ngIf="items != null">
+        <ion-row padding background-size container-hearder-image
+            [ngStyle]="{'background-image': 'url(assets/images/checkout.jpg)'}">
+            <ion-col col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 text-left>
+                <h1 header-title>{{'MY_CART_TITLE' | translate}}</h1>
+                <h2 header-subtitle></h2>
+            </ion-col>
+            <ion-col col-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 text-right>
+                <span span-large>{{ totalPrice }} PKR</span>
+                <button [disabled]="!items || items.length == 0 ? 'true' : ''" (click)="proceed()" ion-button button-clear-outline round outline>
+                    {{ "PROCEED_BUTTON_TEXT" | translate }}
+                </button>
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-12 col-sm-12 col-md-12 col-lg-12 col-xl-12>
+                <ion-list no-margin>
+                    <ion-item *ngFor="let item of items" no-lines no-padding no-margina>
+                        <ion-thumbnail no-margin item-start>
+                            <img src="{{ api.url + '/Images/Inventory/' + item.ImagePath }}">
+                        </ion-thumbnail>
+                        <div item-top>
+                            <h2 item-title padding-left>{{item.Name}}</h2>
+                        </div>
+                        <div item-bottom>
+                            <p item-subtitle padding-left text-wrap></p>
+                        </div>
+                        <item-content item-end>
+                            <span text-right old-price>Qty: {{ item.Quantity }}</span>
+                            <span span-medium text-right new-price>{{item.SalePrice}} PKR</span>
+                        </item-content>
+                    </ion-item>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

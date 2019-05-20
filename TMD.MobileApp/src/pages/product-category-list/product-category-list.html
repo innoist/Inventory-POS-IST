@@ -1,0 +1,30 @@
+<!--Product Categories List-->
+<app-header [title]="('HOMEPAGE_TITLE' | translate)">
+</app-header>
+<!--Content-->
+<ion-content has-header>
+    <ion-grid no-padding *ngIf="data != null">
+        <ion-row>
+            <ion-col col-12 no-padding no-margin>
+                <ion-list *ngFor="let productCategory of productCategories">
+                    <ion-list-header>
+                        <ion-label>
+                            {{productCategory.Name}}
+                        </ion-label>
+                        <ion-icon (click)="viewAllProducts(productCategory)" icon-small item-right>
+                            <i class="icon icon-play"></i>
+                        </ion-icon>
+                    </ion-list-header>
+                    <ion-row *ngIf="productCategory.Products != null && productCategory.Products.length > 0">
+                        <ion-col col-4 *ngFor="let product of productCategory.Products">
+                            <img [src]="api.url + '/Images/Inventory/' + product.ProductImages[0].ItemImagePath">
+                        </ion-col>
+                    </ion-row>
+                </ion-list>
+                <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+                    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+                </ion-infinite-scroll>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

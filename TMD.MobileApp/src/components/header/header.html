@@ -1,0 +1,16 @@
+<!-- Common header for all pages -->
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title text-left>
+            {{ title }}
+        </ion-title>
+        <ion-icon white float-right>
+            <i class="icon icon-cart" (click)="gotoMyCart()">
+                <span *ngIf="itemsInCart" class="badge badge-assertive icon-badge">{{itemsInCart}}</span>
+            </i>
+        </ion-icon>
+    </ion-navbar>
+</ion-header>

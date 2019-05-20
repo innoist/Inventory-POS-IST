@@ -102,9 +102,5 @@
     <Build Include="dbo\Tables\Category.sql" />
     <Build Include="dbo\Views\SalesSummaryView.sql" />
     <Build Include="dbo\Views\ProductsStock.sql" />
-    <Build Include="Security\ToysWorldPk.sql" />
-    <Build Include="Security\toysworld.sql" />
-    <Build Include="Security\RoleMemberships.sql" />
-    <Build Include="Security\ToysWorldPk_1.sql" />
   </ItemGroup>
 </Project>
