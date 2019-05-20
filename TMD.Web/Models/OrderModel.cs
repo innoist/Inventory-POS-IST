@@ -14,6 +14,8 @@ namespace TMD.Web.Models
         public long ? CustomerId { get; set; }
         public bool IsModified { get; set; }
         public bool IsDeleted { get; set; }
+        public bool? IsOpen { get; set; }
+        public bool IsOnline { get; set; }
         public System.DateTime RecCreatedDate { get; set; }
         public System.DateTime RecLastUpdatedDate { get; set; }
         public string Comments { get; set; }

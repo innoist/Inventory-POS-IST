@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -18,12 +19,14 @@ namespace TMD.Web.ModelMappers
                CustomerId = source.CustomerId,
                 Comments = source.Comments,
                 OrderId =  source.OrderId,
+                IsOpen = source.IsOpen,
+                IsOnline = source.IsOnline,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
                 Customer = source.Customer!=null ? source.Customer.CreateFromServerToClient() : new CustomerModel(),
-                OrderItems = source.OrderItems.Select(x=>x.CreateFromServerToClient()).ToList()
+                OrderItems = source.OrderItems.Select(x=>x.CreateFromServerToClient()).ToList(),
             };
         }
 
@@ -51,7 +54,7 @@ namespace TMD.Web.ModelMappers
 
         public static OrderListViewModel CreateFromServerToLVClient(this Order source)
         {
-            var hostURL = "http://" + HttpContext.Current.Request.Url.Host.ToLower() + "/";//ConfigurationManager.AppSettings["HostURL"];
+            var hostURL = ConfigurationManager.AppSettings["HostURL"]; //"http://" + HttpContext.Current.Request.Url.Host.ToLower() + "/";;
             var item = source.OrderItems.ToList();
             var customer = source.Customer;
             return new OrderListViewModel

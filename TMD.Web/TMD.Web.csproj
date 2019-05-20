@@ -1791,6 +1791,7 @@
     <Content Include="Views\Reports\Stocks.cshtml" />
     <Content Include="Views\Reports\Expenses.cshtml" />
     <Content Include="Views\Reports\SalesSummary.cshtml" />
+    <Content Include="Views\Order\OnlineOrders.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
     <Content Include="Views\Vendor\Index.cshtml" />
     <Content Include="Views\Vendor\Create.cshtml" />

@@ -116,6 +116,9 @@ UpgradeLog.htm
 # Images upload folder
 TMD.Web/Images/
 
+# Packages folder
+packages/
+
 # Ionic App
 # Cordova folders
 TMD.MobileApp/node_modules/

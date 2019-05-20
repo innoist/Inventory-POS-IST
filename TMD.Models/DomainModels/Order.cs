@@ -13,6 +13,8 @@ namespace TMD.Models.DomainModels
         public string Comments { get; set; }
         public string RecCreatedBy { get; set; }
         public string RecLastUpdatedBy { get; set; }
+        public bool IsOnline { get; set; }
+        public bool? IsOpen { get; set; }
 
         public virtual ICollection<OrderItem> OrderItems { get; set; }
         public virtual Customer Customer { get; set; }

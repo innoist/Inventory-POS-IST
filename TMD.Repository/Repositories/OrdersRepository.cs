@@ -13,7 +13,7 @@ using TMD.Repository.BaseRepository;
 
 namespace TMD.Repository.Repositories
 {
-    public sealed class OrdersRepository: BaseRepository<Order>, IOrdersRepository
+    public sealed class OrdersRepository : BaseRepository<Order>, IOrdersRepository
     {
         #region Constructor
         /// <summary>
@@ -37,7 +37,7 @@ namespace TMD.Repository.Repositories
                 {
                     {OrdersByColumn.OrderId, c => c.OrderId},
                     {OrdersByColumn.OrderDate, c => c.RecCreatedDate}
-                    
+
                 };
         #endregion
 
@@ -45,13 +45,17 @@ namespace TMD.Repository.Repositories
         {
             int fromRow = (searchRequest.PageNo - 1) * searchRequest.PageSize;
             int toRow = searchRequest.PageSize;
+            bool? isOpen = Convert.ToBoolean(searchRequest.IsOpen);
+            bool? isOnline = Convert.ToBoolean(searchRequest.IsOnline);
             Expression<Func<Order, bool>> query =
                     s => (
                             (
-                             (string.IsNullOrEmpty( searchRequest.OrderId )|| s.OrderId.ToString().Equals(searchRequest.OrderId)) &&
-                            (string.IsNullOrEmpty(searchRequest.ProductCode) || s.OrderItems.Where(x=>x.ProductId.ToString()==searchRequest.ProductCode).Any())
+                             (string.IsNullOrEmpty(searchRequest.OrderId) || s.OrderId.ToString().Equals(searchRequest.OrderId)) &&
+                            (string.IsNullOrEmpty(searchRequest.ProductCode) || s.OrderItems.Where(x => x.ProductId.ToString() == searchRequest.ProductCode).Any())
                             && (searchRequest.OrderDate == null || DbFunctions.TruncateTime(s.RecCreatedDate) == DbFunctions.TruncateTime(searchRequest.OrderDate.Value))
-                            && (s.IsDeleted!=true)
+                            && (searchRequest.IsOpen == null || s.IsOpen == isOpen)
+                            && (searchRequest.IsOnline == null || s.IsOnline == isOnline)
+                            && (s.IsDeleted != true)
                             )
                         );
             IEnumerable<Order> result =

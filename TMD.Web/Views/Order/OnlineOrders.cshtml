@@ -9,21 +9,17 @@
     <h3 class="page-title">
         Orders <small id="Summary">Summary</small>
     </h3>
-    @*<h3> <small><a href="~/Account/Create">Add New User</a></small></h3>*@
 </header>
 <div class="container-fluid">
     <form class="form-horizontal">
         <div class="row-fluid">
             <div class="span12">
-                <div class="portlet-title">
-                    @*<div class="caption">
-                            <i class="fa fa-filter"></i>Filters
-                        </div>*@
+                <div class="">
                     <div class="tools">
-                        <a href="~/Order/Create" class="btn red titleButton">Create New Order</a>
+                        @*<a href="~/Order/Create" class="btn red titleButton">Create New Order</a>*@
                         <input type="button" class="btn blue titleButton" id="btnResetFltr" style="float:right" value="Reset">
-                        <input type="button" class="btn green" id="btnFltr" style="float:right" value="Filter" />
-                        @*<input type="button" class="btn blue titleButton" style="float:right" id="btnResetFltr" value="Reset">*@
+                        <input type="button" class="btn green" id="btnFltr" style="float: right" value="Filter"/>
+                        <br/><br/>
                     </div>
                 </div>
                 <div class="portlet-body form">
@@ -59,6 +55,21 @@
                                             <i class="fa fa-search"></i>
                                             @*<input type="text" class="searchInputs form-control" value="" name="Title" id="Title" />*@
                                             @Html.TextBox("ProductCode", @Model.SearchRequest.ProductCode, new { @class = "searchInputs form-control", @id = "ProductCode", @placeholder = "Search Product Code" })
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-1">
+                                        <label class="control-label">Order Status</label>
+                                    </td>
+                                    <td class="col-md-2">
+                                        <div class="input-icon">
+                                            <i class="fa fa-search"></i>
+                                            @Html.DropDownListFor(x => x.SearchRequest.IsOnline, new List<SelectListItem>
+                                            {
+                                                                new SelectListItem() {Text = "Close", Value="0"},
+                                                                new SelectListItem() {Text = "Open", Value="1"}
+                                            }, new { @class = "form-control input-circle mandatory", @id = "OrderStatus" })
                                         </div>
                                     </td>
                                 </tr>
@@ -156,7 +167,7 @@
             "serverSide": true,
 
             "ajax": {
-                url: siteURL + "Order/Index",
+                url: siteURL + "Order/OnlineOrders",
                 type: "POST",
                 dataType: "json",
                 data: function (params) {
@@ -171,7 +182,8 @@
                     params.OrderId = $('#OrderId').val();
                     params.OrderDate = $('#OrderDate').val();
                     params.ProductCode = $('#ProductCode').val();
-                    params.IsOnline = 0;
+                    params.IsOnline = 1;
+                    params.IsOpen = $('#OrderStatus').val();
                 },
                 complete: Completed
             }
@@ -184,6 +196,7 @@
             $('#OrderId').val("");
             $('#OrderDate').val("");
             $('#ProductCode').val("");
+            $('#OrderStatus').val("");
             $("#OrderDate").datepicker().datepicker("setDate", new Date());
 
             // $('#QS').val("");

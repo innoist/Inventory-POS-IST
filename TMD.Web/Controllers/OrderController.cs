@@ -40,6 +40,7 @@ namespace TMD.Web.Controllers
         [HttpPost]
         public ActionResult Index(OrderSearchRequest oRequest)
         {
+            oRequest.IsOpen = null;
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             OrderSearchResponse oResponse = orderService.GetOrdersSearchResponse(oRequest);
             List<OrderListViewModel> oList = oResponse.Orders.Select(x => x.CreateFromServerToLVClient()).ToList();
@@ -56,6 +57,40 @@ namespace TMD.Web.Controllers
             var toReturn = Json(oVModel, JsonRequestBehavior.AllowGet);
             return toReturn;
         }
+
+        public ActionResult OnlineOrders()
+        {
+            OrderSearchRequest viewModel = Session["PageMetaData"] as OrderSearchRequest;
+
+            Session["PageMetaData"] = null;
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            var toReturnModel = new OrderViewModel
+            {
+                SearchRequest = viewModel ?? new OrderSearchRequest()
+            };
+
+            return View(toReturnModel);
+        }
+        [HttpPost]
+        public ActionResult OnlineOrders(OrderSearchRequest oRequest)
+        {
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            OrderSearchResponse oResponse = orderService.GetOrdersSearchResponse(oRequest);
+            List<OrderListViewModel> oList = oResponse.Orders.Select(x => x.CreateFromServerToLVClient()).ToList();
+            OrderViewModel oVModel = new OrderViewModel();
+            oVModel.data = oList;
+            oVModel.recordsTotal = oResponse.TotalCount;
+            oVModel.recordsFiltered = oResponse.FilteredCount;
+            oVModel.GrossSale = oList.Sum(x => x.TotalSale);
+            oVModel.Discount = oList.Sum(x => x.TotalDiscount);
+            oVModel.NetSale = oList.Sum(x => x.NetSales);
+
+
+            Session["PageMetaData"] = oRequest;
+            var toReturn = Json(oVModel, JsonRequestBehavior.AllowGet);
+            return toReturn;
+        }
+
 
         public OrderController(IOrdersService orderService, IProductService productService, IOrderItemService orderItemService, IProductConfigurationService configurationService)
         {
