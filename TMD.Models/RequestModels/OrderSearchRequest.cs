@@ -10,6 +10,7 @@ namespace TMD.Models.RequestModels
         public string  ProductCode { get; set; }
         public int IsOnline { get; set; }
         public int? IsOpen { get; set; }
+        public long? CustomerId { get; set; }
 
 
         public OrdersByColumn OrdersOrderBy

@@ -41,6 +41,7 @@ namespace TMD.Models.DomainModels
         //public double ? PayPalAmount { get; set; }
         //public double ? PayPalAmountAfterDeduct { get; set; }
         public string UserComments { get; set; }
+        public long? CustomerId { get; set; }
       
     
         
@@ -57,6 +58,7 @@ namespace TMD.Models.DomainModels
         public virtual ICollection<StagingEbayItem> StagingEbayItemsCreatedBy { get; set; }
         public virtual ICollection<StagingEbayItem> StagingEbayItemsDeletedBy { get; set; }
         public virtual ICollection<StagingEbayItem> StagingEbayItemsModifiedBy { get; set; }
+        public virtual Customer Customer { get; set; }
 
     }
 }

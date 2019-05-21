@@ -59,6 +59,7 @@
           <Property Name="LastName" Type="nvarchar" MaxLength="200" />
           <Property Name="Telephone" Type="nvarchar" MaxLength="200" />
           <Property Name="UserComments" Type="nvarchar" MaxLength="1000" />
+          <Property Name="CustomerId" Type="bigint" />
         </EntityType>
         <EntityType Name="Category">
           <Key>
@@ -508,6 +509,18 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
           <Property Name="Profit" Type="decimal" Precision="38" Scale="2" />
           <Property Name="ProfitPercentage" Type="decimal" Precision="38" Scale="6" />
         </EntityType>
+        <Association Name="FK_AspNetUsers_Customers">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUsers">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_CategoryLog_Category">
           <End Role="Category" Type="Self.Category" Multiplicity="1" />
           <End Role="CategoryLog" Type="Self.CategoryLog" Multiplicity="*" />
@@ -934,6 +947,10 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
     [SalesSummaryView].[ProfitPercentage] AS [ProfitPercentage]
     FROM [dbo].[SalesSummaryView] AS [SalesSummaryView]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_AspNetUsers_Customers" Association="Self.FK_AspNetUsers_Customers">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+          </AssociationSet>
           <AssociationSet Name="FK_CategoryLog_Category" Association="Self.FK_CategoryLog_Category">
             <End Role="Category" EntitySet="Category" />
             <End Role="CategoryLog" EntitySet="CategoryLog" />
@@ -1232,6 +1249,10 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
             <End Role="Order" EntitySet="Orders" />
             <End Role="OrderItem" EntitySet="OrderItems" />
           </AssociationSet>
+          <AssociationSet Name="FK_AspNetUsers_Customers" Association="TMD.Models.DomainModels.FK_AspNetUsers_Customers">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="AspNetRole">
           <Key>
@@ -1290,6 +1311,8 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
           <NavigationProperty Name="StagingEbayItemsDeletedBy" Relationship="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_DeletedBy" FromRole="AspNetUser" ToRole="StagingEbayItem" />
           <NavigationProperty Name="StagingEbayItemsModifiedBy" Relationship="TMD.Models.DomainModels.FK_StagingEbayItems_AspNetUsers_ModifiedBy" FromRole="AspNetUser" ToRole="StagingEbayItem" />
           <Property Name="UserComments" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerId" Type="Int64" />
+          <NavigationProperty Name="Customer" Relationship="TMD.Models.DomainModels.FK_AspNetUsers_Customers" FromRole="AspNetUser" ToRole="Customer" />
         </EntityType>
         <Association Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
           <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="1">
@@ -1848,6 +1871,7 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
           <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Orders" Relationship="TMD.Models.DomainModels.FK_Orders_Customer" FromRole="Customer" ToRole="Order" />
+          <NavigationProperty Name="AspNetUsers" Relationship="TMD.Models.DomainModels.FK_AspNetUsers_Customers" FromRole="Customer" ToRole="AspNetUser" />
         </EntityType>
         <Association Name="FK_InventoryItems_Vendors">
           <End Type="TMD.Models.DomainModels.Vendor" Role="Vendor" Multiplicity="0..1" />
@@ -2174,6 +2198,18 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_AspNetUsers_Customers">
+          <End Type="TMD.Models.DomainModels.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="TMD.Models.DomainModels.AspNetUser" Role="AspNetUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AspNetUser">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -2210,6 +2246,7 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="UserComments" ColumnName="UserComments" />
                 <ScalarProperty Name="Telephone" ColumnName="Telephone" />
                 <ScalarProperty Name="LastName" ColumnName="LastName" />
@@ -2684,9 +2721,9 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
           <EntitySetMapping Name="ProductImages">
             <EntityTypeMapping TypeName="TMD.Models.DomainModels.ProductImage">
               <MappingFragment StoreEntitySet="ProductImage">
+                <ScalarProperty Name="ItemImageId" ColumnName="ItemImageId" />
                 <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
-                <ScalarProperty Name="ItemImageId" ColumnName="ItemImageId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -2795,6 +2832,7 @@ warning 6002: The table/view 'IstInventory.dbo.SalesSummaryView' does not have a
         <EntityTypeShape EntityType="TMD.Models.DomainModels.Order" Width="1.5" PointX="15" PointY="2" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_Orders_Customer" />
         <AssociationConnector Association="TMD.Models.DomainModels.FK_OrderItems_Orders" />
+        <AssociationConnector Association="TMD.Models.DomainModels.FK_AspNetUsers_Customers" />
       </Diagram>
     </Diagrams>
   </Designer>

@@ -2,11 +2,13 @@ import { IService } from './IService';
 import { Injectable } from '@angular/core';
 import 'rxjs/add/observable/fromPromise';
 import { NavController } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
+import { Storage } from '@ionic/storage';
 
 @Injectable()
 export class MenuService implements IService {
   
-  constructor() { }
+  constructor(private storage: Storage) { }
 
   getId = (): string => 'menu';
 
@@ -24,13 +26,25 @@ export class MenuService implements IService {
     throw new Error("Method not implemented.");
   }
 
-  load(): any {
-    return [
+  load(): Observable<any> {
+    var menu = [
       {
         title: 'Home',
         component: 'ProductCategoryListPage',
         icon: 'icon-home'
       }
     ];
+
+    return Observable.fromPromise(this.storage.get("authData").then(data => {
+      if(data && data.access_token){
+        menu.push({ 
+          title: 'My Orders',
+          component: 'OrderListPage',
+          icon: 'icon-table'
+        });
+      }
+
+      return menu;
+    }));
   }
 }

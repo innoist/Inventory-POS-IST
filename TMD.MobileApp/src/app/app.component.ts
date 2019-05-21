@@ -77,7 +77,9 @@ export class MyApp {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.initTranslate();  
-      this.pages = this.menuService.load();
+      this.menuService.load().subscribe(value => {
+        this.pages = value;
+      });
     });
   }
 
@@ -105,12 +107,6 @@ export class MyApp {
     this.translate.get(['BACK_BUTTON_TEXT']).subscribe(values => {
       this.config.set('ios', 'backButtonText', values.BACK_BUTTON_TEXT);
     });
-  }
-
-  initApp() {
-    this.settings.load();
-    this.pages = this.menuService.load();
-    this.nav.setRoot(HomePage);
   }
 
   openMenuItem(page: any) {

@@ -41,6 +41,8 @@ namespace TMD.Web.ModelMappers
                 CustomerId = source.CustomerId,
                 Comments = source.Comments,
                 OrderId = source.OrderId,
+                IsOnline = source.IsOnline,
+                IsOpen = source.IsOpen,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,

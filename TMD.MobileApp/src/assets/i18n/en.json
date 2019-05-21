@@ -47,5 +47,6 @@
   "CART_TOTAL": "Cart Total",
   "ORDER_TOTAL": "Order Total",
   "ORDER_TOTAL_PAYABLE": "Total Payable",
-  "CONTINUE_BUTTON_TEXT": "Continue"
+  "CONTINUE_BUTTON_TEXT": "Continue",
+  "ORDER_LIST_TITLE": "My Orders"
 }

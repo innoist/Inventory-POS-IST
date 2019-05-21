@@ -41,7 +41,9 @@ export class CartService {
         return {
             ProductId: product.ProductId,
             Name: product.Name,
+            PurchasePrice: product.PurchasePrice,
             SalePrice: product.SalePrice,
+            MinSalePriceAllowed: product.MinSalePriceAllowed,
             Quantity: product.Quantity || 1,
             ImagePath: product.ProductImages != null && product.ProductImages.length > 0 ?
                 product.ProductImages[0].ItemImagePath : ""
@@ -109,5 +111,13 @@ export class CartService {
 
     reset() {
         this.storage.set("cart", "");
+    }
+
+    mapToOrder() {
+        return new Promise(resolve => {
+            this.getItemsInCart().subscribe(items => {
+                resolve({ IsOnline: true, IsOpen: true, OrderItems: items });
+            });
+        });
     }
 }
