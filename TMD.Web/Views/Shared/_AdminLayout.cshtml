@@ -1,5 +1,10 @@
 ﻿@using System.Configuration
 @using Microsoft.AspNet.Identity
+@using TMD.Web.Helper
+@{
+    var urlHelper = new UrlHelper(Html.ViewContext.RequestContext);
+    var baseurl = urlHelper.Content("~");
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -338,15 +343,7 @@
                 <i class="fa fa-angle-up"></i>
             </span>
     </div>
-    @if (Request.Url.Host.ToLower().Contains("localhost"))
-    {
-        <input type="hidden" id="siteURL" value="http://localhost:23868/"/>
-    }
-    else
-    {
-
-        <input type="hidden" id="siteURL" value="@( "http://" + Request.Url.Host.ToLower() + "/")"/>
-    }
+    <input type="hidden" id="siteURL" value="@baseurl"/>
 
 </div>
 

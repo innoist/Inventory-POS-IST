@@ -14,10 +14,22 @@
             <div class="tools">
                 @*<a href="javascript:;" class="collapse">
                     </a>*@
-                <button type="submit" class="btn btn-circle blue" onclick="return ValidateAmounts();">Save</button>
-                <a href="~/Order/Index">
-                    <button type="button" class="btn btn-circle default">Cancel</button>
-                </a>
+                @if (isOnline)
+                {
+                    @Html.CheckBoxFor(m => m.IsDispatched)
+                    <button type="submit" class="btn btn-circle blue" onclick="return ValidateAmounts();">Save</button>
+                    <a href="~/Order/OnlineOrders">
+                        <button type="button" class="btn btn-circle default">Cancel</button>
+                    </a>
+                }
+                else
+                {
+                    <button type="submit" class="btn btn-circle blue" onclick="return ValidateAmounts();">Save</button>
+                    <a href="~/Order/Index">
+                        <button type="button" class="btn btn-circle default">Cancel</button>
+                    </a>
+                }
+
             </div>
             <div class="caption">
                 <i class="fa fa-male"></i>Create/Update Order
@@ -31,6 +43,8 @@
                 @Html.HiddenFor(m => m.RecCreatedDate)
                 @Html.HiddenFor(m => m.CustomerId)
                 @Html.HiddenFor(m => m.AllowedMaxDiscount)
+                @Html.HiddenFor(m => m.IsOnline)
+                @Html.HiddenFor(m => m.IsOpen)
 
                 <div class="row">
                     <div class="col-md-7 col-sm-12">
