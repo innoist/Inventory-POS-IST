@@ -22,14 +22,19 @@ export class MyCartPage {
     constructor(private cartService: CartService, public api: Api, private navCtrl: NavController,
         private loginService: LoginService, private storage: Storage) { }
 
-    delete = (item: any): void => {
+    removeItem = (item: any): void => {
+        this.cartService.removeFromCart(item).then(() => {
+            this.getCartItems();
+        });
     }
 
     ngAfterViewInit() {
-        this.content.ionScroll.subscribe((d) => {
-            this.fabButton.setElementClass("fab-button-out", d.directionY == "down");
-        });
         // Load items from cart service (items added to cart)
+        this.getCartItems();
+    }
+
+    // Get Cart Items
+    getCartItems() {        
         this.cartService.getItemsInCart().subscribe(value => {
             this.items = value;
             this.calculateTotalPrice();
@@ -38,6 +43,7 @@ export class MyCartPage {
 
     // Calculate Total Price
     calculateTotalPrice() {
+        this.totalPrice = 0;
         this.items.forEach((item: any) => {
             this.totalPrice += item.Quantity * item.SalePrice;
         });

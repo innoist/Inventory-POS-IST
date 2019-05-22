@@ -8,10 +8,12 @@ import { TranslateService } from '@ngx-translate/core';
 @Injectable()
 export class CartService {
     itemAddedToCartSuccessMessage: string;
+    itemRemovedFromCartSuccessMessage: string;
     constructor(private storage: Storage, private events: Events, private toastService: ToastService,
         translateService: TranslateService) {
-        translateService.get("ITEM_ADDED_TO_CART").subscribe((value: any) => {
-            this.itemAddedToCartSuccessMessage = value;
+        translateService.get(["ITEM_ADDED_TO_CART", "ITEM_REMOVED_FROM_CART"]).subscribe((values: any) => {
+            this.itemAddedToCartSuccessMessage = values["ITEM_ADDED_TO_CART"];
+            this.itemRemovedFromCartSuccessMessage = values["ITEM_REMOVED_FROM_CART"];
         });
     }
 
@@ -58,18 +60,37 @@ export class CartService {
         }, 1000);
     }
 
-    removeFromCart(product: any) {
-        this.storage.get("cart").then(cart => {
-            if (!cart.items) {
-                return;
-            }
-
-            var cartItem = cart.items[cart.items.indexOf(product)];
-            if (cartItem != null) {
-                --cartItem.Quantity;
-                this.storage.set("cart", cart);
-            }
+    removeFromCart(product: any): Promise<any> {
+        return new Promise(resolve => {
+            this.storage.get("cart").then(cart => {
+                if (!cart.items) {
+                    resolve();
+                    return;
+                }
+    
+                this.getProductById(product.ProductId).subscribe(value => {
+                    if (!value) {
+                        return;
+                    }
+                    else if (value.index >= 0) {
+                        --cart.items[value.index].Quantity;
+                        if (cart.items[value.index].Quantity === 0) {
+                            cart.items.splice(value.index, 1);
+                        }
+                        this.itemRemovedHandler(cart);
+                        resolve();
+                    }
+                });
+            })
         });
+    }
+
+    itemRemovedHandler(cart: any) {
+        this.storage.set("cart", cart);
+        this.toastService.presentToast(this.itemRemovedFromCartSuccessMessage);
+        setTimeout(() => {
+            this.events.publish("item_added_to_cart");
+        }, 1000);
     }
 
     getProductById(productId: any): Observable<any> {
