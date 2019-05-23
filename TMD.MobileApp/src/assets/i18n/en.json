@@ -42,6 +42,7 @@
   "ITEM_REMOVED_FROM_CART": "Item has been removed from cart successfully!",
   "MY_CART_TITLE": "My Cart",
   "PROCEED_BUTTON_TEXT": "Proceed",
+  "ADD_TO_CART_BUTTON_TEXT": "Add to cart",
   "ORDER_PLACED": "Your order has been placed successfully!",
   "ORDER_ITEMS": "Order Items",
   "ORDER_SUMMARY": "Order Summary",

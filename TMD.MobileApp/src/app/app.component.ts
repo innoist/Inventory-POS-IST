@@ -2,10 +2,10 @@ import { Component, ViewChild } from '@angular/core';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { TranslateService } from '@ngx-translate/core';
-import { Config, Nav, Platform, MenuController } from 'ionic-angular';
+import { Config, Nav, Platform, MenuController, Events } from 'ionic-angular';
 import { Settings, LoadingHelper } from '../providers';
 import { Storage } from '@ionic/storage';
-import { HomePage, ProductCategoryListPage } from '../pages';
+import { HomePage } from '../pages';
 import { MenuService } from '../services/menu-service';
 
 @Component({
@@ -20,6 +20,9 @@ import { MenuService } from '../services/menu-service';
           <ion-icon icon-small item-left name="arrow-back"></ion-icon>
         </button>
       </ion-buttons>
+      <ion-label *ngIf="loggedInUserName">
+        <h2 item-title text-center>Welcome, {{ loggedInUserName }}!</h2>
+      </ion-label>
       <h2 item-title text-center>{{ "MENU_TITLE" | translate }}</h2>
     </ion-header>
     <ion-content main-menu>
@@ -52,7 +55,7 @@ import { MenuService } from '../services/menu-service';
 })
 export class MyApp {
 
-  rootPage: string = ProductCategoryListPage;
+  rootPage: string = HomePage;
 
   selectedMenu: any;
 
@@ -60,6 +63,8 @@ export class MyApp {
   pages: any[] = [];
 
   @ViewChild(Nav) nav: Nav;
+
+  loggedInUserName: string = "";
 
   constructor(private translate: TranslateService,
     platform: Platform,
@@ -70,7 +75,8 @@ export class MyApp {
     private storage: Storage,
     private loader: LoadingHelper,
     private menuCtrl: MenuController,
-    private menuService: MenuService) {
+    private menuService: MenuService,
+    events: Events) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -79,6 +85,14 @@ export class MyApp {
       this.initTranslate();  
       this.menuService.load().subscribe(value => {
         this.pages = value;
+      });
+      this.storage.get("authData").then(authData => {
+        if(authData){
+          this.loggedInUserName = authData.userName;
+        }
+      });
+      events.subscribe("User_LoggedIn", (user: any) => {
+        this.loggedInUserName = user.userName;
       });
     });
   }

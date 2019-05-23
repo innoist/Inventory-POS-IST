@@ -2,7 +2,7 @@
 export const FirstRunPage = 'WelcomePage';
 
 // The main page the user will see as they use the app over a long period of time.
-export const HomePage = 'ContentPage';
+export const HomePage = 'ProductCategoryMainListPage';
 
 // Product Category Page
 export const ProductCategoryListPage = 'ProductCategoryListPage';

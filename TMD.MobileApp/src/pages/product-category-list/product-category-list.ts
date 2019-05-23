@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, InfiniteScroll, NavController } from 'ionic-angular';
+import { IonicPage, InfiniteScroll, NavController, NavParams } from 'ionic-angular';
 import { Api } from '../../providers';
 import { ProductService } from '../../services/product-service';
+import { FormControl } from '@angular/forms';
+import 'rxjs/add/operator/debounceTime';
 
 @IonicPage()
 @Component({
@@ -13,24 +15,53 @@ export class ProductCategoryListPage {
   animateClass: any;
   data: any[] = [];
   totalDataCount: number = 0;
+  productMainCategory: any;
   productCategories = [];
   pageSize: number = 10;
   searchTerm: string = "";
+  searchInput = new FormControl();
   activeInfiniteScroll: InfiniteScroll;
 
   /**
    * Constructor
    */
-  constructor(public api: Api, private productService: ProductService, private nav: NavController) {
+  constructor(public api: Api, private productService: ProductService, private nav: NavController,
+    navParams: NavParams) {
     this.animateClass = { 'fade-in-item': true };
-    this.getProductCategories();
+    this.productMainCategory = navParams.get("MainCategory");
   }
+
+  ngOnInit() {
+    this.getProductCategories();
+    // Add throttle to search filter
+    this.searchInput
+    .valueChanges
+    .debounceTime(500)
+    .subscribe(value => {
+        this.searchTerm = value;
+        this.filter();
+    });
+  }
+
+  // Filter products
+  filter() {
+    this.data.splice(0);
+    this.productCategories.splice(0);
+    this.getProductCategories(() => {
+        // Reactivate infinite scroll
+        if (this.activeInfiniteScroll) {
+            this.activeInfiniteScroll.enable(true);
+        }
+    });  
+}
 
   // Get Product Categories
   getProductCategories(callback?: Function) {
     this.productService.loadCategories({
       PageNo: this.data.length > 0 ? (this.data.length / this.pageSize) + 1 : 1,
-      PageSize: this.pageSize
+      PageSize: this.pageSize, 
+      MainCategoryId: this.productMainCategory.CategoryId,
+      Name: this.searchTerm
     }).subscribe(response => {
       for (let i = 0; i < response.ProductCategories.length; i++) {
         this.data.push(response.ProductCategories[i]);

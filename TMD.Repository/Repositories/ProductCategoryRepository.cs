@@ -39,6 +39,9 @@ namespace TMD.Repository.Repositories
             int toRow = searchRequest.PageSize;
             IEnumerable<ProductCategory> result =
                         DbSet
+                        .Where(pc =>
+                        (!searchRequest.MainCategoryId.HasValue || pc.MainCategoryId == searchRequest.MainCategoryId) &&
+                        (string.IsNullOrEmpty(searchRequest.Name) || pc.Name.Contains(searchRequest.Name)))
                         .OrderBy(pc => pc.Name)
                         .Skip(fromRow)
                         .Take(toRow)

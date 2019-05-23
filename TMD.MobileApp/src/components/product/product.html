@@ -12,7 +12,7 @@
                         <li margin *ngFor="let product of products">
                             <!-- Expandable Full image with CTA Header-->
                             <div class="collapsible-header">
-                                <ion-item (click)="openImageSlider(product)" no-margin padding no-lines [ngClass]="animateClass" background-size
+                                <ion-item (click)="showDetails(product)" no-margin padding no-lines [ngClass]="animateClass" background-size
                                     [ngStyle]="{ 'background-image': 
                                     product.ProductImages && product.ProductImages.length > 0 ? 'url(' + api.url + '/Images/Inventory/' + product.ProductImages[0].ItemImagePath + ')' : '' }">
                                     <div gallery-title>

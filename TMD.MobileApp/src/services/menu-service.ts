@@ -30,7 +30,7 @@ export class MenuService implements IService {
     var menu = [
       {
         title: 'Home',
-        component: 'ProductCategoryListPage',
+        component: 'ProductCategoryMainListPage',
         icon: 'icon-home'
       }
     ];

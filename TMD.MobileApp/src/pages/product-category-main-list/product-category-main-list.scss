@@ -1,0 +1,39 @@
+/*  Style Product Main Categories 
+===========================================*/
+product-category-main-list {
+  li {
+    list-style-type: none;
+    &[margin] {
+      margin: 5px 10px;
+    }
+  }
+
+  .collapsible-header {
+    [background-size]{
+      height: 150px;
+      position: relative;
+      margin-bottom: 5px !important;
+    }
+
+    .item-inner {
+      padding: 0;
+    }
+
+    [button-clear-outline] {
+      position: absolute;
+      right: 20px;
+      bottom: 10px;
+    }
+
+    [item-title] {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+    }
+  }
+
+  [icon-small] {
+    font-size: icon-size('icon-small') !important;
+    color: theme-colors('mainColors', 'accent') !important;
+  }
+}

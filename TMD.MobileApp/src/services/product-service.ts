@@ -33,4 +33,17 @@ export class ProductService {
         });
         return response;        
     }
+
+    loadMainCategories(params?: any): Observable<any> {
+        var that = this;
+        that.loadingHelper.presentLoader();
+        var response = that.api.get('api/Product/MainCategories', params).share();
+        response.subscribe(snapshot => {
+            that.loadingHelper.dismissLoader();
+        }, err => {
+            console.log("Failed to load main categories.", err);
+            that.loadingHelper.dismissLoader();
+        });
+        return response;        
+    }
 }

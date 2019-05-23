@@ -6,6 +6,7 @@ namespace TMD.Models.RequestModels
     {
         public string Name { get; set; }
         public string Description { get; set; }
+        public long? MainCategoryId { get; set; }
         
         public ProductCategoryByColumn ProductOrderBy
         {

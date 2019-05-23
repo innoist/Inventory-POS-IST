@@ -1,0 +1,46 @@
+/*  #Style Centered with header
+===========================================*/
+product-details {
+    ul {
+      li {
+        list-style-type: none;
+  
+        &:last-child ion-item:before {
+          border-bottom: 1px solid transparent !important;
+        }
+      }
+    }
+  
+    ion-list-header {
+      &[background-size] {
+        height: 200px;
+        width: 100%;
+      }
+  
+      [item-title] {
+        z-index: 5;
+        position: relative;
+      }
+    }
+    
+    .collapsible-header {
+      .item-md.item-block .item-inner {
+        padding-right: 0 !important;
+      }
+  
+      ion-icon {
+        display: block;
+        text-align: center;
+      }
+    }
+
+    h3 {
+        font-weight: bold;
+    }
+
+    [button-clear-outline] {
+        margin: 0 8px 8px 8px;
+        width: 95%;
+    }
+  }
+  
