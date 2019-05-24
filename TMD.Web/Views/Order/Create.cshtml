@@ -16,7 +16,10 @@
                     </a>*@
                 @if (isOnline)
                 {
-                    @Html.CheckBoxFor(m => m.IsDispatched)
+                    <label>
+                        @Html.CheckBoxFor(m => m.IsDispatched) Dispatched
+                    </label>
+                    
                     <button type="submit" class="btn btn-circle blue" onclick="return ValidateAmounts();">Save</button>
                     <a href="~/Order/OnlineOrders">
                         <button type="button" class="btn btn-circle default">Cancel</button>
