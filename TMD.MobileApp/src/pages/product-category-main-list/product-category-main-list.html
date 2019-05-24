@@ -1,0 +1,25 @@
+<!--Product Categories List-->
+<app-header [title]="('HOMEPAGE_TITLE' | translate)">
+</app-header>
+<!--Content-->
+<ion-content has-header>
+    <ion-grid no-padding>
+        <ion-row>
+            <ion-col col-12 no-padding no-margin>
+                <ion-list>
+                    <ul no-margin no-padding class="collapsible">
+                        <li margin *ngFor="let category of productCategories">
+                            <!-- Expandable Full image with CTA Header-->
+                            <div class="collapsible-header">
+                                <ion-item (click)="gotoSubCategory(category)" no-margin padding no-lines background-size 
+                                    [ngStyle]="{'background-image': 'url(' + api.url + '/Images/Inventory/' + category.Name.toLowerCase() + '_main_category.png)'}">
+                                    <h2 item-title float-left>{{category.Name}}</h2>
+                                </ion-item>
+                            </div>
+                        </li>
+                    </ul>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

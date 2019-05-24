@@ -34,4 +34,23 @@ product-category-list {
     height: 100%;
     margin: 0 auto;
   }
+
+  ion-list {
+    margin-bottom: 12px !important;
+
+    ion-list-header {
+      margin-bottom: 0 !important;
+    }
+
+    ion-col {
+      padding: 0 !important;
+    }
+  }
+
+  [search-bar-bcg] {
+    .searchbar-input {
+      background-color: transparent;
+      color: theme-colors('textColors', 'primary');
+    }
+  }
 }

@@ -1,10 +1,14 @@
 <!--Product Categories List-->
-<app-header [title]="('HOMEPAGE_TITLE' | translate)">
+<app-header [title]="productMainCategory != null ? productMainCategory.Name : ('HOMEPAGE_TITLE' | translate)">
 </app-header>
 <!--Content-->
 <ion-content has-header>
     <ion-grid no-padding *ngIf="data != null">
         <ion-row>
+            <ion-col col-12>
+                <ion-searchbar [formControl]="searchInput" search-bar-bcg>
+                </ion-searchbar>
+            </ion-col>
             <ion-col col-12 no-padding no-margin>
                 <ion-list *ngFor="let productCategory of productCategories">
                     <ion-list-header>

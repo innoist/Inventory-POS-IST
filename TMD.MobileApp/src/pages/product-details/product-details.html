@@ -1,0 +1,29 @@
+<!--Product Details-->
+<app-header [title]="('HOMEPAGE_TITLE' | translate)">
+</app-header>
+<!-- Themes Centered with header -->
+<ion-content has-header>
+    <ion-grid no-padding>
+        <ion-row>
+            <ion-col col-12 no-padding no-margin>
+                <ion-list>
+                    <!---HEADER-->
+                    <ion-list-header (click)="openImageSlider(product)" no-margin no-padding no-lines background-size
+                        [ngStyle]="{
+                            'background-image': product.ProductImages != null && product.ProductImages.length > 0 ? 
+                            'url(' + api.url + '/Images/Inventory/' + product.ProductImages[0].ItemImagePath + ')' : '' 
+                        }">
+                    </ion-list-header>
+                    <!--CONTENT-->
+                    <ion-item no-padding text-center no-lines>
+                        <h1 text-center>{{product.Name}}</h1>
+                        <h3 text-center item-title>{{product.SalePrice}} PKR</h3>
+                    </ion-item>
+                    <button ion-button button-clear-outline round outline (click)="addToCart(product, $event)">
+                        {{ "ADD_TO_CART_BUTTON_TEXT" | translate }}
+                    </button>
+                </ion-list>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

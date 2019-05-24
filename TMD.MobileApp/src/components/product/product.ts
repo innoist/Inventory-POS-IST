@@ -101,13 +101,10 @@ export class Product {
                 infiniteScroll.complete(); 
             });
         }, 500);
-    }
+    }    
 
-    openImageSlider = (product: any): any => {
-        this.navCtrl.push("ProductDetailsPageFullScreenGallery", {
-            'items': product.ProductImages,
-            'name': product.Name
-        });
+    showDetails(product: any) {
+        this.navCtrl.push("ProductDetailPage", { "Product": product });
     }
 
     addToCart(product: any, event: any) {

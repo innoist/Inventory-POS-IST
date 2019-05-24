@@ -8,7 +8,7 @@ export class LoadingHelper {
 
     loadingMessage: string;
 
-    loader: Loading;
+    loader: any;
 
     constructor(private translateService: TranslateService, 
         private loadingCtrl: LoadingController){

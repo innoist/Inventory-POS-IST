@@ -40,6 +40,14 @@ namespace TMD.Web.Areas.Api.Controllers
             return Ok(new { ProductCategories = productCategories, response.FilteredCount });
         }
 
+        // GET api/<controller>
+        [Route("~/api/Product/MainCategories")]
+        public IHttpActionResult Get()
+        {
+            var response = productCategoryService.GetProductCategoryResponse(null);
+            return Ok(new { ProductMainCategories = response.ProductMainCategories.Select(p => p.CreateFromServerToClient()).ToList() });
+        }
+
         // GET api/<controller>/5
         public ProductApiModel Get(string id, bool searchBarCode =true)
         {

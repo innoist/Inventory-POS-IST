@@ -81,7 +81,7 @@ export class User {
     this._user = resp;
     this.storage.set('authData', this._user).then((res) => {
       // Raise event to notify subscribers - myApp to update menu
-      this.events.publish("User_LoggedIn");
+      this.events.publish("User_LoggedIn", this._user);
       console.log('Saved data for user', res);
     })
   }
