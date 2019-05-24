@@ -28,7 +28,13 @@ product-category-main-list {
     [item-title] {
       position: absolute;
       bottom: 20px;
-      left: 20px;
+      padding-left: 20px;
+      background: linear-gradient(to left, #00bee4 0%, #0091d2 100%);
+      color: white !important;
+    }
+
+    ion-item {
+      padding-left: 0 !important;
     }
   }
 

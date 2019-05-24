@@ -40,10 +40,21 @@ product-category-list {
 
     ion-list-header {
       margin-bottom: 0 !important;
+      min-height: 4.5rem !important;
+      max-height: 4.5rem !important;
+
+      ion-label {
+        font-weight: bold;
+      }
     }
 
     ion-col {
       padding: 0 !important;
+
+      img {
+        width: 115px;
+        height: 83px;
+      }
     }
   }
 

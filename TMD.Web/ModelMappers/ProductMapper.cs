@@ -1,4 +1,8 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Web;
 using TMD.Models.DomainModels;
 using TMD.Web.Models;
 using TMD.Web.ViewModels;
@@ -52,7 +56,8 @@ namespace TMD.Web.ModelMappers
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
                 ImagePath = source.ProductImages.Any() ? "Yes" : "No",
-                ProductImages = source.ProductImages?.Select(x => x.CreateFromServerToClient()).ToList()
+                ProductImages = source.ProductImages != null && source.ProductImages.Any() ? source.ProductImages.Select(x => x.CreateFromServerToClient()).ToList() : 
+                    new List<ProductImageModel> { new ProductImageModel { ItemImagePath = "no-image-found.png", ProductId = source.ProductId } }
             };
         }
 
@@ -90,9 +95,16 @@ namespace TMD.Web.ModelMappers
 
         public static ProductImageModel CreateFromServerToClient(this ProductImage source)
         {
+            var imagePath = source.ImagePath;
+            var imagesFolderPath = HttpContext.Current.Server.MapPath("~/Images/Inventory/");
+            if (!string.IsNullOrEmpty(source.ImagePath) && !File.Exists(imagesFolderPath + source.ImagePath))
+            {
+                imagePath = "no-image-found.png";
+            }
+
             return new ProductImageModel
             {
-                ItemImagePath = source.ImagePath,
+                ItemImagePath = imagePath,
                 ProductId = source.ProductId
             };
 

@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using Microsoft.Practices.Unity;
 using TMD.Interfaces.IRepository;
 using TMD.Models.DomainModels;
@@ -37,16 +39,18 @@ namespace TMD.Repository.Repositories
         {
             int fromRow = (searchRequest.PageNo - 1) * searchRequest.PageSize;
             int toRow = searchRequest.PageSize;
+            Expression<Func<ProductCategory, bool>> query = pc =>
+                (!searchRequest.MainCategoryId.HasValue || pc.MainCategoryId == searchRequest.MainCategoryId) &&
+                (string.IsNullOrEmpty(searchRequest.Name) || pc.Name.Contains(searchRequest.Name));
+
             IEnumerable<ProductCategory> result =
                         DbSet
-                        .Where(pc =>
-                        (!searchRequest.MainCategoryId.HasValue || pc.MainCategoryId == searchRequest.MainCategoryId) &&
-                        (string.IsNullOrEmpty(searchRequest.Name) || pc.Name.Contains(searchRequest.Name)))
+                        .Where(query)
                         .OrderBy(pc => pc.Name)
                         .Skip(fromRow)
                         .Take(toRow)
                         .ToList();
-            var totalCount = DbSet.Count();
+            var totalCount = DbSet.Count(query);
 
             return new ProductCategorySearchResponse { ProductCategories = result, TotalCount = totalCount, FilteredCount = totalCount };
         }

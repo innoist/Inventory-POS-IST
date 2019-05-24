@@ -28,7 +28,7 @@ export class ProductCategoryListPage {
   constructor(public api: Api, private productService: ProductService, private nav: NavController,
     navParams: NavParams) {
     this.animateClass = { 'fade-in-item': true };
-    this.productMainCategory = navParams.get("MainCategory");
+    this.productMainCategory = navParams.get("MainCategory") || {};
   }
 
   ngOnInit() {

@@ -11,11 +11,11 @@
             </ion-col>
             <ion-col col-12 no-padding no-margin>
                 <ion-list *ngFor="let productCategory of productCategories">
-                    <ion-list-header>
+                    <ion-list-header (click)="viewAllProducts(productCategory)" *ngIf="productCategory.Products != null && productCategory.Products.length > 0">
                         <ion-label>
                             {{productCategory.Name}}
                         </ion-label>
-                        <ion-icon (click)="viewAllProducts(productCategory)" icon-small item-right>
+                        <ion-icon icon-small item-right>
                             <i class="icon icon-play"></i>
                         </ion-icon>
                     </ion-list-header>
