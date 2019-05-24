@@ -76,7 +76,8 @@ namespace TMD.Web.Areas.Api.Controllers
                 UserName = user.UserName,
                 EmailConfirmed = true,
                 Address = user.Address,
-                Customer = new Customer { Email = user.Email, Name = user.UserName, Address = user.Address, RecCreatedBy = "system", RecLastUpdatedBy = "system",
+                Telephone = user.Phone,
+                Customer = new Customer { Email = user.Email, Name = user.UserName, Address = user.Address, Phone = user.Phone, RecCreatedBy = "system", RecLastUpdatedBy = "system",
                     RecCreatedDate = DateTime.Now, RecLastUpdatedDate = DateTime.Now }
             }, user.Password);
 

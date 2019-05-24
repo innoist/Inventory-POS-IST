@@ -8,8 +8,8 @@ import { Storage } from '@ionic/storage';
  */
 @Injectable()
 export class Api {
-  public url: string = 'http://innostark-001-site1.itempurl.com';
-  // public url: string = 'http://localhost:23867';
+  // public url: string = 'http://innostark-001-site1.itempurl.com';
+  public url: string = 'http://localhost:23868';
   public token: string = '';
   constructor(public http: HttpClient, private _http: Http, private storage: Storage) {
     this.storage.get('authData').then((data) => {

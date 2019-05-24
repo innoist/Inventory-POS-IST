@@ -28,8 +28,7 @@ product-category-main-list {
     [item-title] {
       position: absolute;
       bottom: 20px;
-      padding-left: 20px;
-      background: linear-gradient(to left, #00bee4 0%, #0091d2 100%);
+      left: 20px;
       color: white !important;
     }
 
@@ -41,5 +40,16 @@ product-category-main-list {
   [icon-small] {
     font-size: icon-size('icon-small') !important;
     color: theme-colors('mainColors', 'accent') !important;
+  }
+
+  [category-title] {
+    position: absolute;
+    left: 0;
+    right: 0;
+    padding: 10px;
+    @include gradient-accent (rgba(0, 190, 228, 0.5) 0%, rgba(0, 145, 210, 0.5) 100% );
+    bottom: 0;
+    min-height: 45px;
+    border-bottom: 1px solid transparent !important;
   }
 }

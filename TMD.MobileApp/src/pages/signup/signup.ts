@@ -15,11 +15,12 @@ export class SignupPage {
   // The account fields for the login form.
   // If you're using the username field with or without email, make
   // sure to add it to the type
-  account: { username: string, email: string, password: string, address: string } = {
-    username: 'Test Human',
-    email: 'test@example.com',
-    password: 'test',
-    address: 'Test address'
+  account: { username: string, email: string, password: string, address: string, phone: string } = {
+    username: '',
+    email: '',
+    password: '',
+    address: '',
+    phone: ''
   };
 
   // Our translated text strings
@@ -40,7 +41,15 @@ export class SignupPage {
     });
   }
 
+  isValid() {
+    return this.account.username && this.account.email && this.account.password && this.account.address;
+  }
+
   doSignup() {
+    if (!this.isValid()) {
+      return;  
+    }
+
     // Attempt to login in through our User service
     this.loadingHelper.presentLoader();
     this.user.signup(this.account).subscribe(() => {

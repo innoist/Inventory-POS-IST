@@ -76,24 +76,34 @@ export class MyApp {
     private loader: LoadingHelper,
     private menuCtrl: MenuController,
     private menuService: MenuService,
-    events: Events) {
+    private events: Events) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       this.statusBar.styleDefault();
       this.splashScreen.hide();
       this.initTranslate();  
-      this.menuService.load().subscribe(value => {
-        this.pages = value;
-      });
-      this.storage.get("authData").then(authData => {
-        if(authData){
-          this.loggedInUserName = authData.userName;
-        }
-      });
-      events.subscribe("User_LoggedIn", (user: any) => {
-        this.loggedInUserName = user.userName;
-      });
+      this.init();
+    });
+  }
+
+  init() {    
+    this.loggedInUserName = "";
+    this.loadMenu();
+    this.storage.get("authData").then(authData => {
+      if(authData){
+        this.loggedInUserName = authData.userName;
+      }
+    });
+    this.events.subscribe("User_LoggedIn", (user: any) => {
+      this.loggedInUserName = user.userName;
+      this.loadMenu();
+    });
+  }
+
+  loadMenu() {
+    this.menuService.load().subscribe(value => {
+      this.pages = value;
     });
   }
 
@@ -146,5 +156,9 @@ export class MyApp {
     this.storage.set('authData', "");
     // Navigate to login page
     this.nav.setRoot(this.rootPage);
+    // Reset component - Menu
+    setTimeout(() => {
+      this.init();
+    }, 1000);
   }
 }

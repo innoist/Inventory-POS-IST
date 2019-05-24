@@ -33,8 +33,13 @@
                     <ion-label floating>{{ 'ADDRESS' | translate }}</ion-label>
                     <ion-input required type="text" [(ngModel)]="account.address" name="address"></ion-input>
                 </ion-item>
+                <!---Input field address-->
+                <ion-item no-padding transparent>
+                    <ion-label floating>{{ 'PHONE' | translate }}</ion-label>
+                    <ion-input required type="text" [(ngModel)]="account.phone" name="phone"></ion-input>
+                </ion-item>
                 <!---Signup button-->
-                <button ion-button float-left button-clear-outline round outline (click)="doSignup()">{{
+                <button [disabled]="isValid() ? '': 'true'" ion-button float-left button-clear-outline round outline (click)="doSignup()">{{
                     'SIGNUP_BUTTON' | translate }}</button>
             </ion-col>
         </ion-row>
