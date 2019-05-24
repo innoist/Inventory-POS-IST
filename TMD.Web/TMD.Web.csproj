@@ -312,6 +312,7 @@
     <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
     <Compile Include="Areas\Api\Controllers\AccountsController.cs" />
     <Compile Include="Areas\Api\Controllers\CustomerController.cs" />
+    <Compile Include="Areas\Api\Controllers\OrderController.cs" />
     <Compile Include="Areas\Api\Controllers\ProductController.cs" />
     <Compile Include="Areas\Api\Models\AccountViewModel.cs" />
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />

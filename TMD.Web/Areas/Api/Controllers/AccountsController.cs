@@ -70,7 +70,16 @@ namespace TMD.Web.Areas.Api.Controllers
                 return BadRequest();
             }
 
-            var response = await UserManager.CreateAsync(new AspNetUser { Email = user.Email, UserName = user.UserName, EmailConfirmed = true, Address = user.Address }, user.Password);
+            var response = await UserManager.CreateAsync(new AspNetUser
+            {
+                Email = user.Email,
+                UserName = user.UserName,
+                EmailConfirmed = true,
+                Address = user.Address,
+                Customer = new Customer { Email = user.Email, Name = user.UserName, Address = user.Address, RecCreatedBy = "system", RecLastUpdatedBy = "system",
+                    RecCreatedDate = DateTime.Now, RecLastUpdatedDate = DateTime.Now }
+            }, user.Password);
+
             if (!response.Succeeded) return BadRequest();
 
             var registeredUser = await UserManager.FindByEmailAsync(user.Email);
@@ -82,7 +91,7 @@ namespace TMD.Web.Areas.Api.Controllers
             var addToRoleResponse = await UserManager.AddToRoleAsync(registeredUser.Id, "Customer");
             if (!addToRoleResponse.Succeeded)
             {
-                return BadRequest("Failed to assign role to added user.");
+                return BadRequest("Failed to assign role to user.");
             }
 
             return Ok(true);

@@ -15,8 +15,12 @@
     [LastName]          NVARCHAR (200)  NULL,
     [Telephone]         NVARCHAR (200)  NULL,
     [UserComments]      NVARCHAR (1000) NULL,
-    CONSTRAINT [PK_dbo.AspNetUsers] PRIMARY KEY CLUSTERED ([Id] ASC)
+    [CustomerId]        BIGINT          NULL,
+    CONSTRAINT [PK_dbo.AspNetUsers] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [FK_AspNetUsers_Customers] FOREIGN KEY ([CustomerId]) REFERENCES [dbo].[Customer] ([Id])
 );
+
+
 
 
 

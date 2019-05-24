@@ -1,0 +1,27 @@
+<!--Orders List-->
+<app-header [title]="('ORDER_LIST_TITLE' | translate)">
+</app-header>
+<!--Content-->
+<ion-content has-header>
+    <ion-grid no-padding *ngIf="data != null">
+        <ion-row>
+            <ion-col col-12>
+                <ion-select [(ngModel)]="orderStatus" (ionChange)="filter()" placeholder="Select Status">
+                    <ion-option value="1">Pending</ion-option>
+                    <ion-option value="0">Closed</ion-option>
+                </ion-select>
+            </ion-col>
+            <ion-col col-12 no-padding no-margin>
+                <ion-list>
+                    <ion-item [ngClass]="animateClass" *ngFor="let order of orders">
+                        <h2>{{ order.OrderId }}</h2>
+                        <ion-badge>{{ order.IsOpen ? "Pending" : "Closed" }}</ion-badge>
+                    </ion-item>
+                </ion-list>
+                <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+                    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+                </ion-infinite-scroll>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+</ion-content>

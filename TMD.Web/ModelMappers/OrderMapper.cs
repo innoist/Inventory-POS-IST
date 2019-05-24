@@ -43,6 +43,7 @@ namespace TMD.Web.ModelMappers
                 OrderId = source.OrderId,
                 IsOnline = source.IsOnline,
                 IsOpen = !source.IsDispatched,
+                IsOpen = source.IsOpen,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
