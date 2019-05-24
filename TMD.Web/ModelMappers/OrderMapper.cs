@@ -15,18 +15,18 @@ namespace TMD.Web.ModelMappers
         {
             return new OrderModel
             {
-               IsModified = source.IsModified,
-               CustomerId = source.CustomerId,
+                IsModified = source.IsModified,
+                CustomerId = source.CustomerId,
                 Comments = source.Comments,
-                OrderId =  source.OrderId,
+                OrderId = source.OrderId,
                 IsOpen = source.IsOpen,
                 IsOnline = source.IsOnline,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
-                Customer = source.Customer!=null ? source.Customer.CreateFromServerToClient() : new CustomerModel(),
-                OrderItems = source.OrderItems.Select(x=>x.CreateFromServerToClient()).ToList(),
+                Customer = source.Customer != null ? source.Customer.CreateFromServerToClient() : new CustomerModel(),
+                OrderItems = source.OrderItems.Select(x => x.CreateFromServerToClient()).ToList(),
             };
         }
 
@@ -35,24 +35,25 @@ namespace TMD.Web.ModelMappers
 
         public static Order CreateFromClientToServer(this OrderModel source)
         {
-            return new Order
+            var order = new Order
             {
                 IsModified = source.IsModified,
                 CustomerId = source.CustomerId,
                 Comments = source.Comments,
                 OrderId = source.OrderId,
                 IsOnline = source.IsOnline,
-                IsOpen = source.IsOpen,
+                IsOpen = !source.IsDispatched,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
                 OrderItems = source.OrderItems.Select(x => x.CreateFromClientToServer(source.OrderId)).ToList()
             };
+            return order;
         }
-    
-    
-    //FOR LIST VIEW
+
+
+        //FOR LIST VIEW
 
         public static OrderListViewModel CreateFromServerToLVClient(this Order source)
         {
@@ -64,18 +65,18 @@ namespace TMD.Web.ModelMappers
                 IsModified = source.IsModified,
                 CustomerId = source.CustomerId,
                 Comments = source.Comments,
-                OrderIdValue=source.OrderId,
+                OrderIdValue = source.OrderId,
                 OrderId = @"<a title='Click to open order' href='" + hostURL + "Order/Create?id=" + source.OrderId + "'> " + source.OrderId + "</a>",
                 OrderOriginalId = source.OrderId,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate.ToShortDateString(),
-                RecCreatedDateFormatted= String.Format("{0:ddd, MMM d, yyyy}", source.RecCreatedDate),
+                RecCreatedDateFormatted = String.Format("{0:ddd, MMM d, yyyy}", source.RecCreatedDate),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
-                TotalDiscount = item.Sum(x=>x.Discount),
+                TotalDiscount = item.Sum(x => x.Discount),
                 TotalSale = double.Parse(item.Sum(x => x.SalePrice * x.Quantity).ToString()),
                 TotalItems = item.Sum(x => x.Quantity),
-                CustomerName = source.CustomerId>0 ? source.Customer.Name : "",
+                CustomerName = source.CustomerId > 0 ? source.Customer.Name : "",
                 CustomerEmail = source.CustomerId > 0 ? source.Customer.Email : "",
                 CustomerPhone = source.CustomerId > 0 ? source.Customer.Phone : "",
                 PrintString = @"<a title='Click to print order' target='_blank' href='" + hostURL + "Order/PrintOrder/" + source.OrderId + "'> Print</a>",

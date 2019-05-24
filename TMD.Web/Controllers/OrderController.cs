@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Activities.Expressions;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ using TMD.Web.Models;
 using TMD.Web.ViewModels;
 using TMD.Web.ViewModels.Common;
 using System.Threading.Tasks;
+using Microsoft.Owin.Security.Provider;
+
 namespace TMD.Web.Controllers
 {
     [Authorize(Roles = "Admin, Employee")]
@@ -109,6 +112,7 @@ namespace TMD.Web.Controllers
         // GET: ProductCategory/Create
         public ActionResult Create(long ? id)
         {
+            var returnUrl = HttpContext.Request.UrlReferrer;
             OrderModel toSend = new OrderModel();
             if (id == null || id == 0)
                 toSend.OrderItems = new List<OrderItemModel>();
@@ -178,6 +182,10 @@ namespace TMD.Web.Controllers
                     orderItemService.AddUpdateService(order);
                     new Task(() => { SendEmail(order, email); }).Start();
                     TempData["message"] = new MessageViewModel { Message = "Order has been updated successfully.", IsSaved = true };
+                    if (orderDetail.IsOnline)
+                    {
+                        return RedirectToAction("OnlineOrders");
+                    }
                     return RedirectToAction("Index");
                 }
                 

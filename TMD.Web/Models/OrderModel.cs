@@ -21,6 +21,7 @@ namespace TMD.Web.Models
         public string Comments { get; set; }
         public string RecCreatedBy { get; set; }
         public string RecLastUpdatedBy { get; set; }
+        public bool IsDispatched { get; set; }
 
         public List<OrderItemModel> OrderItems { get; set; }
         public CustomerModel  Customer { get; set; }
