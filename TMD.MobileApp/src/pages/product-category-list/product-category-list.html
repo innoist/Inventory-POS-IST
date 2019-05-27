@@ -10,8 +10,8 @@
                 </ion-searchbar>
             </ion-col>
             <ion-col col-12 no-padding no-margin>
-                <ion-list *ngFor="let productCategory of productCategories">
-                    <ion-list-header (click)="viewAllProducts(productCategory)" *ngIf="productCategory.Products != null && productCategory.Products.length > 0">
+                <ion-list (click)="viewAllProducts(productCategory)" *ngFor="let productCategory of productCategories">
+                    <ion-list-header *ngIf="productCategory.Products != null && productCategory.Products.length > 0">
                         <ion-label>
                             {{productCategory.Name}}
                         </ion-label>
@@ -21,7 +21,7 @@
                     </ion-list-header>
                     <ion-row *ngIf="productCategory.Products != null && productCategory.Products.length > 0">
                         <ion-col col-4 *ngFor="let product of productCategory.Products">
-                            <img [src]="api.url + '/Images/Inventory/' + product.ProductImages[0].ItemImagePath">
+                            <img [src]="api.url + '/api/Product/Thumbnail?imageName=' + product.ProductImages[0].ItemImagePath">
                         </ion-col>
                     </ion-row>
                 </ion-list>

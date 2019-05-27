@@ -12,7 +12,7 @@
                             <!-- Expandable Full image with CTA Header-->
                             <div class="collapsible-header">
                                 <ion-item (click)="gotoSubCategory(category)" no-margin padding no-lines background-size
-                                    [ngStyle]="{'background-image': 'url(' + api.url + '/Images/Inventory/' + category.Name.replace(' ', '').toLowerCase() + '_main_category.png)'}">
+                                    [ngStyle]="{'background-image': 'url(' + category.ImagePath + ')'}">
                                     <div category-title>
                                         <h2 item-title float-left>{{category.Name}}</h2>
                                     </div>

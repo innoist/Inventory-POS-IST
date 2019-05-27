@@ -14,7 +14,7 @@
                             <div class="collapsible-header">
                                 <ion-item (click)="showDetails(product)" no-margin padding no-lines [ngClass]="animateClass" background-size
                                     [ngStyle]="{ 'background-image': 
-                                    product.ProductImages && product.ProductImages.length > 0 ? 'url(' + api.url + '/Images/Inventory/' + product.ProductImages[0].ItemImagePath + ')' : '' }">
+                                    product.ProductImages && product.ProductImages.length > 0 ? 'url(' + api.url + '/api/Product/Thumbnail?imageName=' + product.ProductImages[0].ItemImagePath + ')' : '' }">
                                     <div gallery-title>
                                         <div float-left>
                                             <h2 item-title>{{product.Name}}</h2>

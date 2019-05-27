@@ -81,7 +81,10 @@ namespace TMD.Web.Areas.Api.Controllers
                     RecCreatedDate = DateTime.Now, RecLastUpdatedDate = DateTime.Now }
             }, user.Password);
 
-            if (!response.Succeeded) return BadRequest();
+            if (!response.Succeeded)
+            {
+                return BadRequest(string.Join(Environment.NewLine, response.Errors));
+            }
 
             var registeredUser = await UserManager.FindByEmailAsync(user.Email);
             if (registeredUser == null)

@@ -22,7 +22,15 @@ export class ProductCategoryMainListPage {
   // Get Product Categories
   getProductCategories() {
     this.productService.loadMainCategories().subscribe(response => {
-      this.productCategories = response.ProductMainCategories;
+      if (!response || !response.ProductMainCategories) {
+        return;
+      }
+
+      response.ProductMainCategories.forEach((category: any) => {
+        category.ImagePath = this.api.url + '/Images/Inventory/' + 
+          category.Name.replace(/ /g, '').toLowerCase() + '_main_category.png';
+        this.productCategories.push(category);  
+      });
     });
   }
 

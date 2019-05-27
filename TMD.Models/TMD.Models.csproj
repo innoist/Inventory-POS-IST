@@ -159,6 +159,7 @@
     <Compile Include="RequestModels\BatchImportSearchRequest.cs" />
     <Compile Include="RequestModels\GetPagedListRequest.cs" />
     <Compile Include="RequestModels\OrderSearchRequest.cs" />
+    <Compile Include="RequestModels\ProductImageRequest.cs" />
     <Compile Include="RequestModels\ProductCategorySearchRequest.cs" />
     <Compile Include="RequestModels\InventoryItemSearchRequest.cs" />
     <Compile Include="RequestModels\ShoppingCartSearchRequest.cs" />

@@ -55,11 +55,11 @@ export class SignupPage {
     this.user.signup(this.account).subscribe(() => {
       this.loadingHelper.dismissLoader();
       this.loginService.doLogin(this.account);
-    }, () => {
+    }, (err) => {
       this.loadingHelper.dismissLoader();
       // Unable to sign up
       let toast = this.toastCtrl.create({
-        message: this.signupErrorString,
+        message: err && err.error ? err.error.Message : this.signupErrorString,
         duration: 3000,
         position: 'top'
       });
