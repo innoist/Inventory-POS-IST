@@ -28,40 +28,29 @@ namespace TMD.Web.Areas.Api.Controllers
 
             string path = HttpContext.Current.Server.MapPath("~/" + ConfigurationManager.AppSettings["InventoryImage"] + request.ImageName);
             HttpResponseMessage response = new HttpResponseMessage();
-            // load it up
-            using (Bitmap bmp = new Bitmap(path))
+            Image img = Image.FromFile(path);
+            int h = img.Height;
+            int w = img.Width;
+            int b = h > w ? h : w;
+            double per = (b > 120) ? (120 * 1.0) / b : 1.0;
+            h = (int)(h * per);
+            w = (int)(w * per);
+
+            // create the thumbnail image
+            using (Image img2 =
+                      img.GetThumbnailImage(w, h,
+                      () => false,
+                      IntPtr.Zero))
             {
-                var fs = new FileStream(HttpContext.Current.Server.MapPath("~/" + ConfigurationManager.AppSettings["InventoryImage"] + @"\I"  + request.ImageName), FileMode.Create);
-                bmp.Save(fs, ImageFormat.Png);
-                bmp.Dispose();
-                
-                Image img = Image.FromStream(fs);
-                fs.Close();
-                fs.Dispose();
-
-                int h = img.Height;
-                int w = img.Width;
-                int b = h > w ? h : w;
-                double per = (b > 120) ? (120 * 1.0) / b : 1.0;
-                h = (int)(h * per);
-                w = (int)(w * per);
-
-                // create the thumbnail image
-                using (Image img2 =
-                          img.GetThumbnailImage(w, h,
-                          () => false,
-                          IntPtr.Zero))
-                {
-                    // emit it to the response stream
-                    MemoryStream ms = new MemoryStream();
-                    img2.Save(ms, ImageFormat.Png);
-                    response.Content = new ByteArrayContent(ms.ToArray());
-                    ms.Close();
-                    ms.Dispose();
-                    response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
-                    response.StatusCode = HttpStatusCode.OK;
-                    return response;
-                }
+                // emit it to the response stream
+                MemoryStream ms = new MemoryStream();
+                img2.Save(ms, ImageFormat.Png);
+                response.Content = new ByteArrayContent(ms.ToArray());
+                ms.Close();
+                ms.Dispose();
+                response.Content.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+                response.StatusCode = HttpStatusCode.OK;
+                return response;
             }
         }
 
